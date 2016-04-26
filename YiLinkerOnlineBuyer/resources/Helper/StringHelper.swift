@@ -9,9 +9,27 @@
 import UIKit
 
 class StringHelper: NSObject {
-    class func localizedStringWithKey(key: String) -> String {
+    /*class func localizedStringWithKey(key: String) -> String {
         let string: String = NSLocalizedString(key, tableName: "LocalizableString", comment: "comment")
         return string
+    }*/
+    
+    
+    class func localizedStringWithKey(key: String) -> String {
+        var language: String = ""
+        
+        if SessionManager.selectedLanguageCode() == "cn" {
+            language = "zh-Hans"
+        } else {
+            language = "en"
+        }
+        
+        let path = NSBundle.mainBundle().pathForResource(language, ofType: "lproj")
+        let bundle = NSBundle(path: path!)
+        
+        return NSLocalizedString(key, tableName: "LocalizableString", bundle: bundle!, value: "", comment: "")
+        //        let string: String = NSLocalizedString(key, tableName: "LocalizableString", comment: "comment")
+        //        return string
     }
     
     class func required(text: String) -> NSAttributedString {
@@ -40,5 +58,11 @@ class StringHelper: NSObject {
         }
         
         return NSDictionary()
+    }
+    
+    class func convertStringToUrl(string: String) -> NSURL {
+        var url : NSString = string
+        var urlStr : NSString = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        return NSURL(string: urlStr as String)!
     }
 }

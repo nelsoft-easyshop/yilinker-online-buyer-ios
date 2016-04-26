@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton Bold.otf">
+            <string>Panton-Bold</string>
+        </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HelpWhatsNewViewController" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="whatsNewLabel" destination="a3c-2I-OiF" id="FjR-Bv-6aX"/>
+                <outlet property="whatsNewTitleLabel" destination="bqK-Fg-L0e" id="V7N-E6-Yki"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WHAT'S NEW" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bqK-Fg-L0e">
+                    <rect key="frame" x="16" y="24" width="343" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="17" id="wn3-LW-9dx"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="18"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="highlightedColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X5H-a0-pMB">
+                    <rect key="frame" x="16" y="74" width="343" height="585"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a3c-2I-OiF">
+                    <rect key="frame" x="16" y="49" width="343" height="17"/>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="highlightedColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="a3c-2I-OiF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="45f-Py-efS"/>
+                <constraint firstItem="a3c-2I-OiF" firstAttribute="top" secondItem="bqK-Fg-L0e" secondAttribute="bottom" constant="8" id="4gg-wn-qTI"/>
+                <constraint firstItem="X5H-a0-pMB" firstAttribute="top" secondItem="a3c-2I-OiF" secondAttribute="bottom" constant="8" id="4pH-GH-gpI"/>
+                <constraint firstItem="bqK-Fg-L0e" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="24" id="ERX-Ia-jmi"/>
+                <constraint firstItem="X5H-a0-pMB" firstAttribute="top" secondItem="a3c-2I-OiF" secondAttribute="bottom" constant="8" id="Ih2-zO-ETE"/>
+                <constraint firstAttribute="trailing" secondItem="X5H-a0-pMB" secondAttribute="trailing" constant="16" id="NYV-CK-MNt"/>
+                <constraint firstAttribute="bottom" secondItem="X5H-a0-pMB" secondAttribute="bottom" constant="8" id="QaT-fi-4UE"/>
+                <constraint firstAttribute="trailing" secondItem="a3c-2I-OiF" secondAttribute="trailing" constant="16" id="T2s-l1-hO7"/>
+                <constraint firstAttribute="trailing" secondItem="bqK-Fg-L0e" secondAttribute="trailing" constant="16" id="kiT-hV-g6w"/>
+                <constraint firstItem="bqK-Fg-L0e" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="vcr-Yp-Yst"/>
+                <constraint firstItem="X5H-a0-pMB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="zN0-gj-Eiz"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <point key="canvasLocation" x="310.5" y="282.5"/>
+        </view>
+    </objects>
+</document>

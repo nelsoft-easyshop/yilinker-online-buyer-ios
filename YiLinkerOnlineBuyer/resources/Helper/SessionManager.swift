@@ -11,6 +11,7 @@ class SessionManager {
     static let sharedInstance = SessionManager()
 
     var loginType: LoginType = LoginType.GoogleLogin
+    static var isLanguageChinese: Bool = false
     
     class func setGcmToken(accessToken: String) {
         NSUserDefaults.standardUserDefaults().setObject(accessToken, forKey: "gcmToken")
@@ -72,6 +73,108 @@ class SessionManager {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
+    //MARK: - 
+    //MARK: - Set First Name
+    class func setFirstName(firstName: String) {
+        NSUserDefaults.standardUserDefaults().setObject(firstName, forKey: "firstName")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    //MARK: -
+    //MARK: - Set Selected Country Code
+    class func setSelectedCountryCode(countryCode: String) {
+        NSUserDefaults.standardUserDefaults().setObject(countryCode, forKey: "countryCode")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    //MARK: -
+    //MARK: - Set Selected Language Code
+    class func setSelectedLanguageCode(languageCode: String) {
+        NSUserDefaults.standardUserDefaults().setObject(languageCode, forKey: "languageCode")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    //MARK: - 
+    //MARK: - Set Last Name
+    class func setLastName(lastName: String) {
+        NSUserDefaults.standardUserDefaults().setObject(lastName, forKey: "lastName")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    //MARK: -
+    //MARK: - Set Email Address
+    class func setEmailAddress(lastName: String) {
+        NSUserDefaults.standardUserDefaults().setObject(lastName, forKey: "emailAddress")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    //MARK: -
+    //MARK: - Set Referrer Code
+    class func setReferrerCode(referrerCode: String) {
+        NSUserDefaults.standardUserDefaults().setObject(referrerCode, forKey: "referrerCode")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    //MARK: -
+    //MARK: - Country Code
+    class func selectedCountryCode() -> String {
+        var result: String = "PH"
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("countryCode") as? String {
+            result = val as! String
+        }
+        return result
+    }
+    
+    //MARK: -
+    //MARK: - Country Code
+    class func selectedLanguageCode() -> String {
+        var result: String = "EN"
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("languageCode") as? String {
+            result = val as! String
+        }
+        return result
+    }
+    
+    //MARK: -
+    //MARK: - Email Address
+    class func referrerCode() -> String {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("referrerCode") as? String {
+            result = val as! String
+        }
+        return result
+    }
+    
+    //MARK: -
+    //MARK: - Email Address
+    class func emailAddress() -> String {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("emailAddress") as? String {
+            result = val as! String
+        }
+        return result
+    }
+    
+    //MARK: - 
+    //MARK: - First Name
+    class func firstName() -> String {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("firstName") as? String {
+            result = val as! String
+        }
+        return result
+    }
+    
+    //MARK: -
+    //MARK: - Last Name
+    class func lastName() -> String {
+        var result: String = ""
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("lastName") as? String {
+            result = val as! String
+        }
+        return result
+    }
+    
     class func userId() -> String {
         var result: String = ""
         if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("userId") as? String {
@@ -80,6 +183,8 @@ class SessionManager {
         return result
     }
     
+    //MARK: - 
+    //MARK: - Mobile Number
     class func mobileNumber() -> String {
         var result: String = ""
         if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("mobileNumber") as? String {
@@ -465,5 +570,20 @@ class SessionManager {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
 
+
+     class func setIsDeviceTokenRegistered(isDeviceRegistered: Bool) {
+        NSUserDefaults.standardUserDefaults().setBool(isDeviceRegistered, forKey: "isDeviceRegistered")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func isDeviceRegistered() -> Bool {
+        var userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        
+        if (userDefaults.objectForKey("isDeviceRegistered") != nil) {
+            return true
+        }
+        
+        return false
+    }
     
 }

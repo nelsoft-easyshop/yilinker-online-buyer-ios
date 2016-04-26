@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Panton SemiBold.otf">
+            <string>Panton-SemiBold</string>
+        </mutableArray>
+        <mutableArray key="Panton.otf">
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="OrderSummaryTableViewCell" rowHeight="71" id="KGk-i7-Jjw" customClass="OrderSummaryTableViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="71"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="lPX-NO-SZY">
+                        <rect key="frame" x="8" y="13" width="77" height="49"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="77" id="cXL-ON-rHt"/>
+                            <constraint firstAttribute="height" constant="49" id="h7F-Gn-gmA"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bamboo Battery" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LgQ-GA-VF4">
+                        <rect key="frame" x="93" y="13" width="217" height="17"/>
+                        <fontDescription key="fontDescription" name="Panton-SemiBold" family="Panton" pointSize="12"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="x1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJ8-9G-qKe">
+                        <rect key="frame" x="94" y="31" width="136" height="14"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="14" id="TOy-ls-vQg"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P 4500" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9F7-2V-DNu">
+                        <rect key="frame" x="93" y="48" width="137" height="14"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="14" id="8cM-2k-sfT"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="close2" translatesAutoresizingMaskIntoConstraints="NO" id="JKp-tu-mjo">
+                        <rect key="frame" x="198" y="56" width="7" height="7"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="7" id="3lJ-zX-PkR"/>
+                            <constraint firstAttribute="width" constant="7" id="XcK-uT-Jta"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not available for COD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R6W-GJ-Ehp">
+                        <rect key="frame" x="198" y="49" width="122" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="0GT-Rk-Zrc"/>
+                            <constraint firstAttribute="width" constant="122" id="CU5-qV-WWa"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailingMargin" secondItem="9F7-2V-DNu" secondAttribute="trailing" constant="82" id="38g-1T-aPl"/>
+                    <constraint firstItem="lPX-NO-SZY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="39K-SX-pUY"/>
+                    <constraint firstItem="lJ8-9G-qKe" firstAttribute="top" secondItem="LgQ-GA-VF4" secondAttribute="bottom" constant="1" id="3wE-sy-Sd7"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="LgQ-GA-VF4" secondAttribute="trailing" constant="2" id="50a-jG-nN0"/>
+                    <constraint firstItem="LgQ-GA-VF4" firstAttribute="leading" secondItem="lPX-NO-SZY" secondAttribute="trailing" constant="8" id="Ad1-pK-BuA"/>
+                    <constraint firstItem="9F7-2V-DNu" firstAttribute="top" secondItem="lJ8-9G-qKe" secondAttribute="bottom" constant="3" id="CPb-6K-Xsr"/>
+                    <constraint firstItem="9F7-2V-DNu" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="NAQ-Hj-vlb"/>
+                    <constraint firstItem="LgQ-GA-VF4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="PW9-b3-fFX"/>
+                    <constraint firstItem="lPX-NO-SZY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="QuA-ff-trx"/>
+                    <constraint firstAttribute="bottom" secondItem="R6W-GJ-Ehp" secondAttribute="bottom" id="WnY-yG-Uqr"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="JKp-tu-mjo" secondAttribute="trailing" constant="107" id="c2c-wP-o3g"/>
+                    <constraint firstItem="lJ8-9G-qKe" firstAttribute="leading" secondItem="lPX-NO-SZY" secondAttribute="trailing" constant="9" id="e3L-la-fzV"/>
+                    <constraint firstItem="9F7-2V-DNu" firstAttribute="leading" secondItem="lPX-NO-SZY" secondAttribute="trailing" constant="8" id="fVX-Et-CLW"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="JKp-tu-mjo" secondAttribute="bottom" constant="-1" id="k6I-g0-YfE"/>
+                    <constraint firstAttribute="trailing" secondItem="R6W-GJ-Ehp" secondAttribute="trailing" id="lqs-WQ-2Le"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="lJ8-9G-qKe" secondAttribute="trailing" constant="82" id="rKu-qg-GfR"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="itemTitleLabel" destination="LgQ-GA-VF4" id="w5p-rC-VxI"/>
+                <outlet property="noCODLabel" destination="R6W-GJ-Ehp" id="fhR-WB-g2r"/>
+                <outlet property="priceLabel" destination="9F7-2V-DNu" id="xMH-LL-5oJ"/>
+                <outlet property="productImageView" destination="lPX-NO-SZY" id="5mA-8h-gkR"/>
+                <outlet property="quantityLabel" destination="lJ8-9G-qKe" id="P40-jC-yve"/>
+            </connections>
+            <point key="canvasLocation" x="4" y="86.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="close2" width="200" height="200"/>
+        <image name="dummy-placeholder" width="1280" height="800"/>
+    </resources>
+</document>

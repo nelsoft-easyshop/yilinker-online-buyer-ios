@@ -26,12 +26,14 @@ MESSAGE_LOGIN_ERROR_TITLE_LOCALIZE_KEY = "Unable to Proceed";
 MESSAGE_LOGIN_ERROR_MESSAGE_LOCALIZE_KEY = "You must be logged in to send a message";
 
 // Global
+INVALID_QR_LOCALIZE_KEY = "Invalid QR Code!";
 SOMETHINGWENTWRONG_LOCALIZE_KEY = "Something Went Wrong";
 OKBUTTON_LOCALIZE_KEY = "OK";
 ERROR_LOCALIZE_KEY = "Error";
 FAILED_LOCALIZE_KEY = "Failed";
 CONNECTIONUNREACHABLE_LOCALIZE_KEY = "Connection Unreachable";
 CONNECTIONERRORMESSAGE_LOCALIZE_KEY = "Cannot retrieve data. Please check your internet connection.";
+HAVE_REFERRER_LOCALIZE_KEY = "You already have referrer code!";
 
 // MARK: - HIDDEN
 SIGNIN_HIDDEN_LOCALIZE_KEY = "Sign In";
@@ -60,6 +62,11 @@ POPULAR_CATEGORIES_LOCALIZE_KEY = "Popular Categories";
 TRENDING_ITEMS_LOCALIZE_KEY = "Trending Items";
 ITEMS_YOU_MY_LIKE_LOCALIZE_KEY = "Items you may like";
 
+HOME_LOCALIZE_KEY = "Home";
+BACK_TO_TOP_LOCALIZE_KEY = "Back to Top";
+OFF_LOCALIZE_KEY = "OFF";
+
+
 TOP_PICKS_LOCALIZE_KEY = "Top Picks";
 WATCHES_LOCALIZE_KEY = "Watches";
 ELECTRONICS_LOCALIZE_KEY = "Electronics";
@@ -83,6 +90,11 @@ OR_LOCALIZE_KEY = "or";
 GET_STARTED_LOCALIZE_KEY = "GET STARTED";
 
 // MARK: - Sign In
+ACCOUNT_TITLE_LOCLAIZE_KEY = "Account";
+REGISTER_TITLE_LOCALIZE_KEY = "Register";
+RESET_PASSWORD_TITLE_LOCALIZE_KEY = "Reset Password";
+BY_MOBILE_LOCALIZE_KEY = "BY MOBILE";
+BY_EMAIL_LOCALIZE_KEY = "BY EMAIL";
 ENTER_EMAIL_ADDRESS_LOCALIZE_KEY = "Enter email address";
 ENTER_PASSWORD_ADDRESS_LOCALIZE_KEY = "Enter password";
 FORGOT_PASSWORD_LOCALIZE_KEY = "Forgot your password?";
@@ -95,21 +107,35 @@ EMAIL_IS_REQUIRED_LOCALIZE_KEY = "Email is required";
 INVALID_EMAIL_REQUIRED_LOCALIZE_KEY = "Email Address is not valid";
 PASSWORD_IS_REQUIRED_LOCALIZE_KEY = "Password is required";
 
+MOBILE_IS_REQUIRED_LOCALIZE_KEY = "Mobile Number is required";
+INVALID_MOBILE_REQUIRED_LOCALIZE_KEY = "Mobile Number is not valid";
+
 // MARK: - Sing In Success Message
 SUCCESS_LOGIN_LOCALIZE_KEY = "Successfully login.";
+LOGIN_LOCALIZE_KEY = "Login";
 
 // MARK: - Register
 FIRST_NAME_LOCALIZE_KEY = "First Name";
 LAST_NAME_LOCALIZE_KEY = "Last Name";
 EMAIL_ADDRESS_LOCALIZE_KEY = "email address";
 PASSWORD_LOCALIZE_KEY = "password";
+PASSWORD_NEW_LOCALIZE_KEY = " New Password";
 RE_TYPE_PASSWORD_LOCALIZE_KEY = "Re-type password";
 REGISTER_ME_NOW_LOCALIZE_KEY = "REGISTER ME NOW";
-NUMBER_LETTERS_LOCALIZE_KEY = "Password must be a combination of letters and numbers.";
+NUMBER_LETTERS_LOCALIZE_KEY = "Password must be a minimum of 8 alphanumeric characters.";
+NUMBER_LETTERS_COMBINATION_LOCALIZE_KEY = "Password must be a minimum combination of 8 alphanumeric characters.";
 SUCCESS_REGISTER_LOCALIZED_KEY = "Successfully registered.";
 THANKYOU_LOCALIZED_KEY = "Thank you";
 MOBILE_LOCALIZED_KEY = "Mobile Number";
 REFERRAL_LOCALIZED_KEY = "Referral Code";
+GET_ACTIVATION_LOCALIZED_KEY = "Get Confirmation Code";
+ACTIVATION_CODE_LOCALIZED_KEY = "Activation Code";
+
+REGISTER_SELECT_LANGUAGE_LOCALIZED_KEY = "Select a Language";
+REGISTER_CHOOSE_LANGUAGE_LOCALIZED_KEY = "Please choose your prefered language.";
+
+REGISTER_SELECT_AREA_CODE_LOCALIZED_KEY = "Select a Area Code";
+REGISTER_CHOOSE_AREA_CODE_LOCALIZED_KEY = "Please choose your Area Code.";
 
 // MARK: - Register Error
 FIRST_NAME_REQUIRED_LOCALIZE_KEY = "First name is required";
@@ -124,6 +150,11 @@ RETYPE_REQUIRED_LOCALIZE_KEY = "Re-type password is required.";
 PASSWORD_NOT_MATCH_LOCALIZE_KEY = "The password does not match.";
 CONTACT_REQUIRED_LOCALIZE_KEY = "Contact number is required.";
 EIGHT_CHARACTERS_LOCALIZED_KEY = "Password must be eight characters.";
+ACTIVATION_CODE_REQUIRED_LOCALIZE_KEY = "Activation Code is required.";
+
+//MARK- Fogot Password
+FORGOT_PASSWORD_SUCCESS_LOCALIZE_KEY = "Successfully changed password.";
+RESET_PASSWORD_LOCALIZED_KEY = "Reset Password";
 
 // MARK: - Customize Shopping
 CATEGORIES_CS_LOCALIZE_KEY = "Categories";
@@ -140,14 +171,18 @@ ORDER_SUMMARY_LOCALIZE_KEY = "Order Summary";
 DELIVERY_LOCALIZE_KEY = "Delivery";
 TOTAL_LOCALIZE_KEY = "Total";
 FREE_LOCALIZE_KEY = "Free";
+VOUCHER_CODE_LOCALIZE_KEY = "Voucher Code";
 
 SHIP_TO_LOCALIZE_KEY = "Ship to";
 DEFAULT_ADDRESS_LOCALIZE_KEY = "Default Address";
 CHANGE_ADDRESS_LOCALIZE_KEY = "Change Address";
+ADD_LOCALIZE_KEY = "ADD";
+REMOVE_LOCALIZE_KEY = "REMOVE";
 
 SAVE_AND_CONTINUE_LOCALIZE_KEY = "Save and Continue";
 SAVE_AND_GO_TO_PAYMENT_LOCALIZE_KEY = "Save and Go to Payment";
 CONTINUE_SHOPPING_LOCALIZE_KEY = "Continue Shopping";
+CONTINUE_SHOPPING2_LOCALIZE_KEY = "CONTINUE SHOPPING";
 
 // MARK: - Address
 MOBILE_NUMBER_LOCALIZE_KEY = "Mobile Number";
@@ -192,6 +227,8 @@ REMEMBER_PAYMENT_LOCALIZE_KEY = "Remember Payment Option";
 DELIVER_TO_LOCALIZE_KEY = "Deliver to:";
 COD_LOCALIZE_KEY = "CoD";
 CREDIT_CARD_LOCALIZE_KEY = "Creditcard";
+NO_COD_LOCALIZE_KEY = "Not available for COD";
+COD_NOT_AVAILABLE_LOCALIZE_KEY = "COD is not available in this transaction";
 
 // MARK: - Checkout OverView
 CONGRATULATIONS_LOCALIZE_KEY = "Congratulations!";
@@ -377,6 +414,19 @@ WEBVIEW_PLEASE = "PLEASE TRY TO VISIT ME AGAIN LATER";
 HELP_FOR_CUSTOMER_SERVICE= "For Customer Service Assistance";
 HELP_EMAIL = "Email  :";
 HELP_CALL = "Call     :";
+HELP_SEND_FEEDBACK = "SEND A FEEDBACK";
+HELP_CHECK_FOR_UPDATES = "CHECK FOR UPDATES";
+HELP_WHATS_NEW = "WHAT'S NEW";
+
+// MARK: - Suggestion Feedback
+SUGGESTION_HEADLINE = "Do you want to send a feedback?";
+SUGGESTION_SUB_HEADLINE = "We'd love to know how we can make YiLinker even better.";
+SUGGESTION_TITLE = "Feedback";
+SUGGESTION_TITLE_LABEL = "Title";
+SUGGESTION_DESCRIPTION = "Description";
+SUGGESTION_SEND = "SEND";
+SUGGESTION_TITLE_REQUIRED = "Title is required!";
+SUGGESTION_DESC_REQUIRED = "Description is required!";
 
 //Cart
 CART_TITLE_LOCALIZE_KEY = "Cart";
@@ -389,6 +439,7 @@ CHECKOUT_LOCALIZE_KEY = "CHECKOUT";
 CHOOSE_ITEM_FROM_CART_LOCALIZE_KEY = "Choose item from your cart.";
 CART_EDIT_LOCALIZE_KEY = "Edit";
 CART_DELETE_LOCALIZE_KEY = "Delete";
+COD_NOT_AVAILABLE_LOCALIZE_KEY = "Not available for COD";
 
 //Wishlist
 WISHLISTTITLE_LOCALIZE_KEY = "Wishlist";
@@ -401,6 +452,10 @@ SEARCH_LOCALIZE_KEY = "Search";
 PRODUCT_LOCALIZE_KEY = "Product";
 SELLER_LOCALIZE_KEY = "Seller";
 BROWSECATEGORY_LOCALIZE_KEY = "Browse by Category";
+KEYWORD_SHORT_LOCALIZE_KEY = "Keyword too short!";
+
+SEARCH_P_PLACEHOLDER_LOCALIZE_KEY = "Search Product Here";
+SEARCH_S_PLACEHOLDER_LOCALIZE_KEY = "Search Seller Here";
 
 //Search Results
 RESULTS_LOCALIZE_KEY = "Results";
@@ -428,6 +483,14 @@ ACTIVITYLOGS_LOCALIZE_KEY = "Activity\nLogs";
 MYPOINTS_LOCALIZE_KEY = "My\nPoints";
 RESOLUTIONCENTER_LOCALIZE_KEY = "Resolution\nCenter";
 SETTINGS_LOCALIZE_KEY = "Settings";
+
+// MARK: - My Points
+MY_POINTS_TITLE_LOCALIZE_KEY = "My Points";
+POINTS_LOCALIZE_KEY = "Points";
+POINTS_EARNED_LOCALIZE_KEY = "POINTS EARNED";
+MY_POINTS_DESCRIPTION_LOCALIZE_KEY = "Points are earned by certain activities in your account, e.g. increasing your Followers, receiving Feedback received from Buyers and by referring Buyers into YiLinker. Spending your points on our platform will be available soon, so watch out for that. ";
+BREAKDOWN_LOCALIZE_KEY = "Breakdown";
+EARN_MORE_POINTS_LOCALIZE_KEY = "HOW TO EARN MORE POINTS";
 
 //Edit Profile
 EDITPROFILE_TRY_AGAIN = "Please try again.";
@@ -467,6 +530,13 @@ ADDRESS_LOCALIZE_KEY = "Address";
 DEFAULTADDRESS_LOCALIZE_KEY = "Default Address";
 CHANGEADDRESS_LOCALIZE_KEY = "Change Address";
 
+//Global Preferences
+GLOBAL_PREFERENCES_KEY = "Global Preferences";
+PROFILE_COUNTRY_KEY = "Country";
+PROFILE_LANGUAGE_KEY = "Language";
+PROFILE_COUNTRY_PREFERENCE_KEY = "Country Preferences";
+PROFILE_LANGUAGE_PREFERENCE_KEY_KEY = "Language Preferences";
+
 //Personal Information
 PERSONALINFO_LOCALIZE_KEY = "Personal Information";
 FIRSTNAME_LOCALIZE_KEY = "First Name";
@@ -489,6 +559,7 @@ CHANGEPASSWORD_LOCALIZE_KEY = "Change Password";
 OLDPASSWORD_LOCALIZE_KEY = "Old Password";
 NEWPASSWORD_LOCALIZE_KEY = "New Password";
 CONFIRMPASSWORD_LOCALIZE_KEY = "Confirm Password";
+CONFIRMPASSWORD_NEW_LOCALIZE_KEY = "Confirm New Password";
 SUBMIT_LOCALIZE_KEY = "Submit";
 PASSWORDMISMATCH_LOCALIZE_KEY = "Password does not match!";
 
@@ -503,6 +574,7 @@ SETTINGSDEACTIVATE_LOCALIZE_KEY = "Deactivate My Account?";
 
 //Transaction
 TRANSACTION_TITLE_TITLE_LOCALIZE_KEY = "Transaction";
+VIEW_TRANSACTION_LOCALIZE_KEY = "VIEW TRANSACTION";
 
 TRANSACTION_ALL_LOCALIZE_KEY = "ALL";
 TRANSACTION_PENDING_LOCALIZE_KEY = "ONGOING";
@@ -608,3 +680,10 @@ TARGET_NOT_AVAILABLE = "No items to load.";
 PAGE_NOT_FOUND_LOCALIZE_KEY = "Page not found.";
 
 HI_LOCALIZE_KEY = "Hi";
+
+//MARK: - Referral Codes
+REFERRAL_LOCALIZE_KEY = "Referral Code";
+YOUR_REFERRAL_LOCALIZE_KEY = "Your Referral Code";
+REFERRAL_PERSON_LOCALIZE_KEY = "Referred By";
+COPY_LOCALIZE_KEY = "Copied to clipboard";
+UPDATE_PROF_LOCALIZE_KEY = "Successfully updated your profile";

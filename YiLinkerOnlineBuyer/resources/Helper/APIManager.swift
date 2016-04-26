@@ -9,12 +9,15 @@
 struct APIEnvironment {
     
     static var development = true
+    static var sprint = false
     static var staging = false
     static var production = false
     
     static func baseUrl() -> String {
         if development {
-            return "http://online.api.easydeal.ph/api"
+            return "http://dev.online.api.easydeal.ph/api"
+        } else if sprint {
+            return "http://sprint.online.api.easydeal.ph/api"
         } else if staging {
             return "http://online.api.easydeal.ph/api"
         } else  {
@@ -27,179 +30,199 @@ struct APIAtlas {
     
     static func COD() -> String {
         if SessionManager.isLoggedIn() {
-            return "v1/auth/payment/doPaymentCod"
+            return "auth/payment/doPaymentCod"
         } else {
             SessionManager.loadCookies()
-            return "v1/payment/doPaymentCod"
+            return "payment/doPaymentCod"
         }
     }
     
     static func pesoPay() -> String {
         if SessionManager.isLoggedIn() {
-            return "v1/auth/payment/doPesoPay"
+            return "auth/payment/doPesoPay"
         } else {
             SessionManager.loadCookies()
-            return "v1/payment/doPesoPay"
+            return "payment/doPesoPay"
         }
     }
     
     static func overView() -> String {
         if SessionManager.isLoggedIn() {
-            return "v1/auth/payment/checkoutOverview"
+            return "auth/payment/checkoutOverview"
         } else {
             SessionManager.loadCookies()
-            return "v1/payment/checkoutOverview"
+            return "payment/checkoutOverview"
         }
     }
     
     static func cart() -> String {
         if SessionManager.isLoggedIn() {
-            return "v1/auth/cart/getCart"
+            return "auth/cart/getCart"
         } else {
             SessionManager.loadCookies()
-            return "v1/cart/getCart"
+            return "cart/getCart"
         }
     }
     
     static func updateCart() -> String {
         if SessionManager.isLoggedIn() {
-            return "v1/auth/cart/updateCartItem"
+            return "auth/cart/updateCartItem"
         } else {
             SessionManager.loadCookies()
-            return "v1/cart/updateCartItem"
+            return "cart/updateCartItem"
         }
     }
     
     static func updateCheckout() -> String {
         if SessionManager.isLoggedIn() {
-            return "v1/auth/cart/cartToCheckout"
+            return "auth/cart/cartToCheckout"
         } else {
             SessionManager.loadCookies()
-            return "v1/cart/cartToCheckout"
+            return "cart/cartToCheckout"
         }
     }
     
     
     static func voucher() -> String {
         if SessionManager.isLoggedIn() {
-            return "v1/auth/cart/applyVoucher"
+            return "auth/cart/applyVoucher"
         } else {
             SessionManager.loadCookies()
-            return "v1/cart/applyVoucher"
+            return "cart/applyVoucher"
         }
     }
     
-    static let refreshTokenUrl = "v1/login"
-    static let loginUrl = "v1/login"
-    static let registerUrl = "v1/user/register"
-    static let getUserInfoUrl = "v1/auth/user/getUser"
+    static func mobileFeedBack() -> String {
+        if SessionManager.isLoggedIn() {
+            return "auth/mobile-feedback/add"
+        } else {
+            SessionManager.loadCookies()
+            return "mobile-feedback/add"
+        }
+    }
+    
+    static func homeUrl(version: String, languageCode: String) -> String {
+        return "ph/\(languageCode)/\(version)/home/getData"
+    }
+    
+    static let V1 = "v1"
+    static let V2 = "v2"
+    static let V3 = "v3"
+    
+    static let appItunesURL = "https://itunes.apple.com/ph/app/yilinker-buyer/id1048641709?mt=8"
+    static let appLookupUrl = "http://itunes.apple.com/lookup?bundleId=com.easyshop.YiLinkerOnlineBuyer"
+    static let refreshTokenUrl = "login"
+    static let loginUrl = "login"
+    static let registerUrl = "user/register"
+    static let getUserInfoUrl = "auth/user/getUser"
     static let homeUrl = "v2/home/getData"
-    static let cartUrl = "v1/auth/cart/getCart"
-    static let wishlistUrl = "v1/auth/cart/getCart"
-    static let updateWishlistUrl = "v1/auth/cart/updateCartItem"
-    static let addWishlistToCartUrl = "v1/auth/wishlistToCart"
-    static let updateCartUrl = "v1/auth/cart/updateCartItem"
-    static let getSellerUrl = "v1/get-seller"
-    static let buyerSellerFeedbacks = "v1/feedback/getUserFeedbacks"
-    static let productDetails = "v1/product/getProductDetail"
-    static let productReviews = "v1/product/getProductReviews"
-    static let productSellerDetails = "v1/get-product"
-    static let getSellerInfoLoggedIn = "v1/auth/user/getStoreInfo"
-    static let getSellerInfo = "v1/user/getStoreInfo"
-    static let followSeller = "v1/auth/followSeller"
-    static let unfollowSeller = "v1/auth/unfollowSeller"
-    static let sellerReview = "v1/seller/getReviews"
-    static let searchUrl = "v1/product/getSearchKeywords"
-    static let profileUrl = "v1/auth/user/getUser"
-    static let editProfileUrl = "v1/auth/user/editProfile"
-    static let addressesUrl = "v1/auth/address/getUserAddresses"
-    static let deleteAddressUrl = "v1/auth/address/deleteUserAddress"
-    static let setDefaultAddressUrl = "v1/auth/address/setDefaultAddress"
-    static let provinceUrl = "v1/location/getAllProvinces"
-    static let citiesUrl = "v1/location/getChildCities"
-    static let barangay = "v1/location/getBarangaysByCity"
-    static let addAddressUrl = "v1/auth/address/addNewAddress"
-    static let updateCheckoutUrl = "v1/auth/cart/cartToCheckout"
-    static let updateGuestCheckout = "v1/cart/cartToCheckout"
-    static let editAddress = "v1/auth/address/editUserAddress"
-    static let setCheckoutAddressUrl = "v1/auth/user/setAddress"
+    static let cartUrl = "auth/cart/getCart"
+    static let wishlistUrl = "auth/cart/getCart"
+    static let updateWishlistUrl = "auth/cart/updateCartItem"
+    static let addWishlistToCartUrl = "auth/wishlistToCart"
+    static let updateCartUrl = "auth/cart/updateCartItem"
+    static let getSellerUrl = "get-seller"
+    static let buyerSellerFeedbacks = "feedback/getUserFeedbacks"
+    static let productDetails = "product/getProductDetail"
+    static let productReviews = "product/getProductReviews"
+    static let productSellerDetails = "get-product"
+    static let getSellerInfoLoggedIn = "auth/user/getStoreInfo"
+    static let getSellerInfo = "user/getStoreInfo"
+    static let followSeller = "auth/followSeller"
+    static let unfollowSeller = "auth/unfollowSeller"
+    static let sellerReview = "seller/getReviews"
+    static let searchUrl = "product/getSearchKeywords"
+    static let profileUrl = "auth/user/getUser"
+    static let editProfileUrl = "auth/user/editProfile"
+    static let addressesUrl = "auth/address/getUserAddresses"
+    static let deleteAddressUrl = "auth/address/deleteUserAddress"
+    static let setDefaultAddressUrl = "auth/address/setDefaultAddress"
+    static let provinceUrl = "location/getAllProvinces"
+    static let citiesUrl = "location/getChildCities"
+    static let barangay = "location/getBarangaysByCity"
+    static let addAddressUrl = "auth/address/addNewAddress"
+    static let updateCheckoutUrl = "auth/cart/cartToCheckout"
+    static let updateGuestCheckout = "cart/cartToCheckout"
+    static let editAddress = "auth/address/editUserAddress"
+    static let setCheckoutAddressUrl = "auth/user/setAddress"
+
     static let cashOnDeliveryUrl = APIAtlas.COD()
     static let pesoPayUrl = APIAtlas.pesoPay()
     static let overViewUrl = APIAtlas.overView()
-    static let activityLogs = "v1/auth/user/activityLog?access_token="
-    static let getCategories = "v1/product/getCategories?parentId="
-    static let productList = "v1/product/getProductList"
-    static let guestUserUrl = "v1/guestUser"
-    static let updateMobileNumber = "v1/auth/user/changeContactNumber"
-    static let smsVerification = "v1/auth/sms/verify"
-    static let changePassword = "v1/auth/user/changePassword"
-    static let getFollowedSellers = "v1/auth/getFollowedSellers"
-    static let postEmailNotif = "v1/auth/email/subscription"
-    static let postSMSNotif = "v1/auth/sms/subscription"
-    static let deactivate = "v1/auth/account/disable"
-    static let todaysPromo = "v1/product/getPromoProducts"
-    static let cartImage = "v1/assets/images/uploads/products/"
-    static let searchBuyer = "v1/product/getProductList?query="
-    static let searchSeller = "v1/store/search?queryString="
+    static let activityLogs = "auth/user/activityLog?access_token="
+    static let getCategories = "product/getCategories?parentId="
+    static let productList = "product/getProductList"
+    static let guestUserUrl = "guestUser"
+    static let updateMobileNumber = "auth/user/changeContactNumber"
+    static let smsVerification = "auth/sms/verify"
+    static let changePassword = "auth/user/changePassword"
+    static let getFollowedSellers = "auth/getFollowedSellers"
+    static let postEmailNotif = "auth/email/subscription"
+    static let postSMSNotif = "auth/sms/subscription"
+    static let deactivate = "auth/account/disable"
+    static let todaysPromo = "product/getPromoProducts"
+    static let cartImage = "assets/images/uploads/products/"
+    static let searchBuyer = "product/getProductList?query="
+    static let searchSeller = "store/search?queryString="
     static let baseUrl = APIEnvironment.baseUrl()
     
     /* MESSAGING CONSTANTS */
-    static let ACTION_SEND_MESSAGE          = "/v1/message/sendMessage"
-    static let ACTION_GET_CONVERSATION_HEAD = "/v1/message/getConversationHead"
-    static let ACTION_GET_CONTACTS          = "/v1/message/getContacts"
-    static let ACTION_GET_CONVERSATION_MESSAGES = "/v1/message/getConversationMessages"
-    static let ACTION_SET_AS_READ           = "/v1/message/setConversationAsRead"
-    static let ACTION_IMAGE_ATTACH          = "/v1/message/imageAttach"
-    static let ACTION_GCM_CREATE            = "/v1/auth/device/addRegistrationId"
-    static let ACTION_GCM_DELETE            = "v1/auth/device/deleteRegistrationId"
-    static let ACTION_GCM_UPDATE            = "/v1/device/auth/updateRegistrationId"
+    static let ACTION_SEND_MESSAGE          = "/message/sendMessage"
+    static let ACTION_GET_CONVERSATION_HEAD = "/message/getConversationHead"
+    static let ACTION_GET_CONTACTS          = "/message/getContacts"
+    static let ACTION_GET_CONVERSATION_MESSAGES = "/message/getConversationMessages"
+    static let ACTION_SET_AS_READ           = "/message/setConversationAsRead"
+    static let ACTION_IMAGE_ATTACH          = "/message/imageAttach"
+    static let ACTION_GCM_CREATE            = "/auth/device/addRegistrationId"
+    static let ACTION_GCM_DELETE            = "auth/device/deleteRegistrationId"
+    static let ACTION_GCM_UPDATE            = "/device/auth/updateRegistrationId"
     static let uploadFileType = "jpeg"
     
     /* MESSAGING CONSTANTS V2 */
-    static let ACTION_SEND_MESSAGE_V2          = "v1/message/sendMessage"
-    static let ACTION_GET_CONVERSATION_HEAD_V2 = "v1/message/getConversationHead"
-    static let ACTION_GET_CONTACTS_V2          = "v1/message/getContacts"
-    static let ACTION_GET_CONVERSATION_MESSAGES_V2 = "v1/message/getConversationMessages"
-    static let ACTION_SET_AS_READ_V2           = "v1/message/setConversationAsRead"
-    static let ACTION_IMAGE_ATTACH_V2          = "v1/message/imageAttach"
-    static let ACTION_GCM_CREATE_V2            = "v1/auth/device/addRegistrationId"
-    static let ACTION_GCM_DELETE_V2            = "v1/auth/device/deleteRegistrationId"
-    static let ACTION_GCM_UPDATE_V2           = "v1/device/auth/updateRegistrationId"
+    static let ACTION_SEND_MESSAGE_V2          = "message/sendMessage"
+    static let ACTION_GET_CONVERSATION_HEAD_V2 = "message/getConversationHead"
+    static let ACTION_GET_CONTACTS_V2          = "message/getContacts"
+    static let ACTION_GET_CONVERSATION_MESSAGES_V2 = "message/getConversationMessages"
+    static let ACTION_SET_AS_READ_V2           = "message/setConversationAsRead"
+    static let ACTION_IMAGE_ATTACH_V2          = "message/imageAttach"
+    static let ACTION_GCM_CREATE_V2            = "auth/device/addRegistrationId"
+    static let ACTION_GCM_DELETE_V2            = "auth/device/deleteRegistrationId"
+    static let ACTION_GCM_UPDATE_V2           = "device/auth/updateRegistrationId"
     static let uploadFileType_V2 = "jpeg"
     
     
     //Transactions
-    static let transactionLogs = "v1/auth/getTransactionList?access_token="
-    static let transactionDetails = "v1/auth/getTransaction?access_token="
-    static let transactionLeaveSellerFeedback = "v1/auth/feedback/addUserFeedback"
-    static let transactionProductDetails = "v1/auth/getOrderProductDetail?access_token="
-    static let transactionCancellation = "v1/auth/cancellation/reasons"
-    static let postTransactionCancellation = "v1/auth/transaction/cancel"
-    static let getReasons = "v1/auth/dispute/get-buyer-reasons?access_token="
-    static let transactionDeliveryStatus = "v1/auth/getTransactionDeliveryOverview?access_token="
-    static let getDeliveryLogs = "v1/auth/getTransactionDeliveryLogs"
-    static let transactionLeaveProductFeedback = "v1/auth/product/addProductReview"
+    static let transactionLogs = "auth/getTransactionList?access_token="
+    static let transactionDetails = "auth/getTransaction?access_token="
+    static let transactionLeaveSellerFeedback = "auth/feedback/addUserFeedback"
+    static let transactionProductDetails = "auth/getOrderProductDetail?access_token="
+    static let transactionCancellation = "auth/cancellation/reasons"
+    static let postTransactionCancellation = "auth/transaction/cancel"
+    static let getReasons = "auth/dispute/get-buyer-reasons?access_token="
+    static let transactionDeliveryStatus = "auth/getTransactionDeliveryOverview?access_token="
+    static let getDeliveryLogs = "auth/getTransactionDeliveryLogs"
+    static let transactionLeaveProductFeedback = "auth/product/addProductReview"
     
     //Resolution Center
-    static let getResolutionCenterCases = "/api/v1/auth/dispute/get-case"
-    static let getResolutionCenterCaseDetails = "/api/v1/auth/dispute/get-case-detail"
-    static let postResolutionCenterAddCase = "/api/v1/auth/dispute/add-case"
+    static let getResolutionCenterCases = "/api/auth/dispute/get-case"
+    static let getResolutionCenterCaseDetails = "/api/auth/dispute/get-case-detail"
+    static let postResolutionCenterAddCase = "/api/auth/dispute/add-case"
     
     //Seller Category
-    static let sellerCategory = "v1/category/getCustomCategories?sellerId="
+    static let sellerCategory = "category/getCustomCategories?sellerId="
     
-    static let facebookUrl = "v1/facebook/auth"
-    static let googleUrl = "v1/google/auth"
+    static let facebookUrl = "facebook/auth"
+    static let googleUrl = "google/auth"
     
-    static let verificationGetCodeUrl = "v1/auth/sms/getCode"
+    static let verificationGetCodeUrl = "auth/sms/getCode"
     
     //Guest Register
-    static let guestUserRegisterUrl = "v1/registerGuestUser"
+    static let guestUserRegisterUrl = "registerGuestUser"
     
     //Voucher Url
     static let voucherUrl = APIAtlas.voucher()
     
-    static let mergeFacebook = "v1/facebook/auth"
+    static let mergeFacebook = "socialmedia/merge"
     
     //Webview
     static let flashSale = "flash-sale"
@@ -207,6 +230,37 @@ struct APIAtlas {
     static let category = "mobile-category"
     static let storeView = "mobile-stores"
     static let mobileProductList = "mobile-product-list"
+    
+    //MARK: - V2 APIs
+    //Login
+    static let loginUrlV2 = "login"
+    
+    //OTP
+    static let unauthenticateOTP = "sms/send"
+    
+    //Register
+    static let registerV2 = "user/register"
+    
+    //Sprint 1
+    static let saveBasicInfoUrl = "auth/update-basic-info"
+    static let authenticatedOTP = "auth/sms/send"
+    static let verifyAuthenticatedOTPCodeUrl = "auth/token/validate"
+    static let verifyUnAuthenticatedOTPCodeUrl = "token/validate"
+    //Fogot Password
+    static let forgotPasswordV2 = "user/resetPassword"
+    
+    //My Points
+    static let getPointsTotal = "auth/user/getPoints"
+    static let getPointsHistory = "auth/user/getPointHistory"
+    
+    //Push Notif
+    static let registerDeviceUrl = "device/add-device-token"
+    
+    //Globalization
+    static let getLanguages = "get-languages"
+    
+    //MARK: - Get Countries
+    static let getCountriesUrl = "get-countries"
 }
 
 class APIManager: AFHTTPSessionManager {

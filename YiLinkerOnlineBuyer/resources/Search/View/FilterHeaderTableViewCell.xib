@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FilterHeaderTableViewCell" id="KGk-i7-Jjw" customClass="FilterHeaderTableViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="151"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rpx-g5-A7d" userLabel="Cancel Container">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="41"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AaO-EQ-bJS">
+                                <rect key="frame" x="8" y="5" width="67" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="67" id="76H-m0-QQY"/>
+                                    <constraint firstAttribute="height" constant="30" id="Ejj-2X-gIq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                <state key="normal" title="CANCEL">
+                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="aWJ-8d-CXz"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ytr-Fi-sfK" userLabel="Separator">
+                                <rect key="frame" x="0.0" y="40" width="375" height="1"/>
+                                <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="UQf-Yo-JWy"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PLd-fA-XPL">
+                                <rect key="frame" x="321" y="5" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="bwh-Ph-hxQ"/>
+                                    <constraint firstAttribute="width" constant="46" id="vU3-Pl-8CH"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                <state key="normal" title="RESET">
+                                    <color key="titleColor" red="0.37647058820000001" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="1a2-9h-hSp"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="41" id="2ey-2h-uGu"/>
+                            <constraint firstAttribute="bottom" secondItem="ytr-Fi-sfK" secondAttribute="bottom" id="JNW-DR-CqP"/>
+                            <constraint firstAttribute="trailing" secondItem="ytr-Fi-sfK" secondAttribute="trailing" id="Kid-od-jJt"/>
+                            <constraint firstItem="AaO-EQ-bJS" firstAttribute="top" secondItem="Rpx-g5-A7d" secondAttribute="top" constant="5" id="NKq-C8-Af7"/>
+                            <constraint firstAttribute="trailing" secondItem="PLd-fA-XPL" secondAttribute="trailing" constant="8" id="OT1-of-nAS"/>
+                            <constraint firstItem="AaO-EQ-bJS" firstAttribute="leading" secondItem="Rpx-g5-A7d" secondAttribute="leading" constant="8" id="ZaC-ld-x8S"/>
+                            <constraint firstItem="PLd-fA-XPL" firstAttribute="top" secondItem="Rpx-g5-A7d" secondAttribute="top" constant="5" id="htu-ax-OJ8"/>
+                            <constraint firstItem="ytr-Fi-sfK" firstAttribute="leading" secondItem="Rpx-g5-A7d" secondAttribute="leading" id="qiK-nW-lHH"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nJ9-4d-90z" userLabel="Name">
+                        <rect key="frame" x="0.0" y="41" width="375" height="110"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OFi-5a-IAJ" userLabel="Separator">
+                                <rect key="frame" x="0.0" y="109" width="375" height="1"/>
+                                <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WQE-Ev-uxG" customClass="TTRangeSlider">
+                                <rect key="frame" x="8" y="46" width="359" height="55"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" red="0.2666666667" green="0.64313725489999995" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="minValue">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="maxValue">
+                                        <real key="value" value="5000"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="selectedMinimum">
+                                        <real key="value" value="500"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="selectedMaximum">
+                                        <real key="value" value="3000"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="minLabelColour">
+                                        <color key="value" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="maxLabelColour">
+                                        <color key="value" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="enableStep" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="minDistance">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="step">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Rpx-g5-A7d" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="K0t-Hi-ieZ"/>
+                    <constraint firstAttribute="trailing" secondItem="Rpx-g5-A7d" secondAttribute="trailing" id="e1B-9c-T2k"/>
+                    <constraint firstItem="Rpx-g5-A7d" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="r9d-b2-VRV"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="cancelButton" destination="AaO-EQ-bJS" id="Eug-iL-sea"/>
+                <outlet property="rangeBar" destination="WQE-Ev-uxG" id="jqP-Cv-7kY"/>
+                <outlet property="resetButton" destination="PLd-fA-XPL" id="hT8-5q-JYb"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>
