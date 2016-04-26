@@ -102,7 +102,7 @@ struct APIAtlas {
     }
     
     static func homeUrl(version: String, languageCode: String) -> String {
-        return "ph/\(languageCode)/\(version)/home/getData"
+        return "home/getData"
     }
     
     static let V1 = "v1"
