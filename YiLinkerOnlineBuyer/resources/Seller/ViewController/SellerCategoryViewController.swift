@@ -125,25 +125,56 @@ class SellerCategoryViewController: UIViewController, UITableViewDataSource, UIT
     
     func fireSellerCategory() {
         self.showHUD()
-        let manager = APIManager.sharedInstance
-        //let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
-        println(APIAtlas.sellerCategory+"1")
-        manager.GET(APIAtlas.sellerCategory+"\(self.sellerId)", parameters: nil, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            self.sellerCategory = SellerCategoryModel.parseDataFromDictionary(responseObject as! NSDictionary)
-            var arr: [String] = []
-            self.tableData.append(SellerCategoryModel(name: "All", categoryId: 0, subCategories: "This will display all seller's products.", subCategories2: arr))
-            for var i: Int = 0; i < self.sellerCategory!.name.count; i++ {
-                self.tableData.append(SellerCategoryModel(name: self.sellerCategory!.name[i],  categoryId: self.sellerCategory!.categoryId[i], subCategories: self.sellerCategory!.subCategories2[i], subCategories2: self.sellerCategory!.subCategories3[i]))
-            }
-            self.categoryTableView.reloadData()
-            self.yiHud?.hide()
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                println(error)
+        WebServiceManager.fireSellerCategoryWithUrl(APIAtlas.sellerCategory+"\(self.sellerId)", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.sellerCategory = SellerCategoryModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                var arr: [String] = []
+                self.tableData.append(SellerCategoryModel(name: "All", categoryId: 0, subCategories: "This will display all seller's products.", subCategories2: arr))
+                
+                for var i: Int = 0; i < self.sellerCategory!.name.count; i++ {
+                    self.tableData.append(SellerCategoryModel(name: self.sellerCategory!.name[i],  categoryId: self.sellerCategory!.categoryId[i], subCategories: self.sellerCategory!.subCategories2[i], subCategories2: self.sellerCategory!.subCategories3[i]))
+                }
+                
+                self.categoryTableView.reloadData()
                 self.yiHud?.hide()
+            } else {
+                self.yiHud?.hide()
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
         })
-
+    }
+    
+    func fireRefreshToken() {
+        self.showHUD()
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.yiHud?.hide()
+            
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.fireSellerCategory()
+            } else {
+                Toast.displayToastWithMessage(Constants.Localized.someThingWentWrong, duration: 1.5, view: self.view)
+            }
+        })
     }
     
     func showHUD() {

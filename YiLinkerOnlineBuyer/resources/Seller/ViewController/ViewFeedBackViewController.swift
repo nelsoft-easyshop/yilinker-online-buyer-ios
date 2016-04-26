@@ -147,10 +147,9 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     
     func fireSellerFeedback() {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        let manager = APIManager.sharedInstance
         var parameters: NSDictionary?
         var url: String = ""
-       
+        
         if self.feedback {
             parameters = ["sellerId" : self.sellerId]
             url = "\(APIAtlas.buyerSellerFeedbacks)?access_token=\(SessionManager.accessToken())"
@@ -159,75 +158,73 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
             url = APIAtlas.productReviews
         }
         
-        manager.POST(url, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject["isSuccessful"])
-            if responseObject["isSuccessful"] as! Bool {
-                if self.feedback {
-                    self.sellerModel = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
-                    self.setRating(self.sellerModel!.rating)
-                    self.generalRatingLabel.text = "\(self.sellerModel!.rating)"
-                    self.numberOfPeopleLabel.text = "\(self.sellerModel!.reviews.count)"
-                    self.ratingAndReviewsTableView.reloadData()
-                    if self.sellerModel!.reviews.count == 0 {
-                        //self.showAlert(title: ProductStrings.alertNoReviews, message: nil)
-                        self.ratingAndReviewsTableView.hidden = true
-                        self.loadingLabel.hidden = false
-                        self.loadingLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_NO_REVIEWS_LOCALIZE_KEY")
-                    } else {
-                        self.ratingAndReviewsTableView.hidden = false
-                        self.loadingLabel.hidden = true
-                    }
-                } else {
-                    self.productReviewModel = ProductReviewModel.parseDataWithDictionary2(responseObject)
-                    self.setRating(self.productReviewModel!.ratingAverage)
-                    self.generalRatingLabel.text = "\(self.productReviewModel!.ratingAverage)"
-                    self.numberOfPeopleLabel.text = "\(self.productReviewModel!.reviews.count)"
-                    self.ratingAndReviewsTableView.reloadData()
-                    if self.productReviewModel!.reviews.count == 0 {
-                        //self.showAlert(title: ProductStrings.alertNoReviews, message: nil)
-                        self.ratingAndReviewsTableView.hidden = true
-                        self.loadingLabel.hidden = false
-                        self.loadingLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_NO_REVIEWS_LOCALIZE_KEY")
-                    } else {
-                        self.ratingAndReviewsTableView.hidden = false
-                        self.loadingLabel.hidden = true
-                    }
-                }
-            } else {
-                self.ratingAndReviewsTableView.hidden = true
-                self.loadingLabel.hidden = false
-                self.loadingLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_NO_REVIEWS_LOCALIZE_KEY")
-            }
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            self.ratingAndReviewsTableView.reloadData()
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 401 {
-                    self.fireRefreshToken()
-                    self.ratingAndReviewsTableView.reloadData()
-                } else {
-                    if error.userInfo != nil {
-                        println(error.userInfo)
-                        if let jsonResult = error.userInfo as? Dictionary<String, AnyObject> {
-                            if jsonResult["message"] != nil {
-                                self.showAlert(title: jsonResult["message"] as! String, message: nil)
-                            } else {
-                                self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
-                            }
+        WebServiceManager.fireSellerFeedbackWithUrl(url, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                if responseObject["isSuccessful"] as! Bool {
+                    if self.feedback {
+                        self.sellerModel = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
+                        self.setRating(self.sellerModel!.rating)
+                        self.generalRatingLabel.text = "\(self.sellerModel!.rating)"
+                        self.numberOfPeopleLabel.text = "\(self.sellerModel!.reviews.count)"
+                        self.ratingAndReviewsTableView.reloadData()
+                        if self.sellerModel!.reviews.count == 0 {
+                            //self.showAlert(title: ProductStrings.alertNoReviews, message: nil)
+                            self.ratingAndReviewsTableView.hidden = true
+                            self.loadingLabel.hidden = false
+                            self.loadingLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_NO_REVIEWS_LOCALIZE_KEY")
+                        } else {
+                            self.ratingAndReviewsTableView.hidden = false
+                            self.loadingLabel.hidden = true
                         }
-                    } else  {
-                        self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                    } else {
+                        self.productReviewModel = ProductReviewModel.parseDataWithDictionary2(responseObject)
+                        self.setRating(self.productReviewModel!.ratingAverage)
+                        self.generalRatingLabel.text = "\(self.productReviewModel!.ratingAverage)"
+                        self.numberOfPeopleLabel.text = "\(self.productReviewModel!.reviews.count)"
+                        self.ratingAndReviewsTableView.reloadData()
+                        if self.productReviewModel!.reviews.count == 0 {
+                            //self.showAlert(title: ProductStrings.alertNoReviews, message: nil)
+                            self.ratingAndReviewsTableView.hidden = true
+                            self.loadingLabel.hidden = false
+                            self.loadingLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_NO_REVIEWS_LOCALIZE_KEY")
+                        } else {
+                            self.ratingAndReviewsTableView.hidden = false
+                            self.loadingLabel.hidden = true
+                        }
                     }
+                } else {
+                    self.ratingAndReviewsTableView.hidden = true
+                    self.loadingLabel.hidden = false
+                    self.loadingLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_NO_REVIEWS_LOCALIZE_KEY")
                 }
-                
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                self.ratingAndReviewsTableView.reloadData()
+            } else {
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 self.ratingAndReviewsTableView.hidden = true
                 self.loadingLabel.hidden = true
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken()
+                    self.ratingAndReviewsTableView.reloadData()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
         })
-        
     }
     
     func showHUD() {
@@ -273,26 +270,20 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     
     func fireRefreshToken() {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        let manager: APIManager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID(), "client_secret": Constants.Credentials.clientSecret(), "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.yiHud?.hide()
             
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.fireSellerFeedback()
-            
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.fireSellerFeedback()
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            } else {
                 let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
                 let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
                 UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            }
         })
-        
     }
 }
