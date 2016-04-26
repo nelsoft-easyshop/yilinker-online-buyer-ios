@@ -15,6 +15,11 @@ class CountryViewController: UIViewController, LGAlertViewDelegate {
     @IBOutlet weak var activityindicatorView:
     UIActivityIndicatorView!
     
+    var yiHud: YiHUD?
+    
+    var countries: [CountryModel] = []
+    var countryTitles: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,6 +27,8 @@ class CountryViewController: UIViewController, LGAlertViewDelegate {
         self.selectCountryButton.layer.cornerRadius = 3
         self.selectCountryButton.layer.borderWidth = 0.5
         self.selectCountryButton.layer.borderColor = UIColor.lightGrayColor().CGColor
+
+        self.fireGetCountries()
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,11 +36,102 @@ class CountryViewController: UIViewController, LGAlertViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    //MARK: - 
+    //MARK: - Fire Get Countries
+    func fireGetCountries() {
+        self.showHUD()
+        
+        var countryEntities: [CountryEntity] = CountryEntity.findAll() as! [CountryEntity]
+        
+        if countryEntities.count == 0 {
+            self.fireGetCountriesAPICall()
+        } else{
+            let countryEntity: CountryEntity = countryEntities.first!
+            if NSDate().subractDate(countryEntity.dateUpdated) > 1 {
+                self.fireGetCountriesAPICall()
+            } else {
+                let basicModel: BasicModel = BasicModel.parseDataFromResponseObjec(StringHelper.convertStringToDictionary(countryEntity.json))
+                
+                if basicModel.dataAnyObject.isKindOfClass(NSArray) {
+                    var dictionaries: [NSDictionary] = basicModel.dataAnyObject as! [NSDictionary]
+                    
+                    for dictionary in dictionaries {
+                        let model: CountryModel = CountryModel.parseDataFromDictionary(dictionary)
+                        if model.isActive {
+                            self.countries.append(model)
+                            self.countryTitles.append(model.name)
+                        }
+                    }
+                    self.yiHud!.hide()
+                } else {
+                    self.yiHud!.hide()
+                }
+            }
+        }
+    }
+    
+    func fireGetCountriesAPICall() {
+        WebServiceManager.fireGetCountries(APIAtlas.getCountriesUrl, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                //save json data to core data
+                self.saveCountriesToCoreData(responseObject)
+                
+                let basicModel: BasicModel = BasicModel.parseDataFromResponseObjec(responseObject)
+                
+                if basicModel.dataAnyObject.isKindOfClass(NSArray) {
+                    var dictionaries: [NSDictionary] = basicModel.dataAnyObject as! [NSDictionary]
+                    
+                    for dictionary in dictionaries {
+                        let model: CountryModel = CountryModel.parseDataFromDictionary(dictionary)
+                        if model.isActive {
+                            self.countries.append(model)
+                            self.countryTitles.append(model.name)
+                        }
+                        
+                    }
+                    
+                    self.yiHud!.hide()
+                } else {
+                    self.yiHud!.hide()
+                }
+            }
+        })
+    }
+    
+    //MARK: - 
+    //MARK: - Save Countries to Core Data
+    func saveCountriesToCoreData(responseObject: AnyObject) {
+        var countryEntities: [CountryEntity] = CountryEntity.findAll() as! [CountryEntity]
+        
+        if countryEntities.count == 0 {
+            let countryEntity: CountryEntity = CountryEntity.createEntity() as! CountryEntity
+            countryEntity.json = StringHelper.convertDictionaryToJsonString(responseObject as! NSDictionary) as String
+            countryEntity.dateUpdated = NSDate()
+            countryEntities.append(countryEntity)
+            NSManagedObjectContext.defaultContext().saveToPersistentStoreAndWait()
+        } else{
+            let countryEntity: CountryEntity = countryEntities.first!
+            if NSDate().subractDate(countryEntity.dateUpdated) > 1 {
+                countryEntity.json = StringHelper.convertDictionaryToJsonString(responseObject as! NSDictionary) as String
+                countryEntities.append(countryEntity)
+                countryEntity.dateUpdated = NSDate()
+                NSManagedObjectContext.defaultContext().saveToPersistentStoreAndWait()
+            }
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Show HUD
+    func showHUD() {
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
+    }
+    
     //MARK: - 
     //MARK: - Country Button Action
     @IBAction func countryButtonAction(sender: UIButton) {
-        
-        var alertView: LGAlertView = LGAlertView(title: "Select a Country", message: "Please choose your prefered country to buy a product.", style: LGAlertViewStyle.ActionSheet, buttonTitles: ["Phlippines", "China"], cancelButtonTitle: nil, destructiveButtonTitle: nil, actionHandler: nil, cancelHandler: nil, destructiveHandler: nil)
+        var alertView: LGAlertView = LGAlertView(title: "Select a Country", message: "Please choose your prefered country to buy a product.", style: LGAlertViewStyle.ActionSheet, buttonTitles: self.countryTitles, cancelButtonTitle: nil, destructiveButtonTitle: nil, actionHandler: nil, cancelHandler: nil, destructiveHandler: nil)
         
         alertView.coverColor = UIColor(white: 1.0, alpha: 0.9)
         alertView.layerShadowColor = UIColor(white: 0.0, alpha: 0.3)
@@ -75,16 +173,16 @@ class CountryViewController: UIViewController, LGAlertViewDelegate {
         self.activityindicatorView.startAnimating()
         self.selectCountryButton.enabled = false
         
-        Delay.delayWithDuration(3.0, completionHandler: { (success) -> Void in
+        Delay.delayWithDuration(1.5, completionHandler: { (success) -> Void in
             self.dropDownImageView.hidden = !true
             self.activityindicatorView.stopAnimating()
             self.selectCountryButton.enabled = true
+        
+            SessionManager.setSelectedCountryCode(self.countries[Int(index)].code)
+            println(self.countries[Int(index)].code)
             
-            if index == 0 {
-                SessionManager.isLanguageChinese = false
-            } else {
-                SessionManager.isLanguageChinese = true
-            }
+            let lang = self.countries[Int(index)].defaultLanguage
+            SessionManager.setSelectedLanguageCode(lang.code)
             
             let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             appDelegate.changeRootToHomeView()

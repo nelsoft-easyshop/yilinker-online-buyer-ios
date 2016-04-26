@@ -131,6 +131,12 @@ REFERRAL_LOCALIZED_KEY = "Referral Code";
 GET_ACTIVATION_LOCALIZED_KEY = "Get Confirmation Code";
 ACTIVATION_CODE_LOCALIZED_KEY = "Activation Code";
 
+REGISTER_SELECT_LANGUAGE_LOCALIZED_KEY = "Select a Language";
+REGISTER_CHOOSE_LANGUAGE_LOCALIZED_KEY = "Please choose your prefered language.";
+
+REGISTER_SELECT_AREA_CODE_LOCALIZED_KEY = "Select a Area Code";
+REGISTER_CHOOSE_AREA_CODE_LOCALIZED_KEY = "Please choose your Area Code.";
+
 // MARK: - Register Error
 FIRST_NAME_REQUIRED_LOCALIZE_KEY = "First name is required";
 FIRST_NAME_ILLEGAL_LOCALIZE_KEY = "First name contains illegal characters.";
@@ -221,6 +227,8 @@ REMEMBER_PAYMENT_LOCALIZE_KEY = "Remember Payment Option";
 DELIVER_TO_LOCALIZE_KEY = "Deliver to:";
 COD_LOCALIZE_KEY = "CoD";
 CREDIT_CARD_LOCALIZE_KEY = "Creditcard";
+NO_COD_LOCALIZE_KEY = "Not available for COD";
+COD_NOT_AVAILABLE_LOCALIZE_KEY = "COD is not available in this transaction";
 
 // MARK: - Checkout OverView
 CONGRATULATIONS_LOCALIZE_KEY = "Congratulations!";

@@ -35,6 +35,8 @@ class DataImageModel: NSObject {
         
         if let temp = dictionary["image"] as? String {
             image = temp
+        } else if let temp = dictionary["flag"] as? String {
+            image = temp
         }
         
         if let temp = dictionary["target"] as? NSDictionary {

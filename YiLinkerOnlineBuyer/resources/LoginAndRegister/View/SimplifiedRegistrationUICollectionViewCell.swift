@@ -31,6 +31,7 @@ class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var languagePreferenceView: UIView!
     
     @IBOutlet weak var areaCodeView: UIView!
+    @IBOutlet weak var areaCodeImageView: UIImageView!
     @IBOutlet weak var areaCodeLabel: UILabel!
 
     @IBOutlet weak var sendActivationCodeButton: UIButton!

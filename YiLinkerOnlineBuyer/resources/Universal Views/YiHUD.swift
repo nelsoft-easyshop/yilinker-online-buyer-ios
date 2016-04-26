@@ -47,7 +47,7 @@ class YiHUD: UIView {
         }
         
         view.layoutIfNeeded()
-        self.center = view.convertPoint(view.center, fromView: self)
+        self.center = view.center
     }
     
     //MARK: - 

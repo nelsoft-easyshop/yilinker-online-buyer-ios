@@ -91,7 +91,7 @@ class SearchResultModel: NSObject {
             }
         }
         
-        if let value: AnyObject = dictionary["isOverseas"] {
+        if let value: AnyObject = dictionary["isInternationalWarehouse"] {
             if value as! NSObject != NSNull() {
                 isOverseas = value as! Bool
             }

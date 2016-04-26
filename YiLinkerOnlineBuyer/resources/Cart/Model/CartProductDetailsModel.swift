@@ -145,7 +145,7 @@ class CartProductDetailsModel {
                 quantity = tempVar.toInt()!
             }
             
-            if let tempVar = dictionary["isCODAvailable"] as? Bool {
+            if let tempVar = dictionary["hasCOD"] as? Bool {
                 isCODAvailable = tempVar
             }
             
