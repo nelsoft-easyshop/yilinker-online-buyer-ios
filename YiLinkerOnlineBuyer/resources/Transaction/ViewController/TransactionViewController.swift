@@ -302,61 +302,64 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
             } else {
                 self.showHUD()
             }*/
+            
             self.showHUD()
             let manager = APIManager.sharedInstance
             var url: String = APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)&perPage=15&page=\(page)"
             
-            manager.GET(APIAtlas.transactionLogs+"\(SessionManager.accessToken())&type=\(queryType)&perPage=15&page=\(page)", parameters: nil, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                println(responseObject)
-                var trans: TransactionModel?
-                
-                let data2 = NSJSONSerialization.dataWithJSONObject(responseObject, options: nil, error: nil)
-                let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
-                /*
-                if queryType == "for-feedback" {
+            WebServiceManager.fireGetTransactionsWithUrl(url, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+                if successful {
+                    var trans: TransactionModel?
+                    
+                    let data2 = NSJSONSerialization.dataWithJSONObject(responseObject, options: nil, error: nil)
+                    let string2 = NSString(data: data2!, encoding: NSUTF8StringEncoding)
+                    /*
+                    if queryType == "for-feedback" {
                     trans = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
-                } else if queryType == "pending" {
+                    } else if queryType == "pending" {
                     trans = TransactionModel.parseDataFromDictionary4(responseObject as! NSDictionary)
-                } else {
-                    trans = TransactionModel.parseDataFromDictionary3(responseObject as! NSDictionary)
-                }
-                */
-                 trans = TransactionModel.parseDataFromDictionary3(responseObject as! NSDictionary)
-                
-                if trans!.product_name.count != 0 {
-                    if trans!.order_id.count < 15 {
-                        self.isPageEnd = true
-                    }
-                    if trans!.is_successful {
-                        for var i = 0; i < trans!.order_id.count; i++ {
-                            self.tableData.append(TransactionModel(order_id: trans!.order_id[i], date_added: trans!.date_added[i], invoice_number: trans!.invoice_number[i], payment_type: trans!.payment_type[i], payment_method_id: trans!.payment_method_id[i], order_status: trans!.order_status[i], order_status_id: trans!.order_status_id[i], total_price: trans!.total_price[i], total_unit_price: trans!.total_unit_price[i], total_item_price: trans!.total_item_price[i], total_handling_fee: trans!.total_handling_fee[i], total_quantity: trans!.total_quantity[i], product_name: trans!.product_name[i], product_count: trans!.product_count[i], is_successful: trans!.is_successful, order_count: trans!.order_count))
-                        }
                     } else {
-                        self.isPageEnd = true
+                    trans = TransactionModel.parseDataFromDictionary3(responseObject as! NSDictionary)
+                    }
+                    */
+                    trans = TransactionModel.parseDataFromDictionary3(responseObject as! NSDictionary)
+                    
+                    if trans!.product_name.count != 0 {
+                        if trans!.order_id.count < 15 {
+                            self.isPageEnd = true
+                        }
+                        if trans!.is_successful {
+                            for var i = 0; i < trans!.order_id.count; i++ {
+                                self.tableData.append(TransactionModel(order_id: trans!.order_id[i], date_added: trans!.date_added[i], invoice_number: trans!.invoice_number[i], payment_type: trans!.payment_type[i], payment_method_id: trans!.payment_method_id[i], order_status: trans!.order_status[i], order_status_id: trans!.order_status_id[i], total_price: trans!.total_price[i], total_unit_price: trans!.total_unit_price[i], total_item_price: trans!.total_item_price[i], total_handling_fee: trans!.total_handling_fee[i], total_quantity: trans!.total_quantity[i], product_name: trans!.product_name[i], product_count: trans!.product_count[i], is_successful: trans!.is_successful, order_count: trans!.order_count))
+                            }
+                        } else {
+                            self.isPageEnd = true
+                        }
+                        
+                        self.tableView.hidden = false
+                    } else {
+                        self.tableView.hidden = true
+                        self.noTransactionLabel.hidden = false
                     }
                     
-                    self.tableView.hidden = false
-                } else {
-                    self.tableView.hidden = true
-                    self.noTransactionLabel.hidden = false
-                }
-               
-                self.tableView.reloadData()
-                
-                /*if self.refreshPage {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                } else {
-                  
-                }*/
-                self.yiHud?.hide()
-                self.refreshPage = true
-                
-                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+                    self.tableView.reloadData()
                     
-                    if task.statusCode == 401 {
+                    /*if self.refreshPage {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    } else {
+                    
+                    }*/
+                    self.yiHud?.hide()
+                    self.refreshPage = true
+                } else {
+                    if requestErrorType == .ResponseError {
+                        //Error in api requirements
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                        self.tableData.removeAll(keepCapacity: false)
+                        self.tableView.reloadData()
+                        self.addEmptyView()
+                    } else if requestErrorType == .AccessTokenExpired {
                         if self.query == "all" {
                             self.requestRefreshToken(TransactionRefreshType.All)
                         } else if self.query == "on-delivery" {
@@ -368,74 +371,67 @@ class TransactionViewController: UIViewController, EmptyViewDelegate {
                         } else {
                             self.requestRefreshToken(TransactionRefreshType.Support)
                         }
-                    } else {
+                    } else if requestErrorType == .PageNotFound {
+                        //Page not found
+                        Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
                         self.tableData.removeAll(keepCapacity: false)
                         self.tableView.reloadData()
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                        //self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+                        self.addEmptyView()
+                    } else if requestErrorType == .NoInternetConnection {
+                        //No internet connection
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                        self.tableData.removeAll(keepCapacity: false)
+                        self.tableView.reloadData()
+                        self.addEmptyView()
+                    } else if requestErrorType == .RequestTimeOut {
+                        //Request timeout
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                        self.tableData.removeAll(keepCapacity: false)
+                        self.tableView.reloadData()
+                        self.addEmptyView()
+                    } else if requestErrorType == .UnRecognizeError {
+                        //Unhandled error
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                        self.tableData.removeAll(keepCapacity: false)
+                        self.tableView.reloadData()
                         self.addEmptyView()
                     }
-                    
                     self.tableView.hidden = true
-                    /*if self.refreshPage {
-                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    } else {
-                        self.yiHud?.hide()
-                    }*/
                     self.yiHud?.hide()
+                }
             })
         }
     }
     
     //MARK: Refresh token
     func requestRefreshToken(type: TransactionRefreshType) {
-        
-        /*if self.refreshPage {
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        } else {
-            self.showHUD()
-        }*/
         self.showHUD()
-        let manager = APIManager.sharedInstance
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
-            "client_secret": Constants.Credentials.clientSecret(),
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            
-            if type == TransactionRefreshType.All {
-                self.fireTransaction("all")
-            } else if type == TransactionRefreshType.OnGoing {
-                self.fireTransaction("on-delivery")
-            } else if type == TransactionRefreshType.Pending {
-                self.fireTransaction("pending")
-            } else if type == TransactionRefreshType.ForFeedback {
-                self.fireTransaction("for-feedback")
-            } else {
-                self.fireTransaction("support")
-            }
-            
-            /*if self.refreshPage {
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            } else {
-                self.yiHud?.hide()
-            }*/
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
             self.yiHud?.hide()
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                self.yiHud?.hide()
+            
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                
+                if type == TransactionRefreshType.All {
+                    self.fireTransaction("all")
+                } else if type == TransactionRefreshType.OnGoing {
+                    self.fireTransaction("on-delivery")
+                } else if type == TransactionRefreshType.Pending {
+                    self.fireTransaction("pending")
+                } else if type == TransactionRefreshType.ForFeedback {
+                    self.fireTransaction("for-feedback")
+                } else {
+                    self.fireTransaction("support")
+                }
+            } else {
                 let alertController = UIAlertController(title: Constants.Localized.someThingWentWrong, message: "", preferredStyle: .Alert)
                 let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
                 self.addEmptyView()
                 self.tableView.hidden = true
+            }
         })
     }
     

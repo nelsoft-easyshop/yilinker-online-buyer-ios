@@ -814,35 +814,28 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     
     func fireRefreshToken() {
         self.showProgressBar()
-        let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
-        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID(), "client_secret": Constants.Credentials.clientSecret(), "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
             
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            
-            if self.refreshtag == 1001 {
-                self.fireTransactionProductDetailsDeliveryStatus()
-                self.fireTransactionProductDetails()
-            } else {
-                self.fireTransactionProductDetailsDeliveryStatus()
-            }
-            
-            self.hideProgressBar()
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-           
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                
+                if self.refreshtag == 1001 {
+                    self.fireTransactionProductDetailsDeliveryStatus()
+                    self.fireTransactionProductDetails()
+                } else {
+                    self.fireTransactionProductDetailsDeliveryStatus()
+                }
+                
                 self.hideProgressBar()
-                let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-               
+            } else {
+                //Forcing user to logout.
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    
+                })
+                self.hideProgressBar()
+            }
         })
-        
     }
     
     func showAlert(#title: String!, message: String!) {
