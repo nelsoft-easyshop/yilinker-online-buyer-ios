@@ -9,20 +9,24 @@
 import UIKit
 
 class TransactionDeliveryLogTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var mainView: UIView!
-    @IBOutlet weak var typeLabel: UILabel!
-    @IBOutlet weak var timeLabel: UILabel!
+    
+    // Labels
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var riderLabel: UILabel!
+    @IBOutlet weak var typeLabel: UILabel!
+    
+    // Views
+    @IBOutlet weak var mainView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        initializeViews()
+        self.initializeViews()
     }
     
+    // MARK: Set rounded corner of mainView
     func initializeViews() {
-        mainView.layer.cornerRadius = 8
+        self.mainView.layer.cornerRadius = 8
     }
 }

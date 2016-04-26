@@ -10,6 +10,7 @@ import UIKit
 
 class TransactionTableViewCell: UITableViewCell {
 
+    // Labels
     @IBOutlet weak var transactionIdLabel: UILabel!
     @IBOutlet weak var numberLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!

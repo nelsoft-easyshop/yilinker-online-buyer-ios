@@ -342,40 +342,38 @@ class NewDisputeTableViewController: UITableViewController, UIPickerViewDataSour
     // MARK: - Requests
     
     func requestGetCaseDetails() {
-        self.showHUD()
-        let manager = APIManager.sharedInstance
-        manager.GET(APIAtlas.transactionLogs + "\(SessionManager.accessToken())" + "&perPage=999" + "&type=for-resolution", parameters: nil, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.transactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
-            self.transactionIds = self.transactionModel.invoice_number
-//            for i in 0..<self.transactionModel.order_id.count {
-//                if self.transactionModel.order_status_id[i] == "3" || self.transactionModel.order_status_id[i] == "6" {
-//                    self.transactionIds.append(self.transactionModel.invoice_number[i])
-//                }
-//            }
-            self.yiHud?.hide()
-            self.tableView.reloadData()
-//            self.isCaseDetailsDone = true
-//            self.requestChecker()
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-//                self.yiHud?.hide()
-                println(error.userInfo)
+         self.showHUD()
+        WebServiceManager.fireGetCaseDetailsWithUrl(APIAtlas.transactionLogs + "\(SessionManager.accessToken())" + "&perPage=999" + "&type=for-resolution", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.transactionModel = TransactionModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                self.transactionIds = self.transactionModel.invoice_number
+                self.yiHud?.hide()
+                self.tableView.reloadData()
+            } else {
                 self.isCaseDetailsDone = true
                 self.requestChecker()
                 
-                
                 self.yiHud?.hide()
-                
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
                     self.fireRefreshToken("details")
-                } else {
-                    if task.statusCode != 404 {
-                        println(error.userInfo)
-//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Something went wrong", title: "Error")
-                    }
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.someThingWentWrong, duration: 1.5, view: self.view)
                 }
+            }
         })
     }
     

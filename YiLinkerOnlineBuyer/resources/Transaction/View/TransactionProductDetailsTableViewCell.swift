@@ -10,6 +10,7 @@ import UIKit
 
 class TransactionProductDetailsTableViewCell: UITableViewCell {
 
+    // Labels
     @IBOutlet weak var attributeNameLabel: UILabel!
     @IBOutlet weak var attributeValueLabel: UILabel!
     

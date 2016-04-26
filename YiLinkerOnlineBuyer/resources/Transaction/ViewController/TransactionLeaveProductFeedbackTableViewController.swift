@@ -115,89 +115,62 @@ class TransactionLeaveProductFeedbackTableViewController: UITableViewController,
         
         var parameters: NSMutableDictionary = ["productId" : self.productId, "orderProductId" : self.orderProductId, "title" : "Product Feedback", "review" : feedback2, "access_token" : SessionManager.accessToken(), "rating" : "\(rate)"]
         
-        manager.POST(APIAtlas.transactionLeaveProductFeedback, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            if responseObject["isSuccessful"] as! Bool {
-                Feedback.setProductFeedback = true
-                self.navigationController?.popViewControllerAnimated(true)
-            } else {
-                self.showAlert(title: "Feedback", message: responseObject["message"] as! String)
-            }
-            
-            self.yiHud?.hide()
-            self.tableView.reloadData()
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                println(error.description)
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 401 {
-                    self.requestRefreshToken()
-                    self.tableView.reloadData()
+        self.showHUD()
+       
+        WebServiceManager.fireSellerFeedbackWithUrl(APIAtlas.transactionLeaveProductFeedback, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                if responseObject["isSuccessful"] as! Bool {
+                    Feedback.setProductFeedback = true
+                    self.navigationController?.popViewControllerAnimated(true)
                 } else {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    //let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    println(dictionary)
-                    var errors: String = ""
-                    if let value: AnyObject = dictionary["data"] {
-                        
-                        if let values = dictionary["data"] as? NSArray {
-                            errors = values[0] as! String
-                        } else {
-                            if let val = value["message"] as? String {
-                                errors = val
-                            } else if let val = value["error"] as? String {
-                                errors = val
-                            } else {
-                                errors = "User already reviewed this product."
-                            }
-                        }
-                        
-                        /*
-                        if let val = value["message"] as? String {
-                            errors = val
-                        } else if let val = value["error"] as? String {
-                            errors = val
-                        } else {
-                            errors = "User already reviewed this product."
-                        }
-                        */
-                    }
-                    
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errors, title: Constants.Localized.error)
-                    self.tableView.reloadData()
+                    self.showAlert(title: "Feedback", message: responseObject["message"] as! String)
                 }
                 
                 self.yiHud?.hide()
+                self.tableView.reloadData()
+            } else {
+                self.yiHud?.hide()
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.requestRefreshToken()
+                    self.tableView.reloadData()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
         })
     }
     
     //MARK: Refresh token
     func requestRefreshToken() {
-        
         self.showHUD()
-        
-        let manager = APIManager.sharedInstance
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
-            "client_secret": Constants.Credentials.clientSecret(),
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.yiHud?.hide()
             
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            
-            self.fireSellerFeedback(self.feedback, rate: self.rate)
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                
-                self.yiHud?.hide()
+                self.fireSellerFeedback(self.feedback, rate: self.rate)
+            } else {
+                //Forcing user to logout.
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    
+                })
+            }
         })
     }
     
@@ -225,8 +198,8 @@ class TransactionLeaveProductFeedbackTableViewController: UITableViewController,
     
     //MARK: Show HUD
     func showHUD() {
-       self.yiHud = YiHUD.initHud()
-       self.yiHud!.showHUDToView(self.view)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
     
     //MARK: Show alert dialog box

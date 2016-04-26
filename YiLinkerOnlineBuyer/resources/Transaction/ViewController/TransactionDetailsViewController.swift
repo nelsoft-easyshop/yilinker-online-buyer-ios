@@ -520,9 +520,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         
         self.sellerId = sellerId
         
-        let manager = APIManager.sharedInstance
         let parameters: NSDictionary?
-        
         var url: String = ""
         
         if SessionManager.isLoggedIn() {
@@ -533,39 +531,49 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             parameters = ["userId" : sellerId] as NSDictionary
         }
         
-        manager.POST(url, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            if responseObject["isSuccessful"] as! Bool {
-                self.sellerModel = SellerModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
-                self.contactsNotFollowed.append(W_Contact(fullName: self.sellerModel.store_name, userRegistrationIds: "", userIdleRegistrationIds: "", userId: sellerId, profileImageUrl: "\(self.sellerModel.avatar)", isOnline: "1"))
-                
-                for var i = 0; i < self.contactsNotFollowed.count; i++ {
-                    if "\(sellerId)" == self.contactsNotFollowed[i].userId {
-                        self.selectedContact = self.contactsNotFollowed[i]
-                        self.canMessage = true
-                        self.showMessaging()
+        WebServiceManager.fireSellerWithUrl(url, parameters: parameters!, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                if responseObject["isSuccessful"] as! Bool {
+                    self.sellerModel = SellerModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
+                    self.contactsNotFollowed.append(W_Contact(fullName: self.sellerModel.store_name, userRegistrationIds: "", userIdleRegistrationIds: "", userId: sellerId, profileImageUrl: "\(self.sellerModel.avatar)", isOnline: "1"))
+                    
+                    for var i = 0; i < self.contactsNotFollowed.count; i++ {
+                        if "\(sellerId)" == self.contactsNotFollowed[i].userId {
+                            self.selectedContact = self.contactsNotFollowed[i]
+                            self.canMessage = true
+                            self.showMessaging()
+                        }
                     }
-                }
-                
-            } else {
-                self.showAlert(title: "Error", message: responseObject["message"] as! String)
-            }
-            self.yiHud?.hide()
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    self.fireRefreshToken(TransactionDetailsType.Seller)
+                    
                 } else {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                    //self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
-                    self.yiHud?.hide()
+                    self.showAlert(title: "Error", message: responseObject["message"] as! String)
                 }
+                
+                self.yiHud?.hide()
+            } else {
+                self.yiHud?.hide()
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    //Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken(TransactionDetailsType.Seller)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
         })
     }
     
@@ -607,148 +615,160 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
         let url = APIAtlas.transactionDetails+"\(SessionManager.accessToken())&transactionId=\(transactionId)" as NSString
         let urlEncoded = url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
         
-        manager.GET(urlEncoded!, parameters: nil, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
-            if responseObject["isSuccessful"] as! Bool {
-                self.transactionDetailsModel = TransactionDetailsModel.parseDataFromDictionary2(responseObject as! NSDictionary)
-                
-                self.cellCount = self.transactionDetailsModel!.sellerId.count
-                self.cellSection = self.transactionDetailsModel!.sellerId.count
-                
-                for var a = 0; a < self.transactionDetailsModel.sellerId.count; a++ {
-                    var arr = [TransactionDetailsProductsModel]()
-                    for var b = 0; b < self.transactionDetailsModel.productName.count; b++ {
-                        if self.transactionDetailsModel.sellerId[a] == self.transactionDetailsModel.sellerId2[b] {
-                            self.tableSectionContents = TransactionDetailsProductsModel(orderProductId: self.transactionDetailsModel.orderProductId[b], productId: self.transactionDetailsModel.productId[b], quantity: self.transactionDetailsModel.quantity[b], unitPrice: self.transactionDetailsModel.unitPrice[b], totalPrice: self.transactionDetailsModel.totalPrice[b], productName: self.transactionDetailsModel.productName[b], handlingFee: self.transactionDetailsModel.handlingFee[b], isCancellable: self.transactionDetailsModel.isCancellable[b], hasProductFeedback: self.transactionDetailsModel.hasProductFeedback[b])
-                            arr.append(self.tableSectionContents)
+        WebServiceManager.fireTransactionDetailsWithUrl(urlEncoded!, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                if responseObject["isSuccessful"] as! Bool {
+                    self.transactionDetailsModel = TransactionDetailsModel.parseDataFromDictionary2(responseObject as! NSDictionary)
+                    
+                    self.cellCount = self.transactionDetailsModel!.sellerId.count
+                    self.cellSection = self.transactionDetailsModel!.sellerId.count
+                    
+                    for var a = 0; a < self.transactionDetailsModel.sellerId.count; a++ {
+                        var arr = [TransactionDetailsProductsModel]()
+                        for var b = 0; b < self.transactionDetailsModel.productName.count; b++ {
+                            if self.transactionDetailsModel.sellerId[a] == self.transactionDetailsModel.sellerId2[b] {
+                                self.tableSectionContents = TransactionDetailsProductsModel(orderProductId: self.transactionDetailsModel.orderProductId[b], productId: self.transactionDetailsModel.productId[b], quantity: self.transactionDetailsModel.quantity[b], unitPrice: self.transactionDetailsModel.unitPrice[b], totalPrice: self.transactionDetailsModel.totalPrice[b], productName: self.transactionDetailsModel.productName[b], handlingFee: self.transactionDetailsModel.handlingFee[b], isCancellable: self.transactionDetailsModel.isCancellable[b], hasProductFeedback: self.transactionDetailsModel.hasProductFeedback[b])
+                                arr.append(self.tableSectionContents)
+                            }
                         }
+                        
+                        self.table.append(TransactionDetailsModel(sellerName: self.transactionDetailsModel!.sellerStore[a], sellerContact: self.transactionDetailsModel!.sellerContactNumber[a], id: self.transactionDetailsModel.sellerId[a], sellerIdForFeedback: self.transactionDetailsModel.sellerId[a], feedback: self.transactionDetailsModel.hasFeedback[a], transactions: arr, orderStatus: self.transactionDetailsModel.name[a], isAffiliate: self.transactionDetailsModel.isReseller[a]))
                     }
                     
-                    self.table.append(TransactionDetailsModel(sellerName: self.transactionDetailsModel!.sellerStore[a], sellerContact: self.transactionDetailsModel!.sellerContactNumber[a], id: self.transactionDetailsModel.sellerId[a], sellerIdForFeedback: self.transactionDetailsModel.sellerId[a], feedback: self.transactionDetailsModel.hasFeedback[a], transactions: arr, orderStatus: self.transactionDetailsModel.name[a], isAffiliate: self.transactionDetailsModel.isReseller[a]))
-                }
-                
-                if self.headerView == nil {
-                    self.loadViewsWithDetails()
-                }
-                
-                self.tableView.reloadData()
-                
-                self.hideProgressBar()
-                
-                //Get buyer's contacts
-                self.getContactsFromEndpoint("1", limit: "30", keyword: "")
-            } else {
-                self.showAlert(title: self.error, message: self.somethingWentWrong)
-            }
-            
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    if (SessionManager.isLoggedIn()){
-                        //self.fireRefreshToken()
+                    if self.headerView == nil {
+                        self.loadViewsWithDetails()
                     }
-                    self.fireRefreshToken(TransactionDetailsType.Details)
-                } else {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                    
+                    self.tableView.reloadData()
                     
                     self.hideProgressBar()
                     
-                    //self.showAlert(title: self.error, message: self.somethingWentWrong)
+                    //Get buyer's contacts
+                    self.getContactsFromEndpoint("1", limit: "30", keyword: "")
+                } else {
+                    self.showAlert(title: self.error, message: self.somethingWentWrong)
                 }
+            } else {
+                self.hideProgressBar()
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    //Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken(TransactionDetailsType.Contacts)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
         })
     }
     
-    func getContactsFromEndpoint(
-        page : String,
-        limit : String,
-        keyword: String){
-            if (Reachability.isConnectedToNetwork()) {
-                
-                self.showProgressBar()
-                
-                let manager: APIManager = APIManager.sharedInstance
-                manager.requestSerializer = AFHTTPRequestSerializer()
-                
-                let parameters: NSDictionary = [
-                    "page"          : "\(page)",
-                    "limit"         : "\(limit)",
-                    "keyword"       : keyword,
-                    "access_token"  : SessionManager.accessToken()
-                    ]   as Dictionary<String, String>
-                
-                let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
-                
-                manager.POST(url, parameters: parameters, success: {
-                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                    println(responseObject)
-                    self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
-                    
-                    for var i = 0; i < self.contacts.count; i++ {
-                        self.arrayContacts.append(self.contacts[i].userId)
+    func getContactsFromEndpoint(page : String, limit : String, keyword: String){
+        if (Reachability.isConnectedToNetwork()) {
+            
+            self.showProgressBar()
+            
+            let manager: APIManager = APIManager.sharedInstance
+            manager.requestSerializer = AFHTTPRequestSerializer()
+            
+            let parameters: NSDictionary = [
+                "page"          : "\(page)",
+                "limit"         : "\(limit)",
+                "keyword"       : keyword,
+                "access_token"  : SessionManager.accessToken()
+                ]   as Dictionary<String, String>
+            
+            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
+            
+            WebServiceManager.fireGetContactsFromEndpointWithUrl(url, parameters: parameters) {
+                (successful, responseObject, requestErrorType) -> Void in
+                self.yiHud?.hide()
+                if successful {
+                    if responseObject["isSuccessful"] as! Bool {
+                        self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
+                        
+                        for var i = 0; i < self.contacts.count; i++ {
+                            self.arrayContacts.append(self.contacts[i].userId)
+                        }
+                    } else {
+                        self.showAlert(title: Constants.Localized.error, message: responseObject["message"] as! String)
                     }
                     
                     self.hideProgressBar()
                     
                     self.refreshPage = true
-                    
-                    }, failure: {
-                        (task: NSURLSessionDataTask!, error: NSError!) in
-                        let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                        
-                        if task.statusCode == 401 {
-                            if (SessionManager.isLoggedIn()){
-                                //self.fireRefreshToken()
-                            }
-                            self.fireRefreshToken(TransactionDetailsType.Contacts)
-                        } else {
-                            let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                            let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                            self.yiHud?.hide()
-                            //self.showAlert(title: self.error, message: self.somethingWentWrong)
-                        }
-                        
-                        self.contacts = Array<W_Contact>()
-                        self.hideProgressBar()
-                })
+                } else {
+                    if requestErrorType == .ResponseError {
+                        //Error in api requirements
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                        self.yiHud?.hide()
+                    } else if requestErrorType == .AccessTokenExpired {
+                        self.fireRefreshToken(TransactionDetailsType.Contacts)
+                    } else if requestErrorType == .PageNotFound {
+                        //Page not found
+                        Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                        self.yiHud?.hide()
+                    } else if requestErrorType == .NoInternetConnection {
+                        //No internet connection
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                        self.yiHud?.hide()
+                    } else if requestErrorType == .RequestTimeOut {
+                        //Request timeout
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                        self.yiHud?.hide()
+                    } else if requestErrorType == .UnRecognizeError {
+                        //Unhandled error
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                        self.yiHud?.hide()
+                    }
+                    self.contacts = Array<W_Contact>()
+                    self.hideProgressBar()
+                }
             }
+        }
     }
     
     func fireRefreshToken(type: TransactionDetailsType) {
         
         self.showProgressBar()
         
-        let manager: APIManager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID(), "client_secret": Constants.Credentials.clientSecret(), "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
-        
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.yiHud?.hide()
             
-            if type == TransactionDetailsType.Details {
-                self.fireTransactionDetails(self.transactionId)
-            } else if type == TransactionDetailsType.Seller {
-                self.fireSeller(self.sellerId)
-            } else {
-                self.getContactsFromEndpoint("1", limit: "30", keyword: "")
-            }
-            
-            self.hideProgressBar()
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                
+                if type == TransactionDetailsType.Details {
+                    self.fireTransactionDetails(self.transactionId)
+                } else if type == TransactionDetailsType.Seller {
+                    self.fireSeller(self.sellerId)
+                } else {
+                    self.getContactsFromEndpoint("1", limit: "30", keyword: "")
+                }
                 
                 self.hideProgressBar()
-                //self.showAlert(title: self.error, message: self.somethingWentWrong)
+            } else {
+                //Forcing user to logout.
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    
+                })
+                self.hideProgressBar()
+            }
         })
-        
     }
     
     func showProgressBar() {
@@ -777,8 +797,8 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     
     //MARK: Show HUD
     func showHUD() {
-       self.yiHud = YiHUD.initHud()
-       self.yiHud!.showHUDToView(self.view)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
     
     //MARK: Show and hide dim view
