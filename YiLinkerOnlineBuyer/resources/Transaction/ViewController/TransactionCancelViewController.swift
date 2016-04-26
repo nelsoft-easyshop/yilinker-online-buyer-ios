@@ -141,50 +141,55 @@ class TransactionCancelViewController: UIViewController, UITextViewDelegate, UIP
     func fireGetReasonForCancellation(){
         
         self.showHUD()
-        
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
-        
-        manager.GET(APIAtlas.transactionCancellation, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            var response: NSDictionary = responseObject as! NSDictionary
-            if response["isSuccessful"] as! Bool {
-                for subValue in response["data"] as! NSArray {
-                    self.cancellationModels.append(TransactionCancellationModel.parseDataWithDictionary(subValue as! NSDictionary))
-                }
-            } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: response["message"] as! String, title: "Error")
-                self.dismissViewControllerAnimated(true, completion: nil)
-                self.delegate?.dismissView()
-            }
-
-            self.yiHud?.hide()
-            
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                
-                if Reachability.isConnectedToNetwork() {
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                    
-                    if task.statusCode == 401 {
-                        self.fireRefreshToken(CancellationType.GetReason)
-                    } else {
-//                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                        self.delegate?.dismissView()
-                        
+        WebServiceManager.fireGetReasonForCancellationWithUrl(APIAtlas.transactionCancellation) {
+            (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                var response: NSDictionary = responseObject as! NSDictionary
+                if response["isSuccessful"] as! Bool {
+                    for subValue in response["data"] as! NSArray {
+                        self.cancellationModels.append(TransactionCancellationModel.parseDataWithDictionary(subValue as! NSDictionary))
                     }
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.noInternet, title: Constants.Localized.error)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: response["message"] as! String, title: "Error")
                     self.dismissViewControllerAnimated(true, completion: nil)
                     self.delegate?.dismissView()
                 }
                 
                 self.yiHud?.hide()
-        })
+            } else {
+                self.yiHud?.hide()
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    //Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.delegate?.dismissView()
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken(CancellationType.GetReason)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.delegate?.dismissView()
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.delegate?.dismissView()
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.delegate?.dismissView()
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.delegate?.dismissView()
+                }
+            }
+        }
     }
     
     //MARK: Cancel transaction
