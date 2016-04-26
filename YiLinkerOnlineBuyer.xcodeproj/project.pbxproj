@@ -262,7 +262,6 @@
 		0CAB82801C86817C00B653A9 /* ViewMoreFooterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB80151C86817B00B653A9 /* ViewMoreFooterCollectionViewCell.swift */; };
 		0CAB82811C86817C00B653A9 /* ViewMoreFooterCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB80161C86817B00B653A9 /* ViewMoreFooterCollectionViewCell.xib */; };
 		0CAB82821C86817C00B653A9 /* HomeContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB80181C86817B00B653A9 /* HomeContainerViewController.swift */; };
-		0CAB82831C86817C00B653A9 /* HomePageCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB80191C86817B00B653A9 /* HomePageCollectionViewController.swift */; };
 		0CAB82841C86817C00B653A9 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB801C1C86817B00B653A9 /* LoginModel.swift */; };
 		0CAB82851C86817C00B653A9 /* RegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB801D1C86817B00B653A9 /* RegisterModel.swift */; };
 		0CAB82861C86817C00B653A9 /* LoginHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB801F1C86817B00B653A9 /* LoginHeaderTableViewCell.swift */; };
@@ -901,7 +900,6 @@
 		0CAB80151C86817B00B653A9 /* ViewMoreFooterCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewMoreFooterCollectionViewCell.swift; sourceTree = "<group>"; };
 		0CAB80161C86817B00B653A9 /* ViewMoreFooterCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewMoreFooterCollectionViewCell.xib; sourceTree = "<group>"; };
 		0CAB80181C86817B00B653A9 /* HomeContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeContainerViewController.swift; sourceTree = "<group>"; };
-		0CAB80191C86817B00B653A9 /* HomePageCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageCollectionViewController.swift; sourceTree = "<group>"; };
 		0CAB801C1C86817B00B653A9 /* LoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		0CAB801D1C86817B00B653A9 /* RegisterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterModel.swift; sourceTree = "<group>"; };
 		0CAB801F1C86817B00B653A9 /* LoginHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginHeaderTableViewCell.swift; sourceTree = "<group>"; };
@@ -2125,7 +2123,6 @@
 			isa = PBXGroup;
 			children = (
 				0CAB80181C86817B00B653A9 /* HomeContainerViewController.swift */,
-				0CAB80191C86817B00B653A9 /* HomePageCollectionViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -3635,7 +3632,6 @@
 				0CAB82901C86817C00B653A9 /* SimplifiedLoginUICollectionViewCell.swift in Sources */,
 				0CAB823A1C86817C00B653A9 /* DateUtility.swift in Sources */,
 				0CAB83651C86817C00B653A9 /* TransactionDeliveryStatusView.swift in Sources */,
-				0CAB82831C86817C00B653A9 /* HomePageCollectionViewController.swift in Sources */,
 				0CAB82D81C86817C00B653A9 /* ProductImagesView.swift in Sources */,
 				0CAB82251C86817C00B653A9 /* FABViewController.swift in Sources */,
 				0CAB82451C86817C00B653A9 /* Toast.swift in Sources */,

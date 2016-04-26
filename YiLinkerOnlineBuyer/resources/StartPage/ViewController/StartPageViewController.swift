@@ -78,9 +78,11 @@ class StartPageViewController: UIViewController, UIPageViewControllerDataSource,
         }
         self.timer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("scrollPage"), userInfo: nil, repeats: false)
         
+        let signIn: String = StringHelper.localizedStringWithKey("SIGNIN_LOCALIZE_KEY")
+        
         self.getStartedButton.setTitle(StartPageStrings.getStarted, forState: UIControlState.Normal)
         self.orLabel.text = StartPageStrings.or
-        self.signInButton.setTitle(FABStrings.signIn, forState: UIControlState.Normal)
+        self.signInButton.setTitle(signIn, forState: UIControlState.Normal)
     }
     
     func scrollPage() {

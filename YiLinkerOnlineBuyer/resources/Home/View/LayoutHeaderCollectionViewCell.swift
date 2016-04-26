@@ -37,7 +37,7 @@ class LayoutHeaderCollectionViewCell: UICollectionViewCell {
         self.viewMoreButton.layer.borderColor = Constants.Colors.appTheme.CGColor
         self.viewMoreButton.layer.borderWidth = 1.0
         
-        self.viewMoreButton.setTitle(HomeCollectionViewStrings.viewMoreItems, forState: UIControlState.Normal)
+        self.viewMoreButton.setTitle(StringHelper.localizedStringWithKey("VIEW_MORE_ITEMS_LOCALIZE_KEY"), forState: UIControlState.Normal)
     }
     
     //MARK: - Update Title Line
