@@ -52,6 +52,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     var password: String = ""
     var referrerPersonCode: String = ""
     var country: CountryModel = CountryModel()
+    var originalCountry: CountryModel = CountryModel()
     var language: LanguageModel = LanguageModel()
     
     var profileImageData: NSData?
@@ -91,6 +92,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         emailAddress = profileModel.email
         referrerPersonCode = profileModel.referrerCode
         country = profileModel.country
+        originalCountry = profileModel.country
         language = profileModel.language
     }
     
@@ -276,7 +278,17 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 SessionManager.setSelectedCountryCode(self.country.code)
                 SessionManager.setSelectedLanguageCode(self.language.code)
                 Toast.displayToastWithMessage(EditProfileLocalizedStrings.successfullyUpdateProfile, duration: 2.0, view: self.navigationController!.view)
-                self.navigationController?.popViewControllerAnimated(true)
+                
+                if self.originalCountry.code == self.country.code {
+                    Delay.delayWithDuration(0.5, completionHandler: { (success) -> Void in
+                        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                        appDelegate.changeRootToHomeView()
+                    })
+                } else {
+                    self.navigationController?.popViewControllerAnimated(true)
+                }
+                
+                
             } else {
                 self.handleErrorWithType(requestErrorType, requestType: .UpdateProfile, responseObject: responseObject, hasImage: hasImage, firstName: firstName, lastName: lastName, profilePhoto: profilePhoto, userDocument: userDocument, referrerPersonCode: referrerPersonCode)
             }
