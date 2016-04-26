@@ -14,6 +14,12 @@ enum ResultViewType {
     case Seller
 }
 
+enum ResultFilterViewType {
+    case Default
+    case Sort
+    case Country
+}
+
 struct ResultViewLocalizedString {
     static let resultsLocalizeString: String = StringHelper.localizedStringWithKey("RESULTS_LOCALIZE_KEY")
     static let listLocalizeString: String = StringHelper.localizedStringWithKey("LIST_LOCALIZE_KEY")
@@ -48,7 +54,11 @@ class ResultViewController: UIViewController {
     @IBOutlet weak var filterLabel: UILabel!
     @IBOutlet weak var sortLabel: UILabel!
     @IBOutlet weak var viewTypeLabel: UILabel!
+    @IBOutlet weak var countryView: UIView!
+    @IBOutlet weak var countryImageView: UIImageView!
+    @IBOutlet weak var countryLabel: UILabel!
     @IBOutlet weak var actionView: UIView!
+    @IBOutlet weak var filterHeaderLabel: UILabel!
     
     @IBOutlet weak var actionViewHeight: NSLayoutConstraint!
     
@@ -62,11 +72,14 @@ class ResultViewController: UIViewController {
     var pageTitle: String = ""
     var isSellerSearch: Bool = false
     var categoryName: String = ""
+    var filterViewType: ResultFilterViewType = .Default
+    var isFilterTableViewHidden = true
     
     //Tap gesture for the action views
     var sortTapGesture: UITapGestureRecognizer!
     var filterTapGesture: UITapGestureRecognizer!
     var viewTypeTapGesture: UITapGestureRecognizer!
+    var countryTapGesture: UITapGestureRecognizer!
     
     //Variable for determining what cell will be shown in the collectionview
     var resultViewType: ResultViewType = ResultViewType.Grid
@@ -84,6 +97,8 @@ class ResultViewController: UIViewController {
         ResultViewLocalizedString.newToOldLocalizeString,   //New to Old
         ResultViewLocalizedString.AToZLocalizeString,       //Alphabetically A-Z
         ResultViewLocalizedString.ZToALocalizeString]       //Alphabetically Z-A
+    
+    var countryTableViewData: [CountryModel] = []       //Alphabetically Z-A
     
     //Sort Parameters selector
     let sortParameter: [String] = [
@@ -104,6 +119,7 @@ class ResultViewController: UIViewController {
     var filtersString: [String] = []    //Generated string based the filter attributes
     var selectedSortTypeIndex: Int = -1
     var filterAtributes: [FilterAttributeModel] = []
+    var countryCode: String = ""        //Country Code
     
     //Search
     var customTabBarController: CustomTabBarController?
@@ -140,6 +156,7 @@ class ResultViewController: UIViewController {
         super.viewDidAppear(animated)
         self.initializeDimView()
         self.intializeActionView()
+        self.initializeData()
         
         if self.targetType == TargetType.TodaysPromo {
             self.baseSearchURL = APIAtlas.todaysPromo
@@ -196,6 +213,8 @@ class ResultViewController: UIViewController {
         self.initializeDimView()
         
         self.noResultLabel.hidden = true
+        
+        self.sortPickerTableView.tableFooterView = UIView(frame: CGRectZero)
     }
     
     //MARK: - Add Pull To Refresh
@@ -223,6 +242,35 @@ class ResultViewController: UIViewController {
         fullDimView?.alpha = 0
     }
     
+    func initializeData() {
+        
+        var country = self.baseSearchURL
+        var startIndex = advance(country.startIndex, 8)
+        var endIndex = advance(country.startIndex, 10)
+        country = country.substringWithRange(startIndex..<endIndex)
+        println("COUNTRY: \(country)")
+        
+        var countryEntities: [CountryEntity] = CountryEntity.findAll() as! [CountryEntity]
+        let countryEntity: CountryEntity = countryEntities.first!
+        
+        let basicModel: BasicModel = BasicModel.parseDataFromResponseObjec(StringHelper.convertStringToDictionary(countryEntity.json))
+        
+        if basicModel.dataAnyObject.isKindOfClass(NSArray) {
+            var dictionaries: [NSDictionary] = basicModel.dataAnyObject as! [NSDictionary]
+            
+            for dictionary in dictionaries {
+                let model: CountryModel = CountryModel.parseDataFromDictionary(dictionary)
+                if model.isActive {
+                    self.countryTableViewData.append(model)
+                    if model.code == country {
+                        self.countryImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(model.flag), placeholderImage: UIImage(named: "dummy-placeholder"))
+                        self.countryLabel.text = model.code
+                    }
+                }
+            }
+        }
+    }
+    
     func registerNibs() {
         var nib = UINib(nibName: "SortTableViewCell", bundle: nil)
         self.sortPickerTableView.registerNib(nib, forCellReuseIdentifier: "SortTableViewCell")
@@ -237,7 +285,12 @@ class ResultViewController: UIViewController {
         self.resultCollectionView?.registerNib(cellNib, forCellWithReuseIdentifier: reuseIdentifierSeller)
         
         var loaderNib = UINib(nibName: reuseIdentifierLoader, bundle: nil)
-        self.resultCollectionView?.registerNib(loaderNib, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: reuseIdentifierLoader)    }
+        self.resultCollectionView?.registerNib(loaderNib, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: reuseIdentifierLoader)
+        
+        var nibPhoto = UINib(nibName: GlobalPreferencesTableViewCell.reuseIdentifier, bundle: nil)
+        self.sortPickerTableView
+            .registerNib(nibPhoto, forCellReuseIdentifier: GlobalPreferencesTableViewCell.reuseIdentifier)
+    }
     
     func addBNavBarBackButton() {
         var backButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
@@ -268,6 +321,10 @@ class ResultViewController: UIViewController {
         viewTypeTapGesture = UITapGestureRecognizer(target:self, action:"tapViewTypeViewAction")
         viewTypeView.addGestureRecognizer(viewTypeTapGesture)
         
+        countryTapGesture = UITapGestureRecognizer(target:self, action:"tapCountryViewAction")
+        countryView.addGestureRecognizer(countryTapGesture)
+
+        
         //Add tap getsure to close keyboard
 //        let tapGesture = UITapGestureRecognizer(target: self, action: "closeKeyboard")
 //        self.view.addGestureRecognizer(tapGesture)
@@ -284,6 +341,10 @@ class ResultViewController: UIViewController {
         
         if viewTypeTapGesture != nil {
             self.viewTypeView.removeGestureRecognizer(viewTypeTapGesture)
+        }
+        
+        if countryTapGesture != nil {
+            self.countryView.removeGestureRecognizer(countryTapGesture)
         }
     }
     
@@ -319,18 +380,79 @@ class ResultViewController: UIViewController {
     //MARK: - Tap Gesture Action Selector
     
     func tapSortViewAction() {
-        if self.dimView.hidden {
-            UIView.animateWithDuration(0.3, animations: {
-                self.dimView.hidden = false
-                self.dimView.alpha = 1.0
-            })
+        if self.isFilterTableViewHidden {
+            if self.filterViewType == .Default {
+                UIView.animateWithDuration(0.3, animations: {
+                    self.dimView.hidden = false
+                    self.dimView.alpha = 1.0
+                })
+                self.filterViewType = .Sort
+            } else {
+                self.filterViewType = .Country
+                
+            }
+            self.isFilterTableViewHidden = false
+            self.sortPickerTableView.reloadData()
         } else {
             UIView.animateWithDuration(0.3, animations: {
                 self.dimView.alpha = 0
                 }, completion: { finished in
                     self.dimView.hidden = true
             })
+            self.filterViewType = .Default
+            self.isFilterTableViewHidden = true
         }
+        
+//        if self.dimView.hidden {
+//            UIView.animateWithDuration(0.3, animations: {
+//                self.dimView.hidden = false
+//                self.dimView.alpha = 1.0
+//            })
+//        } else {
+//            UIView.animateWithDuration(0.3, animations: {
+//                self.dimView.alpha = 0
+//                }, completion: { finished in
+//                    self.dimView.hidden = true
+//            })
+//        }
+    }
+    
+    func tapCountryViewAction() {
+        if self.isFilterTableViewHidden {
+            if self.filterViewType == .Default {
+                UIView.animateWithDuration(0.3, animations: {
+                    self.dimView.hidden = false
+                    self.dimView.alpha = 1.0
+                })
+                self.filterViewType = .Country
+            } else {
+                self.filterViewType = .Sort
+                
+            }
+            self.isFilterTableViewHidden = false
+            self.sortPickerTableView.reloadData()
+        } else {
+            UIView.animateWithDuration(0.3, animations: {
+                self.dimView.alpha = 0
+                }, completion: { finished in
+                    self.dimView.hidden = true
+            })
+            self.filterViewType = .Default
+            self.isFilterTableViewHidden = true
+        }
+        
+//        if self.dimView.hidden {
+//            UIView.animateWithDuration(0.3, animations: {
+//                self.dimView.hidden = false
+//                self.dimView.alpha = 1.0
+//            })
+//        } else {
+//            UIView.animateWithDuration(0.3, animations: {
+//                self.dimView.alpha = 0
+//                }, completion: { finished in
+//                    self.dimView.hidden = true
+//            })
+//        }
     }
     
     func tapFilterViewAction() {
@@ -496,6 +618,10 @@ class ResultViewController: UIViewController {
         
         url += "&perPage=\(self.perPage)"
         
+        if self.countryCode.isNotEmpty() {
+            url += "&country=\(self.countryCode)"
+        }
+        
         if !url.contains("?") && url.contains("&") {
             let range = url.rangeOfString("&")
             url = url.stringByReplacingCharactersInRange(range!, withString: "?")
@@ -503,13 +629,17 @@ class ResultViewController: UIViewController {
         
         return url
     }
+    
+    
     func populateProductCollectionView(responseObject: AnyObject) {
         self.noResultLabel.hidden = true
         if let value: NSDictionary = responseObject["data"] as? NSDictionary{
             
-            for subValue in value["products"] as! NSArray {
-                let model: SearchResultModel = SearchResultModel.parseDataWithDictionary(subValue as! NSDictionary)
-                self.productCollectionViewData.append(model)
+            if let temp = value["products"] as? NSArray{
+                for subValue in temp {
+                    let model: SearchResultModel = SearchResultModel.parseDataWithDictionary(subValue as! NSDictionary)
+                    self.productCollectionViewData.append(model)
+                }
             }
             
             if let aggregations: AnyObject = value["aggregations"] {
@@ -523,22 +653,18 @@ class ResultViewController: UIViewController {
                         }
                     }
                     
-                    if let subValue: AnyObject = aggregations["minPrice"] {
-                        if subValue as! NSObject != NSNull() {
-                            if self.maxPrice == 0{
-                                self.minPrice = subValue as! Double
-                                self.selectedMinPrice = self.minPrice
-                            }
+                    if let subValue = aggregations["minPrice"] as? Double {
+                        if self.maxPrice == 0{
+                            self.minPrice = subValue
+                            self.selectedMinPrice = self.minPrice
                         }
                     }
                     
-                    if let attributes: AnyObject = aggregations["attributes"] {
+                    if let attributes = aggregations["attributes"] as? NSArray {
                         if self.filterAtributes.count == 0 {
                             self.filterAtributes.removeAll(keepCapacity: false)
-                            if attributes as! NSObject != NSNull() {
-                                for attribute in attributes as! NSArray {
-                                    self.filterAtributes.append(FilterAttributeModel.parseDataWithDictionary(attribute as! NSDictionary))
-                                }
+                            for attribute in attributes {
+                                self.filterAtributes.append(FilterAttributeModel.parseDataWithDictionary(attribute as! NSDictionary))
                             }
                         }
                     }
@@ -746,17 +872,36 @@ extension ResultViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.sortTableViewData.count
+        if self.filterViewType == .Sort {
+            return self.sortTableViewData.count
+        } else {
+            return self.countryTableViewData.count
+        }
+        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("SortTableViewCell", forIndexPath: indexPath) as! SortTableViewCell
-        cell.detailsLabel?.text = self.sortTableViewData[indexPath.row]
-        return cell
+        if self.filterViewType == .Sort {
+            let cell = tableView.dequeueReusableCellWithIdentifier("SortTableViewCell", forIndexPath: indexPath) as! SortTableViewCell
+            cell.detailsLabel?.text = self.sortTableViewData[indexPath.row]
+            return cell
+
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier(GlobalPreferencesTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! GlobalPreferencesTableViewCell
+            cell.setValueText("\(self.countryTableViewData[indexPath.row].name)")
+            cell.setValueImage(self.countryTableViewData[indexPath.row].flag)
+            cell.setIsChecked(false)
+            cell.setType(GlobalPreferencesPickerType.Country)
+            return cell
+        }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 30
+        if self.filterViewType == .Sort {
+            return 30
+        } else {
+            return 40
+        }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -766,12 +911,24 @@ extension ResultViewController: UITableViewDataSource, UITableViewDelegate {
                 self.dimView.hidden = true
         })
         
-        //Todo when clicked
-        self.selectedSortTypeIndex = indexPath.row
-        self.page = 1
-        self.productCollectionViewData.removeAll(keepCapacity: false)
-        self.resultCollectionView.reloadData()
-        self.fireSearch()
+        if self.filterViewType == .Sort {
+            //Todo when clicked
+            self.selectedSortTypeIndex = indexPath.row
+            self.page = 1
+            self.productCollectionViewData.removeAll(keepCapacity: false)
+            self.resultCollectionView.reloadData()
+            self.fireSearch()
+        } else {
+            //Todo when clicked
+            self.countryImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(self.countryTableViewData[indexPath.row].flag), placeholderImage: UIImage(named: "dummy-placeholder"))
+            self.countryLabel.text = countryTableViewData[indexPath.row].code
+            self.countryCode = self.countryTableViewData[indexPath.row].code
+            self.page = 1
+            self.productCollectionViewData.removeAll(keepCapacity: false)
+            self.resultCollectionView.reloadData()
+            self.fireSearch()
+        }
+        
     }
     
     func scrollViewDidEndDragging(aScrollView: UIScrollView, willDecelerate decelerate: Bool) {

@@ -115,7 +115,7 @@ struct APIAtlas {
     static let loginUrl = "login"
     static let registerUrl = "user/register"
     static let getUserInfoUrl = "auth/user/getUser"
-    static let homeUrl = "v2/home/getData"
+    static let homeUrl = "home/getData"
     static let cartUrl = "auth/cart/getCart"
     static let wishlistUrl = "auth/cart/getCart"
     static let updateWishlistUrl = "auth/cart/updateCartItem"
