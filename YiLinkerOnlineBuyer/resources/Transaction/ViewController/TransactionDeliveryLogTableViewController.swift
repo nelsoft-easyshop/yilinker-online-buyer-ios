@@ -214,71 +214,62 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
     
     func fireGetDeliveryLogs() {
         
-        showHUD()
-        let manager = APIManager.sharedInstance
+        self.showHUD()
+         var parameters: NSDictionary = NSDictionary(dictionary: ["access_token": SessionManager.accessToken(), "orderProductId": orderProductId])
         
-        var parameters: NSDictionary = NSDictionary(dictionary: ["access_token": SessionManager.accessToken(), "orderProductId": orderProductId])
-        
-        manager.GET(APIAtlas.getDeliveryLogs, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            print(responseObject)
-            self.deliveryLogs = DeliveryLogsModel.parseDataWithDictionary(responseObject as! NSDictionary)
-            
-            if self.deliveryLogs.isSuccessful {
-                self.initializeDeliveryLogsItem()
-            } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.deliveryLogs.message, title: StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY"))
-            }
-            
-            self.yiHud?.hide()
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.yiHud?.hide()
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+        WebServiceManager.fireGetDeliveryLogsWithUrl(APIAtlas.getDeliveryLogs, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.deliveryLogs = DeliveryLogsModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 
-                if task.statusCode == 401 {
-                    self.fireRefreshToken()
+                if self.deliveryLogs.isSuccessful {
+                    self.initializeDeliveryLogsItem()
                 } else {
-                    if Reachability.isConnectedToNetwork() {
-                        UIAlertController.displaySomethingWentWrongError(self)
-                    } else {
-                        let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                        self.yiHud?.hide()
-                        //UIAlertController.displayNoInternetConnectionError(self)
-                    }
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.deliveryLogs.message, title: StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY"))
                 }
+                
+                self.yiHud?.hide()
+            } else {
+                self.yiHud?.hide()
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.error)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
         })
-        
-        
     }
     
     func fireRefreshToken() {
         self.showHUD()
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = [
-            "client_id": Constants.Credentials.clientID(),
-            "client_secret": Constants.Credentials.clientSecret(),
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.yiHud?.hide()
             
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            
-            self.fireGetDeliveryLogs()
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                self.yiHud?.hide()
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                
+                self.fireGetDeliveryLogs()
+            } else {
+                //Forcing user to logout.
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    
+                })
+            }
         })
-        
     }
     
     
