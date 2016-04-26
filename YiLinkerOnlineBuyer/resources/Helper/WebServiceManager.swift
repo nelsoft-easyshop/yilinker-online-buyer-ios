@@ -485,7 +485,7 @@ class WebServiceManager: NSObject {
     }
     
     //MARK: -
-    //MARK: - Fire Get Product List Data With Url
+    //MARK: - Fire Get Product List With Url
     class func fireGetProductListWithUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         
         self.fireGetRequestWithUrl(url, parameters: []) { (successful, responseObject, requestErrorType) -> Void in
@@ -494,7 +494,7 @@ class WebServiceManager: NSObject {
     }
     
     //MARK: -
-    //MARK: - Fire Get Case Details Data With Url
+    //MARK: - Fire Get Case Details With Url
     class func fireGetCaseDetailsWithUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         
         self.fireGetRequestWithUrl(url, parameters: []) { (successful, responseObject, requestErrorType) -> Void in
@@ -503,7 +503,7 @@ class WebServiceManager: NSObject {
     }
     
     //MARK: -
-    //MARK: - Fire Get Case Details Data With Url
+    //MARK: - Fire Get Seller Category With Url
     class func fireSellerCategoryWithUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         
         self.fireGetRequestWithUrl(url, parameters: []) { (successful, responseObject, requestErrorType) -> Void in
@@ -512,10 +512,19 @@ class WebServiceManager: NSObject {
     }
     
     //MARK: -
-    //MARK: - Fire Barangays
+    //MARK: - Fire Seller Feedback
     class func fireSellerFeedbackWithUrl(url: String, parameters: AnyObject, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         
         self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: -
+    //MARK: - Fire Get Reasons For Cancellation With Url
+    class func fireGetReasonForCancellationWithUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        var parameters: NSDictionary = ["access_token" : SessionManager.accessToken()]
+        self.fireGetRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }
