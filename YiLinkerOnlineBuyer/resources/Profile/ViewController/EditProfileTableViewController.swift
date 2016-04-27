@@ -77,6 +77,10 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     override func viewDidAppear(animated: Bool) {
         self.tableView.reloadData()
+        
+        //Set title of the Navigation Bar
+        self.title = EditProfileLocalizedStrings.editProfileLocalizeString
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -98,9 +102,6 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     //MARK: Initializations
     func initializeViews() {
-        //Set title of the Navigation Bar
-        self.title = EditProfileLocalizedStrings.editProfileLocalizeString
-        
         //Avoid overlapping of tab bar and navigation bar to the mainview
         if self.respondsToSelector("edgesForExtendedLayout") {
             self.edgesForExtendedLayout = UIRectEdge.None

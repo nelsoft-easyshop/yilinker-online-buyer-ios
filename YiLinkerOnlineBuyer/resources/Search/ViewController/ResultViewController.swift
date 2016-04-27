@@ -74,6 +74,7 @@ class ResultViewController: UIViewController {
     var categoryName: String = ""
     var filterViewType: ResultFilterViewType = .Default
     var isFilterTableViewHidden = true
+    var isCountryAvailable = false
     
     //Tap gesture for the action views
     var sortTapGesture: UITapGestureRecognizer!
@@ -133,6 +134,8 @@ class ResultViewController: UIViewController {
     
     var showBottomLoader: Bool = false
     
+    @IBOutlet weak var countryConstraint: NSLayoutConstraint!
+    @IBOutlet weak var lineSeparator3: UIView!
     @IBOutlet weak var topBarView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -265,9 +268,18 @@ class ResultViewController: UIViewController {
                     if model.code == country {
                         self.countryImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(model.flag), placeholderImage: UIImage(named: "dummy-placeholder"))
                         self.countryLabel.text = model.code
+                        self.isCountryAvailable = true
                     }
                 }
             }
+        }
+        
+        if self.isCountryAvailable {
+            self.countryConstraint.constant = 112
+            self.lineSeparator3.hidden = false
+        } else {
+            self.countryConstraint.constant = 0
+            self.lineSeparator3.hidden = true
         }
     }
     
@@ -378,7 +390,6 @@ class ResultViewController: UIViewController {
     }
     
     //MARK: - Tap Gesture Action Selector
-    
     func tapSortViewAction() {
         if self.isFilterTableViewHidden {
             if self.filterViewType == .Default {
