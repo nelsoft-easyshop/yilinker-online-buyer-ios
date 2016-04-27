@@ -22,7 +22,7 @@ class CustomTabBarController: UITabBarController {
             let tabItem3 = tabItems[3] as UITabBarItem
             let tabItem4 = tabItems[4] as UITabBarItem
             
-            tabItem3.title = WishlistLocalizedStrings.title
+            tabItem3.title = StringHelper.localizedStringWithKey("WISHLISTTITLE_LOCALIZE_KEY")
             tabItem4.title = StringHelper.localizedStringWithKey("CART_TITLE_LOCALIZE_KEY")
         }
         
