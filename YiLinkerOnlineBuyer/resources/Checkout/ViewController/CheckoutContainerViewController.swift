@@ -210,6 +210,10 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
             self.edgesForExtendedLayout = UIRectEdge.None
         }
         
+        if SessionManager.selectedCountryCode().caseInsensitiveCompare("PH") == NSComparisonResult.OrderedSame {
+            self.noCOD = false
+        }
+        
         self.setUpInitialViews()
         
         //TODO: Hide this function for now, because it will be move into the last part of the transaction.
