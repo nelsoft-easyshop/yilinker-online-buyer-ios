@@ -682,50 +682,59 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     //MARK: -
     //MARK: Get buyer's contacts
-    func getContactsFromEndpoint(
-        page : String,
-        limit : String,
-        keyword: String){
+    func getContactsFromEndpoint(page : String, limit : String, keyword: String){
+        
+        if (Reachability.isConnectedToNetwork()) {
             
-            if (Reachability.isConnectedToNetwork()) {
-                self.showHUD()
-                
-                let manager: APIManager = APIManager.sharedInstance
-                manager.requestSerializer = AFHTTPRequestSerializer()
-                
-                let parameters: NSDictionary = [
-                    "page"          : "\(page)",
-                    "limit"         : "\(limit)",
-                    "keyword"       : keyword,
-                    "access_token"  : SessionManager.accessToken()
-                    ]   as Dictionary<String, String>
-                
-                let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
-                
-                manager.POST(url, parameters: parameters, success: {
-                    (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                    self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
-                    self.yiHud?.hide()
-                    self.tableView.reloadData()
-                    }, failure: {
-                        (task: NSURLSessionDataTask!, error: NSError!) in
-                        if let task: NSHTTPURLResponse = task.response as? NSHTTPURLResponse {
-                            if task.statusCode == 401 {
-                                if (SessionManager.isLoggedIn()){
-                                    self.fireRefreshToken()
-                                }
-                            } else {
-                                if (SessionManager.isLoggedIn()){
-                                    self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-                                }
-                            }
-                            
-                            self.contacts = Array<W_Contact>()
-                        }
-                        
+            let parameters: NSDictionary = [
+                "page"          : "\(page)",
+                "limit"         : "\(limit)",
+                "keyword"       : keyword,
+                "access_token"  : SessionManager.accessToken()
+                ]   as Dictionary<String, String>
+            
+            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
+            
+            WebServiceManager.fireGetContactsFromEndpointWithUrl(url, parameters: parameters) {
+                (successful, responseObject, requestErrorType) -> Void in
+                self.yiHud?.hide()
+                if successful {
+                    if responseObject["isSuccessful"] as! Bool {
+                        self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
                         self.yiHud?.hide()
-                })
+                        self.tableView.reloadData()
+                    } else {
+                        self.showAlert(title: Constants.Localized.error, message: responseObject["message"] as! String)
+                    }
+                } else {
+                    self.contacts = Array<W_Contact>()
+                    if requestErrorType == .ResponseError {
+                        //Error in api requirements
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                        self.yiHud?.hide()
+                    } else if requestErrorType == .AccessTokenExpired {
+                        self.fireRefreshToken()
+                    } else if requestErrorType == .PageNotFound {
+                        //Page not found
+                        Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                        self.yiHud?.hide()
+                    } else if requestErrorType == .NoInternetConnection {
+                        //No internet connection
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                        self.yiHud?.hide()
+                    } else if requestErrorType == .RequestTimeOut {
+                        //Request timeout
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                        self.yiHud?.hide()
+                    } else if requestErrorType == .UnRecognizeError {
+                        //Unhandled error
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                        self.yiHud?.hide()
+                    }
+                }
             }
+        }
     }
     
     //MARK: -
@@ -744,18 +753,17 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //MARK: -
     //MARK: Refresh token
     func fireRefreshToken() {
-        let manager: APIManager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID(), "client_secret": Constants.Credentials.clientSecret(), "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.getContactsFromEndpoint("1", limit: "30", keyword: "")
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 401 {
-                    self.fireRefreshToken()
-                }
+        self.showHUD()
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.yiHud?.hide()
+            
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.getContactsFromEndpoint("1", limit: "30", keyword: "")
+            } else {
+                self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+            }
         })
         
     }
