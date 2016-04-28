@@ -663,7 +663,11 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if self.canMessage {
             self.navigationController?.pushViewController(messagingViewController, animated: true)
         } else {
-            self.showAlert(title: Constants.Localized.error, message: self.cannotMessage)
+            if SessionManager.isLoggedIn() {
+                self.showAlert(title: Constants.Localized.error, message: self.cannotMessage)
+            } else {
+                self.showAlert(title: Constants.Localized.error, message: StringHelper.localizedStringWithKey("VENDOR_PAGE_CANNOT_MESSAGE_LOGIN_LOCALIZE_KEY"))
+            }
         }
         
     }
@@ -693,10 +697,9 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 "access_token"  : SessionManager.accessToken()
                 ]   as Dictionary<String, String>
             
-            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
+            let url = APIAtlas.ACTION_GET_CONTACTS
             
-            WebServiceManager.fireGetContactsFromEndpointWithUrl(url, parameters: parameters) {
-                (successful, responseObject, requestErrorType) -> Void in
+            WebServiceManager.fireGetContactListWithUrl("\(APIAtlas.ACTION_GET_CONTACTS_V2)?access_token=\(SessionManager.accessToken())", keyword: keyword, page: "\(page)", limit: "\(limit)", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
                 self.yiHud?.hide()
                 if successful {
                     if responseObject["isSuccessful"] as! Bool {
@@ -733,7 +736,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         self.yiHud?.hide()
                     }
                 }
-            }
+            })
         }
     }
     
