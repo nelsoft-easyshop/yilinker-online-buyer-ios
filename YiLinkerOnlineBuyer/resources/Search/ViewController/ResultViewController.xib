@@ -17,6 +17,7 @@
             <connections>
                 <outlet property="actionView" destination="Uyb-VK-Thh" id="inG-Wy-qBE"/>
                 <outlet property="actionViewHeight" destination="Sr6-84-KYc" id="e2Q-zF-GmP"/>
+                <outlet property="countryConstraint" destination="oL8-Au-Vzh" id="WiW-DG-IOL"/>
                 <outlet property="countryImageView" destination="r0K-si-PIB" id="RH9-9p-6x5"/>
                 <outlet property="countryLabel" destination="OzG-Ni-Ato" id="clX-qN-mZ1"/>
                 <outlet property="countryView" destination="tFZ-fW-4u4" id="SiM-SI-zPu"/>
@@ -24,6 +25,7 @@
                 <outlet property="filterHeaderLabel" destination="ZIu-as-AsN" id="cEH-CX-g1X"/>
                 <outlet property="filterLabel" destination="i69-th-rrW" id="txk-9O-k9O"/>
                 <outlet property="filterView" destination="hXh-Ex-xcS" id="xu4-Nc-i66"/>
+                <outlet property="lineSeparator3" destination="bdM-ia-e4G" id="C5H-Iv-SJN"/>
                 <outlet property="noResultLabel" destination="VbX-l4-1Ju" id="F7o-kc-cGc"/>
                 <outlet property="resultCollectionView" destination="LgG-iv-oKa" id="RdW-iY-6SE"/>
                 <outlet property="sortLabel" destination="yh5-qb-mfq" id="oUM-Pl-0dP"/>
@@ -55,7 +57,7 @@
                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kDF-aw-IfE" userLabel="Sort View">
                             <rect key="frame" x="1" y="0.0" width="84" height="45"/>
                             <subviews>
-                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I17-np-chy">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I17-np-chy">
                                     <rect key="frame" x="13" y="13" width="58" height="20"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sort" translatesAutoresizingMaskIntoConstraints="NO" id="sLc-i3-geI">
@@ -72,10 +74,18 @@
                                     </subviews>
                                     <animations/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="UOh-Pt-cxM"/>
+                                        <constraint firstAttribute="width" constant="58" id="lhz-u9-3RY"/>
+                                    </constraints>
                                 </view>
                             </subviews>
                             <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="centerY" secondItem="I17-np-chy" secondAttribute="centerY" id="2NY-PC-qdl"/>
+                                <constraint firstAttribute="centerX" secondItem="I17-np-chy" secondAttribute="centerX" id="cT4-PK-adS"/>
+                            </constraints>
                         </view>
                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4JH-F0-9TH" userLabel="Line Separator 1">
                             <rect key="frame" x="86" y="8" width="1" height="29"/>
@@ -88,7 +98,7 @@
                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hXh-Ex-xcS" userLabel="Filter View">
                             <rect key="frame" x="88" y="0.0" width="84" height="45"/>
                             <subviews>
-                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k0q-lF-OMo">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k0q-lF-OMo">
                                     <rect key="frame" x="13" y="13" width="58" height="20"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="filter" translatesAutoresizingMaskIntoConstraints="NO" id="XEJ-4r-N5M">
@@ -105,10 +115,18 @@
                                     </subviews>
                                     <animations/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="Gw5-Pc-h9C"/>
+                                        <constraint firstAttribute="width" constant="58" id="ta9-ab-fAx"/>
+                                    </constraints>
                                 </view>
                             </subviews>
                             <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="centerX" secondItem="k0q-lF-OMo" secondAttribute="centerX" id="SQh-5t-6NO"/>
+                                <constraint firstAttribute="centerY" secondItem="k0q-lF-OMo" secondAttribute="centerY" id="sre-5U-8yI"/>
+                            </constraints>
                         </view>
                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rUh-MG-aC7" userLabel="Line Separator 2">
                             <rect key="frame" x="173" y="8" width="1" height="29"/>
@@ -121,7 +139,7 @@
                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZPP-O9-wIk" userLabel="List View">
                             <rect key="frame" x="175" y="0.0" width="84" height="45"/>
                             <subviews>
-                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WVc-dD-kOs">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WVc-dD-kOs">
                                     <rect key="frame" x="13" y="13" width="58" height="20"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="list" translatesAutoresizingMaskIntoConstraints="NO" id="LQg-Th-BqY">
@@ -138,10 +156,18 @@
                                     </subviews>
                                     <animations/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="58" id="3KD-di-2tQ"/>
+                                        <constraint firstAttribute="height" constant="20" id="HAf-tE-qS5"/>
+                                    </constraints>
                                 </view>
                             </subviews>
                             <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="centerY" secondItem="WVc-dD-kOs" secondAttribute="centerY" id="5Ee-5A-2Ed"/>
+                                <constraint firstAttribute="centerX" secondItem="WVc-dD-kOs" secondAttribute="centerX" id="SOx-rW-CEv"/>
+                            </constraints>
                         </view>
                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bdM-ia-e4G" userLabel="Line Separator 3">
                             <rect key="frame" x="260" y="8" width="1" height="29"/>

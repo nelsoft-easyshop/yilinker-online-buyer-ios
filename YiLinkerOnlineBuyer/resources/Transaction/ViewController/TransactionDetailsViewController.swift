@@ -680,20 +680,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
             
             self.showProgressBar()
             
-            let manager: APIManager = APIManager.sharedInstance
-            manager.requestSerializer = AFHTTPRequestSerializer()
-            
-            let parameters: NSDictionary = [
-                "page"          : "\(page)",
-                "limit"         : "\(limit)",
-                "keyword"       : keyword,
-                "access_token"  : SessionManager.accessToken()
-                ]   as Dictionary<String, String>
-            
-            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
-            
-            WebServiceManager.fireGetContactsFromEndpointWithUrl(url, parameters: parameters) {
-                (successful, responseObject, requestErrorType) -> Void in
+            WebServiceManager.fireGetContactListWithUrl("\(APIAtlas.ACTION_GET_CONTACTS_V2)?access_token=\(SessionManager.accessToken())", keyword: keyword, page: "\(page)", limit: "\(limit)", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
                 self.yiHud?.hide()
                 if successful {
                     if responseObject["isSuccessful"] as! Bool {
@@ -737,7 +724,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                     self.contacts = Array<W_Contact>()
                     self.hideProgressBar()
                 }
-            }
+            })
         }
     }
     

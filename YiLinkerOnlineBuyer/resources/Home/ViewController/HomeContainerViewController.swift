@@ -377,9 +377,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func changeDashBoardToCategory() {
         var viewControllers: [UINavigationController] = self.tabBarController!.viewControllers as! [UINavigationController]
         
+        let categories = StringHelper.localizedStringWithKey("WEBVIEW_CATEGORIES")
         let webViewController: WebViewController = WebViewController(nibName: "WebViewController", bundle: nil) as WebViewController
         webViewController.urlString = APIAtlas.category
-        webViewController.title = WebviewStrings.categories
+        webViewController.title = categories
         webViewController.isBackButtonVisible = false
         let navigationController2: UINavigationController = UINavigationController(rootViewController: webViewController) as UINavigationController
         navigationController2.navigationBar.barTintColor = Constants.Colors.appTheme

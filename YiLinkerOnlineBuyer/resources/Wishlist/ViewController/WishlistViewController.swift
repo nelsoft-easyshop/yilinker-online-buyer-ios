@@ -70,7 +70,8 @@ class WishlistViewController: UIViewController {
         wishlistTableView.registerNib(nib, forCellReuseIdentifier: "WishlistTableViewCell")
         
         //Initialize navigation bar's title
-        self.title = WishlistLocalizedStrings.title
+        let titleWishlist = StringHelper.localizedStringWithKey("WISHLISTTITLE_LOCALIZE_KEY")
+        self.title = titleWishlist
     }
     
     //MARK: -
