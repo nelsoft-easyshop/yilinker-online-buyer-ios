@@ -119,6 +119,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         label.font = UIFont (name: "Panton-Regular", size: 20)
         label.textAlignment = NSTextAlignment.Center
         label.textColor = UIColor.whiteColor()
+        label.adjustsFontSizeToFitWidth = true
         self.navigationItem.titleView = label
     }
     
