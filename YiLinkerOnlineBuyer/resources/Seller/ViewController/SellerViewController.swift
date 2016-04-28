@@ -690,15 +690,6 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         if (Reachability.isConnectedToNetwork()) {
             
-            let parameters: NSDictionary = [
-                "page"          : "\(page)",
-                "limit"         : "\(limit)",
-                "keyword"       : keyword,
-                "access_token"  : SessionManager.accessToken()
-                ]   as Dictionary<String, String>
-            
-            let url = APIAtlas.ACTION_GET_CONTACTS
-            
             WebServiceManager.fireGetContactListWithUrl("\(APIAtlas.ACTION_GET_CONTACTS_V2)?access_token=\(SessionManager.accessToken())", keyword: keyword, page: "\(page)", limit: "\(limit)", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
                 self.yiHud?.hide()
                 if successful {
