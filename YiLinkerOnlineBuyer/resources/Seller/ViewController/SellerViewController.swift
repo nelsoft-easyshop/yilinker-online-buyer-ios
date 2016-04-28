@@ -86,8 +86,6 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.registerNib()
         //Get seller/store info
         self.fireSeller()
-        //Get seller ratings and feebback
-        self.fireSellerFeedback()
         
         self.getContactsFromEndpoint("1", limit: "30", keyword: "")
         
@@ -237,6 +235,8 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 } else {
                     self.showAlert(title: "Error", message: responseObject["message"] as! String)
                 }
+                //Get seller ratings and feebback
+                self.fireSellerFeedback()
             } else {
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
@@ -273,7 +273,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             params = self.slug
         }
         
-        WebServiceManager.fireSellerFeedbackWithUrl(APIAtlas.buyerSellerFeedbacks, sellerId: params) {
+        WebServiceManager.fireSellerFeedbackWithUrl(APIAtlas.buyerSellerFeedbacks+"?sellerId=\(params)", sellerId: params) {
             (successful, responseObject, requestErrorType) -> Void in
             self.yiHud?.hide()
             if successful {
