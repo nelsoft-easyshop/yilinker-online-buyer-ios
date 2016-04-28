@@ -384,9 +384,11 @@ class ResultViewController: UIViewController {
             self.productCollectionViewData.removeAll(keepCapacity: false)
             self.resultViewType = .Grid
         }
+        
+        let replaced = (searchSuggestion.searchUrl as NSString).stringByReplacingOccurrencesOfString("\(APIAtlas.baseUrl)/", withString: "")
     
         self.searchQuery = searchSuggestion.suggestion
-        self.baseSearchURL = searchSuggestion.searchUrl
+        self.baseSearchURL = replaced
     }
     
     //MARK: - Tap Gesture Action Selector
