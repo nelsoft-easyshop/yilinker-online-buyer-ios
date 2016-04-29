@@ -742,21 +742,44 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         WebServiceManager.fireCartToCheckoutWithUrl(APIAtlas.updateCheckout(), cart: item, accessToken: SessionManager.accessToken(), actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
             if successful {
-                var cartProductModel: [CartProductDetailsModel] = []
+                var checkoutItems: [CartProductDetailsModel] = []
                 
-                if let value: AnyObject = responseObject["data"] {
-                    for subValue in responseObject["data"] as! NSArray {
-                        let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
-                        cartProductModel.append(model)
+                if let isSuccessful: Bool = responseObject["isSuccessful"] as? Bool {
+                    if isSuccessful {
+                        if let data: NSArray = responseObject["data"] as? NSArray {
+                            for subValue in data {
+                                let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
+                                
+                                for tempProductUnit in model.productUnits {
+                                    if model.unitId == tempProductUnit.productUnitId {
+                                        
+                                        if tempProductUnit.imageIds.count != 0 {
+                                            for tempImage in model.images {
+                                                if tempImage.id == tempProductUnit.imageIds[0] {
+                                                    model.selectedUnitImage = tempImage.fullImageLocation
+                                                }
+                                            }
+                                        } else if model.images.count != 0 {
+                                            model.selectedUnitImage = model.images[0].fullImageLocation
+                                        } else {
+                                            model.selectedUnitImage = ""
+                                        }
+                                        break
+                                    }
+                                }
+                                checkoutItems.append(model)
+                            }
+                            
+                        }
+                        
+                        let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
+                        checkout.carItems = checkoutItems
+                        checkout.totalPrice = String(stringInterpolationSegment: totalAmount)
+                        let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
+                        navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+                        self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
                     }
                 }
-                
-                let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
-                checkout.carItems = cartProductModel
-                checkout.totalPrice = String(stringInterpolationSegment: totalAmount)
-                let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
-                navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-                self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
             } else {
                 if requestErrorType == .ResponseError {
                     //Error in api requirements

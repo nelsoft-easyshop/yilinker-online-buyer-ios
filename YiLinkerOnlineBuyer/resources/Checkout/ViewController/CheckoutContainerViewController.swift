@@ -748,7 +748,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         if self.selectedIndex == 0 {
             if SessionManager.isLoggedIn() {
                 if self.isValidToSelectPayment {
-                    if self.summaryViewController!.isIncompleteInformation || SessionManager.isMobileVerified() {
+                    if self.summaryViewController!.isIncompleteInformation || !SessionManager.isMobileVerified() {
                         var errorMessage = ""
                         if self.summaryViewController!.firstName == "" {
                             errorMessage = "Please insert your first name."
