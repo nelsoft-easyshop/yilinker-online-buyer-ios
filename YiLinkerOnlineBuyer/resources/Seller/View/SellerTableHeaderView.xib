@@ -59,7 +59,7 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tech Hub Store" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="PUQ-0I-66E">
-                    <rect key="frame" x="112" y="179" width="252" height="17"/>
+                    <rect key="frame" x="112" y="179" width="337" height="17"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="Da6-sp-T0b"/>
                     </constraints>
@@ -134,7 +134,6 @@
                 <constraint firstItem="FVH-bQ-Krq" firstAttribute="top" secondItem="JAF-ug-Wnz" secondAttribute="bottom" constant="4" id="8Rr-Yf-As4"/>
                 <constraint firstItem="M7F-7d-VWr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="GwE-2i-bfM"/>
                 <constraint firstItem="PUQ-0I-66E" firstAttribute="leading" secondItem="M7F-7d-VWr" secondAttribute="trailing" constant="8" id="LOG-J6-ZuF"/>
-                <constraint firstAttribute="trailing" secondItem="PUQ-0I-66E" secondAttribute="trailing" constant="93" id="M1a-sq-Qvj"/>
                 <constraint firstAttribute="bottom" secondItem="FVH-bQ-Krq" secondAttribute="bottom" constant="8" id="N9h-Mh-ig5"/>
                 <constraint firstAttribute="trailing" secondItem="j46-sZ-G8t" secondAttribute="trailing" constant="8" id="NZr-RD-zmd"/>
                 <constraint firstItem="A7W-DK-e0C" firstAttribute="top" secondItem="j46-sZ-G8t" secondAttribute="bottom" constant="8" id="TLr-uJ-rUS"/>
@@ -149,6 +148,7 @@
                 <constraint firstItem="A7W-DK-e0C" firstAttribute="top" secondItem="d0d-dF-wyT" secondAttribute="bottom" constant="8" id="pgJ-nh-cZp"/>
                 <constraint firstItem="b4p-tQ-XcN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="qgy-Tr-Bm9"/>
                 <constraint firstItem="d0d-dF-wyT" firstAttribute="leading" secondItem="JAF-ug-Wnz" secondAttribute="trailing" constant="1" id="rDX-bJ-pft"/>
+                <constraint firstAttribute="centerX" secondItem="PUQ-0I-66E" secondAttribute="centerX" constant="-52" id="s5m-aJ-1aK"/>
                 <constraint firstItem="JAF-ug-Wnz" firstAttribute="top" secondItem="PUQ-0I-66E" secondAttribute="bottom" constant="1" id="vlN-sr-Fz9"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
