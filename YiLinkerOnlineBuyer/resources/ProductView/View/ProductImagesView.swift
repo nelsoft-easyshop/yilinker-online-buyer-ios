@@ -179,8 +179,11 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
             self.overseasContainerView.hidden = false
             self.overseasHeightConstant.constant = 42
         } else {
-            self.overseasContainerView.hidden = false
+            self.overseasContainerView.hidden = true
             self.overseasHeightConstant.constant = 0
+            self.wishlistContainerView.transform = CGAffineTransformMakeTranslation(0.0, -50)
+            self.messageContainerView.transform = CGAffineTransformMakeTranslation(0.0, -50)
+            self.shareContainerView.transform = CGAffineTransformMakeTranslation(0.0, -50)
         }
         
         self.width = width
