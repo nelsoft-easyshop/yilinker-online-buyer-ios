@@ -1067,7 +1067,7 @@ class WebServiceManager: NSObject {
     //MARK: - Fire Seller Feedback With Url
     class func fireSellerFeedbackWithUrl(url: String, sellerId: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         var parameters: NSDictionary = [self.sellerIdKey: sellerId]
-        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+        self.firePostRequestWithUrl(url, parameters: []) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
     }

@@ -179,7 +179,7 @@ class SellerCategoryViewController: UIViewController, UITableViewDataSource, UIT
     
     func showHUD() {
        self.yiHud = YiHUD.initHud()
-       self.yiHud!.showHUDToView(self.view)
+       self.yiHud!.showHUDToView(self.navigationController!.view)
     }
     
     /*
