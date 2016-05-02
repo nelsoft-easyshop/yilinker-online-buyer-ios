@@ -101,6 +101,9 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
             button.setTitle(buttonTitle, forState: .Normal)
             button.titleLabel?.font = UIFont(name: "Panton-Bold", size: 15.0)
             button.titleLabel?.font = UIFont.boldSystemFontOfSize(15.0)
+            button.titleLabel?.numberOfLines = 1
+            button.titleLabel?.adjustsFontSizeToFitWidth = true
+            button.titleLabel?.lineBreakMode = NSLineBreakMode.ByClipping
             button.setTitleColor(UIColor.darkGrayColor(), forState: .Normal)
             button.layer.borderWidth = 1.2
             button.layer.borderColor = UIColor.darkGrayColor().CGColor
@@ -133,13 +136,14 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
 //            }
             
             scroll.addSubview(button)
-//            scroll.contentSize = CGSize(width: scroll.frame.size.width, height: topMargin)
         }
 
         self.addSubview(scroll)
         self.scroll.contentOffset.x = self.scrollPosition
+        self.scroll.frame.size.height = topMargin + 20.0
+//        scroll.contentSize = CGSize(width: scroll.frame.size.width, height: topMargin + 20.0)
         
-//        self.frame.size.height = 200.0
+        self.frame.size.height = topMargin + 20.0
     }
     
     func formatCombination(combinations: NSArray) -> String {
