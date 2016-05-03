@@ -34,7 +34,8 @@ class WebViewURL {
     static let dailyLogin: String = APIEnvironment.baseUrl() + "/v1/auth/" + APIAtlas.dailyLogin
     static let category: String = baseUrl + APIAtlas.category
     static let storeView: String = baseUrl + APIAtlas.storeView
-    static let productList: String = baseUrl + APIAtlas.mobileProductList
+    //static let productList: String = baseUrl + APIAtlas.mobileProductList
+    static let productList: String = APIAtlas.mobileProductList
 }
 
 class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate {
@@ -153,7 +154,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
         if webviewSource == WebviewSource.DailyLogin {
             let html: String = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.outerHTML")!
             
-            if html.contains("error") {
+            if html.contains("invalid_grant") {
                 webView.hidden = true
                 self.requestRefreshToken()
             }

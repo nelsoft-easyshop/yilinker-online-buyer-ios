@@ -754,7 +754,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         if self.selectedIndex == 0 {
             if SessionManager.isLoggedIn() {
                 if self.isValidToSelectPayment {
-                    if self.summaryViewController!.isIncompleteInformation || SessionManager.isMobileVerified() {
+                    if self.summaryViewController!.isIncompleteInformation || !SessionManager.isMobileVerified() {
                         var errorMessage = ""
                         if self.summaryViewController!.firstName == "" {
                             errorMessage = "Please insert your first name."
@@ -971,7 +971,6 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: paymentSuccessModel.message, title: Constants.Localized.someThingWentWrong)
                     }
                 } else {
-                    self.selectedIndex--
                     if requestErrorType == .ResponseError {
                         //Error in api requirements
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -1014,7 +1013,6 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 }
 
             } else {
-                self.selectedIndex--
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
