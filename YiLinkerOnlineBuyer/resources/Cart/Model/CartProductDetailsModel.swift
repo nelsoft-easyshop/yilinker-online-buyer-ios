@@ -29,11 +29,12 @@ class CartProductDetailsModel {
     var itemId: Int = 0
     var quantity: Int = 0
     var isCODAvailable: Bool = false
+    var shippingCost: String = ""
     
     //DETAILS ???
     //BADGES  ???
     
-    init(selected: Bool, id: String, title: String, slug: String, image: String, images: NSArray, selectedUnitImage: String, shortDescription: String, fullDescription: String, sellerId: Int, attributes: NSArray, productUnits: NSArray, unitId: String, itemId: Int, quantity: Int, isCODAvailable: Bool) {
+    init(selected: Bool, id: String, title: String, slug: String, image: String, images: NSArray, selectedUnitImage: String, shortDescription: String, fullDescription: String, sellerId: Int, attributes: NSArray, productUnits: NSArray, unitId: String, itemId: Int, quantity: Int, isCODAvailable: Bool, shippingCost: String) {
         self.selected = selected
         self.id = id
         self.title = title
@@ -53,6 +54,7 @@ class CartProductDetailsModel {
         self.quantity = quantity
         
         self.isCODAvailable = isCODAvailable
+        self.shippingCost = shippingCost
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> CartProductDetailsModel {
@@ -76,6 +78,7 @@ class CartProductDetailsModel {
         var quantity: Int = 0
         
         var isCODAvailable: Bool = false
+        var shippingCost: String = ""
         
         //DETAILS ???
         //BADGES  ???
@@ -149,6 +152,14 @@ class CartProductDetailsModel {
                 isCODAvailable = tempVar
             }
             
+            if let tempVar = dictionary["shippingCost"] as? String {
+                shippingCost = tempVar
+            }
+            
+            if let tempVar = dictionary["shippingCost"] as? Int {
+                shippingCost = "\(tempVar)"
+            }
+            
             // data
         } // dictionary
         
@@ -168,7 +179,8 @@ class CartProductDetailsModel {
             unitId: unitId,
             itemId: itemId,
             quantity: quantity,
-            isCODAvailable: isCODAvailable)
+            isCODAvailable: isCODAvailable,
+            shippingCost: shippingCost)
         
         
     } // parseDataWithDictionary
