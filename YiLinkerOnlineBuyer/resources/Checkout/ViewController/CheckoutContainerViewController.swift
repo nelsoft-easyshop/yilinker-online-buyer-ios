@@ -968,11 +968,9 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     if paymentSuccessModel.isSuccessful {
                         self.redirectToSuccessPage(paymentSuccessModel)
                     } else {
-                        self.selectedIndex--
                         UIAlertController.displayErrorMessageWithTarget(self, errorMessage: paymentSuccessModel.message, title: Constants.Localized.someThingWentWrong)
                     }
                 } else {
-                    self.selectedIndex--
                     if requestErrorType == .ResponseError {
                         //Error in api requirements
                         let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
@@ -1011,12 +1009,10 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 if pesoPayModel.isSuccessful {
                     self.redirectToPaymentWebViewWithUrl(pesoPayModel)
                 } else {
-                    self.selectedIndex--
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: pesoPayModel.message, title: Constants.Localized.error)
                 }
 
             } else {
-                self.selectedIndex--
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
