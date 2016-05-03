@@ -154,7 +154,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
         if webviewSource == WebviewSource.DailyLogin {
             let html: String = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.outerHTML")!
             
-            if html.contains("error") {
+            if html.contains("invalid_grant") {
                 webView.hidden = true
                 self.requestRefreshToken()
             }

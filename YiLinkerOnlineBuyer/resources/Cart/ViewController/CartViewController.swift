@@ -113,7 +113,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let url = APIAtlas.cart()
         WebServiceManager.fireGetCartWithUrl(url, access_token: SessionManager.accessToken(), actionHandler: { (successful, responseObject, requestErrorType) -> Void in
-            
+            println(responseObject)
             self.dismissLoader()
             if successful {
                 self.populateTableView(responseObject)

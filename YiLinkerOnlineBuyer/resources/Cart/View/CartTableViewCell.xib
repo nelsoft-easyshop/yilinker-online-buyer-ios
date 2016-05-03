@@ -11,6 +11,8 @@
         <mutableArray key="Panton.otf">
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -39,7 +41,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bamboo Battery Bamboo Battery Bamboo Battery Bamboo Battery Bamboo Battery " lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="7" id="Fgx-8P-g7b">
                                         <rect key="frame" x="163" y="4" width="175" height="42"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -64,7 +66,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="wood | small" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eg5-B1-pGL">
                                         <rect key="frame" x="163" y="42" width="175" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="12"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -199,7 +201,7 @@
                 <outlet property="swipeIndicatorButton" destination="Wp4-YP-Q4Y" id="v4X-eA-PEV"/>
                 <outlet property="swipeIndicatorView" destination="x2g-iA-ePi" id="pUZ-RP-A98"/>
             </connections>
-            <point key="canvasLocation" x="327.5" y="200"/>
+            <point key="canvasLocation" x="158.5" y="179"/>
         </tableViewCell>
     </objects>
     <resources>
