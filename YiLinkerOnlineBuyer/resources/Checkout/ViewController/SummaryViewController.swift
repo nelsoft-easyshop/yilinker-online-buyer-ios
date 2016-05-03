@@ -29,6 +29,8 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     var currentTextFieldTag: Int = 0
     
     var totalPrice: String = ""
+    var deliveryFee: String = ""
+    
     var yiHud: YiHUD?
     
     var cartItems: [CartProductDetailsModel] = []
@@ -74,7 +76,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
            self.checkoutContainerViewController.fireProvinces()
         }
         
-        if SessionManager.mobileNumber() != "" && SessionManager.firstName() != "" && SessionManager.lastName() != "" &&  SessionManager.emailAddress() != "" {
+        if SessionManager.mobileNumber() != "" && SessionManager.firstName() != "" && SessionManager.lastName() != "" {
             self.isIncompleteInformation = false
         }
         
@@ -651,7 +653,13 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     func totalSummaryPriceTableViewCellWithIndexPath(indexPath: NSIndexPath) -> TotalSummaryPriceTableViewCell  {
         let totalCell: TotalSummaryPriceTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.totalCellNibName) as! TotalSummaryPriceTableViewCell
         
-        totalCell.totalPriceValueLabel.text = self.totalPrice.formatToTwoDecimal()
+        totalCell.totalPriceValueLabel.text = "\(self.totalPrice)"
+        
+        if self.deliveryFee == "0" || self.deliveryFee == "" {
+            self.deliveryFee = "FREE"
+        }
+        
+        totalCell.shippingFeeValueLabel.text = "\(self.deliveryFee)"
         
         totalCell.separatorInset = UIEdgeInsetsMake(0, 1000, 0, 1000)
         return totalCell
@@ -737,6 +745,13 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         orderSummaryCell.productImageView.sd_setImageWithURL(NSURL(string: "\(url)\(APIAtlas.cartImage)\(product.selectedUnitImage)")!, placeholderImage: UIImage(named: "dummy-placeholder"))
         orderSummaryCell.itemTitleLabel.text = product.title
         orderSummaryCell.quantityLabel.text = "x\(product.quantity)"
+        
+        if product.isCODAvailable {
+            orderSummaryCell.noCODLabel.hidden = true
+        } else {
+            orderSummaryCell.noCODLabel.hidden = false
+            checkoutContainerViewController.noCOD = true
+        }
         
         for tempProductUnit in product.productUnits {
             if product.unitId == tempProductUnit.productUnitId {

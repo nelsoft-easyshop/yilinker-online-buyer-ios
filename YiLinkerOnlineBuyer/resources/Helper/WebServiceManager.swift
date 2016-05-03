@@ -1284,4 +1284,93 @@ class WebServiceManager: NSObject {
         
         return sessionDataTask
     }
+    
+    
+    //MARK: -
+    //MARK: - Fire Email Login Request With URL
+    class func fireGetAddress(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = [self.accessTokenKey: SessionManager.accessToken()]
+        
+        let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        
+        return sessionDataTask
+    }
+    
+    //MARK: -
+    //MARK: - Fire Add Address
+    class func fireAddAddress(url: String, accessToken: String, title: String, streetName: String, province: String, city: String, barangay: String, zipCode: String, locationId: Int, longitude: Double, latitude: Double, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = [self.accessTokenKey: accessToken, "title": title, "streetName": streetName, "province": province, "city": city, "barangay": barangay, "zipCode": zipCode, "locationId": locationId, "longitude": longitude, "latitude": latitude]
+        
+        let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        
+        return sessionDataTask
+    }
+    
+    //MARK: -
+    //MARK: - Fire Get Province
+    class func fireGetProvinceFromUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: []) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        
+        return sessionDataTask
+    }
+    
+    //MARK: -
+    //MARK: - Fire Get Cities
+    class func fireGetCitiesFromUrl(url: String, provinceId: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = ["provinceId": provinceId]
+        
+        let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        
+        return sessionDataTask
+    }
+    
+    //MARK: -
+    //MARK: - Fire Get Barangay
+    class func fireGetBarangayFromUrl(url: String, cityId: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = ["cityId": cityId]
+        
+        let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        
+        return sessionDataTask
+    }
+    
+    //MARK: -
+    //MARK: - Fire Set Default Address
+    class func fireSetDefaultAddressFromUrl(url: String, userAddressId: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = ["userAddressId": userAddressId]
+        
+        let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        
+        return sessionDataTask
+    }
+    
 }
