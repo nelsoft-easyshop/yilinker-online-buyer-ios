@@ -160,6 +160,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     
     var selectedIndex: Int = 0
     var totalPrice: String = ""
+    var deliveryFee: String = ""
     
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var continueButton: UIButton!
@@ -626,6 +627,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         overViewViewController = OverViewViewController(nibName: "OverViewViewController", bundle: nil)
         summaryViewController!.totalPrice = self.totalPrice
         summaryViewController!.cartItems = self.carItems
+        summaryViewController!.deliveryFee = self.deliveryFee
         
         self.viewControllers.append(summaryViewController!)
         self.viewControllers.append(paymentViewController!)

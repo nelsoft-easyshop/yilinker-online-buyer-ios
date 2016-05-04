@@ -102,6 +102,7 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
             button.titleLabel?.font = UIFont(name: "Panton-Bold", size: 15.0)
             button.titleLabel?.font = UIFont.boldSystemFontOfSize(15.0)
             button.titleLabel?.numberOfLines = 1
+            button.titleLabel?.minimumScaleFactor = 0.01
             button.titleLabel?.adjustsFontSizeToFitWidth = true
             button.titleLabel?.lineBreakMode = NSLineBreakMode.ByClipping
             button.setTitleColor(UIColor.darkGrayColor(), forState: .Normal)
@@ -111,6 +112,7 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
             button.backgroundColor = UIColor.whiteColor()
             button.addTarget(self, action: "clickedAttriubte:", forControlEvents: .TouchUpInside)
             button.tag = attributesId[i].toInt()!
+            button.titleLabel?.minimumScaleFactor = 0.01
             
             if i % 2 != 0 {
                 topMargin += 40.0
@@ -136,11 +138,16 @@ class ProductAttributeTableViewCell: UITableViewCell, UIScrollViewDelegate {
 //            }
             
             scroll.addSubview(button)
+            self.scroll.frame.size.height = CGRectGetMaxY(button.frame) + 20.0
         }
 
         self.addSubview(scroll)
         self.scroll.contentOffset.x = self.scrollPosition
-        self.scroll.frame.size.height = topMargin + 20.0
+//        if attributes.count == 1 {
+//            topMargin += 40.0
+//        }
+//        self.scroll.frame.size.height = topMargin + 20.0
+//        self.scroll.backgroundColor = .greenColor()
 //        scroll.contentSize = CGSize(width: scroll.frame.size.width, height: topMargin + 20.0)
         
         self.frame.size.height = topMargin + 20.0

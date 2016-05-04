@@ -49,7 +49,7 @@ class ProductDetailsModel {
     }
     
     class func parseDataWithDictionary(dictionary: AnyObject) -> ProductDetailsModel {
-        
+        println(dictionary)
         var message: String = ""
         var isSuccessful: Bool = false
         
