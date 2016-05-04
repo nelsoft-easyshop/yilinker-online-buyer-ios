@@ -705,6 +705,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func showHUD() {
         self.yiHud = YiHUD.initHud()
         self.yiHud!.showHUDToView(self.view)
+        self.yiHud!.showHUDToView(self.view)
+        self.yiHud!.showHUDToView(self.view)
+        self.yiHud!.showHUDToView(self.view)
     }
     
     //MARK: -
