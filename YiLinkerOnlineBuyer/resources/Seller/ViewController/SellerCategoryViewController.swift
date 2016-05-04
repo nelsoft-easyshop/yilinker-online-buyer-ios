@@ -66,6 +66,7 @@ class SellerCategoryViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func back() {
+        self.yiHud?.hide()
         self.navigationController!.popViewControllerAnimated(true)
     }
     
