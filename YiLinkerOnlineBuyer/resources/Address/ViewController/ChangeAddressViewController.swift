@@ -150,7 +150,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     //Set Default Address
     func changeAddressCollectionViewCell(didSelectDefaultAtCell cell: ChangeAddressCollectionViewCell) {
         let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
-        let addressId: String = "\(self.getAddressModel.listOfAddress[indexPath.row].userAddressId))"
+        let addressId: String = "\(self.getAddressModel.listOfAddress[indexPath.row].userAddressId)"
         self.fireSetDefaultAddressWithAddressId(addressId, indexPath: indexPath)
     }
     
@@ -328,27 +328,25 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 self.presentViewController(alertController, animated: true, completion: nil)
         })*/
         
-        
-        func requestRefreshToken(type: AddressRefreshType) {
-            WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.loginUrl, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
-                if successful {
-                    SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                    if type == AddressRefreshType.Get {
-                        self.requestGetAddressess()
-                    } else if type == AddressRefreshType.Delete {
-                        self.requestDeleteAddress(uid, index: indexPath)
-                    } else if type == AddressRefreshType.SetDefault {
-                        self.fireSetDefaultAddressWithAddressId("\(uid)", indexPath: indexPath)
-                    }
-                } else {
-                    self.yiHud?.hide()
-                    let alertController = UIAlertController(title: Constants.Localized.someThingWentWrong, message: "", preferredStyle: .Alert)
-                    let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
-                    alertController.addAction(defaultAction)
-                    self.presentViewController(alertController, animated: true, completion: nil)
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.loginUrl, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                
+                if type == AddressRefreshType.Get {
+                    self.requestGetAddressess()
+                } else if type == AddressRefreshType.Delete {
+                    self.requestDeleteAddress(uid, index: indexPath)
+                } else if type == AddressRefreshType.SetDefault {
+                    self.fireSetDefaultAddressWithAddressId("\(uid)", indexPath: indexPath)
                 }
-            })
-        }
+            } else {
+                self.yiHud?.hide()
+                let alertController = UIAlertController(title: Constants.Localized.someThingWentWrong, message: "", preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }
+        })
     }
     
     func fireSetDefaultAddressWithAddressId(addressId: String, indexPath: NSIndexPath) {
@@ -398,6 +396,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
         
         
         WebServiceManager.fireSetDefaultAddressFromUrl(APIAtlas.setDefaultAddressUrl, userAddressId: addressId) { (successful, responseObject, requestErrorType) -> Void in
+            self.yiHud?.hide()
             if successful {
                 let addressModel: AddressModelV2 = AddressModelV2.parseAddressFromDictionary(responseObject["data"] as! NSDictionary)
                 
@@ -425,7 +424,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 } else if requestErrorType == .UnRecognizeError {
                     Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
                 } else if requestErrorType == .AccessTokenExpired {
-                    self.requestRefreshToken(AddressRefreshType.SetDefault, uid:addressId.toInt()!, indexPath: nil)
+                    self.requestRefreshToken(AddressRefreshType.SetDefault, uid:addressId.toInt()!, indexPath: indexPath)
                 }
             }
         }
