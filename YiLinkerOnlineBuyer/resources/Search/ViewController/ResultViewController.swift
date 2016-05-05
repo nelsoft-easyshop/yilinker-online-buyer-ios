@@ -116,7 +116,7 @@ class ResultViewController: UIViewController {
     var selectedMaxPrice: Double = 0    //Selected max price by the user
     var selectedMinPrice: Double = 0    //Selected min price by the user
     var page: Int = 1                   //Page used for the pagination
-    let perPage: Int = 12               //Number of results in each page
+    let perPage: Int = 2               //Number of results in each page
     var filtersString: [String] = []    //Generated string based the filter attributes
     var selectedSortTypeIndex: Int = -1
     var filterAtributes: [FilterAttributeModel] = []
@@ -131,6 +131,7 @@ class ResultViewController: UIViewController {
     var searchTask: NSURLSessionDataTask?
     var suggestions: [SearchSuggestionModel] = []
     var searchQuery: String = ""
+    var selectedCountry: String = ""
     
     var showBottomLoader: Bool = false
     
@@ -246,12 +247,17 @@ class ResultViewController: UIViewController {
     }
     
     func initializeData() {
+        var country = self.selectedCountry
+        if self.selectedCountry.isEmpty {
+            country = self.baseSearchURL
+            
+            var startIndex = advance(country.startIndex, count(country) - 2)
+            var endIndex = advance(country.startIndex, count(country) )
+            country = country.substringWithRange(startIndex..<endIndex)
+            println("COUNTRY: \(country)")
+        }
         
-        var country = self.baseSearchURL
-        var startIndex = advance(country.startIndex, 8)
-        var endIndex = advance(country.startIndex, 10)
-        country = country.substringWithRange(startIndex..<endIndex)
-        println("COUNTRY: \(country)")
+        println("BASE: \(self.baseSearchURL)")
         
         var countryEntities: [CountryEntity] = CountryEntity.findAll() as! [CountryEntity]
         let countryEntity: CountryEntity = countryEntities.first!
@@ -746,9 +752,11 @@ class ResultViewController: UIViewController {
             self.hud?.showHUDToView(self.view)
         } else {
             self.resultCollectionView.reloadData()
-            var item = self.resultCollectionView.numberOfItemsInSection(0) - 1
-            var lastItemIndex = NSIndexPath(forItem: item, inSection: 0)
-            self.resultCollectionView?.scrollToItemAtIndexPath(lastItemIndex, atScrollPosition: UICollectionViewScrollPosition.Top, animated: true)
+            if self.resultCollectionView.numberOfItemsInSection(0) > 0 {
+                var item = self.resultCollectionView.numberOfItemsInSection(0) - 1
+                var lastItemIndex = NSIndexPath(forItem: item, inSection: 0)
+                self.resultCollectionView?.scrollToItemAtIndexPath(lastItemIndex, atScrollPosition: UICollectionViewScrollPosition.Top, animated: true)
+            }
         }
     }
     
@@ -865,6 +873,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if self.isSellerSearch {
+            self.showBottomLoader = false
             let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
             sellerViewController.sellerId = self.sellerCollectionViewData[indexPath.row].userId
             self.navigationController!.pushViewController(sellerViewController, animated: true)
@@ -939,6 +948,7 @@ extension ResultViewController: UITableViewDataSource, UITableViewDelegate {
             self.page = 1
             self.productCollectionViewData.removeAll(keepCapacity: false)
             self.resultCollectionView.reloadData()
+            self.selectedCountry = countryTableViewData[indexPath.row].code
             self.fireSearch()
         }
         
@@ -956,7 +966,7 @@ extension ResultViewController: UITableViewDataSource, UITableViewDelegate {
         self.closeKeyboard()
         self.searchBarView?.hideSearchTypePicker()
         self.searchBarView?.hideAutoComplete()
-        if y > temp {
+        if y > temp && self.resultCollectionView.numberOfItemsInSection(0) > 0 {
             self.showBottomLoader = true
             self.fireSearch()
         }
