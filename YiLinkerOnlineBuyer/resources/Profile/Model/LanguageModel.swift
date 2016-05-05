@@ -30,7 +30,7 @@ class LanguageModel: NSObject {
         var name: String = ""
         var code: String = ""
         
-        if let temp = dictionary["languageId"] as? Int {
+        if let temp = dictionary["id"] as? Int {
             languageId = temp
         }
         
