@@ -116,7 +116,7 @@ class ResultViewController: UIViewController {
     var selectedMaxPrice: Double = 0    //Selected max price by the user
     var selectedMinPrice: Double = 0    //Selected min price by the user
     var page: Int = 1                   //Page used for the pagination
-    let perPage: Int = 2               //Number of results in each page
+    let perPage: Int = 12               //Number of results in each page
     var filtersString: [String] = []    //Generated string based the filter attributes
     var selectedSortTypeIndex: Int = -1
     var filterAtributes: [FilterAttributeModel] = []
