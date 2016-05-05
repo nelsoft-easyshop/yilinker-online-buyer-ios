@@ -259,86 +259,106 @@ class MyPointsTableViewController: UITableViewController, PointsBreakdownTableVi
     
     func fireGetTotalPoints() {
         showHUD()
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = ["access_token" : SessionManager.accessToken()];
         
-        manager.GET(APIAtlas.getPointsTotal, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            println(responseObject)
-            self.totalPointsModel = TotalPointsModel.parseDataWithDictionary(responseObject as! NSDictionary)
-            
-            if self.totalPointsModel.isSuccessful {
-                self.fireGetPointsHistory()
-            } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.totalPointsModel.message, title: self.errorLocalizeString)
-            }
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                self.hud?.hide(true)
+        WebServiceManager.fireGetTotalPointFromUrl(APIAtlas.getPointsTotal, access_token: SessionManager.accessToken()) { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.totalPointsModel = TotalPointsModel.parseDataWithDictionary(responseObject as! NSDictionary)
                 
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    self.fireRefreshToken("totalPoints")
+                if self.totalPointsModel.isSuccessful {
+                    self.fireGetPointsHistory()
                 } else {
-                    if Reachability.isConnectedToNetwork() {
-                        UIAlertController.displaySomethingWentWrongError(self)
-                    } else {
-                        UIAlertController.displayNoInternetConnectionError(self)
-                    }
-                    println(error)
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.totalPointsModel.message, title: self.errorLocalizeString)
                 }
-                
-                
-        })
+            } else {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    
+                    if errorModel.message == "The access token provided is invalid." {
+                        UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                        })
+                    } else {
+                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    }
+                    
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken("totalPoints")
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
+        }
     }
     
     func fireGetPointsHistory() {
         if !isMyPointsEnd {
             
             showHUD()
-            let manager = APIManager.sharedInstance
-
             myPointsPage++
             
             let url: String = "\(APIAtlas.getPointsHistory)?access_token=\(SessionManager.accessToken())&perPage=10&page=\(myPointsPage)"
             
-            manager.GET(url, parameters: nil, success: {
-                (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-    
-                println(responseObject)
-                self.getCtr++
-                //self.myPointsHistory = MyPointsHistoryModel.parseDataWithDictionary(responseObject as! NSDictionary)
-                
-                let pointHistory: MyPointsHistoryModel = MyPointsHistoryModel.parseDataWithDictionary(responseObject as! NSDictionary)
-                println("Count 1 \(self.myPointsHistory.data.count)")
-                
-                if pointHistory.data.count < 10 {
-                    self.isMyPointsEnd = true
-                }
-                
-                if self.totalPointsModel.isSuccessful {
-                    self.myPointsHistory.data += pointHistory.data
-                    self.tableView.reloadData()
-                } else {
-                    self.isMyPointsEnd = true
-                    self.tableView.reloadData()
-                }
-                self.hud?.hide(true)
-                }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                    self.hud?.hide(true)
-                    let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+            WebServiceManager.fireGetPointsFromUrl(url) { (successful, responseObject, requestErrorType) -> Void in
+                if successful {
+                    println(responseObject)
+                    self.getCtr++
+                    //self.myPointsHistory = MyPointsHistoryModel.parseDataWithDictionary(responseObject as! NSDictionary)
                     
-                    if task.statusCode == 401 {
-                        self.fireRefreshToken("pointsHistory")
-                    } else {
-                        if Reachability.isConnectedToNetwork() {
-                            UIAlertController.displaySomethingWentWrongError(self)
-                        } else {
-                            UIAlertController.displayNoInternetConnectionError(self)
-                        }
-                        println(error)
+                    let pointHistory: MyPointsHistoryModel = MyPointsHistoryModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                    println("Count 1 \(self.myPointsHistory.data.count)")
+                    
+                    if pointHistory.data.count < 10 {
+                        self.isMyPointsEnd = true
                     }
-            })
+                    
+                    if self.totalPointsModel.isSuccessful {
+                        self.myPointsHistory.data += pointHistory.data
+                        self.tableView.reloadData()
+                    } else {
+                        self.isMyPointsEnd = true
+                        self.tableView.reloadData()
+                    }
+                    self.hud?.hide(true)
+                } else {
+                    if requestErrorType == .ResponseError {
+                        //Error in api requirements
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        
+                        if errorModel.message == "The access token provided is invalid." {
+                            UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                            })
+                        } else {
+                            Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                        }
+                        
+                    } else if requestErrorType == .AccessTokenExpired {
+                        self.fireRefreshToken("pointsHistory")
+                    } else if requestErrorType == .PageNotFound {
+                        //Page not found
+                        Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .NoInternetConnection {
+                        //No internet connection
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .RequestTimeOut {
+                        //Request timeout
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .UnRecognizeError {
+                        //Unhandled error
+                        Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                    }
+                }
+            }
+            
         } else {
             self.hud?.hide(true)
             if self.myPointsHistory.data.count != 0 {
