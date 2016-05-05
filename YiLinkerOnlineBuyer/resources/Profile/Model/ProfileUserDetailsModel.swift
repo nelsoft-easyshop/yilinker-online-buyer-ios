@@ -275,6 +275,7 @@ class ProfileUserDetailsModel: NSObject {
             country = CountryModel.parseDataFromDictionary(value)
             SessionManager.setSelectedCountryCode(country.code)
             SessionManager.setSelectedLanguageCode(country.defaultLanguage.code)
+            language = country.defaultLanguage
         }
         
         if let value = dictionary["language"] as? NSDictionary {
