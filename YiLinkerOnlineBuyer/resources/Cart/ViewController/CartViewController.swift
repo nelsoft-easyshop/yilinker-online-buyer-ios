@@ -28,6 +28,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet var cartCounterLabel: UILabel!
     @IBOutlet var checkoutButton: UIButton!
     
+    var totalPrice: Double = 0
+    
     var tableData: [CartProductDetailsModel] = []
     var selectedItemIDs: [Int] = []     //Selected ids in the cart
     
@@ -203,7 +205,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                         
                         let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
                         checkout.carItems = checkoutItems
-                        checkout.totalPrice = self.totalPriceLabel.text!
+                        checkout.totalPrice = "\(self.totalPrice)"
                         let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
                         navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
                         self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
@@ -374,7 +376,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         var price: String = "\(totalPrice)"
         self.totalPriceLabel.text = "\(price.formatToTwoDecimal())"
-        
+        self.totalPrice = totalPrice
         self.initializeCheckoutButton()
     }
     
