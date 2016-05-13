@@ -49,8 +49,8 @@ class ProductReviewsModel {
                 model.fullName = reviews["fullName"] as! String
             }
             
-            if reviews["firstName"] != nil {
-                model.firstName = reviews["firstName"] as! String
+            if let temp = reviews["firstName"] as? String {
+                model.firstName = temp
             }
             
             if reviews["lastName"] != nil {
