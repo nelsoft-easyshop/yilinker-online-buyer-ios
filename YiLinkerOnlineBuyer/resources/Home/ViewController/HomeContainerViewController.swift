@@ -8,38 +8,26 @@
 
 import UIKit
 
-struct HomeStrings {
-    static let featured: String = StringHelper.localizedStringWithKey("FEATURED_LOCALIZE_KEY")
-    static let hotItems: String = StringHelper.localizedStringWithKey("HOT_ITEMS_LOCALIZE_KEY")
-    static let newItem: String = StringHelper.localizedStringWithKey("NEW_ITEMS_LOCALIZE_KEY")
-    static let seller: String = StringHelper.localizedStringWithKey("SELLERS_LOCALIZE_KEY")
+
+class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate, SellerCarouselCollectionViewCellDataSource, SellerCarouselCollectionViewCellDelegate, LayoutNineCollectionViewCellDelegate, DailyLoginCollectionViewCellDataSource, DailyLoginCollectionViewCellDelegate, FABViewControllerDelegate, OverseasCollectionViewCellDelegate, OverseasCollectionViewCellDataSource {
     
-    static let wishlistError: String = StringHelper.localizedStringWithKey("WISHLIST_ERROR_LOCALIZE_KEY")
-    static let error: String = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
-    static let somethingWentWrong: String = StringHelper.localizedStringWithKey("SOMETHING_WENT_WRONG_LOCALIZE_KEY")
-}
-
-struct FABStrings {
-    static let signIn: String = StringHelper.localizedStringWithKey("SIGNIN_LOCALIZE_KEY")
-    static let help: String = StringHelper.localizedStringWithKey("HELP_LOCALIZE_KEY")
-    static let register: String = StringHelper.localizedStringWithKey("REGISTER_LOCALIZE_KEY")
-    static let messaging: String = StringHelper.localizedStringWithKey("MESSAGING_LOCALIZE_KEY")
-    static let customizeShopping: String = StringHelper.localizedStringWithKey("CUSTOMIZE_SHOPPING_LOCALIZE_KEY")
-    static let todaysPromo: String = StringHelper.localizedStringWithKey("TODAYS_PROMO_LOCALIZE_KEY")
-    static let categories: String = StringHelper.localizedStringWithKey("CATEGORIES_LOCALIZE_KEY")
-    static let mustBeSignIn: String = StringHelper.localizedStringWithKey("MUST_BE_SIGNIN_LOCALIZE_KEY")
-    static let followedSeller: String = StringHelper.localizedStringWithKey("FOLLOWED_SELLER_LOCALIZE_KEY")
-    static let logout: String = StringHelper.localizedStringWithKey("LOGOUT_LOCALIZE_KEY")
-    static let profile: String = StringHelper.localizedStringWithKey("PROFILE_LOCALIZE_KEY")
-}
-
-class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate, SellerCarouselCollectionViewCellDataSource, SellerCarouselCollectionViewCellDelegate, LayoutNineCollectionViewCellDelegate, DailyLoginCollectionViewCellDataSource, DailyLoginCollectionViewCellDelegate, FABViewControllerDelegate {
+    let featured: String = StringHelper.localizedStringWithKey("FEATURED_LOCALIZE_KEY")
+    let hotItems: String = StringHelper.localizedStringWithKey("HOT_ITEMS_LOCALIZE_KEY")
+    let newItem: String = StringHelper.localizedStringWithKey("NEW_ITEMS_LOCALIZE_KEY")
+    let seller: String = StringHelper.localizedStringWithKey("SELLERS_LOCALIZE_KEY")
+    
+    let wishlistError: String = StringHelper.localizedStringWithKey("WISHLIST_ERROR_LOCALIZE_KEY")
+    let error: String = StringHelper.localizedStringWithKey("ERROR_LOCALIZE_KEY")
+    let somethingWentWrong: String = StringHelper.localizedStringWithKey("SOMETHING_WENT_WRONG_LOCALIZE_KEY")
+    let home: String = StringHelper.localizedStringWithKey("HOME_LOCALIZE_KEY")
+    let backToTop: String = StringHelper.localizedStringWithKey("BACK_TO_TOP_LOCALIZE_KEY")
+    let off: String = StringHelper.localizedStringWithKey("OFF_LOCALIZE_KEY")
     
     var searchViewContoller: SearchViewController?
     var wishlisViewController: WishlistViewController?
     var cartViewController: CartViewController?
     
-    
+    var scrollYPosition: CGFloat = 0.0
     
     var emptyView: EmptyView?
     var searchBarView: SearchBarView?
@@ -137,6 +125,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.title = self.home
         //header
         self.registerHeaderCollectionView(self.sectionHeaderNibName)
         self.registerCellWithNibName(self.carouselCellNibName)
@@ -150,6 +140,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.registerCellWithNibName(self.sellerCarouselNibName)
         self.registerCellWithNibName(self.layoutNineNibName)
         self.registerCellWithNibName(self.twoColumnGridCell)
+        self.registerCellWithNibName(OverseasCollectionViewCell.nibNameAndIdentifier())
         
         self.fireGetHomePageData(true)
         
@@ -179,6 +170,11 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else {
             println("Device language is english!")
         }
+        
+        if !self.isJsonStringEmpty() {
+            self.populateHomePageWithDictionary(self.coreDataJsonString())
+        }
+        
     }
     
     //MARK: - Add Pull To Refresh
@@ -217,6 +213,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.backToTopButton.layer.shadowOffset = CGSizeMake(0, 5)
         self.backToTopButton.layer.shadowRadius = 5
         self.backToTopButton.layer.shadowOpacity = 1.0
+        self.backToTopButton.setTitle(self.backToTop, forState: UIControlState.Normal)
     }
     
     //MARK: -
@@ -228,9 +225,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: -
     //MARK: - collectionViewLayout()
     func collectionViewLayout() {
+        self.collectionView.collectionViewLayout = UICollectionViewLayout()
+        
         let homePageCollectionViewLayout: HomePageCollectionViewLayout2 = HomePageCollectionViewLayout2()
         homePageCollectionViewLayout.homePageModel = self.homePageModel
         homePageCollectionViewLayout.layouts = self.layouts
+        
         self.collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         self.collectionView.collectionViewLayout = homePageCollectionViewLayout
         //decoration view
@@ -331,7 +331,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     if task.statusCode == 401 {
                         self.fireRefreshToken()
                     } else {
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: HomeStrings.somethingWentWrong, title: HomeStrings.error)
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.somethingWentWrong, title: self.error)
                     }
                 }
                 self.yiHud?.hide()
@@ -359,7 +359,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             if SessionManager.isLoggedIn() {
                 return true
             } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: HomeStrings.wishlistError, title: HomeStrings.error)
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.wishlistError, title: self.error)
                 return false
             }
         } else if self != viewController && viewController != tabBarController.viewControllers![2] as! UIViewController {
@@ -377,9 +377,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func changeDashBoardToCategory() {
         var viewControllers: [UINavigationController] = self.tabBarController!.viewControllers as! [UINavigationController]
         
+        let categories = StringHelper.localizedStringWithKey("WEBVIEW_CATEGORIES")
         let webViewController: WebViewController = WebViewController(nibName: "WebViewController", bundle: nil) as WebViewController
         webViewController.urlString = APIAtlas.category
-        webViewController.title = WebviewStrings.categories
+        webViewController.title = categories
         webViewController.isBackButtonVisible = false
         let navigationController2: UINavigationController = UINavigationController(rootViewController: webViewController) as UINavigationController
         navigationController2.navigationBar.barTintColor = Constants.Colors.appTheme
@@ -411,9 +412,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - Fire Get Home Page Data
     //Request for getting json data for populating homepage
     func fireGetHomePageData(showHuD: Bool) {
-        if showHuD {
+        /*if showHuD {
             self.showHUD()
-        }
+        }*/
         
         WebServiceManager.fireGetHomePageDataWithUrl(APIAtlas.homeUrl, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
@@ -431,7 +432,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     SessionManager.saveCookies()
                 }
             } else {
-                self.yiHud?.hide()
+                //self.yiHud?.hide()
                 
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
@@ -448,8 +449,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                         self.addEmptyView()
                     } else {
                         //show cached data
-                        self.showNoDataBanner()
-                        self.populateHomePageWithDictionary(self.coreDataJsonString())
+                        //self.showNoDataBanner()
+                        //self.populateHomePageWithDictionary(self.coreDataJsonString())
                     }
                     
                 } else if requestErrorType == .RequestTimeOut {
@@ -458,8 +459,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                         self.addEmptyView()
                     } else {
                         //show cached data
-                        self.showNoDataBanner()
-                        self.populateHomePageWithDictionary(self.coreDataJsonString())
+//                        self.showNoDataBanner()
+//                        self.populateHomePageWithDictionary(self.coreDataJsonString())
                     }
                 } else if requestErrorType == .UnRecognizeError {
                     //Unhandled error
@@ -537,6 +538,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: -
     //MARK: - Populate Home PageWith  Dictionary
     func populateHomePageWithDictionary(dictionary: NSDictionary) {
+        let yPosition: CGFloat = self.scrollYPosition
         self.collectionView.hidden = false
         self.homePageModel = HomePageModel.parseDataFromDictionary(dictionary)
         self.layouts.removeAll(keepCapacity: true)
@@ -570,12 +572,15 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 self.layouts.append("9")
             } else if model.isKindOfClass(LayoutTenModel) {
                 self.layouts.append("10")
+            } else if model.isKindOfClass(LayoutElevenModel) {
+                self.layouts.append("11")
             }
         }
         
         dispatch_async(dispatch_get_main_queue(), {
             self.collectionView.reloadData()
             self.collectionViewLayout()
+            self.collectionView.setContentOffset(CGPointMake(0, yPosition), animated: false)
         })
     }
     
@@ -700,6 +705,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func showHUD() {
         self.yiHud = YiHUD.initHud()
         self.yiHud!.showHUDToView(self.view)
+        self.yiHud!.showHUDToView(self.view)
+        self.yiHud!.showHUDToView(self.view)
+        self.yiHud!.showHUDToView(self.view)
     }
     
     //MARK: -
@@ -738,6 +746,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             return 1
         case 10:
             return self.homePageModel.data[section].data.count
+        case 11:
+            return 1
         default:
             return 0
         }
@@ -779,6 +789,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             return self.layoutNineCollectionViewCellWithIndexPath(indexPath)
         } else if self.layouts[indexPath.section] == "10" {
             return self.twoColumnGridCollectionViewCellWithIndexPath(indexPath)
+        } else if self.layouts[indexPath.section] == "11" {
+            return self.overseasCollectionViewCell(indexPath)
         } else {
             return UICollectionViewCell()
         }
@@ -1092,7 +1104,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         if layoutFourModel.data.count >= 1 {
             flashSaleCell.productOneImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutFourModel.data[0].image), placeholderImage: UIImage(named: "dummy-placeholder"))
-            flashSaleCell.productOneDiscountLabel.text = "\(layoutFourModel.data[0].discountPercentage)% OFF"
+            flashSaleCell.productOneDiscountLabel.text = "\(layoutFourModel.data[0].discountPercentage)% \(self.off)"
             flashSaleCell.productOneImageView.target = layoutFourModel.data[0].target.targetUrl
             flashSaleCell.productOneImageView.targetType = layoutFourModel.data[0].target.targetType
         }
@@ -1101,14 +1113,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             flashSaleCell.productTwoImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutFourModel.data[1].image), placeholderImage: UIImage(named: "dummy-placeholder"))
             flashSaleCell.productTwoImageView.target = layoutFourModel.data[1].target.targetUrl
             flashSaleCell.productTwoImageView.targetType = layoutFourModel.data[1].target.targetType
-            flashSaleCell.productTwoDiscountLabel.text = "\(layoutFourModel.data[1].discountPercentage)% OFF"
+            flashSaleCell.productTwoDiscountLabel.text = "\(layoutFourModel.data[1].discountPercentage) \(self.off)"
         }
         
         if layoutFourModel.data.count >= 3 {
             flashSaleCell.productThreeImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutFourModel.data[2].image), placeholderImage: UIImage(named: "dummy-placeholder"))
             flashSaleCell.productThreeImageView.target = layoutFourModel.data[2].target.targetUrl
             flashSaleCell.productThreeImageView.targetType = layoutFourModel.data[2].target.targetType
-            flashSaleCell.productThreeDiscountLabel.text = "\(layoutFourModel.data[2].discountPercentage) OFF%"
+            flashSaleCell.productThreeDiscountLabel.text = "\(layoutFourModel.data[2].discountPercentage) \(self.off)"
         }
         
         return flashSaleCell
@@ -1327,6 +1339,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 halfVerticalImageCollectionViewCell.targetType = layoutFiveModel.data[indexPath.row].target.targetType
                 
                 halfVerticalImageCollectionViewCell.originalPriceLabel.text = layoutFiveModel.data[indexPath.row].originalPrice.addPesoSign()
+                
                 halfVerticalImageCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
                 
                 if layoutFiveModel.data[indexPath.row].discountPercentage.toDouble() == 0 || layoutFiveModel.data[indexPath.row].discountPercentage.toDouble() == nil {
@@ -1468,6 +1481,17 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         sellerCarosuel.delegate = self
         sellerCarosuel.dataSource = self
         return sellerCarosuel
+    }
+    
+    //MARK: - 
+    //MARK: - Overseas Collection View Cell
+    func overseasCollectionViewCell(indexPath: NSIndexPath) -> OverseasCollectionViewCell {
+        let overseasCollectionViewCell: OverseasCollectionViewCell = self.collectionView.dequeueReusableCellWithReuseIdentifier(OverseasCollectionViewCell.nibNameAndIdentifier(), forIndexPath: indexPath) as! OverseasCollectionViewCell
+        
+        overseasCollectionViewCell.delegate = self
+        overseasCollectionViewCell.dataSource = self
+        
+        return overseasCollectionViewCell
     }
     
     //MARK: -
@@ -1628,17 +1652,29 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             let webViewController: WebViewController = WebViewController(nibName: "WebViewController", bundle: nil)
             webViewController.urlString = target
             self.navigationController!.pushViewController(webViewController, animated: true)
+        } else if targetType == "countryProductList" {
+            //code here...
+//            Toast.displayToastWithMessage("country prod list action here", view: self.navigationController!.view)
+            let resultViewController: ResultViewController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+            resultViewController.pageTitle = sectionTitle
+            resultViewController.passModel(SearchSuggestionModel(suggestion: "", imageURL: "", searchUrl: target))
+            self.navigationController!.pushViewController(resultViewController, animated: true)
         }
     }
     
     //MARK: -
     //MARK: - Scroll View Delegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
+        self.scrollYPosition = scrollView.contentOffset.y
         let indexes: [NSIndexPath] = self.collectionView.indexPathsForVisibleItems() as! [NSIndexPath]
         var isShowBackToTop: Bool = true
         self.closeKeyboard()
-        self.searchBarView!.hideSearchTypePicker()
-        self.searchBarView!.hideAutoComplete()
+        
+        if self.searchBarView != nil {
+            self.searchBarView!.hideSearchTypePicker()
+            self.searchBarView!.hideAutoComplete()
+        }
+        
         for index in indexes {
             if index.section == 2 {
                 isShowBackToTop = false
@@ -1707,10 +1743,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: -
     //MARK: - Daily Login Data Source
     func dailyLoginCollectionViewCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
-        let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(dailyLoginCollectionViewCell)!
-        let layoutTwoModel: LayoutTwoModel = self.homePageModel.data[parentIndexPath.section] as! LayoutTwoModel
-        
-        return layoutTwoModel.data.count
+        if self.collectionView.indexPathForCell(dailyLoginCollectionViewCell) != nil {
+            let parentIndexPath: NSIndexPath = self.collectionView.indexPathForCell(dailyLoginCollectionViewCell)!
+            let layoutTwoModel: LayoutTwoModel = self.homePageModel.data[parentIndexPath.section] as! LayoutTwoModel
+            
+            return layoutTwoModel.data.count
+        } else {
+            return 0
+        }
     }
     
     func dailyLoginCollectionViewCell(dailyLoginCollectionViewCell: DailyLoginCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> FullImageCollectionViewCell {
@@ -1793,23 +1833,35 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         fabViewController!.view.backgroundColor = UIColor.clearColor()
         fabViewController!.delegate = self
         
+        let signIn: String = StringHelper.localizedStringWithKey("SIGNIN_LOCALIZE_KEY")
+        let help: String = StringHelper.localizedStringWithKey("HELP_LOCALIZE_KEY")
+        let register: String = StringHelper.localizedStringWithKey("REGISTER_LOCALIZE_KEY")
+        let messaging: String = StringHelper.localizedStringWithKey("MESSAGING_LOCALIZE_KEY")
+        let customizeShopping: String = StringHelper.localizedStringWithKey("CUSTOMIZE_SHOPPING_LOCALIZE_KEY")
+        let todaysPromo: String = StringHelper.localizedStringWithKey("TODAYS_PROMO_LOCALIZE_KEY")
+        let categories: String = StringHelper.localizedStringWithKey("CATEGORIES_LOCALIZE_KEY")
+        let mustBeSignIn: String = StringHelper.localizedStringWithKey("MUST_BE_SIGNIN_LOCALIZE_KEY")
+        let followedSeller: String = StringHelper.localizedStringWithKey("FOLLOWED_SELLER_LOCALIZE_KEY")
+        let logout: String = StringHelper.localizedStringWithKey("LOGOUT_LOCALIZE_KEY")
+        let profile: String = StringHelper.localizedStringWithKey("PROFILE_LOCALIZE_KEY")
+        
         if SessionManager.isLoggedIn() {
             fabViewController!.addtextAndIconsWithLeftText("", rightText: "", icon: "close-white", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText("FOLLOWED SELLER", rightText: "", icon: "fab_following", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText("MESSAGING", rightText: "\(SessionManager.getUnReadMessagesCount()) unread message(s)", icon: "fab_messaging", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText("CATEGORIES", rightText: "", icon: "fab_promo", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText("HELP", rightText: "", icon: "fab_help", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText("PROFILE", rightText: "\(SessionManager.userFullName()) \n \(SessionManager.city()) \(SessionManager.province())", icon: SessionManager.profileImageStringUrl(), isProfile: true)
+            fabViewController!.addtextAndIconsWithLeftText(followedSeller, rightText: "", icon: "fab_following", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(messaging, rightText: "\(SessionManager.getUnReadMessagesCount()) unread message(s)", icon: "fab_messaging", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(categories, rightText: "", icon: "fab_promo", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(help, rightText: "", icon: "fab_help", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(profile, rightText: "\(SessionManager.userFullName()) \n \(SessionManager.city()) \(SessionManager.province())", icon: SessionManager.profileImageStringUrl(), isProfile: true)
             self.tabBarController!.presentViewController(fabViewController!, animated: false) { () -> Void in
                 
             }
         } else {
             self.circularDraweView("circular-drawer")
             fabViewController!.addtextAndIconsWithLeftText("", rightText: "", icon: "close-white", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText(FABStrings.register, rightText: "", icon: "fab_register", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText(FABStrings.signIn, rightText: "", icon: "fab_signin", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText(FABStrings.categories, rightText: "", icon: "fab_category", isProfile: false)
-            fabViewController!.addtextAndIconsWithLeftText(FABStrings.help, rightText: "", icon: "fab_help", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(register, rightText: "", icon: "fab_register", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(signIn, rightText: "", icon: "fab_signin", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(categories, rightText: "", icon: "fab_category", isProfile: false)
+            fabViewController!.addtextAndIconsWithLeftText(help, rightText: "", icon: "fab_help", isProfile: false)
             
             self.tabBarController!.presentViewController(fabViewController!, animated: false) { () -> Void in
                 
@@ -1820,41 +1872,52 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
 
 extension HomeContainerViewController: QRCodeScannerViewControllerDelegate {
     func qrCodeScannerViewController(qrCodeScannerViewController: QRCodeScannerViewController, code: String) {
-        if code.contains("http"){
-            if code.contains("referralCode") {
-                var qrCode: String = ""
-                if let range = code.rangeOfString("=", options: NSStringCompareOptions.BackwardsSearch) {
-                    qrCode = code.substringFromIndex(range.endIndex)
-                    println(qrCode)
-                    if !SessionManager.isLoggedIn() {
-                        self.refferalCode = qrCode
-                        self.redirectToLoginRegister(false)
-                    } else if SessionManager.referrerCode().isEmpty {
-                            var editViewController = EditProfileTableViewController(nibName: "EditProfileTableViewController", bundle: nil)
-                            editViewController.isFromQRScanner = true
-                            self.profileModel.referrerCode = qrCode
-                            editViewController.passModel(self.profileModel)
-                            self.navigationController?.pushViewController(editViewController, animated:true)
-                    } else {
-                        Toast.displayToastWithMessage(StringHelper.localizedStringWithKey("HAVE_REFERRER_LOCALIZE_KEY"), duration: 1.5, view: self.view)
-                    }
+        if code.contains("referralCode") {
+            var qrCode: String = ""
+            if let range = code.rangeOfString("=", options: NSStringCompareOptions.BackwardsSearch) {
+                qrCode = code.substringFromIndex(range.endIndex)
+                println(qrCode)
+                if !SessionManager.isLoggedIn() {
+                    self.refferalCode = qrCode
+                    self.redirectToLoginRegister(false)
+                } else if SessionManager.referrerCode().isEmpty {
+                    var editViewController = EditProfileTableViewController(nibName: "EditProfileTableViewController", bundle: nil)
+                    editViewController.isFromQRScanner = true
+                    self.profileModel.referrerCode = qrCode
+                    editViewController.passModel(self.profileModel)
+                    self.navigationController?.pushViewController(editViewController, animated:true)
+                } else {
+                    Toast.displayToastWithMessage(StringHelper.localizedStringWithKey("HAVE_REFERRER_LOCALIZE_KEY"), duration: 1.5, view: self.view)
                 }
-            } else if code.contains("store") {
-                var slug: String = ""
-                if let range = code.rangeOfString("/", options: NSStringCompareOptions.BackwardsSearch) {
-                    slug = code.substringFromIndex(range.endIndex)
-                    println(slug)
-                    
-                    let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
-                    sellerViewController.slug = slug
-                    self.navigationController!.pushViewController(sellerViewController, animated: true)
-                }
-            } else {
-                Toast.displayToastWithMessage(StringHelper.localizedStringWithKey("INVALID_QR_LOCALIZE_KEY"), duration: 1.5, view: self.view)
             }
-            
-        } else {
-            Toast.displayToastWithMessage(StringHelper.localizedStringWithKey("INVALID_QR_LOCALIZE_KEY"), duration: 1.5, view: self.view)
+        } else if code.contains("store") {
+            var slug: String = ""
+            if let range = code.rangeOfString("/", options: NSStringCompareOptions.BackwardsSearch) {
+                slug = code.substringFromIndex(range.endIndex)
+                println(slug)
+                
+                let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
+                sellerViewController.slug = slug
+                self.navigationController!.pushViewController(sellerViewController, animated: true)
+            }
+        } else if code.contains("item") {
+            var slug: String = ""
+            if let range = code.rangeOfString("/", options: NSStringCompareOptions.BackwardsSearch) {
+                slug = code.substringFromIndex(range.endIndex)
+                println(slug)
+                
+                let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
+                productViewController.tabController = self.tabBarController as! CustomTabBarController
+                productViewController.productId = slug
+                self.navigationController!.pushViewController(productViewController, animated: true)
+
+            }
+        } else if code.contains("register") {
+            self.redirectToLoginRegister(false)
+        } else if code.contains("login") {
+            self.redirectToLoginRegister(true)
+        }else {
+            UIApplication.sharedApplication().openURL(StringHelper.convertStringToUrl(code))
         }
     }
 }
@@ -1888,30 +1951,34 @@ extension HomeContainerViewController: SearchBarViewDelegate {
     }
     
     func searchBarView(searchBarView: SearchBarView, didTapSearch textField: UITextField) {
-        if (self.searchTask != nil) {
-            self.searchTask?.cancel()
-            searchTask = nil
-        }
-        
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-        textField.resignFirstResponder()
-        let newString = textField.text.stringByReplacingOccurrencesOfString(" ", withString: "+")
-        
-        var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
-        
-        if self.searchType == .Product {
-            resultController.isSellerSearch = false
-            resultController.passModel(SearchSuggestionModel(suggestion: textField.text, imageURL: "", searchUrl: "\(APIAtlas.searchBuyer)\(newString)"))
+        if count(textField.text) < 3 {
+            Toast.displayToastWithMessage(StringHelper.localizedStringWithKey("KEYWORD_SHORT_LOCALIZE_KEY"), duration: 1.5, view: self.view)
         } else {
-            resultController.isSellerSearch = true
-            resultController.passModel(SearchSuggestionModel(suggestion: textField.text, imageURL: "", searchUrl: "\(APIAtlas.searchSeller)\(newString)"))
+            if (self.searchTask != nil) {
+                self.searchTask?.cancel()
+                searchTask = nil
+            }
+            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            textField.resignFirstResponder()
+            let newString = textField.text.stringByReplacingOccurrencesOfString(" ", withString: "+")
+            
+            var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+            
+            if self.searchType == .Product {
+                resultController.isSellerSearch = false
+                resultController.passModel(SearchSuggestionModel(suggestion: textField.text, imageURL: "", searchUrl: "\(APIAtlas.searchBuyer)\(newString)"))
+            } else {
+                resultController.isSellerSearch = true
+                resultController.passModel(SearchSuggestionModel(suggestion: textField.text, imageURL: "", searchUrl: "\(APIAtlas.searchSeller)\(newString)"))
+            }
+            
+            resultController.profileModel = self.profileModel
+            
+            resultController.searchType = self.searchType
+            
+            self.navigationController?.pushViewController(resultController, animated:true);
         }
-        
-        resultController.profileModel = self.profileModel
-        
-        resultController.searchType = self.searchType
-        
-        self.navigationController?.pushViewController(resultController, animated:true);
     }
     
     func searchBarView(searchBarView: SearchBarView, didChooseSuggestion suggestion: SearchSuggestionModel) {
@@ -1976,5 +2043,47 @@ extension HomeContainerViewController: SearchBarViewDelegate {
                 }
             }
         })
+    }
+}
+
+extension HomeContainerViewController: OverseasCollectionViewCellDataSource {
+    func overseasCollectionViewCell(overseasCollectionViewCell: OverseasCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
+        let indexPath: NSIndexPath = self.collectionView.indexPathForCell(overseasCollectionViewCell)!
+        let layoutElevenModel: LayoutElevenModel  = self.homePageModel.data[indexPath.section] as! LayoutElevenModel
+        return layoutElevenModel.data.count;
+    }
+    
+    func overseasCollectionViewCell(overseasCollectionViewCell: OverseasCollectionViewCell, cellForRowAtIndexPath indexPath: NSIndexPath) -> FullImageCollectionViewCell {
+
+        let indexPath2: NSIndexPath = self.collectionView.indexPathForCell(overseasCollectionViewCell)!
+        let layoutElevenModel: LayoutElevenModel  = self.homePageModel.data[indexPath2.section] as! LayoutElevenModel
+
+        
+        let fullImageCell: FullImageCollectionViewCell = overseasCollectionViewCell.collectionView.dequeueReusableCellWithReuseIdentifier("FullImageCollectionViewCell", forIndexPath: indexPath) as! FullImageCollectionViewCell
+        
+        fullImageCell.itemProductImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutElevenModel.data[indexPath.row].image), placeholderImage: UIImage(named: "dummy-placeholder"), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+            if let imageView = fullImageCell.itemProductImageView {
+                if downloadedImage != nil {
+                    imageView.fadeInImageWithImage(downloadedImage)
+                }
+            }
+        })
+        
+        fullImageCell.target = layoutElevenModel.data[indexPath.row].target.targetUrl
+        fullImageCell.targetType = layoutElevenModel.data[indexPath.row].target.targetType
+        
+        return fullImageCell
+    }
+    
+    func itemWidthInOverseasCollectionViewCell(overseasCollectionViewCell: OverseasCollectionViewCell) -> CGFloat {
+        return 80
+    }
+}
+
+extension HomeContainerViewController: OverseasCollectionViewCellDelegate {
+    func overseasCollectionViewCell(carouselCollectionViewCell: OverseasCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let fullImageCell: FullImageCollectionViewCell = carouselCollectionViewCell.collectionView.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
+        
+        self.didClickItemWithTarget(fullImageCell.target, targetType: fullImageCell.targetType)
     }
 }

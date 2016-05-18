@@ -66,6 +66,7 @@
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -107,25 +108,23 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6EA-G0-2GT" customClass="SearchBarView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="20" width="375" height="45"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="45" id="NJ7-DE-CbL"/>
-                                        </constraints>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.37647058820000001" green="0.1215686275" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="6EA-G0-2GT" secondAttribute="trailing" id="7Da-cd-NRO"/>
-                                    <constraint firstItem="6EA-G0-2GT" firstAttribute="top" secondItem="goi-6y-62p" secondAttribute="top" constant="20" id="gqb-i9-BoL"/>
-                                    <constraint firstItem="6EA-G0-2GT" firstAttribute="leading" secondItem="goi-6y-62p" secondAttribute="leading" id="tDO-Ar-duG"/>
-                                    <constraint firstAttribute="height" constant="65" id="viU-ei-0RZ"/>
+                                    <constraint firstAttribute="height" constant="65" id="46g-Ab-9Sn"/>
+                                    <constraint firstAttribute="trailing" secondItem="6EA-G0-2GT" secondAttribute="trailing" id="FLz-u5-1J5"/>
+                                    <constraint firstAttribute="bottom" secondItem="6EA-G0-2GT" secondAttribute="bottom" id="S6e-fS-jc4"/>
+                                    <constraint firstItem="6EA-G0-2GT" firstAttribute="leading" secondItem="goi-6y-62p" secondAttribute="leading" id="esJ-yy-dD9"/>
+                                    <constraint firstItem="6EA-G0-2GT" firstAttribute="top" secondItem="goi-6y-62p" secondAttribute="top" constant="20" id="vYb-sm-WwL"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eam-n3-3yH">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eam-n3-3yH">
                                 <rect key="frame" x="127" y="70" width="120" height="30"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.36078431370000003" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="120" id="6ZT-Sb-R0J"/>
-                                    <constraint firstAttribute="height" constant="30" id="Anz-0K-km3"/>
+                                    <constraint firstAttribute="width" constant="120" id="aOw-Vr-yPW"/>
+                                    <constraint firstAttribute="height" constant="30" id="cYF-8p-XuL"/>
                                 </constraints>
                                 <state key="normal" title="back to top">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -138,15 +137,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Lxq-mx-A8I" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="2ho-rM-ruR"/>
-                            <constraint firstItem="Lxq-mx-A8I" firstAttribute="top" secondItem="goi-6y-62p" secondAttribute="bottom" id="Cjq-ac-Dzt"/>
-                            <constraint firstItem="Eam-n3-3yH" firstAttribute="top" secondItem="goi-6y-62p" secondAttribute="bottom" constant="5" id="E2a-Yi-gve"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="goi-6y-62p" secondAttribute="trailing" constant="-16" id="Ffd-AN-Au2"/>
-                            <constraint firstItem="goi-6y-62p" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="topMargin" id="HII-Ny-Xyz"/>
-                            <constraint firstItem="goi-6y-62p" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="eCr-BI-QhF"/>
-                            <constraint firstAttribute="centerX" secondItem="Eam-n3-3yH" secondAttribute="centerX" id="sKM-yr-Jg4"/>
-                            <constraint firstItem="1tV-ne-YDq" firstAttribute="top" secondItem="Lxq-mx-A8I" secondAttribute="bottom" constant="-49" id="vQh-6W-1S2"/>
-                            <constraint firstAttribute="trailing" secondItem="Lxq-mx-A8I" secondAttribute="trailing" id="vm6-cu-Jjq"/>
+                            <constraint firstItem="goi-6y-62p" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="Cbb-qS-6LF"/>
+                            <constraint firstAttribute="bottom" secondItem="Lxq-mx-A8I" secondAttribute="bottom" id="DV1-Fa-3MX"/>
+                            <constraint firstAttribute="trailing" secondItem="goi-6y-62p" secondAttribute="trailing" id="Q2r-7v-G1Z"/>
+                            <constraint firstItem="Lxq-mx-A8I" firstAttribute="top" secondItem="goi-6y-62p" secondAttribute="bottom" id="Vsf-AC-nXE"/>
+                            <constraint firstAttribute="centerX" secondItem="Eam-n3-3yH" secondAttribute="centerX" id="Zcs-a4-gta"/>
+                            <constraint firstAttribute="trailing" secondItem="Lxq-mx-A8I" secondAttribute="trailing" id="euW-CX-kXB"/>
+                            <constraint firstItem="Eam-n3-3yH" firstAttribute="top" secondItem="goi-6y-62p" secondAttribute="bottom" constant="5" id="sPs-Sx-E0G"/>
+                            <constraint firstItem="goi-6y-62p" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="u4w-1v-5NC"/>
+                            <constraint firstItem="Lxq-mx-A8I" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="vue-2M-JIb"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="DKy-sG-2VX"/>
@@ -343,7 +342,7 @@
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M20-0g-60V">
                                         <rect key="frame" x="8" y="7" width="359" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>

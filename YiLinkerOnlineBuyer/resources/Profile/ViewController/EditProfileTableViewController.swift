@@ -51,6 +51,9 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     var emailAddress: String = ""
     var password: String = ""
     var referrerPersonCode: String = ""
+    var country: CountryModel = CountryModel()
+    var originalCountry: CountryModel = CountryModel()
+    var language: LanguageModel = LanguageModel()
     
     var profileImageData: NSData?
     var validIDImageData: NSData?
@@ -74,6 +77,10 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     override func viewDidAppear(animated: Bool) {
         self.tableView.reloadData()
+        
+        //Set title of the Navigation Bar
+        self.title = EditProfileLocalizedStrings.editProfileLocalizeString
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -88,13 +95,13 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         mobileNumber = profileModel.contactNumber
         emailAddress = profileModel.email
         referrerPersonCode = profileModel.referrerCode
+        country = profileModel.country
+        originalCountry = profileModel.country
+        language = profileModel.language
     }
     
     //MARK: Initializations
     func initializeViews() {
-        //Set title of the Navigation Bar
-        self.title = EditProfileLocalizedStrings.editProfileLocalizeString
-        
         //Avoid overlapping of tab bar and navigation bar to the mainview
         if self.respondsToSelector("edgesForExtendedLayout") {
             self.edgesForExtendedLayout = UIRectEdge.None
@@ -106,6 +113,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         
         var tapTableView = UITapGestureRecognizer(target:self, action:"hideKeyboard")
+        tapTableView.cancelsTouchesInView = false
         self.tableView.addGestureRecognizer(tapTableView)
         
         //Initializes 'dimView' (backround of the modals) attributes
@@ -207,6 +215,11 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 cell.viewImageConstraint.constant = 75
             }
             
+            cell.languageValueLabel.text = "\(profileUserDetailsModel.language.name) (\(profileUserDetailsModel.language.code.uppercaseString))"
+            
+            cell.countryFlagImageView.sd_setImageWithURL(NSURL(string: profileUserDetailsModel.country.flag), placeholderImage: UIImage(named: "dummy-placeholder"))
+            cell.countryValueLabel.text =  profileUserDetailsModel.country.name
+            
             cell.delegate = self
             personalIndexPath = indexPath
             
@@ -232,7 +245,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         if indexPath.row == 0 {
             return 150
         } else if indexPath.row == 1 {
-            return 200
+            return 310
         } else if indexPath.row == 2 {
             return 180
         }  else if indexPath.row == 3 {
@@ -254,17 +267,29 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     * and proceed/do some actions based on the error type
     */
 
-    func fireUpdateProfile(hasImage: Bool, firstName: String, lastName: String, profilePhoto: NSData? = nil, userDocument: NSData? = nil, referrerPersonCode: String) {
+    func fireUpdateProfile(hasImage: Bool, firstName: String, lastName: String, profilePhoto: NSData? = nil, userDocument: NSData? = nil, referrerPersonCode: String, countryId: Int, languageId: Int) {
         self.showLoader()
         let url: String = APIAtlas.editProfileUrl
         
-        WebServiceManager.fireUpdateProfileWithUrl(url, hasImage: hasImage, accessToken: SessionManager.accessToken(), firstName: firstName, lastName: lastName, profilePhoto: profilePhoto, userDocument: userDocument, referrerPersonCode: self.referrerPersonCode, actionHandler:  { (successful, responseObject, requestErrorType) -> Void in
+        WebServiceManager.fireUpdateProfileWithUrl(url, hasImage: hasImage, accessToken: SessionManager.accessToken(), firstName: firstName, lastName: lastName, profilePhoto: profilePhoto, userDocument: userDocument, referrerPersonCode: self.referrerPersonCode, countryId: countryId, languageId: languageId, actionHandler:  { (successful, responseObject, requestErrorType) -> Void in
             
             self.dismissLoader()
             if successful {
                 SessionManager.setReferrerCode(self.referrerPersonCode)
+                SessionManager.setSelectedCountryCode(self.country.code)
+                SessionManager.setSelectedLanguageCode(self.language.code)
                 Toast.displayToastWithMessage(EditProfileLocalizedStrings.successfullyUpdateProfile, duration: 2.0, view: self.navigationController!.view)
-                self.navigationController?.popViewControllerAnimated(true)
+                
+                if self.originalCountry.code == self.country.code {
+                    Delay.delayWithDuration(2.5, completionHandler: { (success) -> Void in
+                        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                        appDelegate.changeRootToHomeView()
+                    })
+                } else {
+                    self.navigationController?.popViewControllerAnimated(true)
+                }
+                
+                
             } else {
                 self.handleErrorWithType(requestErrorType, requestType: .UpdateProfile, responseObject: responseObject, hasImage: hasImage, firstName: firstName, lastName: lastName, profilePhoto: profilePhoto, userDocument: userDocument, referrerPersonCode: referrerPersonCode)
             }
@@ -371,7 +396,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 case .GetUserInfo:
                     self.fireGetUserInfo()
                 case .UpdateProfile:
-                    self.fireUpdateProfile(hasImage, firstName: firstName, lastName: lastName, profilePhoto: profilePhoto, userDocument: userDocument, referrerPersonCode: referrerPersonCode)
+                    self.fireUpdateProfile(hasImage, firstName: firstName, lastName: lastName, profilePhoto: profilePhoto, userDocument: userDocument, referrerPersonCode: referrerPersonCode, countryId: self.country.countryID, languageId: self.language.languageId)
                 }
             } else {
                 //Show UIAlert and force the user to logout
@@ -398,7 +423,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
     
     // Hide Keyboard
     func hideKeyboard() {
-        self.view.endEditing(true)
+//        self.view.endEditing(true)
     }
     
     func hideDimView() {
@@ -592,6 +617,22 @@ extension EditProfileTableViewController: EditProfilePersonalInformationTableVie
         }
     }
     
+    func didTapCountryAction() {
+        let globalPref: GlobalPreferencesPickerTableViewController = GlobalPreferencesPickerTableViewController(nibName: "GlobalPreferencesPickerTableViewController", bundle: nil)
+        globalPref.type = .Country
+        globalPref.delegate = self
+        globalPref.selectedCountry = self.country
+        self.navigationController!.pushViewController(globalPref, animated: true)
+    }
+    
+    func didTapLanguageAction() {
+        let globalPref: GlobalPreferencesPickerTableViewController = GlobalPreferencesPickerTableViewController(nibName: "GlobalPreferencesPickerTableViewController", bundle: nil)
+        globalPref.type = .Language
+        globalPref.delegate = self
+        globalPref.selectedLanguage = self.language
+        self.navigationController!.pushViewController(globalPref, animated: true)
+    }
+    
     //MARK: - 
     //MARK: - Referral Code Table View Cell With Index Path
     func referralCodeTableViewCellWithIndexPath(indexPath: NSIndexPath) -> ReferralCodeTableViewCell {
@@ -660,7 +701,7 @@ extension EditProfileTableViewController: EditProfileAccountInformationTableView
                 hasImage = false
             }
             
-            self.fireUpdateProfile(hasImage, firstName: self.firstName, lastName: self.lastName, profilePhoto: self.profileImageData, userDocument: self.validIDImageData, referrerPersonCode: self.referrerPersonCode)
+            self.fireUpdateProfile(hasImage, firstName: self.firstName, lastName: self.lastName, profilePhoto: self.profileImageData, userDocument: self.validIDImageData, referrerPersonCode: self.referrerPersonCode, countryId: self.country.countryID, languageId: self.language.languageId)
         }
     }
     
@@ -792,5 +833,22 @@ extension EditProfileTableViewController: ReferralCodeTableViewCellDelegate {
     func referralCodeTableViewCell(referralCodeTableViewCell: ReferralCodeTableViewCell, didChangeValueAtTextField textField: UITextField, textValue: String) {
         self.referrerPersonCode = textValue
         println("textValue: \(textValue)")
+    }
+}
+
+//MARK: -
+//MARK: - Global Preferences Picker TableViewController Delegate
+extension EditProfileTableViewController: GlobalPreferencesPickerTableViewControllerDelegate {
+    func globalPreferencesPickerTableViewController(globalPreferencesPickerTableViewController: GlobalPreferencesPickerTableViewController, country: CountryModel) {
+        self.country = country
+        self.profileUserDetailsModel.country = country
+        self.profileUserDetailsModel.country.defaultLanguage = self.language
+        self.tableView.reloadData()
+    }
+    
+    func globalPreferencesPickerTableViewController(globalPreferencesPickerTableViewController: GlobalPreferencesPickerTableViewController, language: LanguageModel) {
+        self.language = language
+        self.profileUserDetailsModel.language = language
+        self.tableView.reloadData()
     }
 }

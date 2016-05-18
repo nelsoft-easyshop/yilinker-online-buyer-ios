@@ -8,6 +8,8 @@
 
 import UIKit
 
+// MARK: Delegate
+// TransactionCancelOrderView Delegate methods
 protocol TransactionCancelOrderViewDelegate {
     func showCancelOrder()
     func leaveProductFeedback(tag: Int)
@@ -15,25 +17,26 @@ protocol TransactionCancelOrderViewDelegate {
 
 class TransactionCancelOrderView: UIView {
 
-    @IBOutlet weak var cancelOrderLabel: UILabel!
-    @IBOutlet weak var cancelView: DynamicRoundedView!
-    @IBOutlet weak var cancelButton: UIButton!
+    // Custom button and view
     @IBOutlet weak var leaveFeedbackButton: DynamicRoundedButton!
+    @IBOutlet weak var cancelView: DynamicRoundedView!
     
+    // Buttons
+    @IBOutlet weak var cancelButton: UIButton!
+    
+    // Labels
+    @IBOutlet weak var cancelOrderLabel: UILabel!
+    
+    // Initialize TransactionCancelOrderViewDelegate
     var delegate: TransactionCancelOrderViewDelegate?
-    override func awakeFromNib() {
-        
-        var tap = UITapGestureRecognizer(target: self, action: "cancelOrder:")
-        cancelOrderLabel.addGestureRecognizer(tap)
-        cancelView.addGestureRecognizer(tap)
-        
-    }
     
-    func cancelOrder(sender: AnyObject){
-        println("cancel order")
-        self.delegate?.showCancelOrder()
+    override func awakeFromNib() {
+        var tap = UITapGestureRecognizer(target: self, action: "cancelOrder:")
+        self.cancelOrderLabel.addGestureRecognizer(tap)
+        self.cancelView.addGestureRecognizer(tap)
     }
 
+    // MARK: Button actions
     @IBAction func cancelButtonAction(sender: AnyObject){
         self.delegate?.showCancelOrder()
     }
@@ -41,12 +44,9 @@ class TransactionCancelOrderView: UIView {
     @IBAction func leaveFeedback() {
         self.delegate?.leaveProductFeedback(self.leaveFeedbackButton.tag)
     }
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+    
+    // MARK: cancelOrderLabel and cancelView action
+    func cancelOrder(sender: AnyObject){
+        self.delegate?.showCancelOrder()
     }
-    */
-
 }

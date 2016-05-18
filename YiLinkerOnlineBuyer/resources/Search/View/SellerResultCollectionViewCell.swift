@@ -61,5 +61,6 @@ class SellerResultCollectionViewCell: UICollectionViewCell, UICollectionViewDele
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        println(productIds[indexPath.row])
     }
 }

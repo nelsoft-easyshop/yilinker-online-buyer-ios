@@ -248,7 +248,7 @@ class ActivityLogTableViewController: UITableViewController {
             
             let perPage: String = "&perPage=15&"
             let page: String = "page=\(self.page)"
-            let url: String = "\(APIAtlas.activityLogs)\(SessionManager.accessToken())&\(perPage)\(page)"
+            let url: String = "\(APIAtlas.activityLogs)\(SessionManager.accessToken())\(perPage)\(page)"
             var parameters: NSDictionary = [:]
             
             WebServiceManager.fireGetActivityLogWithUrl(url, parameters: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in

@@ -19,7 +19,10 @@ class TotalSummaryPriceTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        self.shippingFeeValueLabel.text = StringHelper.localizedStringWithKey("FREE_LOCALIZE_KEY")
+        self.totalLabel.text = StringHelper.localizedStringWithKey("TOTAL_LOCALIZE_KEY")
+        self.deliveryLabel.text = StringHelper.localizedStringWithKey("DELIVERY_LOCALIZE_KEY")
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

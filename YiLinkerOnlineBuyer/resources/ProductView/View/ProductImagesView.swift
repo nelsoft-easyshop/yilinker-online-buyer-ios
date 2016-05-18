@@ -31,6 +31,8 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     @IBOutlet weak var originalPrice: UILabel!
     @IBOutlet weak var priceCustomLabel: DiscountLabel!
     @IBOutlet weak var discountPercentLabel: UILabel!
+    @IBOutlet weak var overseasContainerView: UIView!
+    @IBOutlet weak var overseasHeightConstant: NSLayoutConstraint!
     
     var imagesModel: [ProductImagesModel]!
     
@@ -49,6 +51,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         self.rateContainerView.layer.cornerRadius = self.rateContainerView.frame.size.width / 2
         self.messageContainerView.layer.cornerRadius = self.messageContainerView.frame.size.width / 2
         self.shareContainerView.layer.cornerRadius = self.shareContainerView.frame.size.width / 2
+        self.overseasContainerView.layer.cornerRadius = self.overseasContainerView.frame.size.width / 2
         self.discountPercentLabel.layer.cornerRadius = 5
         
         self.collectionView.dataSource = self
@@ -153,7 +156,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
     // Functions
     
     func setDetails(model: ProductDetailsModel, unitId: Int, width: CGFloat) {
-
+        let off: String = StringHelper.localizedStringWithKey("OFF_LOCALIZE_KEY")
         self.nameLabel.text = model.title
 
         if model.productUnits[unitId].price != model.productUnits[unitId].discountedPrice {
@@ -167,9 +170,20 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         
         if model.productUnits[unitId].discount != 0 {
             self.discountPercentLabel.hidden = false
-            self.discountPercentLabel.text = "\(model.productUnits[unitId].discount)% OFF "
+            self.discountPercentLabel.text = "\(model.productUnits[unitId].discount)% \(off) "
         } else {
             self.discountPercentLabel.hidden = true
+        }
+        
+        if model.isOverseas {
+            self.overseasContainerView.hidden = false
+            self.overseasHeightConstant.constant = 42
+        } else {
+            self.overseasContainerView.hidden = true
+            self.overseasHeightConstant.constant = 0
+            self.wishlistContainerView.transform = CGAffineTransformMakeTranslation(0.0, -50)
+            self.messageContainerView.transform = CGAffineTransformMakeTranslation(0.0, -50)
+            self.shareContainerView.transform = CGAffineTransformMakeTranslation(0.0, -50)
         }
         
         self.width = width
@@ -183,6 +197,7 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         }
         
         self.collectionView.reloadData()
+        self.layoutIfNeeded()
     }
 
     func updateDetails(model: ProductDetailsModel, unitId: Int, images: [String]) {
@@ -197,8 +212,9 @@ class ProductImagesView: UIView, UICollectionViewDataSource, UICollectionViewDel
         }
         
         if model.productUnits[unitId].discount != 0 {
+            let off: String = StringHelper.localizedStringWithKey("OFF_LOCALIZE_KEY")
             self.discountPercentLabel.hidden = false
-            self.discountPercentLabel.text = "\(model.productUnits[unitId].discount)% OFF "
+            self.discountPercentLabel.text = "\(model.productUnits[unitId].discount)% \(off)"
         } else {
             self.discountPercentLabel.hidden = true
         }

@@ -11,6 +11,7 @@ class SessionManager {
     static let sharedInstance = SessionManager()
 
     var loginType: LoginType = LoginType.GoogleLogin
+    static var isLanguageChinese: Bool = false
     
     class func setGcmToken(accessToken: String) {
         NSUserDefaults.standardUserDefaults().setObject(accessToken, forKey: "gcmToken")
@@ -79,6 +80,20 @@ class SessionManager {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
+    //MARK: -
+    //MARK: - Set Selected Country Code
+    class func setSelectedCountryCode(countryCode: String) {
+        NSUserDefaults.standardUserDefaults().setObject(countryCode, forKey: "countryCode")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    //MARK: -
+    //MARK: - Set Selected Language Code
+    class func setSelectedLanguageCode(languageCode: String) {
+        NSUserDefaults.standardUserDefaults().setObject(languageCode, forKey: "languageCode")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
     //MARK: - 
     //MARK: - Set Last Name
     class func setLastName(lastName: String) {
@@ -98,6 +113,26 @@ class SessionManager {
     class func setReferrerCode(referrerCode: String) {
         NSUserDefaults.standardUserDefaults().setObject(referrerCode, forKey: "referrerCode")
         NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    //MARK: -
+    //MARK: - Country Code
+    class func selectedCountryCode() -> String {
+        var result: String = "PH"
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("countryCode") as? String {
+            result = val as! String
+        }
+        return result
+    }
+    
+    //MARK: -
+    //MARK: - Country Code
+    class func selectedLanguageCode() -> String {
+        var result: String = "EN"
+        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("languageCode") as? String {
+            result = val as! String
+        }
+        return result
     }
     
     //MARK: -

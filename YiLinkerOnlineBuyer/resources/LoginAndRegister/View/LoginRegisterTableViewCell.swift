@@ -15,6 +15,7 @@ protocol LoginRegisterTableViewCellDelegate {
     func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapSignin signInButton: UIButton)
     
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, textFieldShouldReturn textField: UITextField)
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapLanguagePreference languagePreferenceView: UIView)
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapAreaCode areaCodeView: UIView)
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapSendActivationCode sendActivationCodeButton: UIButton)
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapRegister registerButton: UIButton)
@@ -43,6 +44,9 @@ class LoginRegisterTableViewCell: UITableViewCell {
     
     var referralCode: String = ""
     var isLogin: Bool = true
+    
+    var selectedCountry = CountryModel()
+    var selectedLanguage = LanguageModel()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -148,13 +152,16 @@ extension LoginRegisterTableViewCell: UICollectionViewDataSource, UICollectionVi
         } else {
             let cell: SimplifiedRegistrationUICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierRegistration, forIndexPath: indexPath) as! SimplifiedRegistrationUICollectionViewCell
             cell.referralCodeTextField.text = self.referralCode
+            cell.languagePreferenceLabel.text = "\(self.selectedLanguage.name) (\(self.selectedLanguage.code.uppercaseString))"
+            cell.areaCodeLabel.text = "+\(self.selectedCountry.areaCode)"
+            cell.areaCodeImageView.sd_setImageWithURL(NSURL(string: self.selectedCountry.flag), placeholderImage: UIImage(named: "dummy-placeholder"))
             cell.delegate = self
             return cell
         }
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: self.screenWidth, height:342)
+        return CGSize(width: self.screenWidth, height:390)
     }
 
     //MARK: -  UICollectionViewDelegate
@@ -205,6 +212,10 @@ extension LoginRegisterTableViewCell: SimplifiedLoginUICollectionViewCellDelegat
 extension LoginRegisterTableViewCell: SimplifiedRegistrationUICollectionViewCellDelegate {
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, textFieldShouldReturn textField: UITextField) {
         self.delegate?.simplifiedRegistrationCell(simplifiedRegistrationCell, textFieldShouldReturn: textField)
+    }
+    
+    func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapLanguagePreference languagePreferenceView: UIView) {
+        self.delegate?.simplifiedRegistrationCell(simplifiedRegistrationCell, didTapLanguagePreference: languagePreferenceView)
     }
     
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapAreaCode areaCodeView: UIView) {

@@ -150,7 +150,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     //Set Default Address
     func changeAddressCollectionViewCell(didSelectDefaultAtCell cell: ChangeAddressCollectionViewCell) {
         let indexPath: NSIndexPath = self.collectionView.indexPathForCell(cell)!
-        let addressId: String = "\(self.getAddressModel.listOfAddress[indexPath.row].userAddressId))"
+        let addressId: String = "\(self.getAddressModel.listOfAddress[indexPath.row].userAddressId)"
         self.fireSetDefaultAddressWithAddressId(addressId, indexPath: indexPath)
     }
     
@@ -228,42 +228,42 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     func requestGetAddressess() {
         self.showHUD()
         
-        let params = ["access_token": SessionManager.accessToken()]
-        
-        manager.POST(APIAtlas.addressesUrl, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            self.getAddressModel = GetAddressesModel.parseDataWithDictionary(responseObject)
-            self.cellCount = self.getAddressModel.listOfAddress.count
-            
-            for (index, address) in enumerate(self.getAddressModel.listOfAddress) {
-                if address.isDefault {
-                    self.selectedIndex = index
-                }
-            }
-            
-            self.collectionView.reloadData()
-            self.yiHud?.hide()
-            
-            if self.getAddressModel.listOfAddress.count == 1 {
-                self.fireSetDefaultAddressWithAddressId("\(self.getAddressModel.listOfAddress[0].userAddressId)", indexPath: NSIndexPath(forItem: 0, inSection: 0)!)
-            }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 401 {
-                    self.requestRefreshToken(AddressRefreshType.Get, uid: 0, indexPath: nil)
-                } else if error.userInfo != nil {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: errorModel.title)
-                } else {
-                    self.addEmptyView()
+        WebServiceManager.fireGetAddress(APIAtlas.addressesUrl, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.getAddressModel = GetAddressesModel.parseDataWithDictionary(responseObject)
+                self.cellCount = self.getAddressModel.listOfAddress.count
+                
+                for (index, address) in enumerate(self.getAddressModel.listOfAddress) {
+                    if address.isDefault {
+                        self.selectedIndex = index
+                    }
                 }
                 
+                self.collectionView.reloadData()
                 self.yiHud?.hide()
+                
+                if self.getAddressModel.listOfAddress.count == 1 {
+                    self.fireSetDefaultAddressWithAddressId("\(self.getAddressModel.listOfAddress[0].userAddressId)", indexPath: NSIndexPath(forItem: 0, inSection: 0)!)
+                }
+            } else {
+                self.yiHud?.hide()
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.requestRefreshToken(AddressRefreshType.Get, uid: 0, indexPath: nil)
+                }
+            }
         })
+        
     }
     
     func requestDeleteAddress(addressId: Int, index: NSIndexPath) {
@@ -301,7 +301,7 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     }
     
     func requestRefreshToken(type: AddressRefreshType, uid: Int, indexPath: NSIndexPath!) {
-        let url: String = "http://online.api.easydeal.ph/api/v1/login"
+      /*  let url: String = "http://online.api.easydeal.ph/api/v1/login"
         let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
             "client_secret": Constants.Credentials.clientSecret(),
             "grant_type": Constants.Credentials.grantRefreshToken,
@@ -326,12 +326,32 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
+        })*/
+        
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.loginUrl, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                
+                if type == AddressRefreshType.Get {
+                    self.requestGetAddressess()
+                } else if type == AddressRefreshType.Delete {
+                    self.requestDeleteAddress(uid, index: indexPath)
+                } else if type == AddressRefreshType.SetDefault {
+                    self.fireSetDefaultAddressWithAddressId("\(uid)", indexPath: indexPath)
+                }
+            } else {
+                self.yiHud?.hide()
+                let alertController = UIAlertController(title: Constants.Localized.someThingWentWrong, message: "", preferredStyle: .Alert)
+                let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }
         })
     }
     
     func fireSetDefaultAddressWithAddressId(addressId: String, indexPath: NSIndexPath) {
         self.showHUD()
-        let params = ["access_token": SessionManager.accessToken(),
+        /*let params = ["access_token": SessionManager.accessToken(),
             "userAddressId": addressId]
         
         manager.POST(APIAtlas.setDefaultAddressUrl, parameters: params, success: {
@@ -372,8 +392,42 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 }
                 
                 self.yiHud?.hide()
-        })
+        })*/
         
+        
+        WebServiceManager.fireSetDefaultAddressFromUrl(APIAtlas.setDefaultAddressUrl, userAddressId: addressId) { (successful, responseObject, requestErrorType) -> Void in
+            self.yiHud?.hide()
+            if successful {
+                let addressModel: AddressModelV2 = AddressModelV2.parseAddressFromDictionary(responseObject["data"] as! NSDictionary)
+                
+                SessionManager.setAddressId(addressModel.userAddressId)
+                SessionManager.setFullAddress(addressModel.fullLocation)
+                
+                SessionManager.setLang(addressModel.latitude)
+                SessionManager.setLong(addressModel.longitude)
+                
+                SessionManager.setCity(addressModel.city)
+                SessionManager.setProvince(addressModel.province)
+                
+                self.selectedIndex = indexPath.row
+                self.collectionView.reloadData()
+            } else {
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.requestRefreshToken(AddressRefreshType.SetDefault, uid:addressId.toInt()!, indexPath: indexPath)
+                }
+            }
+        }
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {

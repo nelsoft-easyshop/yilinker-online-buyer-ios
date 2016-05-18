@@ -32,11 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
         //self.toastStyle()
-        if SessionManager.accessToken() == "" {
-            self.startPage()
-        } else {
-            self.changeRootToHomeView()
-        }
         
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
         self.window?.makeKeyAndVisible()
@@ -67,6 +62,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         MagicalRecord.setupCoreDataStack()
         
         UIApplication.sharedApplication().registerForRemoteNotifications()
+        
+        println(SessionManager.selectedCountryCode())
+        
+//        if SessionManager.selectedCountryCode() == "" {
+//            self.countryPage()
+//        } else {
+//            self.changeRootToHomeView()
+//        }
+        
+        if SessionManager.accessToken() == "" {
+            self.countryPage()
+        } else {
+            self.changeRootToHomeView()
+        }
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
@@ -245,20 +254,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
     }
     
     func startPage() {
-        /*for view in self.window!.subviews {
-            view.removeFromSuperview()
-        }
-        let startingPageStoryBoard: UIStoryboard = UIStoryboard(name: "StartPageStoryBoard", bundle: nil)
-        let startingPageViewController: StartPageViewController = startingPageStoryBoard.instantiateViewControllerWithIdentifier("StartPageViewController") as! StartPageViewController
-        self.window?.rootViewController = startingPageViewController*/
         
+    }
+    
+    func countryPage() {
         for view in self.window!.subviews {
             view.removeFromSuperview()
         }
         
-        let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
-        let tabBarController: UITabBarController = storyBoard.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
-        self.window?.rootViewController = tabBarController
+        var countryViewController: CountryViewController =  CountryViewController()
+        
+        if IphoneType.isIphone4() {
+            countryViewController = CountryViewController(nibName: "CountryViewController4s", bundle: nil)
+        } else if IphoneType.isIphone5() {
+            countryViewController = CountryViewController(nibName: "CountryViewController5", bundle: nil)
+        } else if IphoneType.isIphone6() {
+            countryViewController = CountryViewController(nibName: "CountryViewController6", bundle: nil)
+        } else {
+            countryViewController = CountryViewController(nibName: "CountryViewController6plus", bundle: nil)
+        }
+        
+        
+        self.window?.rootViewController = countryViewController
     }
     
     func application(application: UIApplication,

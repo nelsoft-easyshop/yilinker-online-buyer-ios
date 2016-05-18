@@ -340,103 +340,87 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         let indexPath: NSIndexPath = NSIndexPath(forRow: 6, inSection: 0)
         let cell: MapTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! MapTableViewCell
     
-        let params = ["access_token": SessionManager.accessToken(),
-            "title": getTextAtIndex(0),
-            "streetName": getTextAtIndex(1),
-            "province": getTextAtIndex(2),
-            "city": getTextAtIndex(3),
-            "barangay": getTextAtIndex(4),
-            "zipCode": getTextAtIndex(5),
-            "locationId": self.addressModel.barangayId,
-            "longitude":cell.longitude(),
-            "latitude":cell.latitude()
-        ]
-        
-        manager.POST(APIAtlas.addAddressUrl, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+        WebServiceManager.fireAddAddress(APIAtlas.addAddressUrl, accessToken: SessionManager.accessToken(), title: getTextAtIndex(0), streetName: getTextAtIndex(1), province: getTextAtIndex(2), city: getTextAtIndex(3), barangay: getTextAtIndex(4), zipCode: getTextAtIndex(5), locationId: self.addressModel.barangayId, longitude: cell.longitude(), latitude: cell.latitude()) { (successful, responseObject, requestErrorType) -> Void in
+            
+            if successful {
                 self.yiHud?.hide()
                 self.navigationController!.popViewControllerAnimated(true)
                 self.delegate!.addAddressTableViewController(didAddAddressSucceed: self)
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 401 {
+            } else {
+                self.yiHud?.hide()
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
                     self.requestRefreshToken(AddressRefreshType.Create)
-                } else {
-                    self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
-                    self.yiHud?.hide()
                 }
-        })
+            }
+        }
     }
     
     func fireEditAddress() {
         self.showHUD()
         let indexPath: NSIndexPath = NSIndexPath(forRow: 6, inSection: 0)
         let cell: MapTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! MapTableViewCell
-        let params = ["access_token": SessionManager.accessToken(),
-            "title": getTextAtIndex(0),
-            "streetName": getTextAtIndex(1),
-            "province": getTextAtIndex(2),
-            "city": getTextAtIndex(3),
-            "barangay": getTextAtIndex(4),
-            "zipCode": getTextAtIndex(5),
-            "locationId": self.addressModel.barangayId,
-            "userAddressId": self.addressModel.userAddressId,
-            "longitude":cell.longitude(),
-            "latitude":cell.latitude()
-        ]
         
-        manager.POST(APIAtlas.editAddress, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.yiHud?.hide()
-            self.navigationController!.popViewControllerAnimated(true)
-            self.delegate!.addAddressTableViewController(didAddAddressSucceed: self)
-            SessionManager.setLang("\(cell.latitude())")
-            SessionManager.setLong("\(cell.longitude())")
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                 if task.statusCode == 401 {
+        WebServiceManager.fireAddAddress(APIAtlas.editAddress, accessToken: SessionManager.accessToken(), title: getTextAtIndex(0), streetName: getTextAtIndex(1), province: getTextAtIndex(2), city: getTextAtIndex(3), barangay: getTextAtIndex(4), zipCode: getTextAtIndex(5), locationId: self.addressModel.barangayId, longitude: cell.longitude(), latitude: cell.latitude()) { (successful, responseObject, requestErrorType) -> Void in
+            
+            if successful {
+                self.yiHud?.hide()
+                self.navigationController!.popViewControllerAnimated(true)
+                self.delegate!.addAddressTableViewController(didAddAddressSucceed: self)
+                SessionManager.setLang("\(cell.latitude())")
+                SessionManager.setLong("\(cell.longitude())")
+            } else {
+                self.yiHud?.hide()
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
                     self.requestRefreshToken(AddressRefreshType.Edit)
-                } else if error.userInfo != nil {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                } else {
-                    self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
-                    self.yiHud?.hide()
                 }
-        })
+            }
+        }
     }
     
     func requestRefreshToken(type: AddressRefreshType) {
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
-            "client_secret": Constants.Credentials.clientSecret(),
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        self.showHUD()
-        let manager = APIManager.sharedInstance
-        manager.POST(APIAtlas.loginUrl, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            if type == AddressRefreshType.Create {
-                self.requestAddAddress()
-            } else if type == AddressRefreshType.Edit {
-                self.fireEditAddress()
-            }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.loginUrl, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                if type == AddressRefreshType.Create {
+                    self.requestAddAddress()
+                } else if type == AddressRefreshType.Edit {
+                    self.fireEditAddress()
+                }
+
+            } else {
                 self.yiHud?.hide()
                 let alertController = UIAlertController(title: Constants.Localized.someThingWentWrong, message: "", preferredStyle: .Alert)
                 let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
+            }
         })
     }
     
     func requestGetProvince() {
-        let manager = APIManager.sharedInstance
+        /*let manager = APIManager.sharedInstance
         self.showHUD()
         manager.POST(APIAtlas.provinceUrl, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -461,12 +445,47 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.yiHud?.hide()
                 self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
+        })*/
+        
+        
+        WebServiceManager.fireGetProvinceFromUrl(APIAtlas.provinceUrl, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            self.provinceModel = ProvinceModel.parseDataWithDictionary(responseObject)
+            
+            if successful {
+                if self.provinceModel.location.count != 0 && self.addressModel.title == "" {
+                    self.addressModel.province = self.provinceModel.location[0]
+                    self.addressModel.provinceId = self.provinceModel.provinceId[0]
+                    self.requestGetCities(self.provinceModel.provinceId[0])
+                    self.provinceRow = 0
+                    self.setTextAtIndex(2, text: self.provinceModel.location[0])
+                } else {
+                    if self.addressModel.provinceId != 0 {
+                        self.requestGetCities(self.addressModel.provinceId)
+                    } else {
+                        self.requestGetCities(self.provinceModel.provinceId[0])
+                    }
+                }
+            } else {
+                self.yiHud?.hide()
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
         })
+        
     }
     
     func requestGetCities(id: Int) {
-        self.showHUD()
-        let manager = APIManager.sharedInstance
+       /*let manager = APIManager.sharedInstance
         let params = ["provinceId": String(id)]
         
         manager.POST(APIAtlas.citiesUrl, parameters: params, success: {
@@ -512,11 +531,52 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                         }
                     }
                 }
-        })
+        })*/
+        
+        
+        WebServiceManager.fireGetCitiesFromUrl(APIAtlas.citiesUrl, provinceId: String(id)) { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.cityModel = CityModel.parseDataWithDictionary(responseObject)
+                if self.cityModel.cityId.count != 0 && !self.isEdit {
+                    self.addressModel.city = self.cityModel.location[0]
+                    self.addressModel.cityId = self.cityModel.cityId[0]
+                    self.addressModel.barangayId = 0
+                    self.requestGetBarangay(self.addressModel.cityId)
+                    self.addressModel.barangay = ""
+                    self.cityRow = 0
+                    self.barangayRow = 0
+                    self.setTextAtIndex(3, text: self.cityModel.location[0])
+                } else {
+                    if self.addressModel.cityId != 0 {
+                        self.requestGetBarangay(self.addressModel.cityId)
+                    } else {
+                        self.addressModel.city = self.cityModel.location[0]
+                        self.addressModel.cityId = self.cityModel.cityId[0]
+                        self.requestGetBarangay(self.cityModel.cityId[0])
+                    }
+                }
+            } else {
+                self.yiHud?.hide()
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
+        }
+    
     }
     
     func requestGetBarangay(id: Int) {
-        let manager = APIManager.sharedInstance
+        
+      /*let manager = APIManager.sharedInstance
         let params = ["cityId": String(id)]
         self.showHUD()
         manager.POST(APIAtlas.barangay, parameters: params, success: {
@@ -542,7 +602,42 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 self.yiHud?.hide()
                 self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
-        })
+        })*/
+        
+        
+        WebServiceManager.fireGetBarangayFromUrl(APIAtlas.barangay, cityId: String(id)) { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.yiHud?.hide()
+                self.barangayModel = BarangayModel.parseDataWithDictionary(responseObject)
+                
+                if self.barangayModel.barangayId.count != 0 && !self.isEdit {
+                    self.addressModel.barangayId = self.barangayModel.barangayId[0]
+                    self.addressModel.barangay = self.barangayModel.location[0]
+                    self.setTextAtIndex(4, text: self.barangayModel.location[0])
+                } else {
+                    self.isEdit = false
+                }
+                
+                if self.isIndexReady == false && self.isEdit2 {
+                    self.isIndexReady = true
+                    self.defaultIndexes()
+                }
+            } else {
+                self.yiHud?.hide()
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                }
+            }
+        }
     }
     
     // MARK: - Keyboard Toolbar Actions 

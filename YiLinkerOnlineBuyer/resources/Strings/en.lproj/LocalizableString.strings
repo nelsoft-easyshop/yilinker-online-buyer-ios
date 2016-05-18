@@ -62,6 +62,11 @@ POPULAR_CATEGORIES_LOCALIZE_KEY = "Popular Categories";
 TRENDING_ITEMS_LOCALIZE_KEY = "Trending Items";
 ITEMS_YOU_MY_LIKE_LOCALIZE_KEY = "Items you may like";
 
+HOME_LOCALIZE_KEY = "Home";
+BACK_TO_TOP_LOCALIZE_KEY = "Back to Top";
+OFF_LOCALIZE_KEY = "OFF";
+
+
 TOP_PICKS_LOCALIZE_KEY = "Top Picks";
 WATCHES_LOCALIZE_KEY = "Watches";
 ELECTRONICS_LOCALIZE_KEY = "Electronics";
@@ -126,6 +131,12 @@ REFERRAL_LOCALIZED_KEY = "Referral Code";
 GET_ACTIVATION_LOCALIZED_KEY = "Get Confirmation Code";
 ACTIVATION_CODE_LOCALIZED_KEY = "Activation Code";
 
+REGISTER_SELECT_LANGUAGE_LOCALIZED_KEY = "Select a Language";
+REGISTER_CHOOSE_LANGUAGE_LOCALIZED_KEY = "Please choose your prefered language.";
+
+REGISTER_SELECT_AREA_CODE_LOCALIZED_KEY = "Select a Area Code";
+REGISTER_CHOOSE_AREA_CODE_LOCALIZED_KEY = "Please choose your Area Code.";
+
 // MARK: - Register Error
 FIRST_NAME_REQUIRED_LOCALIZE_KEY = "First name is required";
 FIRST_NAME_ILLEGAL_LOCALIZE_KEY = "First name contains illegal characters.";
@@ -160,14 +171,18 @@ ORDER_SUMMARY_LOCALIZE_KEY = "Order Summary";
 DELIVERY_LOCALIZE_KEY = "Delivery";
 TOTAL_LOCALIZE_KEY = "Total";
 FREE_LOCALIZE_KEY = "Free";
+VOUCHER_CODE_LOCALIZE_KEY = "Voucher Code";
 
 SHIP_TO_LOCALIZE_KEY = "Ship to";
 DEFAULT_ADDRESS_LOCALIZE_KEY = "Default Address";
 CHANGE_ADDRESS_LOCALIZE_KEY = "Change Address";
+ADD_LOCALIZE_KEY = "ADD";
+REMOVE_LOCALIZE_KEY = "REMOVE";
 
 SAVE_AND_CONTINUE_LOCALIZE_KEY = "Save and Continue";
 SAVE_AND_GO_TO_PAYMENT_LOCALIZE_KEY = "Save and Go to Payment";
 CONTINUE_SHOPPING_LOCALIZE_KEY = "Continue Shopping";
+CONTINUE_SHOPPING2_LOCALIZE_KEY = "CONTINUE SHOPPING";
 
 // MARK: - Address
 MOBILE_NUMBER_LOCALIZE_KEY = "Mobile Number";
@@ -212,6 +227,8 @@ REMEMBER_PAYMENT_LOCALIZE_KEY = "Remember Payment Option";
 DELIVER_TO_LOCALIZE_KEY = "Deliver to:";
 COD_LOCALIZE_KEY = "CoD";
 CREDIT_CARD_LOCALIZE_KEY = "Creditcard";
+NO_COD_LOCALIZE_KEY = "Not available for COD";
+COD_NOT_AVAILABLE_LOCALIZE_KEY = "COD is not available in this transaction";
 
 // MARK: - Checkout OverView
 CONGRATULATIONS_LOCALIZE_KEY = "Congratulations!";
@@ -371,7 +388,8 @@ PRODUCTS_SELLER_LOCALIZE_KEY = "Products";
 MORE_SELLERS_PRODUCT_LOCALIZE_KEY = "MORE SELLER'S PRODUCT";
 PRODUCT_RATINGS_AND_FEEDBACK_LOCALIZE_KEY = "Seller's Rating and Feedback";
 VENDOR_PAGE_CANNOT_FOLLOW_LOCALIZE_KEY = "Please login to follow this seller.";
-VENDOR_PAGE_CANNOT_MESSAGE_LOCALIZE_KEY = "You're not allowed to message this seller. Please login first.";
+VENDOR_PAGE_CANNOT_MESSAGE_LOGIN_LOCALIZE_KEY = "You're not allowed to message this seller. Please login first.";
+VENDOR_PAGE_CANNOT_MESSAGE_LOCALIZE_KEY = "You're not allowed to message this seller.";
 VENDOR_PAGE_CANNOT_CALL_LOCALIZE_KEY = "Cannot make a call to";
 //Vendor View Feedback
 CANCEL_LOCALIZE_KEY = "CANCEL";
@@ -397,6 +415,19 @@ WEBVIEW_PLEASE = "PLEASE TRY TO VISIT ME AGAIN LATER";
 HELP_FOR_CUSTOMER_SERVICE= "For Customer Service Assistance";
 HELP_EMAIL = "Email  :";
 HELP_CALL = "Call     :";
+HELP_SEND_FEEDBACK = "SEND A FEEDBACK";
+HELP_CHECK_FOR_UPDATES = "CHECK FOR UPDATES";
+HELP_WHATS_NEW = "WHAT'S NEW";
+
+// MARK: - Suggestion Feedback
+SUGGESTION_HEADLINE = "Do you want to send a feedback?";
+SUGGESTION_SUB_HEADLINE = "We'd love to know how we can make YiLinker even better.";
+SUGGESTION_TITLE = "Feedback";
+SUGGESTION_TITLE_LABEL = "Title";
+SUGGESTION_DESCRIPTION = "Description";
+SUGGESTION_SEND = "SEND";
+SUGGESTION_TITLE_REQUIRED = "Title is required!";
+SUGGESTION_DESC_REQUIRED = "Description is required!";
 
 //Cart
 CART_TITLE_LOCALIZE_KEY = "Cart";
@@ -409,6 +440,7 @@ CHECKOUT_LOCALIZE_KEY = "CHECKOUT";
 CHOOSE_ITEM_FROM_CART_LOCALIZE_KEY = "Choose item from your cart.";
 CART_EDIT_LOCALIZE_KEY = "Edit";
 CART_DELETE_LOCALIZE_KEY = "Delete";
+COD_NOT_AVAILABLE_LOCALIZE_KEY = "Not available for COD";
 
 //Wishlist
 WISHLISTTITLE_LOCALIZE_KEY = "Wishlist";
@@ -421,6 +453,10 @@ SEARCH_LOCALIZE_KEY = "Search";
 PRODUCT_LOCALIZE_KEY = "Product";
 SELLER_LOCALIZE_KEY = "Seller";
 BROWSECATEGORY_LOCALIZE_KEY = "Browse by Category";
+KEYWORD_SHORT_LOCALIZE_KEY = "Keyword too short!";
+
+SEARCH_P_PLACEHOLDER_LOCALIZE_KEY = "Search Product Here";
+SEARCH_S_PLACEHOLDER_LOCALIZE_KEY = "Search Seller Here";
 
 //Search Results
 RESULTS_LOCALIZE_KEY = "Results";
@@ -495,6 +531,13 @@ ADDRESS_LOCALIZE_KEY = "Address";
 DEFAULTADDRESS_LOCALIZE_KEY = "Default Address";
 CHANGEADDRESS_LOCALIZE_KEY = "Change Address";
 
+//Global Preferences
+GLOBAL_PREFERENCES_KEY = "Global Preferences";
+PROFILE_COUNTRY_KEY = "Country";
+PROFILE_LANGUAGE_KEY = "Language";
+PROFILE_COUNTRY_PREFERENCE_KEY = "Country Preferences";
+PROFILE_LANGUAGE_PREFERENCE_KEY_KEY = "Language Preferences";
+
 //Personal Information
 PERSONALINFO_LOCALIZE_KEY = "Personal Information";
 FIRSTNAME_LOCALIZE_KEY = "First Name";
@@ -532,6 +575,7 @@ SETTINGSDEACTIVATE_LOCALIZE_KEY = "Deactivate My Account?";
 
 //Transaction
 TRANSACTION_TITLE_TITLE_LOCALIZE_KEY = "Transaction";
+VIEW_TRANSACTION_LOCALIZE_KEY = "VIEW TRANSACTION";
 
 TRANSACTION_ALL_LOCALIZE_KEY = "ALL";
 TRANSACTION_PENDING_LOCALIZE_KEY = "ONGOING";

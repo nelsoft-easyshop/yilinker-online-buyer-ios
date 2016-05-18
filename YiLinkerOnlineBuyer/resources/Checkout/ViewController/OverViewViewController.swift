@@ -52,6 +52,9 @@ class OverViewViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.continueShoppingButton.layer.cornerRadius = 5
         self.viewTransactionButton.layer.cornerRadius = 5
+        
+        self.continueShoppingButton.setTitle(StringHelper.localizedStringWithKey("CONTINUE_SHOPPING2_LOCALIZE_KEY"), forState: UIControlState.Normal)
+        self.viewTransactionButton.setTitle(StringHelper.localizedStringWithKey("VIEW_TRANSACTION_LOCALIZE_KEY"), forState: UIControlState.Normal)
     }
     
     //MARK: -

@@ -6,7 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SellerResultCollectionViewCell" id="NJi-J7-Mja" userLabel="SellerResultCollectionViewCell" customClass="SellerResultCollectionViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+        <collectionReusableView opaque="NO" clipsSubviews="YES" contentMode="center" reuseIdentifier="SellerResultCollectionViewCell" id="NJi-J7-Mja" userLabel="SellerResultCollectionViewCell" customClass="SellerResultCollectionViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="225"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
@@ -69,7 +69,7 @@
                                 <constraint firstItem="Txz-g4-fRZ" firstAttribute="top" secondItem="WDg-GY-CNz" secondAttribute="top" constant="6" id="pAs-Tx-JTM"/>
                             </constraints>
                         </view>
-                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="DAc-Wn-l0p">
+                        <collectionView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="DAc-Wn-l0p">
                             <rect key="frame" x="8" y="50" width="359" height="85"/>
                             <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>

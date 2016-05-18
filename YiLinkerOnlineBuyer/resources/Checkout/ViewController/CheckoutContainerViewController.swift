@@ -160,6 +160,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     
     var selectedIndex: Int = 0
     var totalPrice: String = ""
+    var deliveryFee: String = ""
     
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var continueButton: UIButton!
@@ -196,6 +197,8 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     
     var showSuccess: Bool = false
     
+    var noCOD: Bool = true
+    
     //VerifyNumberViewController for dismissing
     var tempVerifyNumberViewController: VerifyNumberViewController?
     
@@ -206,6 +209,10 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         
         if self.respondsToSelector("edgesForExtendedLayout") {
             self.edgesForExtendedLayout = UIRectEdge.None
+        }
+        
+        if SessionManager.selectedCountryCode().caseInsensitiveCompare("PH") == NSComparisonResult.OrderedSame {
+            self.noCOD = false
         }
         
         self.setUpInitialViews()
@@ -620,6 +627,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         overViewViewController = OverViewViewController(nibName: "OverViewViewController", bundle: nil)
         summaryViewController!.totalPrice = self.totalPrice
         summaryViewController!.cartItems = self.carItems
+        summaryViewController!.deliveryFee = self.deliveryFee
         
         self.viewControllers.append(summaryViewController!)
         self.viewControllers.append(paymentViewController!)
@@ -952,39 +960,42 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     //MARK: -
     //MARK: - Fire COD
     func fireCOD() {
-        self.showHUD()
-        WebServiceManager.fireCODWithUrl(APIAtlas.COD(), accessToken: SessionManager.accessToken()) {
-            (successful, responseObject, requestErrorType) -> Void in
-            self.yiHud?.hide()
-            if successful {
-                let paymentSuccessModel: PaymentSuccessModel = PaymentSuccessModel.parseDataWithDictionary(responseObject as! NSDictionary)
-                if paymentSuccessModel.isSuccessful {
-                    self.redirectToSuccessPage(paymentSuccessModel)
+        if !noCOD {
+            self.showHUD()
+            WebServiceManager.fireCODWithUrl(APIAtlas.COD(), accessToken: SessionManager.accessToken()) {
+                (successful, responseObject, requestErrorType) -> Void in
+                self.yiHud?.hide()
+                if successful {
+                    let paymentSuccessModel: PaymentSuccessModel = PaymentSuccessModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                    if paymentSuccessModel.isSuccessful {
+                        self.redirectToSuccessPage(paymentSuccessModel)
+                    } else {
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: paymentSuccessModel.message, title: Constants.Localized.someThingWentWrong)
+                    }
                 } else {
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: paymentSuccessModel.message, title: Constants.Localized.someThingWentWrong)
-                }
-            } else {
-                self.selectedIndex--
-                if requestErrorType == .ResponseError {
-                    //Error in api requirements
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
-                } else if requestErrorType == .AccessTokenExpired {
-                    self.fireRefreshToken(.COD, values: [])
-                } else if requestErrorType == .PageNotFound {
-                    //Page not found
-                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
-                } else if requestErrorType == .NoInternetConnection {
-                    //No internet connection
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                } else if requestErrorType == .RequestTimeOut {
-                    //Request timeout
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                } else if requestErrorType == .UnRecognizeError {
-                    //Unhandled error
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                    if requestErrorType == .ResponseError {
+                        //Error in api requirements
+                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .AccessTokenExpired {
+                        self.fireRefreshToken(.COD, values: [])
+                    } else if requestErrorType == .PageNotFound {
+                        //Page not found
+                        Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .NoInternetConnection {
+                        //No internet connection
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .RequestTimeOut {
+                        //Request timeout
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .UnRecognizeError {
+                        //Unhandled error
+                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                    }
                 }
             }
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: StringHelper.localizedStringWithKey("COD_NOT_AVAILABLE_LOCALIZE_KEY"))
         }
     }
     
@@ -1004,7 +1015,6 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 }
 
             } else {
-                self.selectedIndex--
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)

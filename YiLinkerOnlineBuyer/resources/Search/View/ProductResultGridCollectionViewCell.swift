@@ -15,17 +15,21 @@ class ProductResultGridCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var originalPriceLabel: UILabel!
     @IBOutlet weak var newPriceLabel: RoundedLabel!
     
+    @IBOutlet weak var overseasView: UIView!
     @IBOutlet weak var productImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.overseasView.hidden = true
     }
     
     func setDiscount(text: String) {
+        let off: String = StringHelper.localizedStringWithKey("OFF_LOCALIZE_KEY")
+        
         if text == "0" {
             discountLabel.hidden = true
         } else {
-            discountLabel.text = text + "% OFF"
+            discountLabel.text = text + "% \(off)"
         }
     }
     
@@ -44,5 +48,9 @@ class ProductResultGridCollectionViewCell: UICollectionViewCell {
     
     func setProductImage(text: String) {
         productImageView.sd_setImageWithURL(NSURL(string: text), placeholderImage: UIImage(named: "dummy-placeholder"))
+    }
+    
+    func setIsOverseas(isOverseas: Bool) {
+        self.overseasView.hidden = !isOverseas
     }
 }

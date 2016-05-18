@@ -21,3 +21,4 @@
 #define MR_SHORTHAND
 #import <CoreData+MagicalRecord.h>
 #import "MPGNotification.h"
+#import "LGAlertView.h"

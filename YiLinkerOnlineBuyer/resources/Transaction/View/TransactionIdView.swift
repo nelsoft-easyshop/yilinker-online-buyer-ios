@@ -9,12 +9,12 @@
 import UIKit
 
 class TransactionIdView: UIView {
-
-    @IBOutlet weak var transactionIdLabel: UILabel!
+    
+    // Labels
     @IBOutlet weak var numberOfProductsLabel: UILabel!
+    @IBOutlet weak var transactionIdLabel: UILabel!
     
     override func awakeFromNib() {
         
     }
-
 }

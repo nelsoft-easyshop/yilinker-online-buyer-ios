@@ -74,10 +74,6 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         self.checkoutButton.layer.cornerRadius = 5
         
-        self.navigationController?.navigationBar.titleTextAttributes =
-            [NSForegroundColorAttributeName: UIColor.whiteColor(),
-                NSFontAttributeName: UIFont(name: "Panton-Regular", size: 21)!]
-        
         self.dimView = UIView(frame: UIScreen.mainScreen().bounds)
         self.dimView?.backgroundColor = UIColor.blackColor()
         self.dimView?.alpha = 0
@@ -119,7 +115,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let url = APIAtlas.cart()
         WebServiceManager.fireGetCartWithUrl(url, access_token: SessionManager.accessToken(), actionHandler: { (successful, responseObject, requestErrorType) -> Void in
-            
+            println(responseObject)
             self.dismissLoader()
             if successful {
                 self.populateTableView(responseObject)
@@ -177,35 +173,43 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 
                 if let isSuccessful: Bool = responseObject["isSuccessful"] as? Bool {
                     if isSuccessful {
-                        if let data: NSArray = responseObject["data"] as? NSArray {
-                            for subValue in data {
-                                let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
-                                
-                                for tempProductUnit in model.productUnits {
-                                    if model.unitId == tempProductUnit.productUnitId {
-                                        
-                                        if tempProductUnit.imageIds.count != 0 {
-                                            for tempImage in model.images {
-                                                if tempImage.id == tempProductUnit.imageIds[0] {
-                                                    model.selectedUnitImage = tempImage.fullImageLocation
+                        var totalShippingCost: Int = 0
+                        if let data: NSDictionary = responseObject["data"] as? NSDictionary {
+                            if let items: NSArray = data["items"] as? NSArray  {
+                                for subValue in items {
+                                    let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
+                                    
+                                    for tempProductUnit in model.productUnits {
+                                        if model.unitId == tempProductUnit.productUnitId {
+                                            
+                                            if tempProductUnit.imageIds.count != 0 {
+                                                for tempImage in model.images {
+                                                    if tempImage.id == tempProductUnit.imageIds[0] {
+                                                        model.selectedUnitImage = tempImage.fullImageLocation
+                                                    }
                                                 }
+                                            } else if model.images.count != 0 {
+                                                model.selectedUnitImage = model.images[0].fullImageLocation
+                                            } else {
+                                                model.selectedUnitImage = ""
                                             }
-                                        } else if model.images.count != 0 {
-                                            model.selectedUnitImage = model.images[0].fullImageLocation
-                                        } else {
-                                            model.selectedUnitImage = ""
+                                            break
                                         }
-                                        break
                                     }
+                                    checkoutItems.append(model)
                                 }
-                                checkoutItems.append(model)
                             }
-
+                            
+                            if let temp: Int = data["totalShippingCost"] as? Int  {
+                                totalShippingCost = temp
+                            }
                         }
                         
                         let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
                         checkout.carItems = checkoutItems
                         checkout.totalPrice = "\(self.totalPrice)"
+                        checkout.deliveryFee = "\(totalShippingCost)"
+                        
                         let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
                         navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
                         self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
@@ -471,7 +475,7 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.productPriceLabel.text = tempProductUnit.discountedPrice.formatToPeso() + " x \(tempModel.quantity)"
             }
         }
-        
+        cell.codView.hidden = tempModel.isCODAvailable
         cell.productNameLabel.text = tempModel.title
         cell.delegate = self
         return cell

@@ -481,8 +481,18 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func requestProductDetails() {
         self.showHUD()
         
-        productId = productId.stringByReplacingOccurrencesOfString("/api/v1/product/getProductDetail?productId=", withString: "", options: nil, range: nil)
-        let id: String = "?productId=" + productId
+        let fullProdId = productId.componentsSeparatedByString("getProductDetail")
+        
+        //productId = productId.stringByReplacingOccurrencesOfString("/api/v3/product/getProductDetail?productId=", withString: "", options: nil, range: nil)
+        
+        var id: String = ""
+        
+        if fullProdId.count != 2 {
+            id = "?productId=" + productId
+        } else {
+            id = fullProdId[1]
+            productId = fullProdId[1].componentsSeparatedByString("=")[1]
+        }
         
         WebServiceManager.fireGetProductDetailsWithUrl(APIAtlas.productDetails + id, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
@@ -568,8 +578,8 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.checkRequests()
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
-//                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-//                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
                 } else if requestErrorType == .AccessTokenExpired {
                     self.requestRefreshToken("details")
                 } else if requestErrorType == .PageNotFound {
@@ -746,35 +756,42 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 
                 if let isSuccessful: Bool = responseObject["isSuccessful"] as? Bool {
                     if isSuccessful {
-                        if let data: NSArray = responseObject["data"] as? NSArray {
-                            for subValue in data {
-                                let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
-                                
-                                for tempProductUnit in model.productUnits {
-                                    if model.unitId == tempProductUnit.productUnitId {
-                                        
-                                        if tempProductUnit.imageIds.count != 0 {
-                                            for tempImage in model.images {
-                                                if tempImage.id == tempProductUnit.imageIds[0] {
-                                                    model.selectedUnitImage = tempImage.fullImageLocation
+                        var totalShippingCost: Int = 0
+                        if let data: NSDictionary = responseObject["data"] as? NSDictionary {
+                            if let items: NSArray = data["items"] as? NSArray  {
+                                for subValue in items {
+                                    let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
+                                    
+                                    for tempProductUnit in model.productUnits {
+                                        if model.unitId == tempProductUnit.productUnitId {
+                                            
+                                            if tempProductUnit.imageIds.count != 0 {
+                                                for tempImage in model.images {
+                                                    if tempImage.id == tempProductUnit.imageIds[0] {
+                                                        model.selectedUnitImage = tempImage.fullImageLocation
+                                                    }
                                                 }
+                                            } else if model.images.count != 0 {
+                                                model.selectedUnitImage = model.images[0].fullImageLocation
+                                            } else {
+                                                model.selectedUnitImage = ""
                                             }
-                                        } else if model.images.count != 0 {
-                                            model.selectedUnitImage = model.images[0].fullImageLocation
-                                        } else {
-                                            model.selectedUnitImage = ""
+                                            break
                                         }
-                                        break
                                     }
+                                    checkoutItems.append(model)
                                 }
-                                checkoutItems.append(model)
                             }
                             
+                            if let temp: Int = data["totalShippingCost"] as? Int  {
+                                totalShippingCost = temp
+                            }
                         }
                         
                         let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
                         checkout.carItems = checkoutItems
                         checkout.totalPrice = String(stringInterpolationSegment: totalAmount)
+                        checkout.deliveryFee = "\(totalShippingCost)"
                         let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
                         navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
                         self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
@@ -813,27 +830,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 if successful {
                     self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
                 } else {
-                    if requestErrorType == .ResponseError {
-                        //Error in api requirements
-//                        let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-//                        Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
-                    } else if requestErrorType == .AccessTokenExpired {
-                        if (SessionManager.isLoggedIn()){
-                            self.requestRefreshToken("message")
-                        }
-                    } else if requestErrorType == .PageNotFound {
-                        //Page not found
-                        Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
-                    } else if requestErrorType == .NoInternetConnection {
-                        //No internet connection
-                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                    } else if requestErrorType == .RequestTimeOut {
-                        //Request timeout
-                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                    } else if requestErrorType == .UnRecognizeError {
-                        //Unhandled error
-                        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: ProductStrings.alertWentWrong)
-                    }
                     self.contacts = Array<W_Contact>()
                 }
                 self.yiHud?.hide()

@@ -8,6 +8,8 @@
 
 import UIKit
 
+// MARK: Delegate
+// TransactionSectionFooterView Delegate methods
 protocol TransactionSectionFooterViewDelegate {
     func leaveSellerFeedback(title: String, tag: Int)
     func messageSeller(sellerId: Int)
@@ -16,46 +18,40 @@ protocol TransactionSectionFooterViewDelegate {
 
 class TransactionSectionFooterView: UIView {
 
+    // Custom buttons
+    @IBOutlet weak var leaveFeedbackButton: DynamicRoundedButton!
+    @IBOutlet weak var messageButton: DynamicRoundedButton!
+    
+    // Buttons
     @IBOutlet weak var sellerStorePageButton: UIButton!
     
-    @IBOutlet weak var leaveFeedbackButton: DynamicRoundedButton!
-    
-    @IBOutlet weak var messageButton: DynamicRoundedButton!
+    // Labels
     @IBOutlet weak var sellerContactNumber: UILabel!
-    
     @IBOutlet weak var sellerNameLabel: UILabel!
-    
     @IBOutlet weak var sellerContactNumberTitle: UILabel!
-    
     @IBOutlet weak var sellerNameLabelTitle: UILabel!
     
+    // Initialize TransactionSectionFooterViewDelegate
     var delegate: TransactionSectionFooterViewDelegate?
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
+
     override func awakeFromNib() {
        
     }
     
+    // MARK: Button actions
     @IBAction func leaveFeedback(sender: AnyObject) {
-        println("leave feedback \(sender.titleLabel!!.text)")
         var label = sender.titleLabel!!.text
         var tag = sender.tag
         self.delegate?.leaveSellerFeedback(label!, tag: tag)
     }
     
     @IBAction func message(sender: AnyObject) {
-        println("message \(sender.tag)")
         var tag = sender.tag
         self.delegate?.messageSeller(tag)
     }
     
     @IBAction func goToSellerPage(sender: AnyObject) {
-        self.delegate?.sellerPage(self.sellerNameLabel.tag)
+        var tag = sender.tag
+        self.delegate?.sellerPage(tag)
     }
-
 }

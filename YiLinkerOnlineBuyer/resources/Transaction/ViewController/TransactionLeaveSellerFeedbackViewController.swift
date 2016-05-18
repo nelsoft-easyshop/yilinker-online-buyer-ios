@@ -269,8 +269,8 @@ class TransactionLeaveSellerFeedbackViewController: UIViewController {
     
     //MARK: Show HUD
     func showHUD() {
-       self.yiHud = YiHUD.initHud()
-       self.yiHud!.showHUDToView(self.view)
+        self.yiHud = YiHUD.initHud()
+        self.yiHud!.showHUDToView(self.view)
     }
 
 }

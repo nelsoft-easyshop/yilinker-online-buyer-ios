@@ -19,6 +19,7 @@ class QRCodeScannerViewController: UIViewController {
 
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var previewView: UIView!
+    @IBOutlet weak var resultView: UIView!
     @IBOutlet weak var resultLabel: UILabel!
     @IBOutlet weak var flashButton: UIButton!
     
@@ -28,6 +29,7 @@ class QRCodeScannerViewController: UIViewController {
     var isTorchOn: Bool = false
     
     var scanCount: Int = 0
+    var isErrorShown: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,11 +84,13 @@ class QRCodeScannerViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.scanCount = 0
+        self.resultView.layer.cornerRadius = 5
     }
     
     @IBAction func backAction(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
     @IBAction func buttonAction(sender: UIButton) {
         if sender == self.flashButton {
             let device = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
@@ -107,6 +111,7 @@ extension QRCodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
         
         // Check if the metadataObjects array is not nil and it contains at least one object.
         if metadataObjects == nil || metadataObjects.count == 0 {
+            self.resultView.hidden = true
             self.resultLabel.text = "No QR code is detected"
             return
         }
@@ -118,13 +123,28 @@ extension QRCodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             // If the found metadata is equal to the QR code metadata then update the status label's text and set the bounds
             let barCodeObject = videoPreviewLayer?.transformedMetadataObjectForMetadataObject(metadataObj as AVMetadataMachineReadableCodeObject) as! AVMetadataMachineReadableCodeObject
             
-            if self.scanCount == 0{
-                if metadataObj.stringValue != nil {
-                    self.scanCount++
-                    var qrCode: String = metadataObj.stringValue
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                    self.delegate?.qrCodeScannerViewController(self, code: qrCode)
+            if metadataObj.stringValue.contains("http") {
+                self.resultView.hidden = true
+                if self.scanCount == 0{
+                    if metadataObj.stringValue != nil {
+                        self.scanCount++
+                        var qrCode: String = metadataObj.stringValue
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                        self.delegate?.qrCodeScannerViewController(self, code: qrCode)
+                    }
                 }
+            } else {
+                self.resultLabel.text = metadataObj.stringValue
+                self.resultView.hidden = false
+//                if !self.isErrorShown {
+//                    Toast.displayToastWithMessage(StringHelper.localizedStringWithKey("INVALID_QR_LOCALIZE_KEY"), duration: 1.5, view: self.view)
+//                    self.isErrorShown = true
+//                }
+//                
+//                let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
+//                dispatch_after(delayTime, dispatch_get_main_queue()) {
+//                    self.isErrorShown = false
+//                }
             }
         }
     }

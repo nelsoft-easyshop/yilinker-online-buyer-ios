@@ -52,7 +52,9 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     var refreshPage: Bool = false
     
     var myTimer: NSTimer?
+    
     var yiHud: YiHUD?
+    
     var table: [TransactionDetailsModel] = []
     var transactionProductDetailsModel: TransactionProductDetailsModel!
     var transactionDeliveryStatus: TransactionProductDetailsDeliveryStatusModel!
@@ -705,142 +707,151 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     //MARK: Get transactions details by id
     func fireTransactionProductDetails() {
         self.showProgressBar()
-        let manager = APIManager.sharedInstance
-        
-        manager.GET(APIAtlas.transactionProductDetails+"\(SessionManager.accessToken())&orderProductId=\(self.orderProductId)", parameters: nil, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            let data = NSJSONSerialization.dataWithJSONObject(responseObject, options: nil, error: nil)
-             var formattedRating: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
-            
-            self.hideProgressBar()
-            
-            if responseObject["isSuccessful"] as! Bool {
-                self.transactionProductDetailsModel = TransactionProductDetailsModel.parseFromDataDictionary(responseObject as! NSDictionary)
-            }
-            
-            if Feedback.setProductFeedback {
-                self.headerView.removeFromSuperview()
-                self.footerView.removeFromSuperview()
-                self.loadViewsWithDetails()
-            }
-            
-            if self.headerView == nil {
-                self.loadViewsWithDetails()
-            }
-            
-            self.tableView.reloadData()
-            
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 401 {
-                    self.fireRefreshToken()
-                    self.tableView.reloadData()
-                } else {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                    self.hideProgressBar()
+        WebServiceManager.fireGetTransactionsWithUrl(APIAtlas.transactionProductDetails+"\(SessionManager.accessToken())&orderProductId=\(self.orderProductId)", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.hideProgressBar()
+                if responseObject["isSuccessful"] as! Bool {
+                    let data = NSJSONSerialization.dataWithJSONObject(responseObject, options: nil, error: nil)
+                    var formattedRating: String = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+                    
+                    if responseObject["isSuccessful"] as! Bool {
+                        self.transactionProductDetailsModel = TransactionProductDetailsModel.parseFromDataDictionary(responseObject as! NSDictionary)
+                    }
+                    
+                    if Feedback.setProductFeedback {
+                        self.headerView.removeFromSuperview()
+                        self.footerView.removeFromSuperview()
+                        self.loadViewsWithDetails()
+                    }
+                    
+                    if self.headerView == nil {
+                        self.loadViewsWithDetails()
+                    }
+                    
                     self.tableView.reloadData()
                 }
+            } else {
                 self.refreshtag = 1001
-                
+                self.hideProgressBar()
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
+                    self.fireRefreshToken()
+                    self.tableView.reloadData()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+                }
+            }
         })
     }
     
     //MARK: Get transactions details by id
     func fireTransactionProductDetailsDeliveryStatus() {
-        let manager = APIManager.sharedInstance
-        
-        manager.GET(APIAtlas.transactionDeliveryStatus+"\(SessionManager.accessToken())&transactionId=\(self.transactionId)", parameters: nil, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            if responseObject["isSuccessful"] as! Bool {
-                self.transactionDeliveryStatus = TransactionProductDetailsDeliveryStatusModel.parseDataFromDictionary(responseObject as! NSDictionary)
-            }
-            
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                //self.yiHud?.hide()
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
+        WebServiceManager.fireGetTransactionsWithUrl(APIAtlas.transactionDeliveryStatus+"\(SessionManager.accessToken())&transactionId=\(self.transactionId)", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                if responseObject["isSuccessful"] as! Bool {
+                    self.transactionDeliveryStatus = TransactionProductDetailsDeliveryStatusModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                }
+            } else {
+                self.hideProgressBar()
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
                     self.fireRefreshToken()
                     self.tableView.reloadData()
-                } else {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                    self.hideProgressBar()
-                    self.tableView.reloadData()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                 }
-                
-                self.hideProgressBar()
+            }
         })
     }
     
     //MARK: Get transactions details by id
     func fireTransactionProductDetailsDeliveryStatusRefresh() {
-        let manager = APIManager.sharedInstance
-        manager.GET(APIAtlas.transactionDeliveryStatus+"\(SessionManager.accessToken())&transactionId=\(self.transactionId)", parameters: nil, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-             self.hideProgressBar()
-            
-            if responseObject["isSuccessful"] as! Bool {
-                self.transactionDeliveryStatus = TransactionProductDetailsDeliveryStatusModel.parseDataFromDictionary(responseObject as! NSDictionary)
-            }
-            
-            }, failure: { (task: NSURLSessionDataTask!, error: NSError!) in
-                //self.yiHud?.hide()
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                if task.statusCode == 401 {
+        WebServiceManager.fireGetTransactionsWithUrl(APIAtlas.transactionDeliveryStatus+"\(SessionManager.accessToken())&transactionId=\(self.transactionId)", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            if successful {
+                self.hideProgressBar()
+                if responseObject["isSuccessful"] as! Bool {
+                    self.transactionDeliveryStatus = TransactionProductDetailsDeliveryStatusModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                }
+            } else {
+                self.refreshtag = 1002
+                self.hideProgressBar()
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
                     self.fireRefreshToken()
                     self.tableView.reloadData()
-                } else {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-                    self.tableView.reloadData()
-                    self.hideProgressBar()
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
                 }
-                
-                self.refreshtag = 1002
-                
+            }
         })
     }
 
     
     func fireRefreshToken() {
         self.showProgressBar()
-        let manager: APIManager = APIManager.sharedInstance
-        //seller@easyshop.ph
-        //password
-        let parameters: NSDictionary = ["client_id": Constants.Credentials.clientID(), "client_secret": Constants.Credentials.clientSecret(), "grant_type": Constants.Credentials.grantRefreshToken, "refresh_token":  SessionManager.refreshToken()]
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.yiHud?.hide()
             
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            
-            if self.refreshtag == 1001 {
-                self.fireTransactionProductDetailsDeliveryStatus()
-                self.fireTransactionProductDetails()
-            } else {
-                self.fireTransactionProductDetailsDeliveryStatus()
-            }
-            
-            self.hideProgressBar()
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-           
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                
+                if self.refreshtag == 1001 {
+                    self.fireTransactionProductDetailsDeliveryStatus()
+                    self.fireTransactionProductDetails()
+                } else {
+                    self.fireTransactionProductDetailsDeliveryStatus()
+                }
+                
                 self.hideProgressBar()
-                let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: Constants.Localized.someThingWentWrong)
-               
+
+            } else {
+                //Forcing user to logout.
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    
+                })
+                self.hideProgressBar()
+            }
         })
-        
     }
     
     func showAlert(#title: String!, message: String!) {
@@ -862,6 +873,21 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     }
     
     func hideProgressBar() {
+        if self.refreshPage {
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        } else {
+            self.yiHud?.hide()
+        }
+    }
+    
+    //You can create a scheduled timer which automatically adds itself to the runloop and starts firing:
+    //NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "timerDidFire:", userInfo: userInfo, repeats: true)
+    func timerRefresh(){
+        time++
+        //Or, you can keep your current code, and add the timer to the runloop when you're ready for it:
+        myTimer = NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: Selector("fireTransactionProductDetailsDeliveryStatusRefresh"), userInfo: nil, repeats: true)
+        //myTimer = NSTimer(timeInterval: 10, target: self, selector: "fireTransactionProductDetailsDeliveryStatusRefresh", userInfo: nil, repeats: true)
+        //NSRunLoop.currentRunLoop().addTimer(myTimer!, forMode: NSRunLoopCommonModes)
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         self.yiHud?.hide()
     }

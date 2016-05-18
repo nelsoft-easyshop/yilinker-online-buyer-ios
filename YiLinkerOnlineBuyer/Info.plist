@@ -17,11 +17,19 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.1</string>
+	<string>1.5.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
 	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.easyshop.YiLinkerOnlineBuyer</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>YiLinkerOnlineBuyer</string>
+			</array>
+		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>None</string>
@@ -48,7 +56,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>7</string>
+	<string>1</string>
 	<key>FacebookAppID</key>
 	<string>513031082205702</string>
 	<key>FacebookDisplayName</key>

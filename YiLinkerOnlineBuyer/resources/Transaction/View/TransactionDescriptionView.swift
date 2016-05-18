@@ -8,32 +8,38 @@
 
 import UIKit
 
+// MARK: Delegate
+// TransactionDescriptionView Delegate method
 protocol TransactionDescriptionViewDelegate {
     func getProductDescription(desc: String)
 }
 
 class TransactionDescriptionView: UIView {
     
+    // Buttons
     @IBOutlet weak var seeMoreButton: UIButton!
+    
+    // Labels
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var seeMoreLabel: UILabel!
     @IBOutlet weak var descriptionTitleLabel: UILabel!
     
+    // Initialize TransactionDescriptionViewDelegate
     var delegate: TransactionDescriptionViewDelegate?
     
     override func awakeFromNib() {
-        
+        // Add tap gesture recognizer in self.seeMoreLabel
         var tap = UITapGestureRecognizer(target: self, action: "seeMoreAction:")
-        seeMoreLabel.addGestureRecognizer(tap)
+        self.seeMoreLabel.addGestureRecognizer(tap)
     }
     
-    func seeMoreAction(sender: AnyObject) {
-        println("see more here")
-        self.delegate?.getProductDescription(self.descriptionLabel.text!)
-    }
-    
+    // MARK: Button actions
     @IBAction func seeMore(sender: AnyObject) {
         self.delegate?.getProductDescription(self.descriptionLabel.text!)
     }
     
+    // MARK: Action for self.seeMoreLabel
+    func seeMoreAction(sender: AnyObject) {
+        self.delegate?.getProductDescription(self.descriptionLabel.text!)
+    }
 }

@@ -9,15 +9,17 @@
 import UIKit
 
 class TransactionDetailsTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var productNameLabel: UILabel!
-    @IBOutlet weak var productStatusLabel: UILabel!
+    
+    // Labels
     @IBOutlet weak var orderProductNameLabel: UILabel!
     @IBOutlet weak var orderProductStatusLabel: UILabel!
+    @IBOutlet weak var productNameLabel: UILabel!
+    @IBOutlet weak var productStatusLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        // Set labels texts
         self.orderProductNameLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_ORDER_PRODUCT_NAME_LOCALIZE_KEY")
         self.orderProductStatusLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_ORDER_PRODUCT_STATUS_LOCALIZE_KEY")
     }

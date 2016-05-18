@@ -17,13 +17,21 @@ class HelpViewController: UIViewController {
     @IBOutlet weak var callTextButton: UIButton!
     @IBOutlet weak var emailIconButton: UIButton!
     @IBOutlet weak var callIconButton: UIButton!
+    @IBOutlet weak var sendFeedbackButton: UIButton!
+    @IBOutlet weak var checkUpdatesButton: UIButton!
+    @IBOutlet weak var whatsNewButton: UIButton!
     
     @IBOutlet weak var facebookButton: UIButton!
     @IBOutlet weak var twitterButton: UIButton!
     @IBOutlet weak var instagramButton: UIButton!
     var appVersion: String  = ""
+    var itunesAppVersion: String  = ""
     
     @IBOutlet weak var versionLabel: UILabel!
+    @IBOutlet weak var logoHeightConstraint: NSLayoutConstraint!
+    
+    var hud: YiHUD?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,15 +47,31 @@ class HelpViewController: UIViewController {
             self.edgesForExtendedLayout = .None
         }
         
-        self.versionLabel.text = "v \(self.appVersion)"
+        self.setVersion(self.appVersion)
         self.emailTextButton.titleLabel?.text = StringHelper.localizedStringWithKey("HELP_EMAIL")
         self.callTextButton.titleLabel?.text = StringHelper.localizedStringWithKey("HELP_CALL")
         self.titleLabel.text = StringHelper.localizedStringWithKey("HELP_FOR_CUSTOMER_SERVICE")
+        self.sendFeedbackButton.setTitle(StringHelper.localizedStringWithKey("HELP_SEND_FEEDBACK"), forState: .Normal)
+        self.checkUpdatesButton.setTitle(StringHelper.localizedStringWithKey("HELP_CHECK_FOR_UPDATES"), forState: .Normal)
+        self.whatsNewButton.setTitle(StringHelper.localizedStringWithKey("HELP_WHATS_NEW"), forState: .Normal)
+        
+        self.sendFeedbackButton.layer.cornerRadius = 5
+        self.checkUpdatesButton.layer.cornerRadius = 5
+        self.whatsNewButton.layer.cornerRadius = 5
+        
+        if IphoneType.isIphone4() {
+            self.logoHeightConstraint.constant = 90
+        } else if IphoneType.isIphone5() {
+            self.logoHeightConstraint.constant = 140
+        } else if IphoneType.isIphone6() {
+            self.logoHeightConstraint.constant = 190
+        } else if IphoneType.isIphone6Plus() {
+            self.logoHeightConstraint.constant = 220
+        }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func initializeNavigationBar() {
@@ -67,6 +91,20 @@ class HelpViewController: UIViewController {
     
     func back() {
         self.navigationController!.popViewControllerAnimated(true)
+    }
+    
+    func setVersion(version: String) {
+        self.versionLabel.text = "YiLinker Buyer v\(self.appVersion)"
+    }
+    
+    // MARK: - Loader function
+    func showLoader() {
+        self.hud = YiHUD.initHud()
+        self.hud?.showHUDToView(self.view)
+    }
+    
+    func dismissLoader() {
+        self.hud?.hide()
     }
     
     @IBAction func buttonAction(sender: AnyObject) {
@@ -93,5 +131,43 @@ class HelpViewController: UIViewController {
     }
     
     
+    @IBAction func sendFeedbackAction(sender: UIButton) {
+        var suggestionsViewController = SuggestionViewController(nibName: "SuggestionViewController", bundle: nil)
+        self.navigationController?.pushViewController(suggestionsViewController, animated:true)
+    }
     
+    @IBAction func checkForUpdatesAction(sender: UIButton) {
+        self.fireGetAppDetails()
+    }
+    
+    @IBAction func whatsNewAction(sender: UIButton) {
+        var whatsNewViewController = HelpWhatsNewViewController(nibName: "HelpWhatsNewViewController", bundle: nil)
+        self.navigationController?.pushViewController(whatsNewViewController, animated:true)
+    }
+    
+    
+    func fireGetAppDetails() {
+        self.showLoader()
+        WebServiceManager.fireLookupAppDetailsWithUrl(APIAtlas.appLookupUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            println(responseObject)
+            
+            if successful {
+                let appDetails = AppDetailsModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                self.itunesAppVersion = appDetails.version
+                
+                if self.itunesAppVersion != self.appVersion {
+                    UIAlertController.showAlertTwoButtonsWithTitle("Application Update", message: "New update available", positiveString: "Update", negativeString: "Cancel", viewController: self, actionHandler: { (isYes) -> Void in
+                        if isYes {
+                            UIApplication.sharedApplication().openURL(NSURL(string: APIAtlas.appItunesURL)!)
+                        }
+                    })
+                } else {
+                    Toast.displayToastWithMessage("Application is up to date.", duration: 1.5, view: self.view)
+                }
+            }
+            
+            self.dismissLoader()
+        })
+    }
 }

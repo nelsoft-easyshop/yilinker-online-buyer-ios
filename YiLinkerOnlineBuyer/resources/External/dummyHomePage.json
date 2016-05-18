@@ -6,29 +6,45 @@
              "layoutId": 1,
              "sectionTitle": "Large Slider Banner",
              "isViewMoreAvailable": false,
-             "viewMoreTarget": [],
+             "viewMoreTarget": {},
              "data": [
                       {
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?",
+                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/mobile-yilinker-all-in-one-place.jpg?ver=v5.0",
                       "target": {
-                      "targetUrl": "https://yilinker.com",
+                      "targetUrl": "/",
+                      "targetType": "any",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?ver=v5.0",
+                      "target": {
+                      "targetUrl": "https://www.facebook.com/YilinkerPH/photos/a.901383163293333.1073741828.876636485768001/945252052239777/?type=3",
                       "targetType": "webView",
                       "isAuthenticated": false
                       }
                       },
                       {
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?",
+                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?ver=v5.0",
                       "target": {
-                      "targetUrl": "https://yilinker.com",
-                      "targetType": "webView",
+                      "targetUrl": "/api/v1/product/getProductList?page=1",
+                      "targetType": "productList",
                       "isAuthenticated": false
                       }
                       },
                       {
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?",
+                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?ver=v5.0",
                       "target": {
-                      "targetUrl": "https://yilinker.com",
-                      "targetType": "webView",
+                      "targetUrl": "/api/v1/product/getProductList?page=1",
+                      "targetType": "productList",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?ver=v5.0",
+                      "target": {
+                      "targetUrl": "/api/v1/product/getProductList?page=1",
+                      "targetType": "productList",
                       "isAuthenticated": false
                       }
                       }
@@ -36,16 +52,16 @@
              },
              {
              "layoutId": 2,
-             "sectionTitle": "Small Slider Banner",
+             "sectionTitle": "Daily Login",
              "isViewMoreAvailable": false,
-             "viewMoreTarget": [],
+             "viewMoreTarget": {},
              "data": [
                       {
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?",
+                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?ver=v5.0",
                       "target": {
-                      "targetUrl": "https://yilinker.com",
+                      "targetUrl": "http://online.api.easydeal.ph/api/v1/auth/daily-login",
                       "targetType": "webView",
-                      "isAuthenticated": false
+                      "isAuthenticated": true
                       }
                       }
                       ]
@@ -54,46 +70,20 @@
              "layoutId": 3,
              "sectionTitle": "Half-view Slider Banner",
              "isViewMoreAvailable": false,
-             "viewMoreTarget": [],
-             "data": [{
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?",
+             "viewMoreTarget": {},
+             "data": [
+                      {
+                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?ver=v5.0",
                       "target": {
-                      "targetUrl": "https://yilinker.com",
-                      "targetType": "webView",
+                      "targetUrl": "/api/v1/product/getProductList?query=ultra",
+                      "targetType": "productList",
                       "isAuthenticated": false
                       }
-                      },{
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?",
+                      },
+                      {
+                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?ver=v5.0",
                       "target": {
-                      "targetUrl": "https://yilinker.com",
-                      "targetType": "webView",
-                      "isAuthenticated": false
-                      }
-                      },{
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?",
-                      "target": {
-                      "targetUrl": "https://yilinker.com",
-                      "targetType": "webView",
-                      "isAuthenticated": false
-                      }
-                      },{
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?",
-                      "target": {
-                      "targetUrl": "https://yilinker.com",
-                      "targetType": "webView",
-                      "isAuthenticated": false
-                      }
-                      },{
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?",
-                      "target": {
-                      "targetUrl": "https://yilinker.com",
-                      "targetType": "webView",
-                      "isAuthenticated": false
-                      }
-                      },{
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?",
-                      "target": {
-                      "targetUrl": "https://yilinker.com",
+                      "targetUrl": "http://online.api.easydeal.ph/mobile-product-list?node=listPowerbank",
                       "targetType": "webView",
                       "isAuthenticated": false
                       }
@@ -104,152 +94,47 @@
              "layoutId": 4,
              "sectionTitle": "Sale Section",
              "isViewMoreAvailable": false,
-             "viewMoreTarget": [],
-             "remainingTime": 10,
-             "data": [
-                      {
-                      "name": "Koala With Super Ultra Electro Magnetic Giga Long Product Title",
-                      "originalPrice": "1012.50",
-                      "discountedPrice": "4050.00",
-                      "discountPercentage": "75.00",
-                      "currency": "PHP",
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1322/1037_437_1446075434.jpg?",
-                      "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1322/thumbnail/1037_437_1446075434.jpg?",
-                      "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1322/small/1037_437_1446075434.jpg?",
-                      "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1322/medium/1037_437_1446075434.jpg?",
-                      "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1322/large/1037_437_1446075434.jpg?",
-                      "target": {
-                      "targetUrl": "/api/v1/product/getProductDetail?productId=1322",
-                      "targetType": "product",
-                      "isAuthenticated": false
-                      }
-                      },
-                      {
-                      "name": "Stuffed Toy With Super Ultra Electro Magnetic Giga Long Product Title",
-                      "originalPrice": "300.00",
-                      "discountedPrice": "1200.00",
-                      "discountPercentage": "75.00",
-                      "currency": "PHP",
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1454/1037_977_1446968580.jpg?",
-                      "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1454/thumbnail/1037_977_1446968580.jpg?",
-                      "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1454/small/1037_977_1446968580.jpg?",
-                      "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1454/medium/1037_977_1446968580.jpg?",
-                      "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1454/large/1037_977_1446968580.jpg?",
-                      "target": {
-                      "targetUrl": "/api/v1/product/getProductDetail?productId=1454",
-                      "targetType": "product",
-                      "isAuthenticated": false
-                      }
-                      },
-                      {
-                      "name": "Koala With Super Ultra Electro Magnetic Giga Long Product Title",
-                      "originalPrice": "1012.50",
-                      "discountedPrice": "4050.00",
-                      "discountPercentage": "75.00",
-                      "currency": "PHP",
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1322/1037_437_1446075434.jpg?",
-                      "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1322/thumbnail/1037_437_1446075434.jpg?",
-                      "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1322/small/1037_437_1446075434.jpg?",
-                      "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1322/medium/1037_437_1446075434.jpg?",
-                      "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1322/large/1037_437_1446075434.jpg?",
-                      "target": {
-                      "targetUrl": "/api/v1/product/getProductDetail?productId=1322",
-                      "targetType": "product",
-                      "isAuthenticated": false
-                      }
-                      }
-                      ]
+             "viewMoreTarget": {},
+             "remainingTime": null,
+             "data": []
              },
              {
              "layoutId": 5,
-             "sectionTitle": "Hot Items",
+             "sectionTitle": "Today's Promo",
              "isViewMoreAvailable": true,
              "viewMoreTarget": {
-             "targetUrl": "https://yilinker.com",
+             "targetUrl": "http://online.api.easydeal.ph/mobile-product-list?node=todaysPromo",
              "targetType": "webView",
              "isAuthenticated": false
              },
-             "data": [
-                      
-                      {
-                      "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                      "originalPrice": "10000.00",
-                      "discountedPrice": "10000.00",
-                      "discountPercentage": "0.00",
-                      "currency": "PHP",
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                      "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                      "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                      "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                      "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
-                      "target": {
-                      "targetUrl": "https://yilinker.com",
-                      "targetType": "webView",
-                      "isAuthenticated": false
-                      }
-                      },
-                      {
-                      "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                      "originalPrice": "10000.00",
-                      "discountedPrice": "10000.00",
-                      "discountPercentage": "0.00",
-                      "currency": "PHP",
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                      "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                      "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                      "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                      "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
-                      "target": {
-                      "targetUrl": "https://yilinker.com",
-                      "targetType": "webView",
-                      "isAuthenticated": false
-                      }
-                      },
-                      {
-                      "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                      "originalPrice": "10000.00",
-                      "discountedPrice": "10000.00",
-                      "discountPercentage": "0.00",
-                      "currency": "PHP",
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                      "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                      "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                      "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                      "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
-                      "target": {
-                      "targetUrl": "https://yilinker.com",
-                      "targetType": "webView",
-                      "isAuthenticated": false
-                      }
-                      }
-                      ]
+             "data": []
              },
              {
              "layoutId": 6,
              "sectionTitle": "Banner Ads",
              "isViewMoreAvailable": false,
-             "viewMoreTarget": [],
+             "viewMoreTarget": {},
              "data": [
                       {
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?",
+                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?ver=v5.0",
                       "target": {
-                      "targetUrl": "https://yilinker.com",
+                      "targetUrl": "http://online.api.easydeal.ph",
                       "targetType": "webView",
                       "isAuthenticated": false
                       }
                       },
                       {
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?",
+                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?ver=v5.0",
                       "target": {
-                      "targetUrl": "https://yilinker.com",
+                      "targetUrl": "http://online.api.easydeal.ph",
                       "targetType": "webView",
                       "isAuthenticated": false
                       }
                       },
                       {
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?",
+                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?ver=v5.0",
                       "target": {
-                      "targetUrl": "https://yilinker.com",
+                      "targetUrl": "http://online.api.easydeal.ph",
                       "targetType": "webView",
                       "isAuthenticated": false
                       }
@@ -261,488 +146,85 @@
              "sectionTitle": "New Items",
              "isViewMoreAvailable": true,
              "viewMoreTarget": {
-             "targetUrl": "https://yilinker.com",
-             "targetType": "webView",
+             "targetUrl": "/api/v1/product/getProductList",
+             "targetType": "productList",
              "isAuthenticated": false
              },
-             "data": [
-                      {
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/?",
-                      "target": {
-                      "targetUrl": "https://yilinker.com",
-                      "targetType": "webView",
-                      "isAuthenticated": false
-                      }
-                      },
-                      {
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/?",
-                      "target": {
-                      "targetUrl": "https://yilinker.com",
-                      "targetType": "webView",
-                      "isAuthenticated": false
-                      }
-                      }
-                      ]
+             "data": []
              },
              {
              "layoutId": 8,
              "sectionTitle": "New Stores",
              "isViewMoreAvailable": true,
              "viewMoreTarget": {
-             "targetUrl": "https://yilinker.com",
+             "targetUrl": "http://online.api.easydeal.ph/mobile-stores",
              "targetType": "webView",
              "isAuthenticated": false
              },
-             "data": [
-                      {
-                      "name": "Yiinker Official",
-                      "specialty": "Bags & Accessories",
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/thumbnail/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/small/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/medium/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/large/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "topProduct": [
-                                     {
-                                     "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                                     "originalPrice": "10000.00",
-                                     "discountedPrice": "10000.00",
-                                     "discountPercentage": "0.00",
-                                     "currency": "PHP",
-                                     "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                                     "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                                     "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                                     "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                                     "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
-                                     "target": {
-                                     "targetUrl": "https://yilinker.com",
-                                     "targetType": "webView",
-                                     "isAuthenticated": false
-                                     }
-                                     },
-                                     {
-                                     "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                                     "originalPrice": "10000.00",
-                                     "discountedPrice": "10000.00",
-                                     "discountPercentage": "0.00",
-                                     "currency": "PHP",
-                                     "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                                     "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                                     "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                                     "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                                     "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
-                                     "target": {
-                                     "targetUrl": "https://yilinker.com",
-                                     "targetType": "webView",
-                                     "isAuthenticated": false
-                                     }
-                                     },
-                                     {
-                                     "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                                     "originalPrice": "10000.00",
-                                     "discountedPrice": "10000.00",
-                                     "discountPercentage": "0.00",
-                                     "currency": "PHP",
-                                     "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                                     "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                                     "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                                     "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                                     "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
-                                     "target": {
-                                     "targetUrl": "https://yilinker.com",
-                                     "targetType": "webView",
-                                     "isAuthenticated": false
-                                     }
-                                     }
-                                     ],
-                      "target": {
-                      "targetUrl": "https://yilinker.com",
-                      "targetType": "webView",
-                      "isAuthenticated": false
-                      }
-                      },
-                      {
-                      "name": "Yiinker Official",
-                      "specialty": "Bags & Accessories",
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/thumbnail/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/small/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/medium/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/large/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "topProduct": [
-                                     {
-                                     "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                                     "originalPrice": "10000.00",
-                                     "discountedPrice": "10000.00",
-                                     "discountPercentage": "0.00",
-                                     "currency": "PHP",
-                                     "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                                     "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                                     "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                                     "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                                     "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
-                                     "target": {
-                                     "targetUrl": "https://yilinker.com",
-                                     "targetType": "webView",
-                                     "isAuthenticated": false
-                                     }
-                                     },
-                                     {
-                                     "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                                     "originalPrice": "10000.00",
-                                     "discountedPrice": "10000.00",
-                                     "discountPercentage": "0.00",
-                                     "currency": "PHP",
-                                     "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                                     "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                                     "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                                     "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                                     "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
-                                     "target": {
-                                     "targetUrl": "https://yilinker.com",
-                                     "targetType": "webView",
-                                     "isAuthenticated": false
-                                     }
-                                     },
-                                     {
-                                     "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                                     "originalPrice": "10000.00",
-                                     "discountedPrice": "10000.00",
-                                     "discountPercentage": "0.00",
-                                     "currency": "PHP",
-                                     "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                                     "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                                     "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                                     "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                                     "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
-                                     "target": {
-                                     "targetUrl": "https://yilinker.com",
-                                     "targetType": "webView",
-                                     "isAuthenticated": false
-                                     }
-                                     }
-                                     ],
-                      "target": {
-                      "targetUrl": "https://yilinker.com",
-                      "targetType": "webView",
-                      "isAuthenticated": false
-                      }
-                      },
-                      {
-                      "name": "Yiinker Official",
-                      "specialty": "Bags & Accessories",
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/thumbnail/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/small/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/medium/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/large/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "topProduct": [
-                                     {
-                                     "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                                     "originalPrice": "10000.00",
-                                     "discountedPrice": "10000.00",
-                                     "discountPercentage": "0.00",
-                                     "currency": "PHP",
-                                     "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                                     "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                                     "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                                     "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                                     "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
-                                     "target": {
-                                     "targetUrl": "https://yilinker.com",
-                                     "targetType": "webView",
-                                     "isAuthenticated": false
-                                     }
-                                     },
-                                     {
-                                     "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                                     "originalPrice": "10000.00",
-                                     "discountedPrice": "10000.00",
-                                     "discountPercentage": "0.00",
-                                     "currency": "PHP",
-                                     "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                                     "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                                     "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                                     "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                                     "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
-                                     "target": {
-                                     "targetUrl": "https://yilinker.com",
-                                     "targetType": "webView",
-                                     "isAuthenticated": false
-                                     }
-                                     },
-                                     {
-                                     "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                                     "originalPrice": "10000.00",
-                                     "discountedPrice": "10000.00",
-                                     "discountPercentage": "0.00",
-                                     "currency": "PHP",
-                                     "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                                     "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                                     "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                                     "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                                     "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
-                                     "target": {
-                                     "targetUrl": "https://yilinker.com",
-                                     "targetType": "webView",
-                                     "isAuthenticated": false
-                                     }
-                                     }
-                                     ],
-                      "target": {
-                      "targetUrl": "https://yilinker.com",
-                      "targetType": "webView",
-                      "isAuthenticated": false
-                      }
-                      }
-                      ]
+             "data": []
              },
              {
              "layoutId": 8,
              "sectionTitle": "Hot Stores",
              "isViewMoreAvailable": true,
              "viewMoreTarget": {
-             "targetUrl": "https://yilinker.com",
+             "targetUrl": "http://online.api.easydeal.ph/mobile-stores",
              "targetType": "webView",
              "isAuthenticated": false
              },
-             "data": [
-                      {
-                      "name": "Yiinker Official",
-                      "specialty": "Bags & Accessories",
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/thumbnail/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/small/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/medium/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/large/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "topProduct": [
-                                     {
-                                     "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                                     "originalPrice": "10000.00",
-                                     "discountedPrice": "10000.00",
-                                     "discountPercentage": "0.00",
-                                     "currency": "PHP",
-                                     "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                                     "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                                     "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                                     "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                                     "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
-                                     "target": {
-                                     "targetUrl": "https://yilinker.com",
-                                     "targetType": "webView",
-                                     "isAuthenticated": false
-                                     }
-                                     },
-                                     {
-                                     "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                                     "originalPrice": "10000.00",
-                                     "discountedPrice": "10000.00",
-                                     "discountPercentage": "0.00",
-                                     "currency": "PHP",
-                                     "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                                     "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                                     "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                                     "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                                     "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
-                                     "target": {
-                                     "targetUrl": "https://yilinker.com",
-                                     "targetType": "webView",
-                                     "isAuthenticated": false
-                                     }
-                                     },
-                                     {
-                                     "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                                     "originalPrice": "10000.00",
-                                     "discountedPrice": "10000.00",
-                                     "discountPercentage": "0.00",
-                                     "currency": "PHP",
-                                     "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                                     "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                                     "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                                     "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                                     "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
-                                     "target": {
-                                     "targetUrl": "https://yilinker.com",
-                                     "targetType": "webView",
-                                     "isAuthenticated": false
-                                     }
-                                     }
-                                     ],
-                      "target": {
-                      "targetUrl": "https://yilinker.com",
-                      "targetType": "webView",
-                      "isAuthenticated": false
-                      }
-                      },
-                      {
-                      "name": "Yiinker Official",
-                      "specialty": "Bags & Accessories",
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/thumbnail/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/small/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/medium/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/large/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "topProduct": [
-                                     {
-                                     "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                                     "originalPrice": "10000.00",
-                                     "discountedPrice": "10000.00",
-                                     "discountPercentage": "0.00",
-                                     "currency": "PHP",
-                                     "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                                     "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                                     "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                                     "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                                     "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
-                                     "target": {
-                                     "targetUrl": "https://yilinker.com",
-                                     "targetType": "webView",
-                                     "isAuthenticated": false
-                                     }
-                                     },
-                                     {
-                                     "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                                     "originalPrice": "10000.00",
-                                     "discountedPrice": "10000.00",
-                                     "discountPercentage": "0.00",
-                                     "currency": "PHP",
-                                     "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                                     "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                                     "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                                     "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                                     "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
-                                     "target": {
-                                     "targetUrl": "https://yilinker.com",
-                                     "targetType": "webView",
-                                     "isAuthenticated": false
-                                     }
-                                     },
-                                     {
-                                     "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                                     "originalPrice": "10000.00",
-                                     "discountedPrice": "10000.00",
-                                     "discountPercentage": "0.00",
-                                     "currency": "PHP",
-                                     "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                                     "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                                     "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                                     "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                                     "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
-                                     "target": {
-                                     "targetUrl": "https://yilinker.com",
-                                     "targetType": "webView",
-                                     "isAuthenticated": false
-                                     }
-                                     }
-                                     ],
-                      "target": {
-                      "targetUrl": "https://yilinker.com",
-                      "targetType": "webView",
-                      "isAuthenticated": false
-                      }
-                      },
-                      {
-                      "name": "Yiinker Official",
-                      "specialty": "Bags & Accessories",
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/thumbnail/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/small/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/medium/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/users/1009/large/654ca4ab9ed5b0ca0a08a0cd6a7df236c857816c.JPEG?",
-                      "topProduct": [
-                                     {
-                                     "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                                     "originalPrice": "10000.00",
-                                     "discountedPrice": "10000.00",
-                                     "discountPercentage": "0.00",
-                                     "currency": "PHP",
-                                     "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                                     "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                                     "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                                     "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                                     "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
-                                     "target": {
-                                     "targetUrl": "https://yilinker.com",
-                                     "targetType": "webView",
-                                     "isAuthenticated": false
-                                     }
-                                     },
-                                     {
-                                     "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                                     "originalPrice": "10000.00",
-                                     "discountedPrice": "10000.00",
-                                     "discountPercentage": "0.00",
-                                     "currency": "PHP",
-                                     "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                                     "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                                     "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                                     "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                                     "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
-                                     "target": {
-                                     "targetUrl": "https://yilinker.com",
-                                     "targetType": "webView",
-                                     "isAuthenticated": false
-                                     }
-                                     },
-                                     {
-                                     "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                                     "originalPrice": "10000.00",
-                                     "discountedPrice": "10000.00",
-                                     "discountPercentage": "0.00",
-                                     "currency": "PHP",
-                                     "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                                     "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                                     "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                                     "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                                     "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
-                                     "target": {
-                                     "targetUrl": "https://yilinker.com",
-                                     "targetType": "webView",
-                                     "isAuthenticated": false
-                                     }
-                                     }
-                                     ],
-                      "target": {
-                      "targetUrl": "https://yilinker.com",
-                      "targetType": "webView",
-                      "isAuthenticated": false
-                      }
-                      }
-                      ]
+             "data": []
              },
              {
              "layoutId": 9,
              "sectionTitle": "Categories",
              "isViewMoreAvailable": true,
              "viewMoreTarget": {
-             "targetUrl": "https://yilinker.com",
+             "targetUrl": "http://online.api.easydeal.ph/mobile-category",
              "targetType": "webView",
              "isAuthenticated": false
              },
              "data": [
                       {
-                      "name": "Pet Supplies",
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?",
+                      "name": "Window treatments",
+                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?ver=v5.0",
                       "target": {
-                      "targetUrl": "https://yilinker.com",
+                      "targetUrl": "http://online.api.easydeal.ph",
                       "targetType": "webView",
                       "isAuthenticated": false
                       }
                       },
                       {
-                      "name": "Bird Supplies",
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?",
+                      "name": "Window treatments",
+                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?ver=v5.0",
                       "target": {
-                      "targetUrl": "https://yilinker.com",
+                      "targetUrl": "http://online.api.easydeal.ph",
                       "targetType": "webView",
                       "isAuthenticated": false
                       }
                       },
                       {
-                      "name": "Pet Supplies",
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?",
+                      "name": "Window treatments",
+                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?ver=v5.0",
                       "target": {
-                      "targetUrl": "https://yilinker.com",
+                      "targetUrl": "http://online.api.easydeal.ph",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "Window treatments",
+                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?ver=v5.0",
+                      "target": {
+                      "targetUrl": "http://online.api.easydeal.ph",
+                      "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "name": "Window treatments",
+                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?ver=v5.0",
+                      "target": {
+                      "targetUrl": "http://online.api.easydeal.ph",
                       "targetType": "webView",
                       "isAuthenticated": false
                       }
@@ -753,12 +235,12 @@
              "layoutId": 2,
              "sectionTitle": "Small Slider Banner",
              "isViewMoreAvailable": false,
-             "viewMoreTarget": [],
+             "viewMoreTarget": {},
              "data": [
                       {
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?",
+                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?ver=v5.0",
                       "target": {
-                      "targetUrl": "https://yilinker.com",
+                      "targetUrl": "http://online.api.easydeal.ph",
                       "targetType": "webView",
                       "isAuthenticated": false
                       }
@@ -770,58 +252,22 @@
              "sectionTitle": "Items you may like",
              "isViewMoreAvailable": true,
              "viewMoreTarget": {
-             "targetUrl": "https://yilinker.com",
-             "targetType": "webView",
+             "targetUrl": "/api/v1/product/getProductDetail?productId=15",
+             "targetType": "product",
              "isAuthenticated": false
              },
+             "data": []
+             },
+             {
+             "layoutId": 2,
+             "sectionTitle": "Daily Login",
+             "isViewMoreAvailable": false,
+             "viewMoreTarget": {},
              "data": [
                       {
-                      "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                      "originalPrice": "10000.00",
-                      "discountedPrice": "10000.00",
-                      "discountPercentage": "0.00",
-                      "currency": "PHP",
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                      "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                      "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                      "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                      "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
+                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?ver=v5.0",
                       "target": {
-                      "targetUrl": "https://yilinker.com",
-                      "targetType": "webView",
-                      "isAuthenticated": false
-                      }
-                      },
-                      {
-                      "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                      "originalPrice": "10000.00",
-                      "discountedPrice": "10000.00",
-                      "discountPercentage": "0.00",
-                      "currency": "PHP",
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                      "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                      "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                      "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                      "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
-                      "target": {
-                      "targetUrl": "https://yilinker.com",
-                      "targetType": "webView",
-                      "isAuthenticated": false
-                      }
-                      },
-                      {
-                      "name": "Official Yilinker Product With Super Ultra Electro Magnetic Giga Long Product Title With Super Ultra Electro Magnetic Giga Long Product Title",
-                      "originalPrice": "10000.00",
-                      "discountedPrice": "10000.00",
-                      "discountPercentage": "0.00",
-                      "currency": "PHP",
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/1009_592_1446017111.jpg?",
-                      "thumbnail": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/thumbnail/1009_592_1446017111.jpg?",
-                      "small": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/small/1009_592_1446017111.jpg?",
-                      "medium": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/medium/1009_592_1446017111.jpg?",
-                      "large": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/products/1297/large/1009_592_1446017111.jpg?",
-                      "target": {
-                      "targetUrl": "https://yilinker.com",
+                      "targetUrl": "http://online.api.easydeal.ph",
                       "targetType": "webView",
                       "isAuthenticated": false
                       }
@@ -829,16 +275,32 @@
                       ]
              },
              {
-             "layoutId": 2,
-             "sectionTitle": "Small Slider Banner",
+             "layoutId": 11,
+             "sectionTitle": "Overseas",
              "isViewMoreAvailable": false,
-             "viewMoreTarget": [],
+             "viewMoreTarget": {},
              "data": [
                       {
-                      "image": "http://d5umn39kitvyh.cloudfront.net/assets/images/uploads/cms/slider-1.png?",
+                      "image": "http://images1.wikia.nocookie.net/__cb20090415082731/onepiece/images/9/92/Baroque_Works_Infobox.png",
                       "target": {
-                      "targetUrl": "https://yilinker.com",
+                      "targetUrl": "/",
+                      "targetType": "any",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "image": "http://ecx.images-amazon.com/images/I/31VnM4FqAnL._SX300_.jpg",
+                      "target": {
+                      "targetUrl": "https://www.facebook.com/YilinkerPH/photos/a.901383163293333.1073741828.876636485768001/945252052239777/?type=3",
                       "targetType": "webView",
+                      "isAuthenticated": false
+                      }
+                      },
+                      {
+                      "image": "http://static.planetminecraft.com/files/resource_media/screenshot/1243/Jolly-Roger-Whitebeard-edward-newgate-whitebeard-30735369-720-540_3942468_lrg.jpg",
+                      "target": {
+                      "targetUrl": "/api/v1/product/getProductList?page=1",
+                      "targetType": "productList",
                       "isAuthenticated": false
                       }
                       }

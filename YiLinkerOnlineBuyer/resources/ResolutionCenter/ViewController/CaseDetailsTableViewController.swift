@@ -129,15 +129,14 @@ class CaseDetailsTableViewController: UITableViewController {
     func fireGetCases() {
         self.showHUD()
         let manager = APIManager.sharedInstance
+        
         var parameters: NSDictionary =
         ["access_token" : SessionManager.accessToken()
             ,"disputeId": self.disputeId];
         
-        manager.GET(APIAtlas.getResolutionCenterCaseDetails, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            let caseDetailsModel: CaseDetailsModel = CaseDetailsModel.parseDataWithDictionary(responseObject)
+        WebServiceManager.fireGetCasesWithUrl(APIAtlas.getResolutionCenterCaseDetails, parameter: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             
-            println(responseObject)
+            let caseDetailsModel: CaseDetailsModel = CaseDetailsModel.parseDataWithDictionary(responseObject)
             
             if caseDetailsModel.isSuccessful {
                 let caseDetails = caseDetailsModel.caseData
@@ -168,56 +167,45 @@ class CaseDetailsTableViewController: UITableViewController {
                 self.tableData = caseDetails.products
                 self.tableView.reloadData()
             } else {
-                let alert = UIAlertController(title: ProductStrings.alertWentWrong, message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-                let okButton = UIAlertAction(title: ProductStrings.alertOk, style: UIAlertActionStyle.Cancel) { (alert) -> Void in
-                    self.navigationController?.popViewControllerAnimated(true)
-                }
-                alert.addAction(okButton)
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
-            self.yiHud?.hide()
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                self.yiHud?.hide()
-                
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
+                if requestErrorType == .ResponseError {
+                    //Error in api requirements
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .AccessTokenExpired {
                     self.fireRefreshToken()
-                } else {
-                    let alert = UIAlertController(title: ProductStrings.alertWentWrong, message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-                    let okButton = UIAlertAction(title: ProductStrings.alertOk, style: UIAlertActionStyle.Cancel) { (alert) -> Void in
-                            self.navigationController?.popViewControllerAnimated(true)
-                    }
-                    alert.addAction(okButton)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                } else if requestErrorType == .PageNotFound {
+                    //Page not found
+                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    //No internet connection
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    //Request timeout
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    //Unhandled error
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "", title: ProductStrings.alertWentWrong)
                 }
-                
-                println(error)
+            }
         })
     }
     
     func fireRefreshToken() {
         self.showHUD()
-        let manager = APIManager.sharedInstance
-        let parameters: NSDictionary = [
-            "client_id": Constants.Credentials.clientID(),
-            "client_secret": Constants.Credentials.clientSecret(),
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        
-        manager.POST(APIAtlas.refreshTokenUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
+        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+            (successful, responseObject, requestErrorType) -> Void in
+            self.yiHud?.hide()
             
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            self.fireGetCases()
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                self.yiHud?.hide()
+            if successful {
+                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                self.fireGetCases()
+            } else {
+                //Forcing user to logout.
+                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                    
+                })
+            }
         })
-        
     }
     
     // MARK: UITableViewController

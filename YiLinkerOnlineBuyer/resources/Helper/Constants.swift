@@ -62,6 +62,7 @@ struct Constants {
         static let offlineColor = HexaColor.colorWithHexa(0xda202d)
         static let onlineColor = HexaColor.colorWithHexa(0x54b6a7)
         static let statusBarBackgroundColor = HexaColor.colorWithHexa(0x602077)
+        static let alphaAppThemeColor = HexaColor.colorWithHexa(0xD7D2E3)
     }
     
     struct Facebook {
@@ -79,6 +80,8 @@ struct Constants {
         //development
         static func clientID() -> String {
             if APIEnvironment.development {
+                return "1_9t2337riou0wsws84ckw8gkck8os8skw8cokoooc04gc0kssc"
+            } else if APIEnvironment.sprint {
                 return "1_4qzm05tv6uwwko4c4c8gs00sco0c40os08owg8sg0wswoo0w8o"
             } else if APIEnvironment.staging {
                 return "1_167rxzqvid8g8swggwokcoswococscocc8ck44wo0g88owgkcc"
@@ -89,6 +92,8 @@ struct Constants {
         
         static func clientSecret() -> String {
             if APIEnvironment.development {
+                return "1vmep15il4cgw8gc0g8gokokk0wwkko0cg0go0s4c484kwswo4"
+            } else if APIEnvironment.sprint {
                 return "1vgsjw5b0u74kssco8cooock0oc8c0sscoksk0sgsc08s8k4gw"
             } else if APIEnvironment.staging {
                 return "317eq8nohry84ooc0o8woo8000c0k844c4cggws84g80scwwog"
