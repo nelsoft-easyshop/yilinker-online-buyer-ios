@@ -792,7 +792,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                         checkout.carItems = checkoutItems
                         checkout.totalPrice = String(stringInterpolationSegment: totalAmount)
                         checkout.deliveryFee = "\(totalShippingCost)"
-                        
                         let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
                         navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
                         self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
