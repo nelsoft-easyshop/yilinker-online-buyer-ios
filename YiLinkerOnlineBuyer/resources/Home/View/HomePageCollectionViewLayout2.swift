@@ -52,7 +52,7 @@ struct SectionHeight {
     
     static func sectionSixSecondCellWidth() -> CGFloat {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
-        return (screenSize.width  - 15) - (SectionHeight.sectionSixFirstCellWidth())
+        return (screenSize.width  - 6) - (SectionHeight.sectionSixFirstCellWidth())
         //return 500
     }
     
@@ -78,7 +78,7 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
 
     var homePageModel: HomePageModel = HomePageModel()
     
-    let sectionVerticalInset: CGFloat = 10
+    let sectionVerticalInset: CGFloat = 2
     var sectionFour: CGFloat = 170.0
     
     //MARK: Prepare Layout
@@ -223,7 +223,7 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
     
     //MARK: - Layout Six
     func layoutSix(section: Int) {
-        let horizontalInset: CGFloat = 5
+        let horizontalInset: CGFloat = 2
         
         for var x = 0; x < 3; x++ {
             let indexPath = NSIndexPath(forItem: x, inSection: section)
