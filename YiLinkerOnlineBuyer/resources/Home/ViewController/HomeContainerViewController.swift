@@ -349,29 +349,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         self.collectionView.hidden = true
     }
-    
-    //MARK: -
-    //MARK: - Tab Bar Delegate
-    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
-        if viewController == tabBarController.viewControllers![4] as! UIViewController {
-            return true
-        } else if viewController == tabBarController.viewControllers![3] as! UIViewController {
-            if SessionManager.isLoggedIn() {
-                return true
-            } else {
-                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.wishlistError, title: self.error)
-                return false
-            }
-        } else if self != viewController && viewController != tabBarController.viewControllers![2] as! UIViewController {
-            return true
-        } else {
-            self.circularDraweView("circular-drawer")
-            self.showFAB()
-            
-            return false
-        }
-    }
-    
+
     //MARK: -
     //MARK: - Change DashBoard to Category
     func changeDashBoardToCategory() {
@@ -545,6 +523,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         for (index, model) in enumerate(self.homePageModel.data) {
             if model.isKindOfClass(LayoutOneModel) {
                 self.layouts.append("1")
+                self.loadImageInSectionOne(model as! LayoutOneModel)
             } else if model.isKindOfClass(LayoutTwoModel) {
                 self.layouts.append("2")
             } else if model.isKindOfClass(LayoutThreeModel) {
@@ -582,6 +561,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             self.collectionViewLayout()
             self.collectionView.setContentOffset(CGPointMake(0, yPosition), animated: false)
         })
+    }
+    
+    //MARK: - 
+    //MARK: - Load Image in Section One
+    func loadImageInSectionOne(layoutOneModel: LayoutOneModel) {
+        for imageData in layoutOneModel.data {
+            self.loadImage(imageData.image)
+        }
     }
     
     //MARK: -
@@ -1779,40 +1766,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         return dailyLoginCollectionViewCell.collectionView.frame.size.width
     }
     
-    //MARK: -
-    //MARK: - FAB View Controller Delegate
-    func fabViewController(viewController: FABViewController, didSelectIndex index: Int) {
-        self.redirectToHiddenWithIndex(index)
-    }
-    
-    func redirectToHiddenWithIndex(index: Int) {
-        if SessionManager.isLoggedIn() {
-            if index != -1 {
-                let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
-                let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
-                hiddenViewController.selectViewControllerAtIndex(index)
-                self.customTabBarController!.selectedIndex = 2
-            }
-        } else {
-            if index == 0 {
-                Delay.delayWithDuration(0.5, completionHandler: { (success) -> Void in
-                    self.redirectToLoginRegister(false)
-                })
-            } else if index == 1 {
-                Delay.delayWithDuration(0.5, completionHandler: { (success) -> Void in
-                    self.redirectToLoginRegister(true)
-                })
-            } else {
-                if index != -1 {
-                    let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
-                    let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
-                    hiddenViewController.selectViewControllerAtIndex(index)
-                    self.customTabBarController!.selectedIndex = 2
-                }
-            }
-        }
-    }
-    
     func redirectToLoginRegister(isLogin: Bool) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "StartPageStoryBoard", bundle: nil)
         let loginRegisterViewController: LoginAndRegisterTableViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterTableViewController") as! LoginAndRegisterTableViewController
@@ -1870,6 +1823,47 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     }
 }
 
+//MARK: - 
+//MARK: - FABView Controller Delegate
+extension HomeContainerViewController: FABViewControllerDelegate {
+    //MARK: -
+    //MARK: - FAB View Controller Delegate
+    func fabViewController(viewController: FABViewController, didSelectIndex index: Int) {
+        self.redirectToHiddenWithIndex(index)
+    }
+    
+    //not a delegate function of fab
+    func redirectToHiddenWithIndex(index: Int) {
+        if SessionManager.isLoggedIn() {
+            if index != -1 {
+                let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
+                let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
+                hiddenViewController.selectViewControllerAtIndex(index)
+                self.customTabBarController!.selectedIndex = 2
+            }
+        } else {
+            if index == 0 {
+                Delay.delayWithDuration(0.5, completionHandler: { (success) -> Void in
+                    self.redirectToLoginRegister(false)
+                })
+            } else if index == 1 {
+                Delay.delayWithDuration(0.5, completionHandler: { (success) -> Void in
+                    self.redirectToLoginRegister(true)
+                })
+            } else {
+                if index != -1 {
+                    let navigationController: UINavigationController = self.customTabBarController!.viewControllers![2] as! UINavigationController
+                    let hiddenViewController: HiddenViewController = navigationController.viewControllers[0] as! HiddenViewController
+                    hiddenViewController.selectViewControllerAtIndex(index)
+                    self.customTabBarController!.selectedIndex = 2
+                }
+            }
+        }
+    }
+}
+
+//MARK: -
+//MARK: - QRCode Scanner View Controller Delegate
 extension HomeContainerViewController: QRCodeScannerViewControllerDelegate {
     func qrCodeScannerViewController(qrCodeScannerViewController: QRCodeScannerViewController, code: String) {
         if code.contains("referralCode") {
@@ -1922,6 +1916,8 @@ extension HomeContainerViewController: QRCodeScannerViewControllerDelegate {
     }
 }
 
+//MARK: -
+//MARK: - Search Bar View Delegate
 extension HomeContainerViewController: SearchBarViewDelegate {
     
     func searchBarView(searchBarView: SearchBarView, didTapScanQRCode button: UIButton) {
@@ -2044,8 +2040,41 @@ extension HomeContainerViewController: SearchBarViewDelegate {
             }
         })
     }
+    
+    //MARK: -
+    //MARK: - Load Image
+    func loadImage(image: String) {
+        let imageView: UIImageView = UIImageView(frame: CGRectZero)
+        imageView.sd_setImageWithURL(StringHelper.convertStringToUrl(image))
+    }
 }
 
+//MARK: -
+//MARK: - Tab Bar Delegate
+extension HomeContainerViewController: UITabBarDelegate {
+    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+        if viewController == tabBarController.viewControllers![4] as! UIViewController {
+            return true
+        } else if viewController == tabBarController.viewControllers![3] as! UIViewController {
+            if SessionManager.isLoggedIn() {
+                return true
+            } else {
+                UIAlertController.displayErrorMessageWithTarget(self, errorMessage: self.wishlistError, title: self.error)
+                return false
+            }
+        } else if self != viewController && viewController != tabBarController.viewControllers![2] as! UIViewController {
+            return true
+        } else {
+            self.circularDraweView("circular-drawer")
+            self.showFAB()
+            
+            return false
+        }
+    }
+}
+
+//MARK: -
+//MARK: - Overseas Collection View Cell Data Source
 extension HomeContainerViewController: OverseasCollectionViewCellDataSource {
     func overseasCollectionViewCell(overseasCollectionViewCell: OverseasCollectionViewCell, numberOfItemsInSection section: Int) -> Int {
         let indexPath: NSIndexPath = self.collectionView.indexPathForCell(overseasCollectionViewCell)!
@@ -2080,6 +2109,8 @@ extension HomeContainerViewController: OverseasCollectionViewCellDataSource {
     }
 }
 
+//MARK: -
+//MARK: - Overseas Collection View Cell Delegate
 extension HomeContainerViewController: OverseasCollectionViewCellDelegate {
     func overseasCollectionViewCell(carouselCollectionViewCell: OverseasCollectionViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let fullImageCell: FullImageCollectionViewCell = carouselCollectionViewCell.collectionView.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
