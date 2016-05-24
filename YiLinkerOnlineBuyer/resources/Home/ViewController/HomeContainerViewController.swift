@@ -545,6 +545,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         for (index, model) in enumerate(self.homePageModel.data) {
             if model.isKindOfClass(LayoutOneModel) {
                 self.layouts.append("1")
+                self.loadImageInSectionOne(model as! LayoutOneModel)
             } else if model.isKindOfClass(LayoutTwoModel) {
                 self.layouts.append("2")
             } else if model.isKindOfClass(LayoutThreeModel) {
@@ -582,6 +583,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             self.collectionViewLayout()
             self.collectionView.setContentOffset(CGPointMake(0, yPosition), animated: false)
         })
+    }
+    
+    //MARK: - 
+    //MARK: - Load Image in Section One
+    func loadImageInSectionOne(layoutOneModel: LayoutOneModel) {
+        for imageData in layoutOneModel.data {
+            self.loadImage(imageData.image)
+        }
     }
     
     //MARK: -
@@ -2043,6 +2052,13 @@ extension HomeContainerViewController: SearchBarViewDelegate {
                 }
             }
         })
+    }
+    
+    //MARK: -
+    //MARK: - Load Image
+    func loadImage(image: String) {
+        let imageView: UIImageView = UIImageView(frame: CGRectZero)
+        imageView.sd_setImageWithURL(StringHelper.convertStringToUrl(image))
     }
 }
 
