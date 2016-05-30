@@ -673,7 +673,8 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         
         var ctr: Int = 0
         var isCombinationNotAvailable: Bool = true
-        
+        println(self.attributes[0].choices)
+        println(self.selectedAttributes)
         for i in 0..<self.attributes.count {
             if !self.attributes[i].choices.contains(self.selectedAttributes[i + 1]) {
                 break

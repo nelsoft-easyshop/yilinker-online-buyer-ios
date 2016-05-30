@@ -480,7 +480,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     
     func requestProductDetails() {
         self.showHUD()
-        
+        println(productId)
         let fullProdId = productId.componentsSeparatedByString("getProductDetail")
         
         //productId = productId.stringByReplacingOccurrencesOfString("/api/v3/product/getProductDetail?productId=", withString: "", options: nil, range: nil)
@@ -1084,14 +1084,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         var labelWidth = (self.view.frame.size.width / 3)
         
         for i in 0..<numberOfAttributes {
-//            if i % 3 == 0 && i != 0 {
-//                topMargin += 23
-//                reseter = 0
-//                counter += 1
-//            }
-            
-//            leftMargin = CGFloat(reseter * Int(labelWidth))
-//            reseter += 1
             
             var attributesLabel = UILabel(frame: CGRectMake(leftMargin + 10, topMargin + 50, 0, 23))
             attributesLabel.font = UIFont.systemFontOfSize(14.0)
