@@ -248,7 +248,23 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
                 return false
             }
         case .Default:
-            return true
+            if urlString.contains("userId") {
+                let id: String = storeViewLinkTap(urlString)
+                let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
+                sellerViewController.sellerId = (id as NSString).integerValue
+                self.navigationController!.pushViewController(sellerViewController, animated: true)
+                return false
+            } else if urlString.contains("productId") {
+                let id: String = productLinkTap(urlString)
+                let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
+                productViewController.tabController = self.tabBarController as! CustomTabBarController
+                productViewController.productId = id
+                self.navigationController?.pushViewController(productViewController, animated: true)
+                return false
+            } else {
+                return true
+            }
+            
         default:
             errorView.hidden = false
             return false
