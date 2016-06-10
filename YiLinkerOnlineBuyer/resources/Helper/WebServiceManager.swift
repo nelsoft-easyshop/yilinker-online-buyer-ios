@@ -1,4 +1,4 @@
-    //
+//
 //  WebServiceManager.swift
 //  YiLinkerOnlineBuyer
 //
@@ -1292,6 +1292,36 @@ class WebServiceManager: NSObject {
         let manager: APIManager = APIManager.sharedInstance
         
         let parameters: NSDictionary = [self.accessTokenKey: SessionManager.accessToken()]
+        
+        let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        
+        return sessionDataTask
+    }
+    
+    //MARK: -
+    //MARK: - Fire Delete Address Request With URL
+    class func fireDeletetAddress(url: String, userAddressId: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = [self.accessTokenKey: SessionManager.accessToken(), "userAddressId": userAddressId]
+        
+        let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        
+        return sessionDataTask
+    }
+    
+    
+    //MARK: -
+    //MARK: - Fire Add Address
+    class func fireEditAddress(url: String, userAddressId: String, accessToken: String, title: String, streetName: String, province: String, city: String, barangay: String, zipCode: String, locationId: Int, longitude: Double, latitude: Double, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = ["userAddressId": userAddressId, self.accessTokenKey: accessToken, "title": title, "streetName": streetName, "province": province, "city": city, "barangay": barangay, "zipCode": zipCode, "locationId": locationId, "longitude": longitude, "latitude": latitude]
         
         let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)

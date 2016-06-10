@@ -699,7 +699,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                             
                             if self.productId == itemProductId && self.unitId == itemUnitId {
                                 var quantity: String = item["quantity"] as! String
-                                var price: Double = (productUnit["discountedPrice"] as! NSString).doubleValue
+                                var price: Double = productUnit["discountedPrice"] as! Double
                                 var iQuantity: Double = (quantity as NSString).doubleValue
                                 self.requestCartToCheckout(item["itemId"] as! Int, totalAmount: (iQuantity * price))
                                 break

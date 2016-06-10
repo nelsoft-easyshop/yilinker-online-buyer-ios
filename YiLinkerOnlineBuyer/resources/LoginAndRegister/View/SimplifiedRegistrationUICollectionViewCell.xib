@@ -217,6 +217,7 @@
                 <outlet property="areaCodeLabel" destination="Sxr-m8-pG5" id="74m-wb-iPe"/>
                 <outlet property="areaCodeView" destination="Ekh-6d-zIq" id="fOy-6A-LB9"/>
                 <outlet property="confirmPasswordTextField" destination="NPw-da-yDo" id="Xsq-c6-1xC"/>
+                <outlet property="downCodeImageView" destination="Kdm-lu-OWv" id="wMj-OG-mFt"/>
                 <outlet property="downImageView" destination="jRJ-t2-JKq" id="9wa-lC-7iu"/>
                 <outlet property="languagePreferenceLabel" destination="ad5-GP-qf6" id="HxK-32-mPO"/>
                 <outlet property="languagePreferenceView" destination="bMU-nJ-zaQ" id="M0a-sD-rjr"/>

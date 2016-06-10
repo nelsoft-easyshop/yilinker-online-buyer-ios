@@ -267,14 +267,14 @@ extension UIAlertController {
     class func showAlertYesOrNoWithTitle(title: String, message: String, viewController: UIViewController, actionHandler: (isYes: Bool) -> Void) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         
-        let cancelAction = UIAlertAction(title: RegisterModalStrings.no, style: .Cancel) { (action) in
-            actionHandler(isYes: false)
+        let cancelAction = UIAlertAction(title: RegisterModalStrings.yes, style: .Cancel) { (action) in
+            actionHandler(isYes: true)
         }
         
         alertController.addAction(cancelAction)
         
-        let OKAction = UIAlertAction(title: RegisterModalStrings.yes, style: .Default) { (action) in
-             actionHandler(isYes: true)
+        let OKAction = UIAlertAction(title: RegisterModalStrings.no, style: .Default) { (action) in
+             actionHandler(isYes: false)
         }
         alertController.addAction(OKAction)
         
@@ -436,7 +436,7 @@ extension String {
     }
     
     func isValidName() -> Bool {
-        let nameRegex = "^[a-zA-Z ]*$"
+        let nameRegex = "^[a-zA-Z0-9-_., ]*$"
         let nameTest = NSPredicate(format: "SELF MATCHES %@", nameRegex)
         
         return nameTest.evaluateWithObject(self)
@@ -473,12 +473,13 @@ extension String {
     
     func formatToTwoDecimal() -> String {
         var stringNumber: String = ""
+        var tempString: String = self.stringByReplacingOccurrencesOfString(",", withString: "")
         
         let formatter = NSNumberFormatter()
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 2
         formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
-        stringNumber = "\(formatter.stringFromNumber((self as NSString).doubleValue)!)"
+        stringNumber = "\(formatter.stringFromNumber((tempString as NSString).doubleValue)!)"
 
         if self.rangeOfString("₱") != nil{
             return stringNumber
@@ -496,7 +497,7 @@ extension String {
         numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
         var stringNumber: String = ""
 
-        stringNumber = self
+        stringNumber = self.stringByReplacingOccurrencesOfString(",", withString: "")
         
         if self.rangeOfString(",") != nil {
             if numberFormatter.stringFromNumber(0) != "0" {

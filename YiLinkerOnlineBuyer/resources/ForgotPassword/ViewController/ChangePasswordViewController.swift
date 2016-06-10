@@ -162,7 +162,7 @@ class ChangePasswordViewController: UIViewController {
     }
     
     func dismissLoader() {
-        self.yiHud?.hidden
+        self.yiHud?.hide()
     }
     
     //MARK: API Requests

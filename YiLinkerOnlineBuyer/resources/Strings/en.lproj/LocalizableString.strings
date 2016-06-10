@@ -175,7 +175,7 @@ VOUCHER_CODE_LOCALIZE_KEY = "Voucher Code";
 
 SHIP_TO_LOCALIZE_KEY = "Ship to";
 DEFAULT_ADDRESS_LOCALIZE_KEY = "Default Address";
-CHANGE_ADDRESS_LOCALIZE_KEY = "Change Address";
+CHANGE_ADDRESS_LOCALIZE_KEY = "Address Management";
 ADD_LOCALIZE_KEY = "ADD";
 REMOVE_LOCALIZE_KEY = "REMOVE";
 
@@ -205,6 +205,7 @@ CHANGE_ADDRESS_LOCALIZE_KEY = "Change Address";
 NEW_ADDRESS_LOCALIZE_KEY = "+ NEW ADDRESS";
 EDIT_ADDRESS_LOCALIZE_KEY = "Edit Address";
 ADD_ADDRESS_LOCALIZE_KEY = "Add Address";
+ADD_NEW_ADDRESS_LOCALIZE_KEY = "Add New Address";
 ADDRESS_TITLE_ADDRESS_LOCALIZE_KEY = "Address Title";
 
 // MARK: - Address Error
@@ -220,6 +221,10 @@ ADDRESS_REQUIRED_LOCALIZE_KEY = "Address is required.";
 STREET_NUMBER_REQUIRED_LOCALIZE_KEY = "Street number is required.";
 STREET_NAME_REQUIRED_LOCALIZE_KEY = "Address is required.";
 ZIP_CODE_REQUIRED_LOCALIZE_KEY = "Zip code is required.";
+
+DELETE_DEFAULT_ERROR_LOCALIZE_KEY = "Deleting primary user address is not allowed";
+DELETE_ADRESS_TITLE_LOCALIZE_KEY = "Delete Address";
+DELETE_ADRESS_ERROR_LOCALIZE_KEY = "Are you sure you want to delete this address?";
 
 // MARK: - Checkout - Payment
 HOW_DO_LOCALIZE_KEY = "How do you wish to pay";

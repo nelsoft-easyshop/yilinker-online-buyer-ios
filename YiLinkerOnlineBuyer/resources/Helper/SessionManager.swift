@@ -346,6 +346,17 @@ class SessionManager {
         appDelegate.changeRootToHomeView()
     }
     
+    class func logoutUserWithLoginRedirection(viewController: UIViewController) {
+        let registrationToken = SessionManager.gcmToken()
+        SessionManager.logout()
+        SessionManager.setGcmToken(registrationToken)
+        FBSDKLoginManager().logOut()
+        GPPSignIn.sharedInstance().signOut()
+        viewController.dismissViewControllerAnimated(false, completion: nil)
+        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.redirectToLoginRegister()
+    }
+    
     class func isLoggedIn() -> Bool {
         if self.accessToken() != "" {
             return true
