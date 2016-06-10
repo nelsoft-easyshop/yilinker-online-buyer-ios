@@ -100,7 +100,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         
-        self.setupSearchBar()
+//        self.setupSearchBar()
     }
     
     override func viewWillDisappear(animated: Bool) {

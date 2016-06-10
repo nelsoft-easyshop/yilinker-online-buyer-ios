@@ -231,6 +231,10 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             cell.delegate = self
             addressIndexPath = indexPath
             cell.addressLabel.text = profileUserDetailsModel.address.fullLocation
+            
+            if profileUserDetailsModel.address.fullLocation.isEmpty {
+                cell.changeAddressButton.setTitle(StringHelper.localizedStringWithKey("ADD_NEW_ADDRESS_LOCALIZE_KEY"), forState: .Normal)
+            }
             return cell
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier(accountCellIdentifier, forIndexPath: indexPath) as! EditProfileAccountInformationTableViewCell
@@ -610,7 +614,7 @@ extension EditProfileTableViewController: EditProfilePersonalInformationTableVie
             self.tabBarController?.presentViewController(viewImageModal, animated: true, completion: nil)
             
             self.dimView!.hidden = false
-            UIView.animateWithDuration(0.3, animations: {
+            UIView.animateWithDuration(0.3, animations: {0
                 self.dimView!.alpha = 1
                 }, completion: { finished in
             })
@@ -733,7 +737,9 @@ extension EditProfileTableViewController: ChangePasswordViewControllerDelegate {
         hideDimView()
         var changeLocalizeString = StringHelper.localizedStringWithKey("CHANGEPASSWORD_LOCALIZE_KEY")
         var successLocalizeString = StringHelper.localizedStringWithKey("SUCCESSCHANGEPASSWORD_LOCALIZE_KEY")
-        UIAlertController.displayErrorMessageWithTarget(self, errorMessage: successLocalizeString, title: changeLocalizeString)
+        Toast.displayToastWithMessage(successLocalizeString, duration: 2.0, view: self.navigationController!.view)
+        
+        SessionManager.logoutUserWithLoginRedirection(self)
     }
 }
 

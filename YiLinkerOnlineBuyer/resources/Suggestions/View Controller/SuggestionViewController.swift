@@ -106,6 +106,7 @@ class SuggestionViewController: UIViewController {
         self.titleTextField.text = SuggestionStrings.titlePlaceholder
         self.titleTextField.required()
         self.descriptionTextView.required()
+        self.descriptionTextView.alpha = 0.5
         self.sendButton.setTitle(SuggestionStrings.send, forState: .Normal)
         
         self.titleTextField.delegate = self
@@ -183,6 +184,7 @@ class SuggestionViewController: UIViewController {
             self.descriptionTextView.text = SuggestionStrings.descriptionPlaceholder
             self.titleTextField.required()
             self.descriptionTextView.required()
+            self.descriptionTextView.alpha = 0.5
         }
     }
     
@@ -247,6 +249,7 @@ extension SuggestionViewController: UITextViewDelegate {
         if textView.attributedText.string == "\(SuggestionStrings.descriptionPlaceholder)*" {
             textView.text = ""
             textView.textColor = UIColor.darkGrayColor()
+            self.descriptionTextView.alpha = 1
         }
         
         textView.becomeFirstResponder()
@@ -257,6 +260,7 @@ extension SuggestionViewController: UITextViewDelegate {
             textView.text = SuggestionStrings.descriptionPlaceholder
             textView.textColor = UIColor.lightGrayColor()
             textView.required()
+            self.descriptionTextView.alpha = 0.5
         }
         
         textView.resignFirstResponder()

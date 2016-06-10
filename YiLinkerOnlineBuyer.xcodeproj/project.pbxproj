@@ -3960,7 +3960,7 @@
 					"$(PROJECT_DIR)/YiLinkerOnlineBuyer/Resources/External",
 				);
 				INFOPLIST_FILE = YiLinkerOnlineBuyer/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "dbafa5c7-e762-42e0-909d-5324f8b26cb1";
@@ -3983,7 +3983,7 @@
 					"$(PROJECT_DIR)/YiLinkerOnlineBuyer/Resources/External",
 				);
 				INFOPLIST_FILE = YiLinkerOnlineBuyer/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

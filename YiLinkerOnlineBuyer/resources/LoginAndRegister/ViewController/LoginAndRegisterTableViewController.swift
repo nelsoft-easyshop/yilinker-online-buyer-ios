@@ -161,12 +161,13 @@ class LoginAndRegisterTableViewController: UITableViewController {
         } else {
             
         }
+        
+        self.fireGetLanguageData()
+        self.initializeDefaultValues()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        self.fireGetLanguageData()
-        self.initializeDefaultValues()
     }
     
     override func didReceiveMemoryWarning() {
@@ -195,6 +196,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
                     if model.code == SessionManager.selectedCountryCode() {
                         self.selectedCountry = model
                         self.selectedLanguage = model.defaultLanguage
+                        self.tableView.reloadData()
                     }
                 }
             }

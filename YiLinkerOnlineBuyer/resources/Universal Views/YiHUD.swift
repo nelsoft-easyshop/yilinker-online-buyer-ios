@@ -11,6 +11,7 @@ import UIKit
 class YiHUD: UIView {
     
     static let kHudTag: Int = 123456
+    var isViewHidden: Bool = true
     
     @IBOutlet weak var dimView: UIView!
     //MARK: - 
@@ -52,12 +53,15 @@ class YiHUD: UIView {
         
         view.layoutIfNeeded()
         self.center = view.center
+        
+        self.isViewHidden = false
     }
     
     //MARK: - 
     //MARK: - Hide
     func hide() {
         self.removeFromSuperview()
+        self.isViewHidden = true
     }
 
 }

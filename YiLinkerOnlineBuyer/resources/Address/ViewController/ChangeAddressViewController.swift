@@ -263,70 +263,45 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
                 }
             }
         })
-        
     }
     
     func requestDeleteAddress(addressId: Int, index: NSIndexPath) {
-        self.showHUD()
         
-        let params = ["access_token": SessionManager.accessToken(),
-        "userAddressId": String(addressId)]
-        
-        manager.POST(APIAtlas.deleteAddressUrl, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            if (responseObject["isSuccessful"] as! Bool) {
-                self.deleteCellInIndexPath(index)
-            } else {
-                self.showAlert(title: responseObject["message"] as! String, message: nil)
-            }
-            
-            self.yiHud?.hide()
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                
-                if task.statusCode == 401 {
-                    self.requestRefreshToken(AddressRefreshType.Delete, uid:addressId, indexPath: index)
-                } else if error.userInfo != nil {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: errorModel.title)
-                } else {
-                    self.addEmptyView()
+        if self.getAddressModel.listOfAddress[index.row].isDefault {
+            Toast.displayToastWithMessage(StringHelper.localizedStringWithKey("DELETE_DEFAULT_ERROR_LOCALIZE_KEY"), duration: 1.5, view: self.view)
+        } else {
+            UIAlertController.showAlertYesOrNoWithTitle(StringHelper.localizedStringWithKey("DELETE_ADRESS_TITLE_LOCALIZE_KEY"), message: StringHelper.localizedStringWithKey("DELETE_ADRESS_ERROR_LOCALIZE_KEY"), viewController: self) { (isYes) -> Void in
+                if isYes {
+                    self.showHUD()
+                    
+                    WebServiceManager.fireDeletetAddress(APIAtlas.deleteAddressUrl, userAddressId: String(addressId)) { (successful, responseObject, requestErrorType) -> Void in
+                        self.yiHud?.hide()
+                        println(responseObject)
+                        if successful {
+                            self.deleteCellInIndexPath(index)
+                        } else {
+                            if requestErrorType == .ResponseError {
+                                let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                                Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                            } else if requestErrorType == .PageNotFound {
+                                Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                            } else if requestErrorType == .NoInternetConnection {
+                                Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                            } else if requestErrorType == .RequestTimeOut {
+                                Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                            } else if requestErrorType == .UnRecognizeError {
+                                Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                            } else if requestErrorType == .AccessTokenExpired {
+                                self.requestRefreshToken(AddressRefreshType.Delete, uid: 0, indexPath: nil)
+                            }
+                        }
+                    }
                 }
-                
-                self.yiHud?.hide()
-        })
+            }
+        }
     }
     
     func requestRefreshToken(type: AddressRefreshType, uid: Int, indexPath: NSIndexPath!) {
-      /*  let url: String = "http://online.api.easydeal.ph/api/v1/login"
-        let params: NSDictionary = ["client_id": Constants.Credentials.clientID(),
-            "client_secret": Constants.Credentials.clientSecret(),
-            "grant_type": Constants.Credentials.grantRefreshToken,
-            "refresh_token": SessionManager.refreshToken()]
-        let manager = APIManager.sharedInstance
-        self.showHUD()
-        manager.POST(url, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            if type == AddressRefreshType.Get {
-                self.requestGetAddressess()
-            } else if type == AddressRefreshType.Delete {
-                self.requestDeleteAddress(uid, index: indexPath)
-            } else if type == AddressRefreshType.SetDefault {
-                self.fireSetDefaultAddressWithAddressId("\(uid)", indexPath: indexPath)
-            }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                self.yiHud?.hide()
-                let alertController = UIAlertController(title: Constants.Localized.someThingWentWrong, message: "", preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
-                alertController.addAction(defaultAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
-        })*/
         
         WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.loginUrl, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
@@ -351,49 +326,6 @@ class ChangeAddressViewController: UIViewController, UICollectionViewDelegateFlo
     
     func fireSetDefaultAddressWithAddressId(addressId: String, indexPath: NSIndexPath) {
         self.showHUD()
-        /*let params = ["access_token": SessionManager.accessToken(),
-            "userAddressId": addressId]
-        
-        manager.POST(APIAtlas.setDefaultAddressUrl, parameters: params, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
-            if (responseObject["isSuccessful"] as! Bool) {
-                let addressModel: AddressModelV2 = AddressModelV2.parseAddressFromDictionary(responseObject["data"] as! NSDictionary)
-                
-                SessionManager.setAddressId(addressModel.userAddressId)
-                SessionManager.setFullAddress(addressModel.fullLocation)
-                
-                SessionManager.setLang(addressModel.latitude)
-                SessionManager.setLong(addressModel.longitude)
-                
-                SessionManager.setCity(addressModel.city)
-                SessionManager.setProvince(addressModel.province)
-                
-                self.selectedIndex = indexPath.row
-                self.collectionView.reloadData()
-            } else {
-                self.showAlert(title: responseObject["message"] as! String, message: nil)
-            }
-            
-            self.yiHud?.hide()
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                self.yiHud?.hide()
-                
-                if task.statusCode == 401 {
-                    self.requestRefreshToken(AddressRefreshType.SetDefault, uid:addressId.toInt()!, indexPath: nil)
-                }  else if error.userInfo != nil {
-                    let dictionary: NSDictionary = (error.userInfo as? Dictionary<String, AnyObject>)!
-                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(dictionary)
-                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorModel.message, title: errorModel.title)
-                } else {
-                    self.addEmptyView()
-                }
-                
-                self.yiHud?.hide()
-        })*/
-        
         
         WebServiceManager.fireSetDefaultAddressFromUrl(APIAtlas.setDefaultAddressUrl, userAddressId: addressId) { (successful, responseObject, requestErrorType) -> Void in
             self.yiHud?.hide()

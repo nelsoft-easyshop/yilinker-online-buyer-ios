@@ -257,6 +257,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate {
         
     }
     
+    func redirectToLoginRegister() {
+        for view in self.window!.subviews {
+            view.removeFromSuperview()
+        }
+        
+        for view in self.window!.subviews {
+            view.removeFromSuperview()
+        }
+        let startingPageStoryBoard: UIStoryboard = UIStoryboard(name: "StartPageStoryBoard", bundle: nil)
+        let loginRegisterViewController: LoginAndRegisterTableViewController = startingPageStoryBoard.instantiateViewControllerWithIdentifier("LoginAndRegisterTableViewController") as! LoginAndRegisterTableViewController
+        loginRegisterViewController.isLogin = true
+        self.window?.rootViewController = loginRegisterViewController
+    }
+    
     func countryPage() {
         for view in self.window!.subviews {
             view.removeFromSuperview()
