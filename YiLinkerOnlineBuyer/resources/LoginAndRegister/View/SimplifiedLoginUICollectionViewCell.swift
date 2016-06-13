@@ -13,6 +13,7 @@ protocol SimplifiedLoginUICollectionViewCellDelegate {
     func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapFBLogin facebookButton: FBSDKLoginButton)
     func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapForgotPassword forgotPasswordButton: UIButton)
     func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapSignin signInButton: UIButton)
+    func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapAreaCode areaCodeView: UIView)
 }
 
 class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
@@ -30,9 +31,11 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var areaCodeView: UIView!
     @IBOutlet weak var areaCodeLabel: UILabel!
+    @IBOutlet weak var areaCodeImageView: UIImageView!
     @IBOutlet weak var areaCodeConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var downImageView: UIImageView!
+    @IBOutlet weak var downAreaImageView: UIImageView!
     
     var isMobileLogin: Bool = true
     
@@ -47,6 +50,9 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
             self.facebookButton.readPermissions = ["public_profile", "email"]
             self.facebookButton.delegate = self
         }
+        
+        let areaCodeTapGesture = UITapGestureRecognizer(target:self, action:"didTapAreaCode")
+        self.areaCodeView.addGestureRecognizer(areaCodeTapGesture)
     }
     
     func initializeViews() {
@@ -54,6 +60,7 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
         self.passwordTextField.delegate = self
         
         self.downImageView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
+        self.downAreaImageView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
         
         self.signInButton.layer.cornerRadius = 3
         self.facebookButton.layer.cornerRadius = 3
@@ -110,6 +117,11 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
         } else if sender == self.signInButton {
             self.delegate?.simplifiedLoginCell(self, didTapSignin: self.signInButton)
         }
+    }
+    
+    func didTapAreaCode() {
+        self.delegate?.simplifiedLoginCell(self, didTapAreaCode: self.areaCodeView)
+        println("Area Code")
     }
 }
 

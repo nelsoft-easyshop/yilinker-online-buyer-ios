@@ -166,10 +166,6 @@ class LoginAndRegisterTableViewController: UITableViewController {
         self.initializeDefaultValues()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -712,6 +708,10 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
     
     func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapSignin signInButton: UIButton) {
         self.loginChecker(simplifiedLoginCell)
+    }
+    
+    func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapAreaCode areaCodeView: UIView) {
+        
     }
     
     
