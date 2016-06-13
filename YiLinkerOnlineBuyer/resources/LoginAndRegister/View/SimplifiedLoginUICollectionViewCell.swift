@@ -35,7 +35,6 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var areaCodeConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var downImageView: UIImageView!
-    @IBOutlet weak var downAreaImageView: UIImageView!
     
     var isMobileLogin: Bool = true
     
@@ -60,7 +59,6 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
         self.passwordTextField.delegate = self
         
         self.downImageView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
-        self.downAreaImageView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
         
         self.signInButton.layer.cornerRadius = 3
         self.facebookButton.layer.cornerRadius = 3
@@ -97,7 +95,7 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
             self.emailMobileTextField.keyboardType = UIKeyboardType.PhonePad
             self.emailMobileTextField.text = ""
             self.emailMobileTextField.placeholder = LoginStrings.mobileNUmber
-            self.areaCodeConstraint.constant = 69
+            self.areaCodeConstraint.constant = 85
             UIView.animateWithDuration(0.25) {
                 self.layoutIfNeeded()
             }
