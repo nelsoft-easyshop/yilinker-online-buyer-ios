@@ -112,6 +112,7 @@ INVALID_MOBILE_REQUIRED_LOCALIZE_KEY = "Mobile Number is not valid";
 
 // MARK: - Sing In Success Message
 SUCCESS_LOGIN_LOCALIZE_KEY = "Successfully login.";
+WELCOME_LOCALIZE_KEY = "Welcome to YiLinker";
 LOGIN_LOCALIZE_KEY = "Login";
 
 // MARK: - Register
