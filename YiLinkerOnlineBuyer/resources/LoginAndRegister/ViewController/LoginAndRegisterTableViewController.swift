@@ -23,6 +23,7 @@ struct LoginStrings {
     static let passwordIsRequired: String = StringHelper.localizedStringWithKey("PASSWORD_IS_REQUIRED_LOCALIZE_KEY")
     
     static let successMessage: String = StringHelper.localizedStringWithKey("SUCCESS_LOGIN_LOCALIZE_KEY")
+     static let welcomMessage: String = StringHelper.localizedStringWithKey("WELCOME_LOCALIZE_KEY")
     static let or: String = StringHelper.localizedStringWithKey("OR_LOCALIZE_KEY")
     static let forgotPasswordd: String = StringHelper.localizedStringWithKey("FORGOT_PASSWORD_LOCALIZE_KEY")
     static let signIn: String = StringHelper.localizedStringWithKey("SIGNIN_HIDDEN_LOCALIZE_KEY")
@@ -139,6 +140,8 @@ class LoginAndRegisterTableViewController: UITableViewController {
     
     var selectedCountry = CountryModel()
     var selectedLanguage = LanguageModel()
+    
+    var isRegistration: Bool = false
     
     //MARK: -
     //MARK: - View Did Load
@@ -326,7 +329,12 @@ class LoginAndRegisterTableViewController: UITableViewController {
     //MARK: -
     //MARK: - Success Message
     func showSuccessMessage() {
-        Toast.displayToastWithMessage( LoginStrings.successMessage, duration: 3.0, view: self.view)
+        if self.isRegistration {
+            Toast.displayToastWithMessage( LoginStrings.welcomMessage, duration: 3.0, view: self.view)
+        } else{
+            Toast.displayToastWithMessage( LoginStrings.successMessage, duration: 3.0, view: self.view)
+        }
+        
         self.view.userInteractionEnabled = false
         Delay.delayWithDuration(1.0, completionHandler: { (success) -> Void in
             let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -338,6 +346,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
     //MARK: -
     //MARK: - Fire Login With Email
     func fireLoginWithEmail(email: String, password: String) {
+        self.isRegistration = false
         self.showLoader()
         self.loginSessionDataTask = WebServiceManager.fireEmailLoginRequestWithUrl(APIAtlas.loginUrl, emailAddress: email, password: password, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
@@ -368,6 +377,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
     //MARK: -
     //MARK: - Fire Login With Contact Number
     func fireLoginWithContactNumber(contactNo: String, password: String) {
+        self.isRegistration = false
         self.showLoader()
         
         self.loginSessionDataTask = WebServiceManager.fireContactNumberLoginRequestWithUrl(APIAtlas.loginUrlV2, contactNo: contactNo, password: password, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
@@ -435,7 +445,9 @@ class LoginAndRegisterTableViewController: UITableViewController {
         self.showLoader()
         
         WebServiceManager.fireRegisterRequestWithUrl(APIAtlas.registerV2, contactNumber: contactNumber, password: password, areaCode: areaCode, referralCode: referralCode, verificationCode: verificationCode, language: language, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            println(responseObject)
             if successful {
+                self.isRegistration = true
                 self.dismissLoader()
                 let registerModel: RegisterModel = RegisterModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 if registerModel.isSuccessful {
