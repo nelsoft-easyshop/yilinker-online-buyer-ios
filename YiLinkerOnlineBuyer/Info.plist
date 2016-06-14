@@ -35,7 +35,7 @@
 			<string>None</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb513031082205702</string>
+				<string>fb922572817803410</string>
 			</array>
 		</dict>
 		<dict>
@@ -58,7 +58,7 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>FacebookAppID</key>
-	<string>513031082205702</string>
+	<string>922572817803410</string>
 	<key>FacebookDisplayName</key>
 	<string>Yilinker Online</string>
 	<key>LSApplicationCategoryType</key>
