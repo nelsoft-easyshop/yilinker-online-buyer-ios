@@ -1429,4 +1429,18 @@ class WebServiceManager: NSObject {
         return sessionDataTask
     }
     
+    //MARK: -
+    //MARK: - Fire Social media Login
+    class func fireSocialMediaLoginFromUrl(url: String, parameters: NSDictionary, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        
+        return sessionDataTask
+    }
+    
+    
 }

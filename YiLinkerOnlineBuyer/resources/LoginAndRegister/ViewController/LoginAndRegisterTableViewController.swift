@@ -520,38 +520,46 @@ class LoginAndRegisterTableViewController: UITableViewController {
         
         let parameters: NSDictionary = [LoginConstants.tokenKey: token, LoginConstants.clientIdKey: Constants.Credentials.clientID(), LoginConstants.clientSecretKey: Constants.Credentials.clientSecret(), LoginConstants.grantTypeKey: Constants.Credentials.grantBuyer]
         
-        manager.POST(APIAtlas.facebookUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+        WebServiceManager.fireSocialMediaLoginFromUrl(APIAtlas.facebookUrl, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             self.dismissLoader()
-            println(responseObject.description)
-            
-            let loginModel: LoginModel = LoginModel.parseDataFromDictionary(responseObject as! NSDictionary)
-            if loginModel.isSuccessful {
-                SessionManager.parseTokensFromResponseObject(loginModel.dataDictionary)
-                self.showSuccessMessage()
-                self.fireCreateRegistration(SessionManager.gcmToken())
-            } else {
-                if let isExisting = loginModel.dataDictionary["isExisting"] as? Bool {
-                    UIAlertController.showAlertYesOrNoWithTitle(Constants.Localized.error, message: "\(loginModel.message), do you want to merge your account?", viewController: self, actionHandler: { (isYes) -> Void in
-                        if isYes {
-                            self.mergeAccount(token)
-                        } else {
-                            FBSDKLoginManager().logOut()
-                        }
-                    })
-                    
+            if successful {
+                let loginModel: LoginModel = LoginModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                if loginModel.isSuccessful {
+                    SessionManager.parseTokensFromResponseObject(loginModel.dataDictionary)
+                    self.showSuccessMessage()
+                    self.fireCreateRegistration(SessionManager.gcmToken())
                 } else {
-                    FBSDKLoginManager().logOut()
-                    Toast.displayToastWithMessage(loginModel.message, view: self.view)
+                    if let isExisting = loginModel.dataDictionary["isExisting"] as? Bool {
+                        UIAlertController.showAlertYesOrNoWithTitle(Constants.Localized.error, message: "\(loginModel.message), do you want to merge your account?", viewController: self, actionHandler: { (isYes) -> Void in
+                            if isYes {
+                                self.mergeAccount(token)
+                            } else {
+                                FBSDKLoginManager().logOut()
+                            }
+                        })
+                        
+                    } else {
+                        FBSDKLoginManager().logOut()
+                        Toast.displayToastWithMessage(loginModel.message, view: self.view)
+                    }
+                }
+            } else {
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                } else if requestErrorType == .Cancel {
+                    //Do nothing
                 }
             }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                Toast.displayToastWithMessage(Constants.Localized.someThingWentWrong, view: self.view)
-                self.dismissLoader()
-        })
+        }
     }
     
     //MARK: -
@@ -562,29 +570,36 @@ class LoginAndRegisterTableViewController: UITableViewController {
         
         let parameters: NSDictionary = [LoginConstants.clientIdKey: Constants.Credentials.clientID(), LoginConstants.clientSecretKey: Constants.Credentials.clientSecret(), LoginConstants.clientSecretKey: Constants.Credentials.grantBuyer, LoginConstants.grantTypeKey: Constants.Credentials.grantBuyer, "token": facebookAccessToken, "accountType": "facebook"]
         
-        manager.POST(APIAtlas.mergeFacebook, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+        WebServiceManager.fireSocialMediaLoginFromUrl(APIAtlas.mergeFacebook, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             self.dismissLoader()
-            println(responseObject)
-            
-            let loginModel: LoginModel = LoginModel.parseDataFromDictionary(responseObject as! NSDictionary)
-            if loginModel.isSuccessful {
-                SessionManager.parseTokensFromResponseObject(loginModel.dataDictionary)
-                self.showSuccessMessage()
-                self.fireCreateRegistration(SessionManager.gcmToken())
+            if successful {
+                let loginModel: LoginModel = LoginModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                if loginModel.isSuccessful {
+                    SessionManager.parseTokensFromResponseObject(loginModel.dataDictionary)
+                    self.showSuccessMessage()
+                    self.fireCreateRegistration(SessionManager.gcmToken())
+                } else {
+                    FBSDKLoginManager().logOut()
+                    Toast.displayToastWithMessage(loginModel.message, view: self.view)
+                }
+
             } else {
-                FBSDKLoginManager().logOut()
-                Toast.displayToastWithMessage(loginModel.message, view: self.view)
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                } else if requestErrorType == .Cancel {
+                    //Do nothing
+                }
             }
-            
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                Toast.displayToastWithMessage(Constants.Localized.someThingWentWrong, view: self.view)
-                self.dismissLoader()
-        })
+        }
     }
     
     //MARK: -

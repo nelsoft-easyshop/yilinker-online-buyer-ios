@@ -111,6 +111,7 @@ class FollowedSellerViewController: UIViewController, EmptyViewDelegate {
                 self.followedSellerModel = FollowedSellerModel.parseDataWithDictionary(responseObject)
                 
                 if self.followedSellerModel.id.count != 0 {
+                    self.emptyLabel.hidden = true
                     self.tableView.reloadData()
                 } else {
                     self.emptyLabel.hidden = false

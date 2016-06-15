@@ -921,7 +921,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 let isSuccessful: Bool = dictionary["isSuccessful"] as! Bool
                 
                 if isSuccessful {
-                    let address: String = "\(registerModel.streetName) \(self.addressModel.barangay) \(self.addressModel.city) \(self.addressModel.province)"
+                    let address: String = "\(registerModel.streetName) \(self.addressModel.barangay) \(self.addressModel.city) \(self.addressModel.province) \(self.addressModel.zipCode )"
                     let fullName: String = "\(registerModel.firstName) \(registerModel.lastName)"
                     SessionManager.setUserFullName(fullName)
                     SessionManager.setFullAddress(address)
