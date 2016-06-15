@@ -411,8 +411,12 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.currentTextFieldTag = textfieldTag
         
         if textfieldTag < 4 {
-            var indexPath: NSIndexPath = self.tableView.indexPathForCell(self.guestCheckoutTableViewCell)!
-            self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+            
+            if self.tableView.indexPathForCell(self.guestCheckoutTableViewCell) != nil {
+                var indexPath: NSIndexPath = self.tableView.indexPathForCell(self.guestCheckoutTableViewCell)!
+                self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+            }
+            
         }
         
         UIView.animateWithDuration(0.5, animations: {
