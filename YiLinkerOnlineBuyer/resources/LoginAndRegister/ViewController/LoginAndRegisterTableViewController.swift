@@ -377,7 +377,6 @@ class LoginAndRegisterTableViewController: UITableViewController {
     //MARK: -
     //MARK: - Fire Login With Contact Number
     func fireLoginWithContactNumber(contactNo: String, password: String) {
-        self.isRegistration = false
         self.showLoader()
         
         self.loginSessionDataTask = WebServiceManager.fireContactNumberLoginRequestWithUrl(APIAtlas.loginUrlV2, contactNo: contactNo, password: password, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
