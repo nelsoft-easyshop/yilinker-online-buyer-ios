@@ -86,6 +86,7 @@ PODS:
   - SVProgressHUD (1.1.3)
   - SwipeBack (1.1.0)
   - Toast (3.0)
+  - TPKeyboardAvoiding (1.3)
 
 DEPENDENCIES:
   - AFNetworking
@@ -103,6 +104,7 @@ DEPENDENCIES:
   - SVProgressHUD
   - SwipeBack
   - Toast
+  - TPKeyboardAvoiding
 
 SPEC CHECKSUMS:
   AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
@@ -129,5 +131,6 @@ SPEC CHECKSUMS:
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
   SwipeBack: 45a42c333b7b9657b9f02cf19673339b3a006195
   Toast: 32c59229abfcf41850162b83bb9259dc84372473
+  TPKeyboardAvoiding: a5138f318c06fb3e151f886e18ce4a72695d9cbe
 
 COCOAPODS: 0.39.0
