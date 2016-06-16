@@ -410,57 +410,57 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     func guestCheckoutTableViewCell(guestCheckoutTableViewCell: GuestCheckoutTableViewCell, didStartEditingTextFieldWithTag textfieldTag: Int, textField: UITextField) {
         self.currentTextFieldTag = textfieldTag
         
-        if textfieldTag < 4 {
-            
-            if self.tableView.indexPathForCell(self.guestCheckoutTableViewCell) != nil {
-                var indexPath: NSIndexPath = self.tableView.indexPathForCell(self.guestCheckoutTableViewCell)!
-                self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
-            }
-            
-        }
-        
-        UIView.animateWithDuration(0.5, animations: {
-            var contentInset: UIEdgeInsets = self.tableView.contentInset
-            contentInset.top = 0.0
-            if IphoneType.isIphone6Plus() {
-               contentInset.top = contentInset.top - (50 * CGFloat(textfieldTag + 1))
-            } else if IphoneType.isIphone6() {
-
-                if textfieldTag == 13 {
-                    contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag))
-                } else {
-                    if self.currentTextFieldTag == 0 {
-                        contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag + 1))
-                    } else {
-                        contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag))
-                    }
-                }
-            } else if IphoneType.isIphone5() {
-                if textfieldTag == 3 {
-                    contentInset.top = contentInset.top - (50 * CGFloat(textfieldTag - 1)) - 120
-                } else if textfieldTag == 13 {
-                    contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag)) - 120
-                } else if textfieldTag >= 8 {
-                    contentInset.top = contentInset.top - (55 * CGFloat(textfieldTag)) - 120
-                } else {
-                    contentInset.top = contentInset.top - (45 * CGFloat(textfieldTag + 1)) - 120
-                } 
-            } else if IphoneType.isIphone4() {
-                let extraSpace: CGFloat = 150
-                
-                if textfieldTag >= 8 {
-                    contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag)) - extraSpace
-                } else {
-                    if textField.tag == 3 {
-                        contentInset.top = contentInset.top - (45 * CGFloat(textfieldTag)) - extraSpace                        
-                    } else {
-                        contentInset.top = contentInset.top - (45 * CGFloat(textfieldTag + 1)) - extraSpace
-                    }
-                }
-            }
-                self.tableView.contentInset = contentInset
-                self.tableView.scrollIndicatorInsets = contentInset
-        })
+//        if textfieldTag < 4 {
+//            
+//            if self.tableView.indexPathForCell(self.guestCheckoutTableViewCell) != nil {
+//                var indexPath: NSIndexPath = self.tableView.indexPathForCell(self.guestCheckoutTableViewCell)!
+//                self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+//            }
+//            
+//        }
+//        
+//        UIView.animateWithDuration(0.5, animations: {
+//            var contentInset: UIEdgeInsets = self.tableView.contentInset
+//            contentInset.top = 0.0
+//            if IphoneType.isIphone6Plus() {
+//               contentInset.top = contentInset.top - (50 * CGFloat(textfieldTag + 1))
+//            } else if IphoneType.isIphone6() {
+//
+//                if textfieldTag == 13 {
+//                    contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag))
+//                } else {
+//                    if self.currentTextFieldTag == 0 {
+//                        contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag + 1))
+//                    } else {
+//                        contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag))
+//                    }
+//                }
+//            } else if IphoneType.isIphone5() {
+//                if textfieldTag == 3 {
+//                    contentInset.top = contentInset.top - (50 * CGFloat(textfieldTag - 1)) - 120
+//                } else if textfieldTag == 13 {
+//                    contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag)) - 120
+//                } else if textfieldTag >= 8 {
+//                    contentInset.top = contentInset.top - (55 * CGFloat(textfieldTag)) - 120
+//                } else {
+//                    contentInset.top = contentInset.top - (45 * CGFloat(textfieldTag + 1)) - 120
+//                } 
+//            } else if IphoneType.isIphone4() {
+//                let extraSpace: CGFloat = 150
+//                
+//                if textfieldTag >= 8 {
+//                    contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag)) - extraSpace
+//                } else {
+//                    if textField.tag == 3 {
+//                        contentInset.top = contentInset.top - (45 * CGFloat(textfieldTag)) - extraSpace                        
+//                    } else {
+//                        contentInset.top = contentInset.top - (45 * CGFloat(textfieldTag + 1)) - extraSpace
+//                    }
+//                }
+//            }
+//                self.tableView.contentInset = contentInset
+//                self.tableView.scrollIndicatorInsets = contentInset
+//        })
         
         
         if textField == self.guestCheckoutTableViewCell.provinceTextField {
