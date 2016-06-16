@@ -413,6 +413,13 @@ class LoginAndRegisterTableViewController: UITableViewController {
         WebServiceManager.fireUnauthenticatedOTPRequestWithUrl(APIAtlas.unauthenticateOTP, contactNumber: contactNumber, areaCode: areaCode, type: type, storeType: storeType, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 self.dismissLoader()
+                
+                if let temp = responseObject as? NSDictionary {
+                    if let tempMessage = temp["message"] as? String {
+                        Toast.displayToastWithMessage(tempMessage, duration: 1.5, view: self.view)
+                    }
+                }
+                
                 if self.isResetPassword {
                     self.tempForgotPasswordCell?.startTimer()
                 } else {
