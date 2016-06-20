@@ -257,6 +257,12 @@ class LoginAndRegisterTableViewController: UITableViewController {
                 let resetPasswordTableViewCell: ForgotPasswordTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.resetPasswordTableViewCellNibName) as! ForgotPasswordTableViewCell
                 resetPasswordTableViewCell.delegate = self
                 resetPasswordTableViewCell.selectionStyle = .None
+                
+                resetPasswordTableViewCell.mobileNumberTextField.text = ""
+                resetPasswordTableViewCell.passwordTextField.text = ""
+                resetPasswordTableViewCell.confirmPasswordTextField.text = ""
+                resetPasswordTableViewCell.activationCodeTextField.text = ""
+                
                 return resetPasswordTableViewCell
             } else {
                 let loginRegisterTableViewCell: LoginRegisterTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.loginResgisterTableViewCellNibName) as! LoginRegisterTableViewCell
