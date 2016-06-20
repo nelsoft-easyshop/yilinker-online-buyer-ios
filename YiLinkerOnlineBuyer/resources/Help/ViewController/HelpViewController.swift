@@ -60,9 +60,9 @@ class HelpViewController: UIViewController {
         self.whatsNewButton.layer.cornerRadius = 5
         
         if IphoneType.isIphone4() {
-            self.logoHeightConstraint.constant = 90
+            self.logoHeightConstraint.constant = 70
         } else if IphoneType.isIphone5() {
-            self.logoHeightConstraint.constant = 140
+            self.logoHeightConstraint.constant = 120
         } else if IphoneType.isIphone6() {
             self.logoHeightConstraint.constant = 190
         } else if IphoneType.isIphone6Plus() {

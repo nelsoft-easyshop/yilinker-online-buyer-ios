@@ -826,6 +826,8 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
             cell.specialtyLabel.text = tempModel.specialty
             cell.sellerImageView.sd_setImageWithURL(NSURL(string: tempModel.image), placeholderImage: UIImage(named: "dummy-placeholder"))
             cell.descriptionLabel.text = tempModel.productDescription
+            cell.productIds.removeAll(keepCapacity: false)
+            cell.productImages.removeAll(keepCapacity: false)
             
             for subValue in tempModel.products {
                 cell.productIds.append(subValue.productId)
@@ -836,6 +838,9 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
                     cell.productImages.append(" ")
                 }
             }
+            
+            cell.collectionView.reloadData()
+            cell.contentView.setNeedsLayout()
             return cell
         }
     }
