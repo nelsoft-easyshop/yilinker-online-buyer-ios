@@ -14,7 +14,7 @@ protocol PaymentWebViewViewControllerDelegate {
 }
 
 
-class PaymentWebViewViewController: UIViewController, UIWebViewDelegate {
+class PaymentWebViewViewController: UIViewController, UIWebViewDelegate, NSURLConnectionDelegate {
 
     @IBOutlet weak var webView: UIWebView!
     
@@ -30,6 +30,11 @@ class PaymentWebViewViewController: UIViewController, UIWebViewDelegate {
         self.showHUD()
         self.backButton()
         let request = NSURLRequest(URL: self.pesoPayModel.paymentUrl)
+        
+        if APIEnvironment.development {
+            let urlConnection:NSURLConnection = NSURLConnection(request: request, delegate: self)!
+        }
+        
         self.webView.loadRequest(request)
         self.webView.delegate = self
         self.webView.scalesPageToFit = true
@@ -114,5 +119,28 @@ class PaymentWebViewViewController: UIViewController, UIWebViewDelegate {
     
     func webViewDidFinishLoad(webView: UIWebView) {
         self.yiHud?.hide()
+    }
+    
+    func connection(connection: NSURLConnection, canAuthenticateAgainstProtectionSpace protectionSpace: NSURLProtectionSpace) -> Bool {
+        return true
+    }
+    
+    func connection(connection: NSURLConnection, didReceiveAuthenticationChallenge challenge: NSURLAuthenticationChallenge) {
+        if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust  {
+            print("send credential Server Trust")
+            let credential = NSURLCredential(forTrust: challenge.protectionSpace.serverTrust!)
+            challenge.sender.useCredential(credential, forAuthenticationChallenge: challenge)
+            
+        }else if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodHTTPBasic{
+            print("send credential HTTP Basic")
+            let defaultCredentials: NSURLCredential = NSURLCredential(user: "username", password: "password", persistence:NSURLCredentialPersistence.ForSession)
+            challenge.sender.useCredential(defaultCredentials, forAuthenticationChallenge: challenge)
+            
+        }else if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodNTLM{
+            print("send credential NTLM")
+            
+        } else{
+            challenge.sender.performDefaultHandlingForAuthenticationChallenge!(challenge)
+        }
     }
 }
