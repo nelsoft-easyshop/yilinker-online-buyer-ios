@@ -465,7 +465,7 @@ class MessageThreadVC: UIViewController {
         
         
         /* uncomment + "a" to test retry sending */
-        let url = APIAtlas.ACTION_SEND_MESSAGE_V2 //+ "a"
+        let url = APIAtlas.baseUrl + APIAtlas.ACTION_SEND_MESSAGE //+ "a"
         
         manager.POST(url, parameters: parameters, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
@@ -511,8 +511,8 @@ class MessageThreadVC: UIViewController {
                 "access_token"  : SessionManager.accessToken()
                 ]   as Dictionary<String, AnyObject>
             println(parameters)
-            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONVERSATION_MESSAGES_V2
-            
+            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONVERSATION_MESSAGES
+            println(url)
             manager.POST(url, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 self.messages = W_Messages.parseMessages(responseObject as! NSDictionary)
