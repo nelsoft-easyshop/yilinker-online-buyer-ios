@@ -1100,14 +1100,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             flashSaleCell.productTwoImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutFourModel.data[1].image), placeholderImage: UIImage(named: "dummy-placeholder"))
             flashSaleCell.productTwoImageView.target = layoutFourModel.data[1].target.targetUrl
             flashSaleCell.productTwoImageView.targetType = layoutFourModel.data[1].target.targetType
-            flashSaleCell.productTwoDiscountLabel.text = "\(layoutFourModel.data[1].discountPercentage) \(self.off)"
+            flashSaleCell.productTwoDiscountLabel.text = "\(layoutFourModel.data[1].discountPercentage)% \(self.off)"
         }
         
         if layoutFourModel.data.count >= 3 {
             flashSaleCell.productThreeImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutFourModel.data[2].image), placeholderImage: UIImage(named: "dummy-placeholder"))
             flashSaleCell.productThreeImageView.target = layoutFourModel.data[2].target.targetUrl
             flashSaleCell.productThreeImageView.targetType = layoutFourModel.data[2].target.targetType
-            flashSaleCell.productThreeDiscountLabel.text = "\(layoutFourModel.data[2].discountPercentage) \(self.off)"
+            flashSaleCell.productThreeDiscountLabel.text = "\(layoutFourModel.data[2].discountPercentage)% \(self.off)"
         }
         
         return flashSaleCell

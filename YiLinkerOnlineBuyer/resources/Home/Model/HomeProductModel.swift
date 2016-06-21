@@ -58,6 +58,8 @@ class HomeProductModel: NSObject {
             }
             
             discountPercentage = tempDiscountPercentage
+        } else if let tempDiscountPercentage = dictionary["discountPercentage"] as? Double {
+             discountPercentage = "\(tempDiscountPercentage)"
         }
         
         if let temp = dictionary["currency"] as? String {
