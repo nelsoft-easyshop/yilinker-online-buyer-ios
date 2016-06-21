@@ -632,6 +632,7 @@ extension UIDevice {
         case "iPod3,1":                                 model = "iPod Touch 3G"
         case "iPod4,1":                                 model = "iPod Touch 4G"
         case "iPod5,1":                                 model = "iPod Touch 5G"
+        case "iPod7,1":                                 model = "iPod Touch 6G"
             
         case "iPhone1,1":                               model = "iPhone 2G"
         case "iPhone1,2":                               model = "iPhone 3G"
@@ -646,17 +647,20 @@ extension UIDevice {
         case "iPhone7,1":                               model = "iPhone 6 Plus"
         case "iPhone8,1":                               model = "iPhone 6S"
         case "iPhone8,2":                               model = "iPhone 6S Plus"
-            
+        case "iPhone8,4":                               model = "iPhone SE"
             
         case "iPad1,1":                                 model = "iPad 1"
         case "iPad2,1", "iPad2,2", "iPad2,3", "iPad2,4":model = "iPad 2"
         case "iPad3,1", "iPad3,2", "iPad3,3":           model = "iPad 3"
         case "iPad3,4", "iPad3,5", "iPad3,6":           model = "iPad 4"
         case "iPad4,1", "iPad4,2", "iPad4,3":           model = "iPad Air"
-        case "iPad5,1", "iPad5,3", "iPad5,4":           model = "iPad Air 2"
+        case "iPad5,3", "iPad5,4":                      model = "iPad Air 2"
         case "iPad2,5", "iPad2,6", "iPad2,7":           model = "iPad Mini"
         case "iPad4,4", "iPad4,5", "iPad4,6":           model = "iPad Mini 2"
         case "iPad4,7", "iPad4,8", "iPad4,9":           model = "iPad Mini 3"
+        case "iPad5,1", "iPad5,2":                      model = "iPad Mini 4"
+        case "iPad6,3", "iPad6,4":                      model = "iPad Pro (9.7 inch)"
+        case "iPad6,7", "iPad6,8":                      model = "iPad Pro (12.9 inch)"
             
         case "i386", "x86_64":                          model = "Simulator"
         default:                                        model = deviceCode //If unkhnown
