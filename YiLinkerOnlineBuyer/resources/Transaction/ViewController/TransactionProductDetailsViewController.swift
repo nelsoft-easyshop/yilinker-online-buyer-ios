@@ -729,6 +729,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
                     }
                     
                     self.tableView.reloadData()
+                    self.hideProgressBar()
                 }
             } else {
                 self.refreshtag = 1001
@@ -763,7 +764,9 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             if successful {
                 if responseObject["isSuccessful"] as! Bool {
                     self.transactionDeliveryStatus = TransactionProductDetailsDeliveryStatusModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                    self.timerRefresh()
                 }
+                self.hideProgressBar()
             } else {
                 self.hideProgressBar()
                 if requestErrorType == .ResponseError {
@@ -794,7 +797,6 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     func fireTransactionProductDetailsDeliveryStatusRefresh() {
         WebServiceManager.fireGetTransactionsWithUrl(APIAtlas.transactionDeliveryStatus+"\(SessionManager.accessToken())&transactionId=\(self.transactionId)", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
-                self.hideProgressBar()
                 if responseObject["isSuccessful"] as! Bool {
                     self.transactionDeliveryStatus = TransactionProductDetailsDeliveryStatusModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 }
