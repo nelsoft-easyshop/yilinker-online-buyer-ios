@@ -161,6 +161,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     var selectedIndex: Int = 0
     var totalPrice: String = ""
     var deliveryFee: String = ""
+    var hasFlashSaleItem: Bool = false
     
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var continueButton: UIButton!
@@ -628,6 +629,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         summaryViewController!.totalPrice = self.totalPrice
         summaryViewController!.cartItems = self.carItems
         summaryViewController!.deliveryFee = self.deliveryFee
+        summaryViewController!.hasFlashSaleItem = self.hasFlashSaleItem
         
         self.viewControllers.append(summaryViewController!)
         self.viewControllers.append(paymentViewController!)
@@ -921,7 +923,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 let isSuccessful: Bool = dictionary["isSuccessful"] as! Bool
                 
                 if isSuccessful {
-                    let address: String = "\(registerModel.streetName) \(self.addressModel.barangay) \(self.addressModel.city) \(self.addressModel.province) \(self.addressModel.zipCode )"
+                    let address: String = "\(registerModel.streetName) \(self.addressModel.barangay) \(self.addressModel.city) \(self.addressModel.province) \(registerModel.zipCode)"
                     let fullName: String = "\(registerModel.firstName) \(registerModel.lastName)"
                     SessionManager.setUserFullName(fullName)
                     SessionManager.setFullAddress(address)

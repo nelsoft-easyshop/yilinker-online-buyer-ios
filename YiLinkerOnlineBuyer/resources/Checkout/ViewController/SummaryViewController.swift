@@ -30,6 +30,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var totalPrice: String = ""
     var deliveryFee: String = ""
+    var hasFlashSaleItem: Bool = false
     
     var yiHud: YiHUD?
     
@@ -692,6 +693,11 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     func voucherTableViewCellWithIndexPath(indexPath: NSIndexPath) -> VoucherTableViewCell {
         let voucherCell: VoucherTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.voucherCellNibName) as! VoucherTableViewCell
         voucherCell.delegate = self
+        
+        if self.hasFlashSaleItem {
+            voucherCell.voucherTextField.enabled = false
+        }
+        
         voucherCell.selectionStyle = UITableViewCellSelectionStyle.None
         return voucherCell
     }
