@@ -98,6 +98,10 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         
         self.tableView.reloadData()
+        
+        if self.hasFlashSaleItem {
+            self.voucherRequestIsSuccessful(VoucherModel(isSuccessful: false, less: "", originalPrice: "", voucherPrice: "", message: "Voucher is not allowed for promo items"))
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -599,7 +603,10 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             indexPaths.append(indexPath2)
         }
         
-        self.changeButtonState(voucherCell.addButton)
+        if !self.hasFlashSaleItem {
+           self.changeButtonState(voucherCell.addButton)
+        }
+        
         self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Left)
     }
     
