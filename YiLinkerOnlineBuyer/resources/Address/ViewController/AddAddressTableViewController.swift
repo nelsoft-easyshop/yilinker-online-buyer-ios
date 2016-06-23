@@ -14,6 +14,14 @@ protocol AddAddressTableViewControllerDelegate {
 
 class AddAddressTableViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, NewAddressTableViewCellDelegate, UIPickerViewDelegate, UIPickerViewDataSource, MapTableViewCellDelegate {
     
+    let selectProvince: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_SELECT_PROVINCE")
+    let selectCity: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_SELECT_CITY")
+    let selectBarangay: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_SELECT_BARANGAY")
+    
+    let provinceRequired: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_PROVINCE_REQUIRED_LOCALIZE_KEY")
+    let cityRequired: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_CITY_REQUIRED_LOCALIZE_KEY")
+    let barangayRequired: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_BARANGAY_REQUIRED_LOCALIZE_KEY")
+    
     let mapCellNibName = "MapTableViewCell"
     
     let titles: [String] = ["\(AddressStrings.addressTitle):", "\(AddressStrings.address):", "\(AddressStrings.province):", "\(AddressStrings.city):", "\(AddressStrings.barangay):", "\(AddressStrings.zipCode):"]
@@ -107,6 +115,14 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                     cell.rowTextField.text = self.addressModel.barangay
                 } else if indexPath.row == 5 {
                     cell.rowTextField.text = self.addressModel.zipCode
+                }
+            } else {
+                if indexPath.row == 2 {
+                    cell.rowTextField.text = self.selectProvince
+                } else if indexPath.row == 3 {
+                    cell.rowTextField.text = self.selectCity
+                } else if indexPath.row == 4 {
+                    cell.rowTextField.text = self.selectBarangay
                 }
             }
             
@@ -284,6 +300,12 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.addressTitleRequired)
             } else if self.addressModel.streetName == "" {
                 showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.streetNameRequired)
+            } else if self.addressModel.province == self.selectProvince {
+                showAlert(title: AddressStrings.incompleteInformation, message: self.provinceRequired)
+            } else if self.addressModel.city == self.selectCity {
+                showAlert(title: AddressStrings.incompleteInformation, message: self.cityRequired)
+            } else if self.addressModel.barangay == self.selectBarangay {
+                showAlert(title: AddressStrings.incompleteInformation, message: self.barangayRequired)
             } else {
                 self.isSaving = true
                 if self.isEdit2 {
@@ -469,11 +491,14 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             
             if successful {
                 if self.provinceModel.location.count != 0 && self.addressModel.title == "" {
+                    self.provinceModel.location.insert(self.selectProvince, atIndex: 0)
+                    self.provinceModel.provinceId.insert(-1, atIndex: 0)
                     self.addressModel.province = self.provinceModel.location[0]
                     self.addressModel.provinceId = self.provinceModel.provinceId[0]
-                    self.requestGetCities(self.provinceModel.provinceId[0])
+//                    self.requestGetCities(self.provinceModel.provinceId[0])
                     self.provinceRow = 0
                     self.setTextAtIndex(2, text: self.provinceModel.location[0])
+                    self.setTextAtIndex(3, text: self.selectCity)
                 } else {
                     if self.addressModel.provinceId != 0 {
                         self.requestGetCities(self.addressModel.provinceId)
@@ -553,12 +578,14 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         WebServiceManager.fireGetCitiesFromUrl(APIAtlas.citiesUrl, provinceId: String(id)) { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 self.cityModel = CityModel.parseDataWithDictionary(responseObject)
+                self.cityModel.location.insert(self.selectCity, atIndex: 0)
+                self.cityModel.cityId.insert(-1, atIndex: 0)
                 if self.cityModel.cityId.count != 0 && !self.isEdit {
                     self.addressModel.city = self.cityModel.location[0]
                     self.addressModel.cityId = self.cityModel.cityId[0]
                     self.addressModel.barangayId = 0
                     self.requestGetBarangay(self.addressModel.cityId)
-                    self.addressModel.barangay = ""
+                    self.addressModel.barangay = self.selectBarangay
                     self.cityRow = 0
                     self.barangayRow = 0
                     self.setTextAtIndex(3, text: self.cityModel.location[0])
@@ -625,6 +652,8 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             if successful {
                 self.hideHUD()
                 self.barangayModel = BarangayModel.parseDataWithDictionary(responseObject)
+                self.barangayModel.location.insert(self.selectBarangay, atIndex: 0)
+                self.barangayModel.barangayId.insert(-1, atIndex: 0)
                 
                 if self.barangayModel.barangayId.count != 0 && !self.isEdit {
                     self.addressModel.barangayId = self.barangayModel.barangayId[0]
