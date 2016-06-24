@@ -65,9 +65,10 @@ class GuestCheckoutTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.mobileNumberLabel.text = AddressStrings.mobileNumber
         self.emailAddressLabel.text = AddressStrings.emailAddress
         self.provinceLabel.text = AddressStrings.province
-        self.cityLabel.text = AddressStrings.city
+        self.cityLabel.text = AddressStrings.cityMunicipality
         self.barangayLabel.text = AddressStrings.barangay
         self.zipCodelabel.text = AddressStrings.zipCode
+        self.streetNameLabel.text = AddressStrings.street
     }
     
     func requiredLabels() {
