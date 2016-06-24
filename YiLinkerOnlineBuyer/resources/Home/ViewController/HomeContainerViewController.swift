@@ -442,7 +442,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     }
                 } else if requestErrorType == .UnRecognizeError {
                     //Unhandled error
-                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+//                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                    println(Constants.Localized.error)
                     self.addEmptyView()
                 }
             }
