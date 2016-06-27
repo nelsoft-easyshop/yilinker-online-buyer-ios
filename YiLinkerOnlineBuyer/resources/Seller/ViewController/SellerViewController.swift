@@ -279,7 +279,9 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.yiHud?.hide()
             if successful {
                 if responseObject["isSuccessful"] as! Bool {
-                    self.sellerModel = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
+                    let temp = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
+                    self.sellerModel?.reviews = temp.reviews
+                    self.sellerModel?.rating = temp.rating
                     self.tableView.reloadData()
                 } else {
                     self.showAlert(title: Constants.Localized.error, message: responseObject["message"] as! String)
