@@ -27,6 +27,7 @@ class TransactionCancelOrderView: UIView {
     // Labels
     @IBOutlet weak var cancelOrderLabel: UILabel!
     
+    @IBOutlet weak var contactCSRLabel: UILabel!
     // Initialize TransactionCancelOrderViewDelegate
     var delegate: TransactionCancelOrderViewDelegate?
     
@@ -49,4 +50,12 @@ class TransactionCancelOrderView: UIView {
     func cancelOrder(sender: AnyObject){
         self.delegate?.showCancelOrder()
     }
+    
+    func showCancelLabel() {
+        contactCSRLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_CONTACT_CSR_LOCALIZE_KEY")
+        leaveFeedbackButton.hidden = true
+        cancelView.hidden = true
+        contactCSRLabel.hidden = false
+    }
+    
 }
