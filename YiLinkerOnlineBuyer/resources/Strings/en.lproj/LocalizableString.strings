@@ -703,3 +703,5 @@ YOUR_REFERRAL_LOCALIZE_KEY = "Your Referral Code";
 REFERRAL_PERSON_LOCALIZE_KEY = "Referred By";
 COPY_LOCALIZE_KEY = "Copied to clipboard";
 UPDATE_PROF_LOCALIZE_KEY = "Successfully updated your profile";
+
+TRANSACTION_CONTACT_CSR_LOCALIZE_KEY = "For cancellation of transactions. please contact csr@yilinker.ph.";

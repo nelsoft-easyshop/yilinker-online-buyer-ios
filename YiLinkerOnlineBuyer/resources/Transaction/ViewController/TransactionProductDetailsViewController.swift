@@ -271,6 +271,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         if self.transactionProductDetailsModel != nil {
             if !self.transactionProductDetailsModel.isCancellable {
                 self.transactionCancelView.cancelView.hidden = true
+                self.transactionCancelView.showCancelLabel()
                 if self.hasProductFeedback {
                     self.transactionCancelView.leaveFeedbackButton.setTitle("VIEW PRODUCT FEEDBACK", forState: UIControlState.Normal)
                     self.transactionCancelView.leaveFeedbackButton.hidden = false
