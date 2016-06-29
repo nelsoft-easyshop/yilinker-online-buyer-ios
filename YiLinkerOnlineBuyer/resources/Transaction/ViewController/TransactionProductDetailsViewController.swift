@@ -259,7 +259,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             }
             
             self.transactionDeliveryStatusView.frame.size.width = self.view.frame.size.width
-            self.transactionDeliveryStatusView.frame.origin.y += CGFloat(20)
+            self.transactionDeliveryStatusView.frame.origin.y += CGFloat(176)
         }
         return self.transactionDeliveryStatusView
     }
@@ -267,6 +267,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     func getTransactionCancelOrderView() -> TransactionCancelOrderView {
         self.transactionCancelView = XibHelper.puffViewWithNibName("TransactionViews", index: 9) as! TransactionCancelOrderView
         self.transactionCancelView.cancelOrderLabel.text = self.cancelOrder
+        
         self.transactionCancelView.delegate = self
         if self.transactionProductDetailsModel != nil {
             if !self.transactionProductDetailsModel.isCancellable {
@@ -277,7 +278,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
                     self.transactionCancelView.leaveFeedbackButton.hidden = false
                     self.transactionCancelView.leaveFeedbackButton.tag = 1001
                 } else {
-                    if self.transactionProductDetailsModel.orderProductStatusId == 4 {
+                    if self.transactionProductDetailsModel.orderProductStatusId == 4 || self.transactionProductDetailsModel.orderProductStatusId == 5  {
                         self.transactionCancelView.leaveFeedbackButton.hidden = false
                         self.transactionCancelView.leaveFeedbackButton.tag = 1002
                     } else {
@@ -730,6 +731,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
                     }
                     
                     self.tableView.reloadData()
+                    self.hideProgressBar()
                 }
             } else {
                 self.refreshtag = 1001
@@ -764,7 +766,9 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             if successful {
                 if responseObject["isSuccessful"] as! Bool {
                     self.transactionDeliveryStatus = TransactionProductDetailsDeliveryStatusModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                    self.timerRefresh()
                 }
+                self.hideProgressBar()
             } else {
                 self.hideProgressBar()
                 if requestErrorType == .ResponseError {
@@ -795,10 +799,12 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     func fireTransactionProductDetailsDeliveryStatusRefresh() {
         WebServiceManager.fireGetTransactionsWithUrl(APIAtlas.transactionDeliveryStatus+"\(SessionManager.accessToken())&transactionId=\(self.transactionId)", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
-                self.hideProgressBar()
                 if responseObject["isSuccessful"] as! Bool {
                     self.transactionDeliveryStatus = TransactionProductDetailsDeliveryStatusModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 }
+                self.transactionDeliveryStatusView.removeFromSuperview()
+                self.transactionDeliveryStatusView = nil
+                self.getFooterView().addSubview(self.getTransactionDeliveryStatusView())
             } else {
                 self.refreshtag = 1002
                 self.hideProgressBar()
