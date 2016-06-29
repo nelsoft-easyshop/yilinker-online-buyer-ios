@@ -452,10 +452,19 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
         //Set cell data
         var tempModel: CartProductDetailsModel = tableData[indexPath.row]
         
-        cell.checkBox.selected = true
-        cell.checkBox.backgroundColor = UIColor(red: 68/255.0, green: 164/255.0, blue: 145/255.0, alpha: 1.0)
-        cell.checkBox.layer.borderWidth = 0
-        cell.checkBox.layer.borderColor = UIColor.whiteColor().CGColor
+        cell.checkBox.selected = tempModel.selected
+        
+        if tempModel.selected {
+            cell.checkBox.backgroundColor = UIColor(red: 68/255.0, green: 164/255.0, blue: 145/255.0, alpha: 1.0)
+            cell.checkBox.layer.borderWidth = 0
+            cell.checkBox.layer.borderColor = UIColor.whiteColor().CGColor
+        } else {
+            cell.checkBox.backgroundColor = UIColor.whiteColor()
+            cell.checkBox.layer.borderWidth = 1
+            cell.checkBox.layer.borderColor = UIColor.darkGrayColor().CGColor
+        }
+        
+        
         
         for tempProductUnit in tempModel.productUnits {
             if tempModel.unitId == tempProductUnit.productUnitId {

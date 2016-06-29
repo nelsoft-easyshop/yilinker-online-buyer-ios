@@ -201,6 +201,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.searchBarView?.delegate = self
         self.searchBarView?.setProfileImage(SessionManager.profileImageStringUrl())
         self.view.layoutIfNeeded()
+        self.searchBarView?.frame.size.width = UIScreen.mainScreen().bounds.width
     }
     
     //MARK: -
