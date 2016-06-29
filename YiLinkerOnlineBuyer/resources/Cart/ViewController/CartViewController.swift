@@ -173,7 +173,9 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 
                 if let isSuccessful: Bool = responseObject["isSuccessful"] as? Bool {
                     if isSuccessful {
-                        var totalShippingCost: Int = 0
+                        var totalShippingCost: String = ""
+                        var totalAmount: String = ""
+                        var hasFlashSaleItem: Bool = false
                         if let data: NSDictionary = responseObject["data"] as? NSDictionary {
                             if let items: NSArray = data["items"] as? NSArray  {
                                 for subValue in items {
@@ -201,14 +203,27 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                             }
                             
                             if let temp: Int = data["totalShippingCost"] as? Int  {
+                                totalShippingCost = "\(temp)"
+                            } else if let temp: String = data["totalShippingCost"] as? String  {
                                 totalShippingCost = temp
+                            }
+                            
+                            if let temp: Int = data["totalAmount"] as? Int  {
+                                totalAmount = "\(temp)"
+                            } else if let temp: String = data["totalAmount"] as? String  {
+                                totalAmount = temp
+                            }
+                            
+                            if let temp: Bool = data["hasFlashSaleItem"] as? Bool  {
+                                hasFlashSaleItem = temp
                             }
                         }
                         
                         let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
                         checkout.carItems = checkoutItems
-                        checkout.totalPrice = "\(self.totalPrice)"
+                        checkout.totalPrice = "\(totalAmount)"
                         checkout.deliveryFee = "\(totalShippingCost)"
+                        checkout.hasFlashSaleItem = hasFlashSaleItem
                         
                         let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
                         navigationController.navigationBar.barTintColor = Constants.Colors.appTheme

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
@@ -1350,10 +1350,11 @@ Phiippines</string>
                 <constraint firstAttribute="trailing" secondItem="F8Z-sn-mXp" secondAttribute="trailing" constant="8" id="GMq-DH-00v"/>
                 <constraint firstItem="gOp-uy-NuM" firstAttribute="bottom" secondItem="CdL-Ze-R7c" secondAttribute="bottomMargin" constant="-7" id="Hlv-Ha-klJ"/>
                 <constraint firstAttribute="bottom" secondItem="F8Z-sn-mXp" secondAttribute="bottom" constant="13" id="Nl3-CU-2tb"/>
+                <constraint firstItem="Ja3-D2-yaB" firstAttribute="leading" secondItem="CdL-Ze-R7c" secondAttribute="leading" id="avZ-w7-esv"/>
                 <constraint firstItem="F8Z-sn-mXp" firstAttribute="top" secondItem="CdL-Ze-R7c" secondAttribute="top" constant="14" id="ekM-v7-VSr"/>
-                <constraint firstAttribute="centerX" secondItem="lJ7-WW-hal" secondAttribute="centerX" id="fqh-IB-9Mw"/>
-                <constraint firstAttribute="centerY" secondItem="lJ7-WW-hal" secondAttribute="centerY" constant="1" id="g1Q-HR-x8x"/>
-                <constraint firstItem="lJ7-WW-hal" firstAttribute="leading" secondItem="CdL-Ze-R7c" secondAttribute="leading" constant="8" id="whL-Yo-x2I"/>
+                <constraint firstAttribute="bottom" secondItem="Ja3-D2-yaB" secondAttribute="bottom" id="k3p-C1-xne"/>
+                <constraint firstAttribute="trailing" secondItem="Ja3-D2-yaB" secondAttribute="trailing" id="rXc-kM-KNb"/>
+                <constraint firstItem="Ja3-D2-yaB" firstAttribute="top" secondItem="CdL-Ze-R7c" secondAttribute="top" id="tPs-ac-nzt"/>
                 <constraint firstItem="gOp-uy-NuM" firstAttribute="leading" secondItem="CdL-Ze-R7c" secondAttribute="leadingMargin" id="zO8-8z-pkd"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -1361,10 +1362,10 @@ Phiippines</string>
                 <outlet property="cancelButton" destination="1JB-FW-kJb" id="4HN-yN-pzt"/>
                 <outlet property="cancelOrderLabel" destination="pCM-TD-2h3" id="SZx-xN-Lhj"/>
                 <outlet property="cancelView" destination="gOp-uy-NuM" id="Lb7-BO-f8m"/>
-                <outlet property="contactCsrLabel" destination="lJ7-WW-hal" id="rGV-6C-oQm"/>
+                <outlet property="contactCSRLabel" destination="Ja3-D2-yaB" id="3A2-F3-oWN"/>
                 <outlet property="leaveFeedbackButton" destination="F8Z-sn-mXp" id="PQ4-wZ-57H"/>
             </connections>
-            <point key="canvasLocation" x="824.5" y="868.5"/>
+            <point key="canvasLocation" x="830.5" y="850.5"/>
         </view>
     </objects>
     <resources>

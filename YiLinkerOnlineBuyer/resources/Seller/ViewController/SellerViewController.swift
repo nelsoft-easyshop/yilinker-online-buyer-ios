@@ -280,9 +280,12 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         WebServiceManager.fireSellerFeedbackWithUrl(APIAtlas.buyerSellerFeedbacks+"?sellerId=\(params)", sellerId: params) {
             (successful, responseObject, requestErrorType) -> Void in
             self.yiHud?.hide()
+            println(responseObject)
             if successful {
                 if responseObject["isSuccessful"] as! Bool {
-                    self.sellerModelFeedback = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
+                    let temp = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
+                    self.sellerModel?.reviews = temp.reviews
+                    self.sellerModel?.rating = temp.rating
                     self.tableView.reloadData()
                 } else {
                     self.showAlert(title: Constants.Localized.error, message: responseObject["message"] as! String)
@@ -402,34 +405,37 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //MARK: -
     //MARK: Refresh token
     func requestRefreshToken(type: SellerRefreshType) {
-        self.showHUD()
-        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
-            (successful, responseObject, requestErrorType) -> Void in
-            self.yiHud?.hide()
-            
-            if successful {
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+        if SessionManager.isLoggedIn() {
+            self.showHUD()
+            WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+                (successful, responseObject, requestErrorType) -> Void in
+                self.yiHud?.hide()
                 
-                if type == SellerRefreshType.Follow {
-                    self.fireFollowSeller()
-                } else if type == SellerRefreshType.Unfollow {
-                    self.fireUnfollowSeller()
-                } else if type == SellerRefreshType.Get {
-                    self.fireSeller()
+                if successful {
+                    SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                    
+                    if type == SellerRefreshType.Follow {
+                        self.fireFollowSeller()
+                    } else if type == SellerRefreshType.Unfollow {
+                        self.fireUnfollowSeller()
+                    } else if type == SellerRefreshType.Get {
+                        self.fireSeller()
+                    } else {
+                        self.fireSellerFeedback()
+                    }
                 } else {
-                    self.fireSellerFeedback()
+                    //Forcing user to logout.
+                    UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                        SessionManager.logout()
+                        FBSDKLoginManager().logOut()
+                        GPPSignIn.sharedInstance().signOut()
+                        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                        appDelegate.startPage()
+                    })
                 }
-            } else {
-                //Forcing user to logout.
-                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
-                    SessionManager.logout()
-                    FBSDKLoginManager().logOut()
-                    GPPSignIn.sharedInstance().signOut()
-                    let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                    appDelegate.startPage()
-                })
-            }
-        })
+            })
+        }
+        
     }
     
     func didTapReload() {
@@ -749,18 +755,20 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //MARK: -
     //MARK: Refresh token
     func fireRefreshToken() {
-        self.showHUD()
-        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
-            (successful, responseObject, requestErrorType) -> Void in
-            self.yiHud?.hide()
-            
-            if successful {
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                self.getContactsFromEndpoint("1", limit: "30", keyword: "")
-            } else {
-                self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-            }
-        })
+        if SessionManager.isLoggedIn() {
+            self.showHUD()
+            WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+                (successful, responseObject, requestErrorType) -> Void in
+                self.yiHud?.hide()
+                
+                if successful {
+                    SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                    self.getContactsFromEndpoint("1", limit: "30", keyword: "")
+                } else {
+                    self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                }
+            })
+        }
         
     }
     

@@ -601,6 +601,9 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
         self.productDetailsModel = productDetailsModel
         self.attributes = productDetailsModel.attributes as [ProductAttributeModel]
         self.selectedAttributes = selectedValue
+        if self.selectedAttributes[0] == "-" {
+            self.selectedAttributes[0] = "1x"
+        }
         self.quantity = quantity
         self.unitId = unitId
         
@@ -670,6 +673,7 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
     
     func selectedAttribute2(controller: ProductAttributeTableViewCell, currentSelected: [String]) {
         self.selectedAttributes = currentSelected
+        self.selectedAttributes[0] = "1x"
         
         var ctr: Int = 0
         var isCombinationNotAvailable: Bool = true
@@ -696,10 +700,16 @@ class ProductAttributeViewController: UIViewController, UITableViewDelegate, Pro
                     priceLabel.text = "Not Available"
                     selectedNotAvailable()
                 }
-                
             }
-            
-            
+        }
+        
+        if self.maximumStock != 0 {
+            stocks = 1
+            checkStock(stocks)
+        } else if self.maximumStock == 0 {
+            checkStock(0)
+        } else {
+            println("----ProductAttributeViewController")
         }
         
         self.tableView.reloadData()

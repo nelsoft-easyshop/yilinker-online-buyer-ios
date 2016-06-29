@@ -88,12 +88,12 @@ class VerifyNumberViewController: UIViewController, UITextFieldDelegate {
         } else {
             if self.timeInterval >= 10 {
                 if min == 0 {
-                    self.timerLabel.text = "Time left to resend code  0\(min):\(seconds)"
+                    self.timerLabel.text = "Resend code  0\(min):\(seconds)"
                 } else {
                     self.timerLabel.text = "Calculating time"
                 }
             } else {
-                self.timerLabel.text = "Time left to resend code  0\(min):0\(seconds)"
+                self.timerLabel.text = "Resend code  0\(min):0\(seconds)"
             }
         }
         

@@ -267,12 +267,12 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     func getTransactionCancelOrderView() -> TransactionCancelOrderView {
         self.transactionCancelView = XibHelper.puffViewWithNibName("TransactionViews", index: 9) as! TransactionCancelOrderView
         self.transactionCancelView.cancelOrderLabel.text = self.cancelOrder
-        self.transactionCancelView.contactCsrLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_ORDER_CONTACT_CSR_LOCALIZE_KEY")
+        
         self.transactionCancelView.delegate = self
         if self.transactionProductDetailsModel != nil {
             if !self.transactionProductDetailsModel.isCancellable {
                 self.transactionCancelView.cancelView.hidden = true
-                self.transactionCancelView.contactCsrLabel.hidden = true
+                self.transactionCancelView.showCancelLabel()
                 if self.hasProductFeedback {
                     self.transactionCancelView.leaveFeedbackButton.setTitle("VIEW PRODUCT FEEDBACK", forState: UIControlState.Normal)
                     self.transactionCancelView.leaveFeedbackButton.hidden = false
@@ -283,16 +283,13 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
                         self.transactionCancelView.leaveFeedbackButton.tag = 1002
                     } else {
                         self.transactionCancelView.leaveFeedbackButton.hidden = true
-                        self.transactionCancelView.contactCsrLabel.hidden = false
                     }
                 }
             } else {
                 self.transactionCancelView.cancelView.hidden = false
-                self.transactionCancelView.contactCsrLabel.hidden = true
                 self.transactionCancelView.leaveFeedbackButton.hidden = true
             }
         } else {
-            self.transactionCancelView.contactCsrLabel.hidden = false
             self.transactionCancelView.cancelView.hidden = true
         }
         
