@@ -259,7 +259,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
             }
             
             self.transactionDeliveryStatusView.frame.size.width = self.view.frame.size.width
-            self.transactionDeliveryStatusView.frame.origin.y += CGFloat(20)
+            self.transactionDeliveryStatusView.frame.origin.y += CGFloat(176)
         }
         return self.transactionDeliveryStatusView
     }
@@ -267,27 +267,32 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     func getTransactionCancelOrderView() -> TransactionCancelOrderView {
         self.transactionCancelView = XibHelper.puffViewWithNibName("TransactionViews", index: 9) as! TransactionCancelOrderView
         self.transactionCancelView.cancelOrderLabel.text = self.cancelOrder
+        self.transactionCancelView.contactCsrLabel.text = StringHelper.localizedStringWithKey("TRANSACTION_ORDER_CONTACT_CSR_LOCALIZE_KEY")
         self.transactionCancelView.delegate = self
         if self.transactionProductDetailsModel != nil {
             if !self.transactionProductDetailsModel.isCancellable {
                 self.transactionCancelView.cancelView.hidden = true
+                self.transactionCancelView.contactCsrLabel.hidden = true
                 if self.hasProductFeedback {
                     self.transactionCancelView.leaveFeedbackButton.setTitle("VIEW PRODUCT FEEDBACK", forState: UIControlState.Normal)
                     self.transactionCancelView.leaveFeedbackButton.hidden = false
                     self.transactionCancelView.leaveFeedbackButton.tag = 1001
                 } else {
-                    if self.transactionProductDetailsModel.orderProductStatusId == 4 {
+                    if self.transactionProductDetailsModel.orderProductStatusId == 4 || self.transactionProductDetailsModel.orderProductStatusId == 5  {
                         self.transactionCancelView.leaveFeedbackButton.hidden = false
                         self.transactionCancelView.leaveFeedbackButton.tag = 1002
                     } else {
                         self.transactionCancelView.leaveFeedbackButton.hidden = true
+                        self.transactionCancelView.contactCsrLabel.hidden = false
                     }
                 }
             } else {
                 self.transactionCancelView.cancelView.hidden = false
+                self.transactionCancelView.contactCsrLabel.hidden = true
                 self.transactionCancelView.leaveFeedbackButton.hidden = true
             }
         } else {
+            self.transactionCancelView.contactCsrLabel.hidden = false
             self.transactionCancelView.cancelView.hidden = true
         }
         
@@ -800,6 +805,9 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
                 if responseObject["isSuccessful"] as! Bool {
                     self.transactionDeliveryStatus = TransactionProductDetailsDeliveryStatusModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 }
+                self.transactionDeliveryStatusView.removeFromSuperview()
+                self.transactionDeliveryStatusView = nil
+                self.getFooterView().addSubview(self.getTransactionDeliveryStatusView())
             } else {
                 self.refreshtag = 1002
                 self.hideProgressBar()

@@ -620,6 +620,7 @@ TRANSACTION_DETAILS_NOT_ALLOWED_MESSAGE_LOCALIZE_KEY = "You're not allowed to me
 TRANSACTION_NO_REVIEWS_LOCALIZE_KEY = "No reviews available.";
 TRANSACTION_ORDER_PRODUCT_NAME_LOCALIZE_KEY = "Order Product Name";
 TRANSACTION_ORDER_PRODUCT_STATUS_LOCALIZE_KEY = "Order Product Status";
+TRANSACTION_ORDER_CONTACT_CSR_LOCALIZE_KEY = "For cancellation of transactions, please contact csr@yilinker.ph";
 
 //Transaction Product Details
 TRANSACTION_PRODUCT_DETAILS_TITLE_LOCALIZE_KEY = "Product Details";

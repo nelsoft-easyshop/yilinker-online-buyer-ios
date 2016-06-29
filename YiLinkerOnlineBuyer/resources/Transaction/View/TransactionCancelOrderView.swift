@@ -26,6 +26,7 @@ class TransactionCancelOrderView: UIView {
     
     // Labels
     @IBOutlet weak var cancelOrderLabel: UILabel!
+    @IBOutlet weak var contactCsrLabel: UILabel!
     
     // Initialize TransactionCancelOrderViewDelegate
     var delegate: TransactionCancelOrderViewDelegate?

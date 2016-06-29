@@ -60,6 +60,7 @@
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
             <string>Panton-Regular</string>
+            <string>Panton-Regular</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -1270,7 +1271,7 @@ Phiippines</string>
                                         <constraint firstAttribute="width" constant="20" id="aGK-xB-tPi"/>
                                     </constraints>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CANCEL THIS ORDER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="pCM-TD-2h3">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="CANCEL THIS ORDER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="pCM-TD-2h3">
                                     <rect key="frame" x="38" y="4" width="133" height="21"/>
                                     <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1332,14 +1333,27 @@ Phiippines</string>
                         <action selector="leaveFeedback" destination="CdL-Ze-R7c" eventType="touchUpInside" id="Nox-yo-D3d"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="For cancellation of transactions, please contact csr@yilinker.ph" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="lJ7-WW-hal">
+                    <rect key="frame" x="8" y="13" width="359" height="31"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="31" id="ckG-6o-ph1"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="14"/>
+                    <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="lJ7-WW-hal" secondAttribute="trailing" constant="8" id="51D-ki-DjW"/>
                 <constraint firstAttribute="centerX" secondItem="F8Z-sn-mXp" secondAttribute="centerX" id="5O9-3E-a0X"/>
                 <constraint firstItem="gOp-uy-NuM" firstAttribute="trailing" secondItem="CdL-Ze-R7c" secondAttribute="trailingMargin" id="E7I-AJ-3p7"/>
                 <constraint firstAttribute="trailing" secondItem="F8Z-sn-mXp" secondAttribute="trailing" constant="8" id="GMq-DH-00v"/>
                 <constraint firstItem="gOp-uy-NuM" firstAttribute="bottom" secondItem="CdL-Ze-R7c" secondAttribute="bottomMargin" constant="-7" id="Hlv-Ha-klJ"/>
                 <constraint firstAttribute="bottom" secondItem="F8Z-sn-mXp" secondAttribute="bottom" constant="13" id="Nl3-CU-2tb"/>
                 <constraint firstItem="F8Z-sn-mXp" firstAttribute="top" secondItem="CdL-Ze-R7c" secondAttribute="top" constant="14" id="ekM-v7-VSr"/>
+                <constraint firstAttribute="centerX" secondItem="lJ7-WW-hal" secondAttribute="centerX" id="fqh-IB-9Mw"/>
+                <constraint firstAttribute="centerY" secondItem="lJ7-WW-hal" secondAttribute="centerY" constant="1" id="g1Q-HR-x8x"/>
+                <constraint firstItem="lJ7-WW-hal" firstAttribute="leading" secondItem="CdL-Ze-R7c" secondAttribute="leading" constant="8" id="whL-Yo-x2I"/>
                 <constraint firstItem="gOp-uy-NuM" firstAttribute="leading" secondItem="CdL-Ze-R7c" secondAttribute="leadingMargin" id="zO8-8z-pkd"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -1347,6 +1361,7 @@ Phiippines</string>
                 <outlet property="cancelButton" destination="1JB-FW-kJb" id="4HN-yN-pzt"/>
                 <outlet property="cancelOrderLabel" destination="pCM-TD-2h3" id="SZx-xN-Lhj"/>
                 <outlet property="cancelView" destination="gOp-uy-NuM" id="Lb7-BO-f8m"/>
+                <outlet property="contactCsrLabel" destination="lJ7-WW-hal" id="rGV-6C-oQm"/>
                 <outlet property="leaveFeedbackButton" destination="F8Z-sn-mXp" id="PQ4-wZ-57H"/>
             </connections>
             <point key="canvasLocation" x="824.5" y="868.5"/>
