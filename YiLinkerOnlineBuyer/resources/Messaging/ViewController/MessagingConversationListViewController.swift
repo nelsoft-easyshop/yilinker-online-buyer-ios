@@ -71,6 +71,8 @@ class MessagingConversationListViewController: UIViewController {
     
     var showHud: Bool = true
     
+    var oldPushNotifData: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -277,13 +279,14 @@ class MessagingConversationListViewController: UIViewController {
                 if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
                     if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
                         if let id = json["recipientUid"] as? Int {
-                            if "\(id)" == SessionManager.userId() {
+                            if "\(id)" == SessionManager.userId() &&  self.oldPushNotifData != data{
                                 self.circularDraweView("circular-drawer")
                                 self.resetAndGetDataWithHud(false)
                             }
                         }
                     }
                 }
+                self.oldPushNotifData = data
             }
         }
     }

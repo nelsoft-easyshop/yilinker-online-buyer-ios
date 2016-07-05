@@ -293,7 +293,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
                     if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
                         if let id = json["recipientUid"] as? Int {
-                            if "\(id)" == SessionManager.userId() {
+                            if "\(id)" == SessionManager.userId() && self.oldPushNotifData != data {
                                 var count = SessionManager.getUnReadMessagesCount() + 1
                                 SessionManager.setUnReadMessagesCount(count)
                                 self.circularDraweView("circular-drawer")
@@ -301,6 +301,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                         }
                     }
                 }
+                self.oldPushNotifData = data
             }
         }
         
