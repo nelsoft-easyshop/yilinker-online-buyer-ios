@@ -119,8 +119,10 @@ class SessionManager {
     //MARK: - Country Code
     class func selectedCountryCode() -> String {
         var result: String = "PH"
-        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("countryCode") as? String {
-            result = val as! String
+        if let val = NSUserDefaults.standardUserDefaults().objectForKey("countryCode") as? String {
+            if val.isNotEmpty() {
+               result = val as! String
+            }
         }
         return result
     }
@@ -128,9 +130,11 @@ class SessionManager {
     //MARK: -
     //MARK: - Country Code
     class func selectedLanguageCode() -> String {
-        var result: String = "EN"
-        if let val: AnyObject = NSUserDefaults.standardUserDefaults().objectForKey("languageCode") as? String {
-            result = val as! String
+        var result: String = "en"
+        if let val = NSUserDefaults.standardUserDefaults().objectForKey("languageCode") as? String {
+            if val.isNotEmpty() {
+                result = val as! String
+            }
         }
         return result
     }
