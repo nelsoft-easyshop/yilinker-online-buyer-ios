@@ -292,12 +292,15 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             if let data = info["data"] as? String{
                 if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
                     if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
-                        if self.oldPushNotifData != data {
-                            self.circularDraweView("circular-drawer")
+                        if let id = json["recipientUid"] as? Int {
+                            if "\(id)" == SessionManager.userId() {
+                                var count = SessionManager.getUnReadMessagesCount() + 1
+                                SessionManager.setUnReadMessagesCount(count)
+                                self.circularDraweView("circular-drawer")
+                            }
                         }
                     }
                 }
-                self.oldPushNotifData = data
             }
         }
         
@@ -383,7 +386,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         item2.image = unselectedImage
         item2.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
         
-        if SessionManager.getUnReadMessagesCount() != 0 {
+        if SessionManager.getUnReadMessagesCount() > 0 {
             item2.badgeValue = "\(SessionManager.getUnReadMessagesCount())"
         }
     }
