@@ -755,6 +755,7 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
         self.isResetPassword = true
         self.isCloseButton = false
         var indexPath = NSIndexPath(forRow: 1, inSection: 0)
+        self.tempForgotPasswordCell?.seconds = 1
         self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Left)
         self.tableView.reloadData()
     }
