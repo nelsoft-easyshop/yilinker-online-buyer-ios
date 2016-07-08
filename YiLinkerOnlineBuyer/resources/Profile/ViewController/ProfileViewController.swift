@@ -23,6 +23,8 @@ class ProfileViewController: UIViewController{
     
     var isFromSearchBar: Bool = false
     
+    var emptyView: EmptyView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.hidden = true
@@ -151,20 +153,24 @@ class ProfileViewController: UIViewController{
                         Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
                     }
                     
-                } else if requestErrorType == .AccessTokenExpired {
-                    self.fireRefreshToken()
-                } else if requestErrorType == .PageNotFound {
-                    //Page not found
-                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
-                } else if requestErrorType == .NoInternetConnection {
-                    //No internet connection
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                } else if requestErrorType == .RequestTimeOut {
-                    //Request timeout
-                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-                } else if requestErrorType == .UnRecognizeError {
-                    //Unhandled error
-                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                } else {
+                    self.addEmptyView()
+                    
+                    if requestErrorType == .AccessTokenExpired {
+                        self.fireRefreshToken()
+                    } else if requestErrorType == .PageNotFound {
+                        //Page not found
+                        Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .NoInternetConnection {
+                        //No internet connection
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .RequestTimeOut {
+                        //Request timeout
+                        Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                    } else if requestErrorType == .UnRecognizeError {
+                        //Unhandled error
+                        Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                    }
                 }
             }
         }
@@ -203,6 +209,28 @@ class ProfileViewController: UIViewController{
     func dismissLoader() {
         self.hud?.hide()
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+    }
+    
+    //MARK: - Add Empty View
+    //Show this view if theres no internet connection
+    func addEmptyView() {
+        self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
+        self.view.layoutIfNeeded()
+        self.emptyView?.frame = self.view.frame
+        self.emptyView!.delegate = self
+        self.view.addSubview(self.emptyView!)
+    }
+    
+    
+}
+
+extension ProfileViewController: EmptyViewDelegate {
+    
+    //MARK: -
+    //MARK: - Did Tap Reload
+    func didTapReload() {
+        self.emptyView?.removeFromSuperview()
+        self.fireGetUserInfo()
     }
 }
 

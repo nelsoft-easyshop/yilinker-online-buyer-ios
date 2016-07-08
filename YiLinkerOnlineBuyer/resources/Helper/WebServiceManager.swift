@@ -882,18 +882,9 @@ class WebServiceManager: NSObject {
         
         var tempURL: String = url
         
-        if !url.contains(APIAtlas.V3) {
+        if !url.contains(APIAtlas.V1) ||  !url.contains(APIAtlas.V2) ||  !url.contains(APIAtlas.V3) {
             tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
-        } else {
-            tempURL = tempURL.stringByReplacingOccurrencesOfString("api/", withString: "", options: nil)
         }
-        
-        
-        tempURL = tempURL.stringByReplacingOccurrencesOfString("//", withString: "/", options: nil)
-        tempURL = tempURL.stringByReplacingOccurrencesOfString("/api", withString: "api", options: nil)
-        tempURL = tempURL.stringByReplacingOccurrencesOfString("/v1", withString: "v1", options: nil)
-        tempURL = tempURL.stringByReplacingOccurrencesOfString("/v2", withString: "v2", options: nil)
-        tempURL = tempURL.stringByReplacingOccurrencesOfString("/v3", withString: "v3", options: nil)
         
         if Reachability.isConnectedToNetwork() {
             manager.GET(tempURL, parameters: parameters, success: {
