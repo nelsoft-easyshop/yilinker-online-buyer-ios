@@ -71,6 +71,8 @@ class MessagingConversationListViewController: UIViewController {
     
     var showHud: Bool = true
     
+    var oldPushNotifData: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -276,11 +278,15 @@ class MessagingConversationListViewController: UIViewController {
             if let data = info["data"] as? String{
                 if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
                     if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
-                        if let userId = json["senderUid"] as? Int{
-                            self.resetAndGetDataWithHud(false)
+                        if let id = json["recipientUid"] as? Int {
+                            if "\(id)" == SessionManager.userId() &&  self.oldPushNotifData != data{
+                                self.circularDraweView("circular-drawer")
+                                self.resetAndGetDataWithHud(false)
+                            }
                         }
                     }
                 }
+                self.oldPushNotifData = data
             }
         }
     }
@@ -291,6 +297,20 @@ class MessagingConversationListViewController: UIViewController {
         self.page = 1
         self.showHud = showHud
         self.fireGetConversationList()
+    }
+    
+    func circularDraweView(imageName: String) {
+        let unselectedImage: UIImage = UIImage(named: imageName)!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+        let item2: UITabBarItem = self.tabBarController?.tabBar.items![2] as! UITabBarItem
+        item2.selectedImage = unselectedImage
+        item2.image = unselectedImage
+        item2.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
+        
+        if SessionManager.getUnReadMessagesCount() > 0 {
+            item2.badgeValue = "\(SessionManager.getUnReadMessagesCount())"
+        } else {
+            item2.badgeValue = nil
+        }
     }
     
     //Show HUD
@@ -359,6 +379,8 @@ extension MessagingConversationListViewController: UITableViewDataSource, UITabl
         if SessionManager.getUnReadMessagesCount() != 0 {
             if let count = conversationsTableData[indexPath.row].contactDetails?.hasUnreadMessage.toInt() {
                 SessionManager.setUnReadMessagesCount(SessionManager.getUnReadMessagesCount() - count)
+                
+                self.circularDraweView("circular-drawer")
             }
         }
         var viewController = MessagingThreadViewController(nibName: "MessagingThreadViewController", bundle: nil)

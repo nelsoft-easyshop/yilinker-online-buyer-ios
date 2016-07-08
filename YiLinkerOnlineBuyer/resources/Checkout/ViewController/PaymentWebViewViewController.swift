@@ -31,7 +31,7 @@ class PaymentWebViewViewController: UIViewController, UIWebViewDelegate, NSURLCo
         self.backButton()
         let request = NSURLRequest(URL: self.pesoPayModel.paymentUrl)
         
-        if APIEnvironment.development {
+        if APIEnvironment.development || APIEnvironment.staging {
             let urlConnection:NSURLConnection = NSURLConnection(request: request, delegate: self)!
         }
         
