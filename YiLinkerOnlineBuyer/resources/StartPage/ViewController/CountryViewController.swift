@@ -173,7 +173,7 @@ class CountryViewController: UIViewController, LGAlertViewDelegate {
         self.activityindicatorView.startAnimating()
         self.selectCountryButton.enabled = false
         
-        Delay.delayWithDuration(1.5, completionHandler: { (success) -> Void in
+        Delay.delayWithDuration(0.5, completionHandler: { (success) -> Void in
             self.dropDownImageView.hidden = !true
             self.activityindicatorView.stopAnimating()
             self.selectCountryButton.enabled = true

@@ -705,6 +705,10 @@ extension EditProfileTableViewController: EditProfileAccountInformationTableView
                 hasImage = false
             }
             
+            if self.profileUserDetailsModel.referrerCode.isNotEmpty() {
+                self.referrerPersonCode = ""
+            }
+            
             self.fireUpdateProfile(hasImage, firstName: self.firstName, lastName: self.lastName, profilePhoto: self.profileImageData, userDocument: self.validIDImageData, referrerPersonCode: self.referrerPersonCode, countryId: self.country.countryID, languageId: self.language.languageId)
         }
     }

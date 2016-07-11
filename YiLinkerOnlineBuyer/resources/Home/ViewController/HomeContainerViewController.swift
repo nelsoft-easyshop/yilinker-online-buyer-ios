@@ -425,6 +425,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 } else if requestErrorType == .PageNotFound {
                     //Page not found
                     Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+                    self.addEmptyView()
                 } else if requestErrorType == .NoInternetConnection {
                     //No internet connection
                     //Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
@@ -562,11 +563,11 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             }
         }
         
-        dispatch_async(dispatch_get_main_queue(), {
+//        dispatch_async(dispatch_get_main_queue(), {
             self.collectionView.reloadData()
             self.collectionViewLayout()
             self.collectionView.setContentOffset(CGPointMake(0, yPosition), animated: false)
-        })
+//        })
     }
     
     //MARK: - 
