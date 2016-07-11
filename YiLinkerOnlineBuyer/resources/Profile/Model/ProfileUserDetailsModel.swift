@@ -137,6 +137,7 @@ class ProfileUserDetailsModel: NSObject {
         if let value: AnyObject = dictionary["email"] {
             if value as! NSObject != NSNull() {
                 email = value as! String
+                SessionManager.setEmailAddress(email)
             }
         }
         
