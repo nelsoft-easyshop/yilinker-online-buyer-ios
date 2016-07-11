@@ -493,24 +493,30 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     }
     
     func showMessaging(){
-        let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
-        let messagingViewController: MessageThreadVC = (storyBoard.instantiateViewControllerWithIdentifier("MessageThreadVC") as? MessageThreadVC)!
+//        let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
+//        let messagingViewController: MessageThreadVC = (storyBoard.instantiateViewControllerWithIdentifier("MessageThreadVC") as? MessageThreadVC)!
+//        
+//        var isOnline = "-1"
+//        if (SessionManager.isLoggedIn()){
+//            isOnline = "1"
+//        } else {
+//            isOnline = "0"
+//        }
+//        
+//        messagingViewController.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
+//        messagingViewController.recipient = selectedContact
+//        
+//        if self.canMessage {
+//            self.navigationController?.pushViewController(messagingViewController, animated: true)
+//        } else {
+//            self.showAlert(title: self.error, message: self.errorMessage)
+//        }
         
-        var isOnline = "-1"
-        if (SessionManager.isLoggedIn()){
-            isOnline = "1"
-        } else {
-            isOnline = "0"
+        var viewController = MessagingThreadViewController(nibName: "MessagingThreadViewController", bundle: nil)
+        if let temp: W_Contact = selectedContact {
+            viewController.receiver = MessagingContactModel(userId: temp.userId, slug: "", fullName: temp.fullName, profileImageUrl: temp.profileImageUrl, profileThumbnailImageUrl: temp.profileImageUrl, profileSmallImageUrl: temp.profileImageUrl, profileMediumImageUrl: temp.profileImageUrl, profileLargeImageUrl: temp.profileImageUrl, isOnline: temp.isOnline, hasUnreadMessage: "")
         }
-        
-        messagingViewController.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
-        messagingViewController.recipient = selectedContact
-        
-        if self.canMessage {
-            self.navigationController?.pushViewController(messagingViewController, animated: true)
-        } else {
-            self.showAlert(title: self.error, message: self.errorMessage)
-        }
+        self.navigationController?.pushViewController(viewController, animated:true)
     }
     
     //MARK: Get seller/store info
