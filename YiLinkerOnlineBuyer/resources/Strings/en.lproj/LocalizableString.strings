@@ -587,6 +587,8 @@ DEACTIVATE_LOCALIZE_KEY = "Deactivate";
 SETTINGSSMS_LOCALIZE_KEY = "Receive Notifications via SMS?";
 SETTINGSEMAIL_LOCALIZE_KEY = "Receive Notifications via Email?";
 SETTINGSDEACTIVATE_LOCALIZE_KEY = "Deactivate My Account?";
+DEACTIVATE_EMAIL_ERROR_LOCALIZED_KEY = "Please provide an email address in your account.";
+DEACTIVATE_EMAIL_VERIFICATION_ERROR_LOCALIZED_KEY = "Please verify your email address to deactivate your account.";
 
 //Transaction
 TRANSACTION_TITLE_TITLE_LOCALIZE_KEY = "Transaction";
