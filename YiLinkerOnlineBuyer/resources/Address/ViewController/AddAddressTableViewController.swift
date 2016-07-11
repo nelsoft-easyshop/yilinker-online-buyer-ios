@@ -14,6 +14,14 @@ protocol AddAddressTableViewControllerDelegate {
 
 class AddAddressTableViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, NewAddressTableViewCellDelegate, UIPickerViewDelegate, UIPickerViewDataSource, MapTableViewCellDelegate {
     
+    let selectProvince: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_SELECT_PROVINCE")
+    let selectCity: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_SELECT_CITY")
+    let selectBarangay: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_SELECT_BARANGAY")
+    
+    let provinceRequired: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_PROVINCE_REQUIRED_LOCALIZE_KEY")
+    let cityRequired: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_CITY_REQUIRED_LOCALIZE_KEY")
+    let barangayRequired: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_BARANGAY_REQUIRED_LOCALIZE_KEY")
+    
     let mapCellNibName = "MapTableViewCell"
     
     let titles: [String] = ["\(AddressStrings.addressTitle):", "\(AddressStrings.address):", "\(AddressStrings.province):", "\(AddressStrings.city):", "\(AddressStrings.barangay):", "\(AddressStrings.zipCode):"]
@@ -46,6 +54,8 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     
     var rowForPicker: Int = 0
     
+    var isSaving: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.registerNib()
@@ -65,6 +75,12 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     func showHUD() {
         self.yiHud = YiHUD.initHud()
         self.yiHud!.showHUDToView(self.view)
+        self.view.userInteractionEnabled = false
+    }
+    
+    func hideHUD() {
+        self.yiHud?.hide()
+        self.view.userInteractionEnabled = true
     }
     
     
@@ -99,6 +115,14 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                     cell.rowTextField.text = self.addressModel.barangay
                 } else if indexPath.row == 5 {
                     cell.rowTextField.text = self.addressModel.zipCode
+                }
+            } else {
+                if indexPath.row == 2 {
+                    cell.rowTextField.text = self.selectProvince
+                } else if indexPath.row == 3 {
+                    cell.rowTextField.text = self.selectCity
+                } else if indexPath.row == 4 {
+                    cell.rowTextField.text = self.selectBarangay
                 }
             }
             
@@ -265,51 +289,63 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     
     //MARK: - Check
     func check() {
-        self.addressModel.title = getTextAtIndex(0)
-        self.addressModel.streetName =  getTextAtIndex(1)
-        self.addressModel.zipCode = getTextAtIndex(5)
-
-        
-        if self.addressModel.title == "" {
-            showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.addressTitleRequired)
-        } else if self.addressModel.streetName == "" {
-            showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.streetNameRequired)
-        } else {
-            if self.isEdit2 {
-                self.fireEditAddress()
+        if !self.isSaving {
+            self.view.endEditing(true)
+            self.addressModel.title = getTextAtIndex(0)
+            self.addressModel.streetName =  getTextAtIndex(1)
+            self.addressModel.zipCode = getTextAtIndex(5)
+            
+            
+            if self.addressModel.title == "" {
+                showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.addressTitleRequired)
+            } else if self.addressModel.streetName == "" {
+                showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.streetNameRequired)
+            } else if self.addressModel.province == self.selectProvince {
+                showAlert(title: AddressStrings.incompleteInformation, message: self.provinceRequired)
+            } else if self.addressModel.city == self.selectCity {
+                showAlert(title: AddressStrings.incompleteInformation, message: self.cityRequired)
+            } else if self.addressModel.barangay == self.selectBarangay {
+                showAlert(title: AddressStrings.incompleteInformation, message: self.barangayRequired)
             } else {
-                requestAddAddress()
+                self.isSaving = true
+                if self.isEdit2 {
+                    self.fireEditAddress()
+                } else {
+                    requestAddAddress()
+                }
             }
+
         }
-        
     }
     
     func done() {
         let row = NSIndexPath(forItem: activeTextField, inSection: 0)
-        let cell: NewAddressTableViewCell = tableView.cellForRowAtIndexPath(row) as! NewAddressTableViewCell
-        cell.rowTextField.endEditing(true)
-        
-        
-        if activeTextField == 2 {
-            //get province title and id
-            self.addressModel.provinceId = self.provinceModel.provinceId[self.provinceRow]
-            self.addressModel.province = self.provinceModel.location[self.provinceRow]
-            self.addressModel.city = ""
-            //request for new city data model and reload tableview
-            self.requestGetCities(self.addressModel.provinceId)
-            self.setTextAtIndex(2, text: self.provinceModel.location[self.provinceRow])
-        } else if activeTextField == 3 {
-            self.addressModel.cityId = self.cityModel.cityId[self.cityRow]
-            self.requestGetBarangay(self.addressModel.cityId)
-            self.addressModel.city = self.cityModel.location[self.cityRow]
-            self.setTextAtIndex(3, text: self.cityModel.location[self.cityRow])
-        } else if activeTextField == 4 {
-            self.setTextAtIndex(activeTextField, text: self.barangayModel.location[self.barangayRow])
-            self.addressModel.barangay = self.barangayModel.location[self.barangayRow]
-            self.addressModel.barangayId = self.barangayModel.barangayId[self.barangayRow]
-            self.setTextAtIndex(4, text: self.barangayModel.location[self.barangayRow])
+        if let cell: NewAddressTableViewCell = tableView.cellForRowAtIndexPath(row) as? NewAddressTableViewCell {
+            cell.rowTextField.endEditing(true)
+            
+            
+            if activeTextField == 2 {
+                //get province title and id
+                self.addressModel.provinceId = self.provinceModel.provinceId[self.provinceRow]
+                self.addressModel.province = self.provinceModel.location[self.provinceRow]
+                self.addressModel.city = ""
+                //request for new city data model and reload tableview
+                self.requestGetCities(self.addressModel.provinceId)
+                self.setTextAtIndex(2, text: self.provinceModel.location[self.provinceRow])
+            } else if activeTextField == 3 {
+                self.addressModel.cityId = self.cityModel.cityId[self.cityRow]
+                self.requestGetBarangay(self.addressModel.cityId)
+                self.addressModel.city = self.cityModel.location[self.cityRow]
+                self.setTextAtIndex(3, text: self.cityModel.location[self.cityRow])
+            } else if activeTextField == 4 {
+                self.setTextAtIndex(activeTextField, text: self.barangayModel.location[self.barangayRow])
+                self.addressModel.barangay = self.barangayModel.location[self.barangayRow]
+                self.addressModel.barangayId = self.barangayModel.barangayId[self.barangayRow]
+                self.setTextAtIndex(4, text: self.barangayModel.location[self.barangayRow])
+            }
+        } else {
+            self.view.endEditing(true)
         }
-
     }
     
     func getTextAtIndex(index: Int) -> String {
@@ -342,12 +378,13 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
     
         WebServiceManager.fireAddAddress(APIAtlas.addAddressUrl, accessToken: SessionManager.accessToken(), title: getTextAtIndex(0), streetName: getTextAtIndex(1), province: getTextAtIndex(2), city: getTextAtIndex(3), barangay: getTextAtIndex(4), zipCode: getTextAtIndex(5), locationId: self.addressModel.barangayId, longitude: cell.longitude(), latitude: cell.latitude()) { (successful, responseObject, requestErrorType) -> Void in
             
+            self.isSaving = false
             if successful {
-                self.yiHud?.hide()
+                self.hideHUD()
                 self.navigationController!.popViewControllerAnimated(true)
                 self.delegate!.addAddressTableViewController(didAddAddressSucceed: self)
             } else {
-                self.yiHud?.hide()
+                self.hideHUD()
                 if requestErrorType == .ResponseError {
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
@@ -371,16 +408,17 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         let indexPath: NSIndexPath = NSIndexPath(forRow: 6, inSection: 0)
         let cell: MapTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! MapTableViewCell
         
-        WebServiceManager.fireAddAddress(APIAtlas.editAddress, accessToken: SessionManager.accessToken(), title: getTextAtIndex(0), streetName: getTextAtIndex(1), province: getTextAtIndex(2), city: getTextAtIndex(3), barangay: getTextAtIndex(4), zipCode: getTextAtIndex(5), locationId: self.addressModel.barangayId, longitude: cell.longitude(), latitude: cell.latitude()) { (successful, responseObject, requestErrorType) -> Void in
-            
+        WebServiceManager.fireEditAddress(APIAtlas.editAddress, userAddressId: "\(self.addressModel.userAddressId)", accessToken: SessionManager.accessToken(), title: getTextAtIndex(0), streetName: getTextAtIndex(1), province: getTextAtIndex(2), city: getTextAtIndex(3), barangay: getTextAtIndex(4), zipCode: getTextAtIndex(5), locationId: self.addressModel.barangayId, longitude: cell.longitude(), latitude: cell.latitude()) { (successful, responseObject, requestErrorType) -> Void in
+            println(responseObject)
+            self.isSaving = false
             if successful {
-                self.yiHud?.hide()
+                self.hideHUD()
                 self.navigationController!.popViewControllerAnimated(true)
                 self.delegate!.addAddressTableViewController(didAddAddressSucceed: self)
                 SessionManager.setLang("\(cell.latitude())")
                 SessionManager.setLong("\(cell.longitude())")
             } else {
-                self.yiHud?.hide()
+                self.hideHUD()
                 if requestErrorType == .ResponseError {
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
@@ -410,7 +448,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 }
 
             } else {
-                self.yiHud?.hide()
+                self.hideHUD()
                 let alertController = UIAlertController(title: Constants.Localized.someThingWentWrong, message: "", preferredStyle: .Alert)
                 let defaultAction = UIAlertAction(title: Constants.Localized.ok, style: .Default, handler: nil)
                 alertController.addAction(defaultAction)
@@ -424,7 +462,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         self.showHUD()
         manager.POST(APIAtlas.provinceUrl, parameters: nil, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            self.yiHud?.hide()
+            self.hideHUD()
             self.provinceModel = ProvinceModel.parseDataWithDictionary(responseObject)
             if self.provinceModel.location.count != 0 && self.addressModel.title == "" {
                 self.addressModel.province = self.provinceModel.location[0]
@@ -443,7 +481,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.yiHud?.hide()
+                self.hideHUD()
                 self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
         })*/
         
@@ -453,11 +491,14 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             
             if successful {
                 if self.provinceModel.location.count != 0 && self.addressModel.title == "" {
+                    self.provinceModel.location.insert(self.selectProvince, atIndex: 0)
+                    self.provinceModel.provinceId.insert(-1, atIndex: 0)
                     self.addressModel.province = self.provinceModel.location[0]
                     self.addressModel.provinceId = self.provinceModel.provinceId[0]
-                    self.requestGetCities(self.provinceModel.provinceId[0])
+//                    self.requestGetCities(self.provinceModel.provinceId[0])
                     self.provinceRow = 0
                     self.setTextAtIndex(2, text: self.provinceModel.location[0])
+                    self.setTextAtIndex(3, text: self.selectCity)
                 } else {
                     if self.addressModel.provinceId != 0 {
                         self.requestGetCities(self.addressModel.provinceId)
@@ -466,7 +507,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                     }
                 }
             } else {
-                self.yiHud?.hide()
+                self.hideHUD()
                 if requestErrorType == .ResponseError {
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
@@ -492,7 +533,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             
             self.cityModel = CityModel.parseDataWithDictionary(responseObject)
-            self.yiHud?.hide()
+            self.hideHUD()
                 //get all cities and assign get the id and title of the first city
                 if self.cityModel.cityId.count != 0 && !self.isEdit {
                     self.addressModel.city = self.cityModel.location[0]
@@ -514,7 +555,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                 }
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.yiHud?.hide()
+                self.hideHUD()
                 self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
                 
                 if let task = task.response as? NSHTTPURLResponse {
@@ -537,12 +578,14 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         WebServiceManager.fireGetCitiesFromUrl(APIAtlas.citiesUrl, provinceId: String(id)) { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 self.cityModel = CityModel.parseDataWithDictionary(responseObject)
+                self.cityModel.location.insert(self.selectCity, atIndex: 0)
+                self.cityModel.cityId.insert(-1, atIndex: 0)
                 if self.cityModel.cityId.count != 0 && !self.isEdit {
                     self.addressModel.city = self.cityModel.location[0]
                     self.addressModel.cityId = self.cityModel.cityId[0]
                     self.addressModel.barangayId = 0
                     self.requestGetBarangay(self.addressModel.cityId)
-                    self.addressModel.barangay = ""
+                    self.addressModel.barangay = self.selectBarangay
                     self.cityRow = 0
                     self.barangayRow = 0
                     self.setTextAtIndex(3, text: self.cityModel.location[0])
@@ -556,7 +599,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                     }
                 }
             } else {
-                self.yiHud?.hide()
+                self.hideHUD()
                 if requestErrorType == .ResponseError {
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
@@ -581,7 +624,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
         self.showHUD()
         manager.POST(APIAtlas.barangay, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-                self.yiHud?.hide()
+                self.hideHUD()
                 self.barangayModel = BarangayModel.parseDataWithDictionary(responseObject)
             
                 if self.barangayModel.barangayId.count != 0 && !self.isEdit {
@@ -600,15 +643,17 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
-                self.yiHud?.hide()
+                self.hideHUD()
                 self.showAlert(title: Constants.Localized.someThingWentWrong, message: nil)
         })*/
         
         
         WebServiceManager.fireGetBarangayFromUrl(APIAtlas.barangay, cityId: String(id)) { (successful, responseObject, requestErrorType) -> Void in
             if successful {
-                self.yiHud?.hide()
+                self.hideHUD()
                 self.barangayModel = BarangayModel.parseDataWithDictionary(responseObject)
+                self.barangayModel.location.insert(self.selectBarangay, atIndex: 0)
+                self.barangayModel.barangayId.insert(-1, atIndex: 0)
                 
                 if self.barangayModel.barangayId.count != 0 && !self.isEdit {
                     self.addressModel.barangayId = self.barangayModel.barangayId[0]
@@ -623,7 +668,7 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
                     self.defaultIndexes()
                 }
             } else {
-                self.yiHud?.hide()
+                self.hideHUD()
                 if requestErrorType == .ResponseError {
                     let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
                     Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)

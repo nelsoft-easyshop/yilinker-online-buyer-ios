@@ -13,6 +13,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var tableView: UITableView!
     
     var sellerModel: SellerModel?
+    var sellerModelFeedback: SellerModel?
     var followSellerModel: FollowedSellerModel?
     var productReviewModel: ProductReviewsModel?
     var productReviews: [ProductReviewsModel] = [ProductReviewsModel]()
@@ -25,6 +26,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var slug: String = ""
     var sellerContactNumber: String = ""
     var sellerName: String = ""
+    var storeDescription: String = ""
     
     let sellerTableHeaderView: SellerTableHeaderView = SellerTableHeaderView.loadFromNibNamed("SellerTableHeaderView", bundle: nil) as! SellerTableHeaderView
     
@@ -232,6 +234,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     self.is_successful = self.sellerModel!.is_allowed
                     self.yiHud?.hide()
                     self.titleView(self.sellerModel!.store_name)
+                    self.storeDescription = self.sellerModel!.store_description
                     self.populateData()
                 } else {
                     self.showAlert(title: "Error", message: responseObject["message"] as! String)
@@ -277,9 +280,12 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         WebServiceManager.fireSellerFeedbackWithUrl(APIAtlas.buyerSellerFeedbacks+"?sellerId=\(params)", sellerId: params) {
             (successful, responseObject, requestErrorType) -> Void in
             self.yiHud?.hide()
+            println(responseObject)
             if successful {
                 if responseObject["isSuccessful"] as! Bool {
-                    self.sellerModel = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
+                    let temp = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
+                    self.sellerModel?.reviews = temp.reviews
+                    self.sellerModel?.rating = temp.rating
                     self.tableView.reloadData()
                 } else {
                     self.showAlert(title: Constants.Localized.error, message: responseObject["message"] as! String)
@@ -399,34 +405,37 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //MARK: -
     //MARK: Refresh token
     func requestRefreshToken(type: SellerRefreshType) {
-        self.showHUD()
-        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
-            (successful, responseObject, requestErrorType) -> Void in
-            self.yiHud?.hide()
-            
-            if successful {
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+        if SessionManager.isLoggedIn() {
+            self.showHUD()
+            WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+                (successful, responseObject, requestErrorType) -> Void in
+                self.yiHud?.hide()
                 
-                if type == SellerRefreshType.Follow {
-                    self.fireFollowSeller()
-                } else if type == SellerRefreshType.Unfollow {
-                    self.fireUnfollowSeller()
-                } else if type == SellerRefreshType.Get {
-                    self.fireSeller()
+                if successful {
+                    SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                    
+                    if type == SellerRefreshType.Follow {
+                        self.fireFollowSeller()
+                    } else if type == SellerRefreshType.Unfollow {
+                        self.fireUnfollowSeller()
+                    } else if type == SellerRefreshType.Get {
+                        self.fireSeller()
+                    } else {
+                        self.fireSellerFeedback()
+                    }
                 } else {
-                    self.fireSellerFeedback()
+                    //Forcing user to logout.
+                    UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
+                        SessionManager.logout()
+                        FBSDKLoginManager().logOut()
+                        GPPSignIn.sharedInstance().signOut()
+                        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                        appDelegate.startPage()
+                    })
                 }
-            } else {
-                //Forcing user to logout.
-                UIAlertController.displayAlertRedirectionToLogin(self, actionHandler: { (sucess) -> Void in
-                    SessionManager.logout()
-                    FBSDKLoginManager().logOut()
-                    GPPSignIn.sharedInstance().signOut()
-                    let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                    appDelegate.startPage()
-                })
-            }
-        })
+            })
+        }
+        
     }
     
     func didTapReload() {
@@ -465,13 +474,13 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if section != 3 {
             return 1
         } else {
-            if self.sellerModel != nil {
-                if self.sellerModel!.reviews.count > 3 {
+            if self.sellerModelFeedback != nil {
+                if self.sellerModelFeedback!.reviews.count > 3 {
                     return 4
-                } else if self.sellerModel!.reviews.count == 0 {
+                } else if self.sellerModelFeedback!.reviews.count == 0 {
                     return 1
                 } else {
-                    return self.sellerModel!.reviews.count
+                    return self.sellerModelFeedback!.reviews.count
                 }
             } else {
                 return 0
@@ -487,14 +496,12 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if indexPath.section == 0 {
             let aboutSellerTableViewCell: AboutSellerTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Seller.aboutSellerTableViewCellNibNameAndIdentifier) as! AboutSellerTableViewCell
             //aboutSellerTableViewCell.aboutLabel.text = self.sellerModel!.sellerAbout
-            
-            aboutSellerTableViewCell.aboutLabel.text = self.sellerModel?.store_description
+            aboutSellerTableViewCell.aboutLabel.text = self.storeDescription
             aboutSellerTableViewCell.aboutTitleLabel.text = aboutSeller
             
             return aboutSellerTableViewCell
         } else if indexPath.section == 1 {
             let productsTableViewCell: ProductsTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(Constants.Seller.productsTableViewCellNibNameAndIdentifier) as! ProductsTableViewCell
-            
             productsTableViewCell.productModels = sellerModel!.products
             productsTableViewCell.productsLabel.text = productsTitle
             productsTableViewCell.moreSellersProduct.setTitle(moreSellersProduct, forState: UIControlState.Normal)
@@ -514,7 +521,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             return generalRatingTableViewCell
         } else {
-            if self.sellerModel!.reviews.count != 0 {
+            if self.sellerModelFeedback!.reviews.count != 0 {
                 if indexPath.row == 3 {
                     let noReviewCell: NoReviewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("NoReviewTableViewCell") as! NoReviewTableViewCell
                     noReviewCell.noReviewsLabel.text = "Tap to see more."
@@ -522,7 +529,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     return noReviewCell
                 } else {
                     let reviewCell: ReviewTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("ReviewTableViewCell") as! ReviewTableViewCell
-                    let reviewModel: ProductReviewsModel = self.sellerModel!.reviews[indexPath.row]
+                    let reviewModel: ProductReviewsModel = self.sellerModelFeedback!.reviews[indexPath.row]
                     
                     reviewCell.displayPictureImageView.sd_setImageWithURL(NSURL(string: reviewModel.imageUrl)!, placeholderImage: UIImage(named: "dummy-placeholder"))
                     reviewCell.messageLabel.text = reviewModel.review
@@ -579,8 +586,8 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //MARK: Seller Header View Delegate
     //Show seller's ratings and feedback
     func sellerTableHeaderViewDidViewFeedBack() {
-        if self.sellerModel != nil {
-            if sellerModel?.reviews.count > 5 {
+        if self.sellerModelFeedback != nil {
+            if sellerModelFeedback?.reviews.count > 5 {
                 self.showView()
                 var feedBackViewController = FeedBackViewController(nibName: "FeedBackViewController", bundle: nil)
                 feedBackViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
@@ -588,14 +595,14 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 feedBackViewController.definesPresentationContext = true
                 feedBackViewController.view.backgroundColor = UIColor.clearColor()
                 feedBackViewController.delegate = self
-                feedBackViewController.sellerModel = self.sellerModel!
+                feedBackViewController.sellerModel = self.sellerModelFeedback!
                 feedBackViewController.populateData()
                 self.tabBarController?.presentViewController(feedBackViewController, animated: true, completion: nil)
             } else {
                 var row = 0
                 
-                if self.sellerModel!.reviews.count - 1 >= 0 {
-                    row = self.sellerModel!.reviews.count - 1
+                if self.sellerModelFeedback!.reviews.count - 1 >= 0 {
+                    row = self.sellerModelFeedback!.reviews.count - 1
                 }
                 
                 self.tableView.scrollToRowAtIndexPath(NSIndexPath(forItem: row, inSection: 3), atScrollPosition: .Bottom, animated: true)
@@ -748,18 +755,20 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //MARK: -
     //MARK: Refresh token
     func fireRefreshToken() {
-        self.showHUD()
-        WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
-            (successful, responseObject, requestErrorType) -> Void in
-            self.yiHud?.hide()
-            
-            if successful {
-                SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-                self.getContactsFromEndpoint("1", limit: "30", keyword: "")
-            } else {
-                self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
-            }
-        })
+        if SessionManager.isLoggedIn() {
+            self.showHUD()
+            WebServiceManager.fireRefreshTokenWithUrl(APIAtlas.refreshTokenUrl, actionHandler: {
+                (successful, responseObject, requestErrorType) -> Void in
+                self.yiHud?.hide()
+                
+                if successful {
+                    SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
+                    self.getContactsFromEndpoint("1", limit: "30", keyword: "")
+                } else {
+                    self.showAlert(title: Constants.Localized.error, message: Constants.Localized.someThingWentWrong)
+                }
+            })
+        }
         
     }
     

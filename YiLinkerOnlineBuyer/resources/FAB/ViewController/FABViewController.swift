@@ -374,12 +374,13 @@ class FABViewController: UIViewController, FABCollectionViewCellDelegate, FABPro
             if let data = info["data"] as? String{
                 if let data2 = data.dataUsingEncoding(NSUTF8StringEncoding){
                     if let json = NSJSONSerialization.JSONObjectWithData(data2, options: .MutableContainers, error: nil) as? [String:AnyObject] {
-                        if self.oldPushNotifData != data {
-                            var count = SessionManager.getUnReadMessagesCount() + 1
-                            SessionManager.setUnReadMessagesCount(count)
-                            if count != 0 {
-                                self.textAndIcons[1].rightTitle = "\(SessionManager.getUnReadMessagesCount()) unread meassage(s)"
-                                self.collectionView.reloadData()
+                        if let id = json["recipientUid"] as? Int {
+                            if "\(id)" == SessionManager.userId() {
+                                var count = SessionManager.getUnReadMessagesCount()
+                                if count != 0 {
+                                    self.textAndIcons[2].rightTitle = "\(SessionManager.getUnReadMessagesCount()) unread meassage(s)"
+                                    self.collectionView.reloadData()
+                                }
                             }
                         }
                     }

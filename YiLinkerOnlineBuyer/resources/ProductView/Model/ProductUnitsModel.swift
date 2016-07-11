@@ -44,6 +44,7 @@ class ProductUnitsModel {
                 }
                 
                 if let tempVar = dictionary["quantity"] as? Int {
+                    println(tempVar)
                     model.quantity = tempVar
                 } else {
                     model.quantity = 0

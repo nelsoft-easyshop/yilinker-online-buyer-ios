@@ -93,6 +93,7 @@ struct CheckoutStrings {
     static let changeAddress: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_LOCALIZE_KEY")
     
     static let saveAndContinue: String = StringHelper.localizedStringWithKey("SAVE_AND_CONTINUE_LOCALIZE_KEY")
+    static let saveAndVerify: String = StringHelper.localizedStringWithKey("SAVE_AND_VERIFY_LOCALIZE_KEY")
     static let saveAndGoToPayment: String = StringHelper.localizedStringWithKey("SAVE_AND_GO_TO_PAYMENT_LOCALIZE_KEY")
     static let continueShopping: String = StringHelper.localizedStringWithKey("CONTINUE_SHOPPING_LOCALIZE_KEY")
 }
@@ -107,11 +108,13 @@ struct AddressStrings {
     static let buildingName: String = StringHelper.localizedStringWithKey("BUILDING_NAME_LOCALIZE_KEY")
     static let streetNo: String = StringHelper.localizedStringWithKey("STREET_NO_LOCALIZE_KEY")
     static let streetName: String = StringHelper.localizedStringWithKey("STREET_NAME_LOCALIZE_KEY")
+    static let street: String = StringHelper.localizedStringWithKey("STREET_LOCALIZE_KEY")
     static let address: String = StringHelper.localizedStringWithKey("ADDRESS_LOCALIZE_KEY")
 
     static let subdivision: String = StringHelper.localizedStringWithKey("SUBDIVISION_LOCALIZE_KEY")
     static let province: String = StringHelper.localizedStringWithKey("PROVINCE_LOCALIZE_KEY")
     static let city: String = StringHelper.localizedStringWithKey("CITY_LOCALIZE_KEY")
+    static let cityMunicipality: String = StringHelper.localizedStringWithKey("CITY_MUNICIPALITY_LOCALIZE_KEY")
     
     static let barangay: String = StringHelper.localizedStringWithKey("BARANGAY_LOCALIZE_KEY")
     static let zipCode: String = StringHelper.localizedStringWithKey("ZIP_CODE_LOCALIZE_KEY")
@@ -134,6 +137,14 @@ struct AddressStrings {
     static let streetNumberRequired: String = StringHelper.localizedStringWithKey("STREET_NUMBER_REQUIRED_LOCALIZE_KEY")
     static let streetNameRequired: String = StringHelper.localizedStringWithKey("STREET_NAME_REQUIRED_LOCALIZE_KEY")
     static let zipCodeRequired: String = StringHelper.localizedStringWithKey("ZIP_CODE_REQUIRED_LOCALIZE_KEY")
+    
+    static let selectProvince: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_SELECT_PROVINCE")
+    static let selectCity: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_SELECT_CITY")
+    static let selectBarangay: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_SELECT_BARANGAY")
+    
+    static let provinceRequired: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_PROVINCE_REQUIRED_LOCALIZE_KEY")
+    static let cityRequired: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_CITY_REQUIRED_LOCALIZE_KEY")
+    static let barangayRequired: String = StringHelper.localizedStringWithKey("CHANGE_ADDRESS_BARANGAY_REQUIRED_LOCALIZE_KEY")
 }
 
 class CheckoutContainerViewController: UIViewController, PaymentWebViewViewControllerDelegate, ChangeMobileNumberViewControllerDelegate, VerifyMobileNumberViewControllerDelegate, VerifyMobileNumberStatusViewControllerDelegate, VerifyNumberViewControllerDelegate, SuccessModalViewControllerDelegate {
@@ -160,6 +171,8 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
     
     var selectedIndex: Int = 0
     var totalPrice: String = ""
+    var deliveryFee: String = ""
+    var hasFlashSaleItem: Bool = false
     
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var continueButton: UIButton!
@@ -231,7 +244,10 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         WebServiceManager.fireProvince(APIAtlas.provinceUrl, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
             if successful {
+                self.yiHud?.hide()
                 self.provinceModel = ProvinceModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                self.provinceModel.location.insert(AddressStrings.selectProvince, atIndex: 0)
+                self.provinceModel.provinceId.insert(-1, atIndex: 0)
                 
                 self.addressModel.province = self.provinceModel.location[0]
                 self.addressModel.provinceId = self.provinceModel.provinceId[0]
@@ -241,12 +257,12 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 self.barangayRow = 0
                 
                 self.addressModel.province = self.provinceModel.location[0]
-                self.addressModel.barangay = ""
+                self.addressModel.barangay = AddressStrings.selectBarangay
                 
                 //clear text field of summary view controller
                 self.summaryViewController!.clearCityAndBarangayTextField()
                 //get all cities
-                self.fireCitiesWithProvinceId("\(self.addressModel.provinceId)")
+//                self.fireCitiesWithProvinceId("\(self.addressModel.provinceId)")
                 //set text to default province value
                 self.summaryViewController!.setProvinceTextFieldTextWithString(self.provinceModel.location[0])
             } else {
@@ -275,19 +291,22 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         WebServiceManager.fireCityWithProvinceId(APIAtlas.citiesUrl, provinceId: provinceId, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
             if successful {
+                self.yiHud?.hide()
                 self.cityModel = CityModel.parseDataWithDictionary(responseObject as! NSDictionary)
+                self.cityModel.location.insert(AddressStrings.selectCity, atIndex: 0)
+                self.cityModel.cityId.insert(-1, atIndex: 0)
                 
                 self.addressModel.city = self.cityModel.location[0]
                 self.addressModel.cityId = self.cityModel.cityId[0]
                 
-                self.addressModel.barangay = ""
+                self.addressModel.barangay = AddressStrings.selectBarangay
                 
                 self.cityRow = 0
                 self.barangayRow = 0
                 //set city text field to default
                 self.summaryViewController!.setCityTextFieldTextWithString(self.cityModel.location[0])
                 
-                self.fireBarangaysWithCityId("\(self.addressModel.cityId)")
+//                self.fireBarangaysWithCityId("\(self.addressModel.cityId)")
             } else {
                 self.yiHud?.hide()
                 if requestErrorType == .ResponseError {
@@ -314,7 +333,10 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         WebServiceManager.fireBarangaysWithCityId(APIAtlas.barangay, cityId: cityId, actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
             if successful {
+                self.yiHud?.hide()
                 self.barangayModel = BarangayModel.parseDataWithDictionary(responseObject)
+                self.barangayModel.location.insert(AddressStrings.selectBarangay, atIndex: 0)
+                self.barangayModel.barangayId.insert(-1, atIndex: 0)
                 
                 if self.barangayModel.barangayId.count != 0 {
                     self.addressModel.barangayId = self.barangayModel.barangayId[0]
@@ -495,13 +517,13 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         if index == 0 {
             self.firsCircle()
             if SessionManager.isMobileVerified() {
-                self.continueButton.setTitle(CheckoutStrings.saveAndContinue, forState: UIControlState.Normal)
+                self.continueButton.setTitle(CheckoutStrings.saveAndContinue.uppercaseString, forState: UIControlState.Normal)
             } else {
-                self.continueButton.setTitle("Save and Verify", forState: UIControlState.Normal)
+                self.continueButton.setTitle(CheckoutStrings.saveAndVerify.uppercaseString, forState: UIControlState.Normal)
             }
         } else if index == 1 {
             self.secondCircle()
-            self.continueButton(CheckoutStrings.saveAndGoToPayment)
+            self.continueButton(CheckoutStrings.saveAndGoToPayment.uppercaseString)
         }
         
         let viewController: UIViewController = viewControllers[index]
@@ -626,6 +648,8 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
         overViewViewController = OverViewViewController(nibName: "OverViewViewController", bundle: nil)
         summaryViewController!.totalPrice = self.totalPrice
         summaryViewController!.cartItems = self.carItems
+        summaryViewController!.deliveryFee = self.deliveryFee
+        summaryViewController!.hasFlashSaleItem = self.hasFlashSaleItem
         
         self.viewControllers.append(summaryViewController!)
         self.viewControllers.append(paymentViewController!)
@@ -762,7 +786,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                             errorMessage = "Please insert your last name."
                         } else if self.summaryViewController!.mobileNumber == "" {
                             errorMessage = "Please insert your mobile Number."
-                        }
+                        } 
                         
                         if errorMessage == "" {
                             if SessionManager.isMobileVerified() {
@@ -803,6 +827,12 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AddressStrings.mobileNumberIsRequired, title: AddressStrings.incompleteInformation)
                 } else if self.summaryViewController!.guestCheckoutTableViewCell.streetNameTextField.text!.isEmpty {
                     UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AddressStrings.addressIsRequired, title: AddressStrings.incompleteInformation)
+                } else if self.summaryViewController!.guestCheckoutTableViewCell.provinceTextField.text == AddressStrings.selectProvince {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AddressStrings.provinceRequired, title: AddressStrings.incompleteInformation)
+                } else if self.summaryViewController!.guestCheckoutTableViewCell.cityTextField.text == AddressStrings.selectProvince {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AddressStrings.cityRequired, title: AddressStrings.incompleteInformation)
+                } else if self.summaryViewController!.guestCheckoutTableViewCell.barangayTextField.text == AddressStrings.selectProvince {
+                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: AddressStrings.barangayRequired, title: AddressStrings.incompleteInformation)
                 } else {
 //                    self.fireGuestCheckout()
                     self.fireGetOTP(self.summaryViewController!.guestCheckoutTableViewCell.mobileNumberTextField.text, areaCode: "63", type: "guest_checkout", storeType: "", actionHandler: { (isSuccessful) -> Void in
@@ -919,7 +949,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
                 let isSuccessful: Bool = dictionary["isSuccessful"] as! Bool
                 
                 if isSuccessful {
-                    let address: String = "\(registerModel.streetName) \(self.addressModel.barangay) \(self.addressModel.city) \(self.addressModel.province)"
+                    let address: String = "\(registerModel.streetName) \(self.addressModel.barangay) \(self.addressModel.city) \(self.addressModel.province) \(registerModel.zipCode)"
                     let fullName: String = "\(registerModel.firstName) \(registerModel.lastName)"
                     SessionManager.setUserFullName(fullName)
                     SessionManager.setFullAddress(address)
@@ -963,6 +993,7 @@ class CheckoutContainerViewController: UIViewController, PaymentWebViewViewContr
             WebServiceManager.fireCODWithUrl(APIAtlas.COD(), accessToken: SessionManager.accessToken()) {
                 (successful, responseObject, requestErrorType) -> Void in
                 self.yiHud?.hide()
+                println(responseObject)
                 if successful {
                     let paymentSuccessModel: PaymentSuccessModel = PaymentSuccessModel.parseDataWithDictionary(responseObject as! NSDictionary)
                     if paymentSuccessModel.isSuccessful {

@@ -925,10 +925,10 @@
 		0CAB80361C86817B00B653A9 /* W_Conversation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_Conversation.swift; sourceTree = "<group>"; };
 		0CAB80371C86817B00B653A9 /* W_Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = W_Messages.swift; sourceTree = "<group>"; };
 		0CAB80391C86817B00B653A9 /* ImageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageVC.swift; sourceTree = "<group>"; };
-		0CAB803A1C86817B00B653A9 /* MessagingContactListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessagingContactListViewController.xib; sourceTree = "<group>"; };
+		0CAB803A1C86817B00B653A9 /* MessagingContactListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessagingContactListViewController.xib; path = ../View/MessagingContactListViewController.xib; sourceTree = "<group>"; };
 		0CAB803B1C86817B00B653A9 /* MessagingContactTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagingContactTableViewCell.swift; sourceTree = "<group>"; };
 		0CAB803C1C86817B00B653A9 /* MessagingContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessagingContactTableViewCell.xib; sourceTree = "<group>"; };
-		0CAB803D1C86817B00B653A9 /* MessagingConversationListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessagingConversationListViewController.xib; sourceTree = "<group>"; };
+		0CAB803D1C86817B00B653A9 /* MessagingConversationListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessagingConversationListViewController.xib; path = ../View/MessagingConversationListViewController.xib; sourceTree = "<group>"; };
 		0CAB803E1C86817B00B653A9 /* MessagingConversationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagingConversationTableViewCell.swift; sourceTree = "<group>"; };
 		0CAB803F1C86817B00B653A9 /* MessagingConversationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessagingConversationTableViewCell.xib; sourceTree = "<group>"; };
 		0CAB80401C86817B00B653A9 /* MessagingReceiverImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagingReceiverImageTableViewCell.swift; sourceTree = "<group>"; };
@@ -939,7 +939,7 @@
 		0CAB80451C86817B00B653A9 /* MessagingSenderImageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessagingSenderImageTableViewCell.xib; sourceTree = "<group>"; };
 		0CAB80461C86817B00B653A9 /* MessagingSenderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagingSenderTableViewCell.swift; sourceTree = "<group>"; };
 		0CAB80471C86817B00B653A9 /* MessagingSenderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessagingSenderTableViewCell.xib; sourceTree = "<group>"; };
-		0CAB80481C86817B00B653A9 /* MessagingThreadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessagingThreadViewController.xib; sourceTree = "<group>"; };
+		0CAB80481C86817B00B653A9 /* MessagingThreadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessagingThreadViewController.xib; path = ../View/MessagingThreadViewController.xib; sourceTree = "<group>"; };
 		0CAB80491C86817B00B653A9 /* MessagingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessagingViewController.xib; sourceTree = "<group>"; };
 		0CAB804B1C86817B00B653A9 /* ContactListTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactListTVC.swift; sourceTree = "<group>"; };
 		0CAB804C1C86817B00B653A9 /* ContactListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactListVC.swift; sourceTree = "<group>"; };
@@ -2203,10 +2203,8 @@
 			isa = PBXGroup;
 			children = (
 				0CAB80391C86817B00B653A9 /* ImageVC.swift */,
-				0CAB803A1C86817B00B653A9 /* MessagingContactListViewController.xib */,
 				0CAB803B1C86817B00B653A9 /* MessagingContactTableViewCell.swift */,
 				0CAB803C1C86817B00B653A9 /* MessagingContactTableViewCell.xib */,
-				0CAB803D1C86817B00B653A9 /* MessagingConversationListViewController.xib */,
 				0CAB803E1C86817B00B653A9 /* MessagingConversationTableViewCell.swift */,
 				0CAB803F1C86817B00B653A9 /* MessagingConversationTableViewCell.xib */,
 				0CAB80401C86817B00B653A9 /* MessagingReceiverImageTableViewCell.swift */,
@@ -2217,7 +2215,6 @@
 				0CAB80451C86817B00B653A9 /* MessagingSenderImageTableViewCell.xib */,
 				0CAB80461C86817B00B653A9 /* MessagingSenderTableViewCell.swift */,
 				0CAB80471C86817B00B653A9 /* MessagingSenderTableViewCell.xib */,
-				0CAB80481C86817B00B653A9 /* MessagingThreadViewController.xib */,
 				0CAB80491C86817B00B653A9 /* MessagingViewController.xib */,
 			);
 			path = View;
@@ -2234,8 +2231,11 @@
 				0CAB80501C86817B00B653A9 /* MessageThreadTVC.swift */,
 				0CAB80511C86817B00B653A9 /* MessageThreadVC.swift */,
 				0CAB80521C86817B00B653A9 /* MessagingContactListViewController.swift */,
+				0CAB803A1C86817B00B653A9 /* MessagingContactListViewController.xib */,
 				0CAB80531C86817B00B653A9 /* MessagingConversationListViewController.swift */,
+				0CAB803D1C86817B00B653A9 /* MessagingConversationListViewController.xib */,
 				0CAB80541C86817B00B653A9 /* MessagingThreadViewController.swift */,
+				0CAB80481C86817B00B653A9 /* MessagingThreadViewController.xib */,
 				0CAB80551C86817B00B653A9 /* MessagingViewController.swift */,
 				0CAB80561C86817B00B653A9 /* MessagingViewController.xib */,
 			);
@@ -3963,7 +3963,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "dbafa5c7-e762-42e0-909d-5324f8b26cb1";
+				PROVISIONING_PROFILE = "00309adb-c47b-433b-afc3-71e80bcb6b7b";
 				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineBuyer/Resources/Helper/YiLinkerOnlineBuyer-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -3991,7 +3991,7 @@
 					"\"${PODS_ROOT}/Google/Libraries” $(inherited) \"${PODS_ROOT}/GoogleAppUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleAuthUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleInterchangeUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleNetworkingUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleSignIn/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleSymbolUtilities/Libraries\" $(inherited) \"${PODS_ROOT}/GoogleUtilities/Libraries\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "dbafa5c7-e762-42e0-909d-5324f8b26cb1";
+				PROVISIONING_PROFILE = "00309adb-c47b-433b-afc3-71e80bcb6b7b";
 				SWIFT_OBJC_BRIDGING_HEADER = "YiLinkerOnlineBuyer/Resources/Helper/YiLinkerOnlineBuyer-Bridging-Header.h";
 			};
 			name = Release;

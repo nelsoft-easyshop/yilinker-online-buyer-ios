@@ -30,6 +30,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var totalPrice: String = ""
     var deliveryFee: String = ""
+    var hasFlashSaleItem: Bool = false
     
     var yiHud: YiHUD?
     
@@ -76,7 +77,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
            self.checkoutContainerViewController.fireProvinces()
         }
         
-        if SessionManager.mobileNumber() != "" && SessionManager.firstName() != "" && SessionManager.lastName() != "" {
+        if SessionManager.mobileNumber() != "" && SessionManager.firstName() != "" && SessionManager.lastName() != "" && SessionManager.emailAddress() != "" {
             self.isIncompleteInformation = false
         }
         
@@ -97,6 +98,10 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         
         self.tableView.reloadData()
+        
+        if self.hasFlashSaleItem {
+            self.voucherRequestIsSuccessful(VoucherModel(isSuccessful: false, less: "", originalPrice: "", voucherPrice: "", message: "Voucher is not allowed for promo items"))
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -192,16 +197,22 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func cellWithPath(indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            if SessionManager.isLoggedIn() {
-                return self.shipToTableViewCellWithIndexPath(indexPath)
-            } else {
-                return self.guestCheckoutTableViewCellWithindexPath(indexPath)
-            }
-            
+        if SessionManager.isLoggedIn() {
+            return self.shipToTableViewCellWithIndexPath(indexPath)
         } else {
-            return self.mapTableViewCellWithIndexPath(indexPath)
+            return self.guestCheckoutTableViewCellWithindexPath(indexPath)
         }
+        
+//        if indexPath.row == 0 {
+//            if SessionManager.isLoggedIn() {
+//                return self.shipToTableViewCellWithIndexPath(indexPath)
+//            } else {
+//                return self.guestCheckoutTableViewCellWithindexPath(indexPath)
+//            }
+//            
+//        } else {
+//            return self.mapTableViewCellWithIndexPath(indexPath)
+//        }
     }
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -243,7 +254,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             if section == 0 {
                 return cartItems.count + additionalCellCount
             } else {
-                return 2
+                return 1
             }
         } else {
             if section == 0 {
@@ -410,53 +421,57 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     func guestCheckoutTableViewCell(guestCheckoutTableViewCell: GuestCheckoutTableViewCell, didStartEditingTextFieldWithTag textfieldTag: Int, textField: UITextField) {
         self.currentTextFieldTag = textfieldTag
         
-        if textfieldTag < 4 {
-            var indexPath: NSIndexPath = self.tableView.indexPathForCell(self.guestCheckoutTableViewCell)!
-            self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
-        }
-        
-        UIView.animateWithDuration(0.5, animations: {
-            var contentInset: UIEdgeInsets = self.tableView.contentInset
-            contentInset.top = 0.0
-            if IphoneType.isIphone6Plus() {
-               contentInset.top = contentInset.top - (50 * CGFloat(textfieldTag + 1))
-            } else if IphoneType.isIphone6() {
-
-                if textfieldTag == 13 {
-                    contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag))
-                } else {
-                    if self.currentTextFieldTag == 0 {
-                        contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag + 1))
-                    } else {
-                        contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag))
-                    }
-                }
-            } else if IphoneType.isIphone5() {
-                if textfieldTag == 3 {
-                    contentInset.top = contentInset.top - (50 * CGFloat(textfieldTag - 1)) - 120
-                } else if textfieldTag == 13 {
-                    contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag)) - 120
-                } else if textfieldTag >= 8 {
-                    contentInset.top = contentInset.top - (55 * CGFloat(textfieldTag)) - 120
-                } else {
-                    contentInset.top = contentInset.top - (45 * CGFloat(textfieldTag + 1)) - 120
-                } 
-            } else if IphoneType.isIphone4() {
-                let extraSpace: CGFloat = 150
-                
-                if textfieldTag >= 8 {
-                    contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag)) - extraSpace
-                } else {
-                    if textField.tag == 3 {
-                        contentInset.top = contentInset.top - (45 * CGFloat(textfieldTag)) - extraSpace                        
-                    } else {
-                        contentInset.top = contentInset.top - (45 * CGFloat(textfieldTag + 1)) - extraSpace
-                    }
-                }
-            }
-                self.tableView.contentInset = contentInset
-                self.tableView.scrollIndicatorInsets = contentInset
-        })
+//        if textfieldTag < 4 {
+//            
+//            if self.tableView.indexPathForCell(self.guestCheckoutTableViewCell) != nil {
+//                var indexPath: NSIndexPath = self.tableView.indexPathForCell(self.guestCheckoutTableViewCell)!
+//                self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+//            }
+//            
+//        }
+//        
+//        UIView.animateWithDuration(0.5, animations: {
+//            var contentInset: UIEdgeInsets = self.tableView.contentInset
+//            contentInset.top = 0.0
+//            if IphoneType.isIphone6Plus() {
+//               contentInset.top = contentInset.top - (50 * CGFloat(textfieldTag + 1))
+//            } else if IphoneType.isIphone6() {
+//
+//                if textfieldTag == 13 {
+//                    contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag))
+//                } else {
+//                    if self.currentTextFieldTag == 0 {
+//                        contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag + 1))
+//                    } else {
+//                        contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag))
+//                    }
+//                }
+//            } else if IphoneType.isIphone5() {
+//                if textfieldTag == 3 {
+//                    contentInset.top = contentInset.top - (50 * CGFloat(textfieldTag - 1)) - 120
+//                } else if textfieldTag == 13 {
+//                    contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag)) - 120
+//                } else if textfieldTag >= 8 {
+//                    contentInset.top = contentInset.top - (55 * CGFloat(textfieldTag)) - 120
+//                } else {
+//                    contentInset.top = contentInset.top - (45 * CGFloat(textfieldTag + 1)) - 120
+//                } 
+//            } else if IphoneType.isIphone4() {
+//                let extraSpace: CGFloat = 150
+//                
+//                if textfieldTag >= 8 {
+//                    contentInset.top = contentInset.top - (60 * CGFloat(textfieldTag)) - extraSpace
+//                } else {
+//                    if textField.tag == 3 {
+//                        contentInset.top = contentInset.top - (45 * CGFloat(textfieldTag)) - extraSpace                        
+//                    } else {
+//                        contentInset.top = contentInset.top - (45 * CGFloat(textfieldTag + 1)) - extraSpace
+//                    }
+//                }
+//            }
+//                self.tableView.contentInset = contentInset
+//                self.tableView.scrollIndicatorInsets = contentInset
+//        })
         
         
         if textField == self.guestCheckoutTableViewCell.provinceTextField {
@@ -543,7 +558,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     //MARK: -
     //MARK: - Voucher Table View Cell Delegate
     func voucherTableViewCell(didTapAddButton cell: VoucherTableViewCell) {
-        if cell.addButton.titleLabel!.text == "Add" {
+        if cell.addButton.titleLabel!.text == "ADD" {
             self.checkoutContainerViewController.fireVoucherWithVoucherId(cell.voucherTextField.text)
         } else {
             self.voucherRequestNotSuccessful(cell)
@@ -594,7 +609,10 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             indexPaths.append(indexPath2)
         }
         
-        self.changeButtonState(voucherCell.addButton)
+        if !self.hasFlashSaleItem {
+           self.changeButtonState(voucherCell.addButton)
+        }
+        
         self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Left)
     }
     
@@ -612,11 +630,11 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     //MARK: -
     //MARK: - Change Button State
     func changeButtonState(button: UIButton) {
-        if button.titleLabel!.text == "Add" {
+        if button.titleLabel!.text == "ADD" {
             button.setTitle("Remove", forState: UIControlState.Normal)
             button.backgroundColor = UIColor.redColor()
         } else {
-            button.setTitle("Add", forState: UIControlState.Normal)
+            button.setTitle("ADD", forState: UIControlState.Normal)
             button.backgroundColor = Constants.Colors.appTheme
         }
     }
@@ -624,7 +642,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     //MARK: -
     //MARK: - Activate Button
     func activateAddButton(button: UIButton) {
-        button.setTitle("Add", forState: UIControlState.Normal)
+        button.setTitle("ADD", forState: UIControlState.Normal)
         button.backgroundColor = Constants.Colors.appTheme
         button.enabled = true
     }
@@ -632,7 +650,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     //MARK: -
     //MARK: - DeActivate Button
     func deActivateAddButton(button: UIButton) {
-        button.setTitle("Add", forState: UIControlState.Normal)
+        button.setTitle("ADD", forState: UIControlState.Normal)
         button.backgroundColor = UIColor.lightGrayColor()
         button.enabled = false
     }
@@ -688,6 +706,11 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     func voucherTableViewCellWithIndexPath(indexPath: NSIndexPath) -> VoucherTableViewCell {
         let voucherCell: VoucherTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.voucherCellNibName) as! VoucherTableViewCell
         voucherCell.delegate = self
+        
+        if self.hasFlashSaleItem {
+            voucherCell.voucherTextField.enabled = false
+        }
+        
         voucherCell.selectionStyle = UITableViewCellSelectionStyle.None
         return voucherCell
     }
@@ -742,7 +765,10 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         let product: CartProductDetailsModel = self.cartItems[indexPath.row]
         let url = APIAtlas.baseUrl.stringByReplacingOccurrencesOfString("api/v1", withString: "")
         let orderSummaryCell: OrderSummaryTableViewCell = tableView.dequeueReusableCellWithIdentifier(Constants.Checkout.orderSummaryTableViewCellNibNameAndIdentifier) as! OrderSummaryTableViewCell
-        orderSummaryCell.productImageView.sd_setImageWithURL(NSURL(string: "\(url)\(APIAtlas.cartImage)\(product.selectedUnitImage)")!, placeholderImage: UIImage(named: "dummy-placeholder"))
+        /*orderSummaryCell.productImageView.sd_setImageWithURL(NSURL(string: "\(url)\(APIAtlas.cartImage)\(product.selectedUnitImage)")!, placeholderImage: UIImage(named: "dummy-placeholder"))*/
+        
+        orderSummaryCell.productImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(product.selectedUnitImage), placeholderImage: UIImage(named: "dummy-placeholder"))
+        
         orderSummaryCell.itemTitleLabel.text = product.title
         orderSummaryCell.quantityLabel.text = "x\(product.quantity)"
         
@@ -806,8 +832,8 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     //MARK: - 
     //MARK: - Clear City and Barangay TextField
     func clearCityAndBarangayTextField() {
-        self.guestCheckoutTableViewCell.cityTextField.text = ""
-        self.guestCheckoutTableViewCell.barangayTextField.text = ""
+        self.guestCheckoutTableViewCell.cityTextField.text = AddressStrings.selectCity
+        self.guestCheckoutTableViewCell.barangayTextField.text = AddressStrings.selectBarangay
     }
     
     //MARK: - 

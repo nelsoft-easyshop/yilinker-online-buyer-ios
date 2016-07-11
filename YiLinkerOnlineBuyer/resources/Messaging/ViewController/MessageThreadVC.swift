@@ -512,7 +512,7 @@ class MessageThreadVC: UIViewController {
                 ]   as Dictionary<String, AnyObject>
             println(parameters)
             let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONVERSATION_MESSAGES
-            
+            println(url)
             manager.POST(url, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 self.messages = W_Messages.parseMessages(responseObject as! NSDictionary)

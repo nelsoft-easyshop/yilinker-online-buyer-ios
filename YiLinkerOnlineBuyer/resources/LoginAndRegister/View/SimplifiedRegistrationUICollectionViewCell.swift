@@ -12,6 +12,7 @@ protocol SimplifiedRegistrationUICollectionViewCellDelegate {
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, textFieldShouldReturn textField: UITextField)
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapLanguagePreference languagePreferenceView: UIView)
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapAreaCode areaCodeView: UIView)
+    
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapSendActivationCode sendActivationCodeButton: UIButton)
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTapRegister registerButton: UIButton)
     func simplifiedRegistrationCell(simplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell, didTimerEnded sendActivationCodeButton: UIButton)
@@ -39,6 +40,7 @@ class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var resendActivationLabel: UILabel!
     
     @IBOutlet weak var downImageView: UIImageView!
+    @IBOutlet weak var downCodeImageView: UIImageView!
     
     var seconds: Int = 60
     var timer = NSTimer()
@@ -64,6 +66,7 @@ class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
         self.registerButton.layer.cornerRadius = 3
         
         self.downImageView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
+        self.downCodeImageView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
         
         //Set inset of textfield
         self.mobileNumberTextField.layer.sublayerTransform = CATransform3DMakeTranslation(5, 0, 0)

@@ -1,4 +1,4 @@
-    //
+//
 //  WebServiceManager.swift
 //  YiLinkerOnlineBuyer
 //
@@ -521,6 +521,15 @@ class WebServiceManager: NSObject {
     }
     
     //MARK: -
+    //MARK: - Fire Seller Feedback
+    class func fireCancelTransactionWithUrl(url: String, parameters: AnyObject, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
+        
+        self.firePostRequestWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+    }
+    
+    //MARK: -
     //MARK: - Fire Get Reasons For Cancellation With Url
     class func fireGetReasonForCancellationWithUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         var parameters: NSDictionary = ["access_token" : SessionManager.accessToken()]
@@ -873,18 +882,9 @@ class WebServiceManager: NSObject {
         
         var tempURL: String = url
         
-        if !url.contains(APIAtlas.V3) {
+        if !url.contains(APIAtlas.V1) ||  !url.contains(APIAtlas.V2) ||  !url.contains(APIAtlas.V3) {
             tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
-        } else {
-            tempURL = tempURL.stringByReplacingOccurrencesOfString("api/", withString: "", options: nil)
         }
-        
-        
-        tempURL = tempURL.stringByReplacingOccurrencesOfString("//", withString: "/", options: nil)
-        tempURL = tempURL.stringByReplacingOccurrencesOfString("/api", withString: "api", options: nil)
-        tempURL = tempURL.stringByReplacingOccurrencesOfString("/v1", withString: "v1", options: nil)
-        tempURL = tempURL.stringByReplacingOccurrencesOfString("/v2", withString: "v2", options: nil)
-        tempURL = tempURL.stringByReplacingOccurrencesOfString("/v3", withString: "v3", options: nil)
         
         if Reachability.isConnectedToNetwork() {
             manager.GET(tempURL, parameters: parameters, success: {
@@ -1301,6 +1301,36 @@ class WebServiceManager: NSObject {
     }
     
     //MARK: -
+    //MARK: - Fire Delete Address Request With URL
+    class func fireDeletetAddress(url: String, userAddressId: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = [self.accessTokenKey: SessionManager.accessToken(), "userAddressId": userAddressId]
+        
+        let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        
+        return sessionDataTask
+    }
+    
+    
+    //MARK: -
+    //MARK: - Fire Add Address
+    class func fireEditAddress(url: String, userAddressId: String, accessToken: String, title: String, streetName: String, province: String, city: String, barangay: String, zipCode: String, locationId: Int, longitude: Double, latitude: Double, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = ["userAddressId": userAddressId, self.accessTokenKey: accessToken, "title": title, "streetName": streetName, "province": province, "city": city, "barangay": barangay, "zipCode": zipCode, "locationId": locationId, "longitude": longitude, "latitude": latitude]
+        
+        let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        
+        return sessionDataTask
+    }
+    
+    //MARK: -
     //MARK: - Fire Add Address
     class func fireAddAddress(url: String, accessToken: String, title: String, streetName: String, province: String, city: String, barangay: String, zipCode: String, locationId: Int, longitude: Double, latitude: Double, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
         
@@ -1364,7 +1394,7 @@ class WebServiceManager: NSObject {
         
         let manager: APIManager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = ["userAddressId": userAddressId]
+        let parameters: NSDictionary = ["userAddressId": userAddressId, self.accessTokenKey: SessionManager.accessToken()]
         
         let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
@@ -1372,5 +1402,45 @@ class WebServiceManager: NSObject {
         
         return sessionDataTask
     }
+    
+    //MARK: -
+    //MARK: - Fire Get Total Points
+    class func fireGetTotalPointFromUrl(url: String, access_token: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let parameters: NSDictionary = [self.accessTokenKey: access_token]
+        
+        let sessionDataTask: NSURLSessionDataTask = self.fireGetRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        
+        return sessionDataTask
+    }
+    
+    class func fireGetPointsFromUrl(url: String, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let sessionDataTask: NSURLSessionDataTask = self.fireGetRequestSessionDataTaskWithUrl(url, parameters: []) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        
+        return sessionDataTask
+    }
+    
+    //MARK: -
+    //MARK: - Fire Social media Login
+    class func fireSocialMediaLoginFromUrl(url: String, parameters: NSDictionary, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
+        
+        let manager: APIManager = APIManager.sharedInstance
+        
+        let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
+            actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
+        }
+        
+        return sessionDataTask
+    }
+    
     
 }

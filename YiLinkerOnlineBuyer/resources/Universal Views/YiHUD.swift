@@ -10,6 +10,9 @@ import UIKit
 
 class YiHUD: UIView {
     
+    static let kHudTag: Int = 123456
+    var isViewHidden: Bool = true
+    
     @IBOutlet weak var dimView: UIView!
     //MARK: - 
     //MARK: - Awake Form Nib
@@ -25,6 +28,8 @@ class YiHUD: UIView {
     //MARK: - Init HUD
     class func initHud() -> YiHUD {
         let yiHUD: YiHUD = XibHelper.puffViewWithNibName("YiHUD", index: 0) as! YiHUD
+        yiHUD.tag = YiHUD.kHudTag
+        
         return yiHUD
     }
     
@@ -34,7 +39,7 @@ class YiHUD: UIView {
         var isAdded: Bool = false
         
         for subView in view.subviews {
-            if subView.isKindOfClass(YiHUD) {
+            if subView.isKindOfClass(YiHUD) || subView.tag ==  YiHUD.kHudTag {
                 isAdded = true
                 break
             }
@@ -48,12 +53,15 @@ class YiHUD: UIView {
         
         view.layoutIfNeeded()
         self.center = view.center
+        
+        self.isViewHidden = false
     }
     
     //MARK: - 
     //MARK: - Hide
     func hide() {
         self.removeFromSuperview()
+        self.isViewHidden = true
     }
 
 }

@@ -13,6 +13,7 @@ protocol SimplifiedLoginUICollectionViewCellDelegate {
     func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapFBLogin facebookButton: FBSDKLoginButton)
     func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapForgotPassword forgotPasswordButton: UIButton)
     func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapSignin signInButton: UIButton)
+    func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapAreaCode areaCodeView: UIView)
 }
 
 class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
@@ -30,6 +31,7 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var areaCodeView: UIView!
     @IBOutlet weak var areaCodeLabel: UILabel!
+    @IBOutlet weak var areaCodeImageView: UIImageView!
     @IBOutlet weak var areaCodeConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var downImageView: UIImageView!
@@ -47,6 +49,9 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
             self.facebookButton.readPermissions = ["public_profile", "email"]
             self.facebookButton.delegate = self
         }
+        
+        let areaCodeTapGesture = UITapGestureRecognizer(target:self, action:"didTapAreaCode")
+        self.areaCodeView.addGestureRecognizer(areaCodeTapGesture)
     }
     
     func initializeViews() {
@@ -90,7 +95,7 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
             self.emailMobileTextField.keyboardType = UIKeyboardType.PhonePad
             self.emailMobileTextField.text = ""
             self.emailMobileTextField.placeholder = LoginStrings.mobileNUmber
-            self.areaCodeConstraint.constant = 69
+            self.areaCodeConstraint.constant = 85
             UIView.animateWithDuration(0.25) {
                 self.layoutIfNeeded()
             }
@@ -110,6 +115,11 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
         } else if sender == self.signInButton {
             self.delegate?.simplifiedLoginCell(self, didTapSignin: self.signInButton)
         }
+    }
+    
+    func didTapAreaCode() {
+        self.delegate?.simplifiedLoginCell(self, didTapAreaCode: self.areaCodeView)
+        println("Area Code")
     }
 }
 

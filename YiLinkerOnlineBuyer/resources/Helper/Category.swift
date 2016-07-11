@@ -267,14 +267,14 @@ extension UIAlertController {
     class func showAlertYesOrNoWithTitle(title: String, message: String, viewController: UIViewController, actionHandler: (isYes: Bool) -> Void) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         
-        let cancelAction = UIAlertAction(title: RegisterModalStrings.no, style: .Cancel) { (action) in
-            actionHandler(isYes: false)
+        let cancelAction = UIAlertAction(title: RegisterModalStrings.yes, style: .Cancel) { (action) in
+            actionHandler(isYes: true)
         }
         
         alertController.addAction(cancelAction)
         
-        let OKAction = UIAlertAction(title: RegisterModalStrings.yes, style: .Default) { (action) in
-             actionHandler(isYes: true)
+        let OKAction = UIAlertAction(title: RegisterModalStrings.no, style: .Default) { (action) in
+             actionHandler(isYes: false)
         }
         alertController.addAction(OKAction)
         
@@ -436,7 +436,7 @@ extension String {
     }
     
     func isValidName() -> Bool {
-        let nameRegex = "^[a-zA-Z ]*$"
+        let nameRegex = "^[a-zA-Z0-9-_., ]*$"
         let nameTest = NSPredicate(format: "SELF MATCHES %@", nameRegex)
         
         return nameTest.evaluateWithObject(self)
@@ -473,12 +473,13 @@ extension String {
     
     func formatToTwoDecimal() -> String {
         var stringNumber: String = ""
+        var tempString: String = self.stringByReplacingOccurrencesOfString(",", withString: "")
         
         let formatter = NSNumberFormatter()
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 2
         formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
-        stringNumber = "\(formatter.stringFromNumber((self as NSString).doubleValue)!)"
+        stringNumber = "\(formatter.stringFromNumber((tempString as NSString).doubleValue)!)"
 
         if self.rangeOfString("₱") != nil{
             return stringNumber
@@ -496,7 +497,7 @@ extension String {
         numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
         var stringNumber: String = ""
 
-        stringNumber = self
+        stringNumber = self.stringByReplacingOccurrencesOfString(",", withString: "")
         
         if self.rangeOfString(",") != nil {
             if numberFormatter.stringFromNumber(0) != "0" {
@@ -631,6 +632,7 @@ extension UIDevice {
         case "iPod3,1":                                 model = "iPod Touch 3G"
         case "iPod4,1":                                 model = "iPod Touch 4G"
         case "iPod5,1":                                 model = "iPod Touch 5G"
+        case "iPod7,1":                                 model = "iPod Touch 6G"
             
         case "iPhone1,1":                               model = "iPhone 2G"
         case "iPhone1,2":                               model = "iPhone 3G"
@@ -645,17 +647,20 @@ extension UIDevice {
         case "iPhone7,1":                               model = "iPhone 6 Plus"
         case "iPhone8,1":                               model = "iPhone 6S"
         case "iPhone8,2":                               model = "iPhone 6S Plus"
-            
+        case "iPhone8,4":                               model = "iPhone SE"
             
         case "iPad1,1":                                 model = "iPad 1"
         case "iPad2,1", "iPad2,2", "iPad2,3", "iPad2,4":model = "iPad 2"
         case "iPad3,1", "iPad3,2", "iPad3,3":           model = "iPad 3"
         case "iPad3,4", "iPad3,5", "iPad3,6":           model = "iPad 4"
         case "iPad4,1", "iPad4,2", "iPad4,3":           model = "iPad Air"
-        case "iPad5,1", "iPad5,3", "iPad5,4":           model = "iPad Air 2"
+        case "iPad5,3", "iPad5,4":                      model = "iPad Air 2"
         case "iPad2,5", "iPad2,6", "iPad2,7":           model = "iPad Mini"
         case "iPad4,4", "iPad4,5", "iPad4,6":           model = "iPad Mini 2"
         case "iPad4,7", "iPad4,8", "iPad4,9":           model = "iPad Mini 3"
+        case "iPad5,1", "iPad5,2":                      model = "iPad Mini 4"
+        case "iPad6,3", "iPad6,4":                      model = "iPad Pro (9.7 inch)"
+        case "iPad6,7", "iPad6,8":                      model = "iPad Pro (12.9 inch)"
             
         case "i386", "x86_64":                          model = "Simulator"
         default:                                        model = deviceCode //If unkhnown

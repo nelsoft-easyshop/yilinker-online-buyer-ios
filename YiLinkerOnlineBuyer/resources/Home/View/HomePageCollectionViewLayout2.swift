@@ -52,7 +52,7 @@ struct SectionHeight {
     
     static func sectionSixSecondCellWidth() -> CGFloat {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
-        return (screenSize.width  - 15) - (SectionHeight.sectionSixFirstCellWidth())
+        return (screenSize.width  - 6) - (SectionHeight.sectionSixFirstCellWidth())
         //return 500
     }
     
@@ -78,7 +78,7 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
 
     var homePageModel: HomePageModel = HomePageModel()
     
-    let sectionVerticalInset: CGFloat = 10
+    let sectionVerticalInset: CGFloat = 2
     var sectionFour: CGFloat = 170.0
     
     //MARK: Prepare Layout
@@ -223,7 +223,7 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
     
     //MARK: - Layout Six
     func layoutSix(section: Int) {
-        let horizontalInset: CGFloat = 5
+        let horizontalInset: CGFloat = 2
         
         for var x = 0; x < 3; x++ {
             let indexPath = NSIndexPath(forItem: x, inSection: section)
@@ -416,14 +416,18 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
                     numberOfItems = CGFloat(layoutTenModel.data.count) / 2.0
                 }
                 
+                
+                var tempInset: CGFloat = 10
+                
+                
                 if (numberOfItems - floor(numberOfItems) > 0.000001) { // 0.000001 can be changed depending on the level of precision you need
                     var items: Int = Int(numberOfItems)
 
                     let height: CGFloat = SectionHeight.sectionTen * CGFloat(items + 1)
-                    occupiedSpace = occupiedSpace + height + SectionHeight.layoutHeader + (sectionVerticalInset * CGFloat(items / 2)) + sectionVerticalInset + sectionVerticalInset
+                    occupiedSpace = occupiedSpace + height + SectionHeight.layoutHeader + (tempInset * CGFloat(items / 2)) + tempInset + tempInset
                 } else {
                     let items: Int = Int(numberOfItems)
-                    occupiedSpace = occupiedSpace + (SectionHeight.sectionTen * CGFloat(items)) + SectionHeight.layoutHeader + (sectionVerticalInset * CGFloat(items / 2)) + sectionVerticalInset
+                    occupiedSpace = occupiedSpace + (SectionHeight.sectionTen * CGFloat(items)) + SectionHeight.layoutHeader + (tempInset * CGFloat(items / 2)) + tempInset
                 }
             } else if self.layouts[x] == "11" {
                 occupiedSpace = occupiedSpace + SectionHeight.sectionEleven + sectionVerticalInset

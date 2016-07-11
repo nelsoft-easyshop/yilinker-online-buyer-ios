@@ -8,9 +8,9 @@
 
 struct APIEnvironment {
     
-    static var development = true
+    static var development = false
     static var sprint = false
-    static var staging = false
+    static var staging = true
     static var production = false
     
     static func baseUrl() -> String {
@@ -115,7 +115,7 @@ struct APIAtlas {
     static let loginUrl = "login"
     static let registerUrl = "user/register"
     static let getUserInfoUrl = "auth/user/getUser"
-    static let homeUrl = "v2/home/getData"
+    static let homeUrl = "home/getData"
     static let cartUrl = "auth/cart/getCart"
     static let wishlistUrl = "auth/cart/getCart"
     static let updateWishlistUrl = "auth/cart/updateCartItem"
@@ -167,15 +167,15 @@ struct APIAtlas {
     static let baseUrl = APIEnvironment.baseUrl()
     
     /* MESSAGING CONSTANTS */
-    static let ACTION_SEND_MESSAGE          = "/message/sendMessage"
-    static let ACTION_GET_CONVERSATION_HEAD = "/message/getConversationHead"
-    static let ACTION_GET_CONTACTS          = "/message/getContacts"
-    static let ACTION_GET_CONVERSATION_MESSAGES = "/message/getConversationMessages"
-    static let ACTION_SET_AS_READ           = "/message/setConversationAsRead"
-    static let ACTION_IMAGE_ATTACH          = "/message/imageAttach"
-    static let ACTION_GCM_CREATE            = "/auth/device/addRegistrationId"
-    static let ACTION_GCM_DELETE            = "auth/device/deleteRegistrationId"
-    static let ACTION_GCM_UPDATE            = "/device/auth/updateRegistrationId"
+    static let ACTION_SEND_MESSAGE          = "/v1/message/sendMessage"
+    static let ACTION_GET_CONVERSATION_HEAD = "/v1/message/getConversationHead"
+    static let ACTION_GET_CONTACTS          = "/v1/message/getContacts"
+    static let ACTION_GET_CONVERSATION_MESSAGES = "/v1/message/getConversationMessages"
+    static let ACTION_SET_AS_READ           = "/v1/message/setConversationAsRead"
+    static let ACTION_IMAGE_ATTACH          = "/v1/message/imageAttach"
+    static let ACTION_GCM_CREATE            = "/v1/auth/device/addRegistrationId"
+    static let ACTION_GCM_DELETE            = "/v1/auth/device/deleteRegistrationId"
+    static let ACTION_GCM_UPDATE            = "/v1/device/auth/updateRegistrationId"
     static let uploadFileType = "jpeg"
     
     /* MESSAGING CONSTANTS V2 */

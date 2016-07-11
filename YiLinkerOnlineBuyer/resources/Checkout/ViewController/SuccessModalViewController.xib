@@ -61,7 +61,7 @@
                                 <constraint firstAttribute="height" constant="53" id="Zsq-AW-VM3"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You've succesfully verify this transaction" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5fs-l8-kXv">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You've succesfully verified this transaction" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5fs-l8-kXv">
                             <rect key="frame" x="39" y="104" width="222" height="38"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="38" id="X50-1K-17i"/>

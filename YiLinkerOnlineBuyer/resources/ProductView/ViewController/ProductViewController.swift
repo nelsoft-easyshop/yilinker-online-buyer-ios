@@ -752,21 +752,66 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         WebServiceManager.fireCartToCheckoutWithUrl(APIAtlas.updateCheckout(), cart: item, accessToken: SessionManager.accessToken(), actionHandler: {
             (successful, responseObject, requestErrorType) -> Void in
             if successful {
-                var cartProductModel: [CartProductDetailsModel] = []
+                var checkoutItems: [CartProductDetailsModel] = []
                 
-                if let value: AnyObject = responseObject["data"] {
-                    for subValue in responseObject["data"] as! NSArray {
-                        let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
-                        cartProductModel.append(model)
+                if let isSuccessful: Bool = responseObject["isSuccessful"] as? Bool {
+                    if isSuccessful {
+                        var totalShippingCost: String = ""
+                        var totalAmount: String = ""
+                        var hasFlashSaleItem: Bool = false
+                        if let data: NSDictionary = responseObject["data"] as? NSDictionary {
+                            if let items: NSArray = data["items"] as? NSArray  {
+                                for subValue in items {
+                                    let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
+                                    
+                                    for tempProductUnit in model.productUnits {
+                                        if model.unitId == tempProductUnit.productUnitId {
+                                            
+                                            if tempProductUnit.imageIds.count != 0 {
+                                                for tempImage in model.images {
+                                                    if tempImage.id == tempProductUnit.imageIds[0] {
+                                                        model.selectedUnitImage = tempImage.fullImageLocation
+                                                    }
+                                                }
+                                            } else if model.images.count != 0 {
+                                                model.selectedUnitImage = model.images[0].fullImageLocation
+                                            } else {
+                                                model.selectedUnitImage = ""
+                                            }
+                                            break
+                                        }
+                                    }
+                                    checkoutItems.append(model)
+                                }
+                            }
+                            
+                            if let temp: Int = data["totalShippingCost"] as? Int  {
+                                totalShippingCost = "\(temp)"
+                            } else if let temp: String = data["totalShippingCost"] as? String  {
+                                totalShippingCost = temp
+                            }
+                            
+                            if let temp: Int = data["totalAmount"] as? Int  {
+                                totalAmount = "\(temp)"
+                            } else if let temp: String = data["totalAmount"] as? String  {
+                                totalAmount = temp
+                            }
+                            
+                            if let temp: Bool = data["hasFlashSaleItem"] as? Bool  {
+                                hasFlashSaleItem = temp
+                            }
+                        }
+                        
+                        let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
+                        checkout.carItems = checkoutItems
+                        checkout.totalPrice = "\(totalAmount)"
+                        checkout.deliveryFee = "\(totalShippingCost)"
+                        checkout.hasFlashSaleItem = hasFlashSaleItem
+                        let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
+                        navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
+                        self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
                     }
                 }
-                
-                let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
-                checkout.carItems = cartProductModel
-                checkout.totalPrice = String(stringInterpolationSegment: totalAmount)
-                let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
-                navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
-                self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
             } else {
                 if requestErrorType == .ResponseError {
                     //Error in api requirements
@@ -795,8 +840,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func requestContactsFromEndpoint(){
         
         if (Reachability.isConnectedToNetwork()) {
-            let url = APIAtlas.baseUrl + APIAtlas.ACTION_GET_CONTACTS
-            WebServiceManager.fireGetContacttDetailsWithUrl(url, page: "1", limit: "99", keyword: "", accessToken: SessionManager.accessToken(), actionHandler: {  (successful, responseObject, requestErrorType) -> Void in
+            let url = APIAtlas.ACTION_GET_CONTACTS_V2
+            WebServiceManager.fireGetContacttDetailsWithUrl(url, page: "1", limit: "30", keyword: "", accessToken: SessionManager.accessToken(), actionHandler: {  (successful, responseObject, requestErrorType) -> Void in
+                println(responseObject)
                 if successful {
                     self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
                 } else {
@@ -805,6 +851,45 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.yiHud?.hide()
             })
         }
+        
+//        WebServiceManager.fireGetContactListWithUrl("\(APIAtlas.ACTION_GET_CONTACTS_V2)?access_token=\(SessionManager.accessToken())", keyword: keyword, page: "\(page)", limit: "\(limit)", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+//            self.yiHud?.hide()
+//            if successful {
+//                if responseObject["isSuccessful"] as! Bool {
+//                    self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
+//                    self.yiHud?.hide()
+//                    self.tableView.reloadData()
+//                } else {
+//                    self.showAlert(title: Constants.Localized.error, message: responseObject["message"] as! String)
+//                }
+//            } else {
+//                self.contacts = Array<W_Contact>()
+//                if requestErrorType == .ResponseError {
+//                    //Error in api requirements
+//                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+//                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+//                    self.yiHud?.hide()
+//                } else if requestErrorType == .AccessTokenExpired {
+//                    self.fireRefreshToken()
+//                } else if requestErrorType == .PageNotFound {
+//                    //Page not found
+//                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
+//                    self.yiHud?.hide()
+//                } else if requestErrorType == .NoInternetConnection {
+//                    //No internet connection
+//                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+//                    self.yiHud?.hide()
+//                } else if requestErrorType == .RequestTimeOut {
+//                    //Request timeout
+//                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+//                    self.yiHud?.hide()
+//                } else if requestErrorType == .UnRecognizeError {
+//                    //Unhandled error
+//                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
+//                    self.yiHud?.hide()
+//                }
+//            }
+//        })
     }
     
     func requestRefreshToken(type: String) {
@@ -933,6 +1018,7 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
 //            }
             
             self.quantity = self.productDetailsModel.productUnits[0].quantity
+//            println(self.productDetailsModel.productUnits[0])
             self.unitId = self.productDetailsModel.productUnits[0].productUnitId
             getUnitIdIndexFrom()
             
@@ -1051,7 +1137,9 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
         selectedValue = []
         selectedId = []
         selectedName.append(ProductStrings.quantity)
-        if quantity == 0 {
+        if isDefault {
+            selectedValue.append("-")
+        } else if quantity == 0 {
             selectedValue.append(ProductStrings.outOfStock)
             self.quantity = 0
         } else {

@@ -200,6 +200,7 @@ class TransactionModel: NSObject {
             }
             
             if let value: AnyObject = dictionary["data"] {
+                println(value["orders"])
                 let orders: NSArray = value["orders"] as! NSArray
                 for order in orders as! [NSDictionary] {
                     for product_status in order["unique_order_product_statuses"] as! NSArray {

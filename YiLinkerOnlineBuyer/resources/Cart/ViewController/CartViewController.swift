@@ -28,6 +28,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet var cartCounterLabel: UILabel!
     @IBOutlet var checkoutButton: UIButton!
     
+    var totalPrice: Double = 0
+    
     var tableData: [CartProductDetailsModel] = []
     var selectedItemIDs: [Int] = []     //Selected ids in the cart
     
@@ -171,35 +173,58 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
                 
                 if let isSuccessful: Bool = responseObject["isSuccessful"] as? Bool {
                     if isSuccessful {
-                        if let data: NSArray = responseObject["data"] as? NSArray {
-                            for subValue in data {
-                                let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
-                                
-                                for tempProductUnit in model.productUnits {
-                                    if model.unitId == tempProductUnit.productUnitId {
-                                        
-                                        if tempProductUnit.imageIds.count != 0 {
-                                            for tempImage in model.images {
-                                                if tempImage.id == tempProductUnit.imageIds[0] {
-                                                    model.selectedUnitImage = tempImage.fullImageLocation
+                        var totalShippingCost: String = ""
+                        var totalAmount: String = ""
+                        var hasFlashSaleItem: Bool = false
+                        if let data: NSDictionary = responseObject["data"] as? NSDictionary {
+                            if let items: NSArray = data["items"] as? NSArray  {
+                                for subValue in items {
+                                    let model: CartProductDetailsModel = CartProductDetailsModel.parseDataWithDictionary(subValue as! NSDictionary)
+                                    
+                                    for tempProductUnit in model.productUnits {
+                                        if model.unitId == tempProductUnit.productUnitId {
+                                            
+                                            if tempProductUnit.imageIds.count != 0 {
+                                                for tempImage in model.images {
+                                                    if tempImage.id == tempProductUnit.imageIds[0] {
+                                                        model.selectedUnitImage = tempImage.fullImageLocation
+                                                    }
                                                 }
+                                            } else if model.images.count != 0 {
+                                                model.selectedUnitImage = model.images[0].fullImageLocation
+                                            } else {
+                                                model.selectedUnitImage = ""
                                             }
-                                        } else if model.images.count != 0 {
-                                            model.selectedUnitImage = model.images[0].fullImageLocation
-                                        } else {
-                                            model.selectedUnitImage = ""
+                                            break
                                         }
-                                        break
                                     }
+                                    checkoutItems.append(model)
                                 }
-                                checkoutItems.append(model)
                             }
-
+                            
+                            if let temp: Int = data["totalShippingCost"] as? Int  {
+                                totalShippingCost = "\(temp)"
+                            } else if let temp: String = data["totalShippingCost"] as? String  {
+                                totalShippingCost = temp
+                            }
+                            
+                            if let temp: Int = data["totalAmount"] as? Int  {
+                                totalAmount = "\(temp)"
+                            } else if let temp: String = data["totalAmount"] as? String  {
+                                totalAmount = temp
+                            }
+                            
+                            if let temp: Bool = data["hasFlashSaleItem"] as? Bool  {
+                                hasFlashSaleItem = temp
+                            }
                         }
                         
                         let checkout = CheckoutContainerViewController(nibName: "CheckoutContainerViewController", bundle: nil)
                         checkout.carItems = checkoutItems
-                        checkout.totalPrice = self.totalPriceLabel.text!
+                        checkout.totalPrice = "\(totalAmount)"
+                        checkout.deliveryFee = "\(totalShippingCost)"
+                        checkout.hasFlashSaleItem = hasFlashSaleItem
+                        
                         let navigationController: UINavigationController = UINavigationController(rootViewController: checkout)
                         navigationController.navigationBar.barTintColor = Constants.Colors.appTheme
                         self.tabBarController?.presentViewController(navigationController, animated: true, completion: nil)
@@ -370,7 +395,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         var price: String = "\(totalPrice)"
         self.totalPriceLabel.text = "\(price.formatToTwoDecimal())"
-        
+        self.totalPrice = totalPrice
         self.initializeCheckoutButton()
     }
     
@@ -427,10 +452,19 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
         //Set cell data
         var tempModel: CartProductDetailsModel = tableData[indexPath.row]
         
-        cell.checkBox.selected = true
-        cell.checkBox.backgroundColor = UIColor(red: 68/255.0, green: 164/255.0, blue: 145/255.0, alpha: 1.0)
-        cell.checkBox.layer.borderWidth = 0
-        cell.checkBox.layer.borderColor = UIColor.whiteColor().CGColor
+        cell.checkBox.selected = tempModel.selected
+        
+        if tempModel.selected {
+            cell.checkBox.backgroundColor = UIColor(red: 68/255.0, green: 164/255.0, blue: 145/255.0, alpha: 1.0)
+            cell.checkBox.layer.borderWidth = 0
+            cell.checkBox.layer.borderColor = UIColor.whiteColor().CGColor
+        } else {
+            cell.checkBox.backgroundColor = UIColor.whiteColor()
+            cell.checkBox.layer.borderWidth = 1
+            cell.checkBox.layer.borderColor = UIColor.darkGrayColor().CGColor
+        }
+        
+        
         
         for tempProductUnit in tempModel.productUnits {
             if tempModel.unitId == tempProductUnit.productUnitId {
@@ -465,7 +499,7 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.productPriceLabel.text = tempProductUnit.discountedPrice.formatToPeso() + " x \(tempModel.quantity)"
             }
         }
-        cell.codView.hidden = !tempModel.isCODAvailable
+        cell.codView.hidden = tempModel.isCODAvailable
         cell.productNameLabel.text = tempModel.title
         cell.delegate = self
         return cell

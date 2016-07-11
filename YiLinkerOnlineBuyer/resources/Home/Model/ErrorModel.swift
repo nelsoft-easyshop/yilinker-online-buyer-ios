@@ -46,18 +46,18 @@ class ErrorModel: NSObject {
             }
         }
         
-        if let value: AnyObject = dictionary["message"] {
+        if let value: AnyObject = dictionary["error_description"] {
             if (value as! NSObject != NSNull() && value as? String != nil) {
-                if message == "" {
-                    message = value as! String
+                if let temp = value as? String {
+                    message = temp
                 }
             }
         }
         
-        if let value: AnyObject = dictionary["error_description"] {
+        if let value: AnyObject = dictionary["message"] {
             if (value as! NSObject != NSNull() && value as? String != nil) {
-                if message == "" {
-                    message = value as! String
+                if let temp = value as? String {
+                    message = temp
                 }
             }
         }

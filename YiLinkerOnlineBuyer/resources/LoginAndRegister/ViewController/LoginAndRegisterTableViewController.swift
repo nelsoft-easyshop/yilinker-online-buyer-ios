@@ -23,6 +23,7 @@ struct LoginStrings {
     static let passwordIsRequired: String = StringHelper.localizedStringWithKey("PASSWORD_IS_REQUIRED_LOCALIZE_KEY")
     
     static let successMessage: String = StringHelper.localizedStringWithKey("SUCCESS_LOGIN_LOCALIZE_KEY")
+     static let welcomMessage: String = StringHelper.localizedStringWithKey("WELCOME_LOCALIZE_KEY")
     static let or: String = StringHelper.localizedStringWithKey("OR_LOCALIZE_KEY")
     static let forgotPasswordd: String = StringHelper.localizedStringWithKey("FORGOT_PASSWORD_LOCALIZE_KEY")
     static let signIn: String = StringHelper.localizedStringWithKey("SIGNIN_HIDDEN_LOCALIZE_KEY")
@@ -100,7 +101,9 @@ struct RegisterStrings {
     static let resetPassword: String = StringHelper.localizedStringWithKey("RESET_PASSWORD_LOCALIZED_KEY")
 }
 
-class LoginAndRegisterTableViewController: UITableViewController {
+class LoginAndRegisterTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    @IBOutlet weak var tableView: UITableView!
     
     let headerViewNibName = "LoginHeaderTableViewCell"
     let loginResgisterTableViewCellNibName = "LoginRegisterTableViewCell"
@@ -127,16 +130,20 @@ class LoginAndRegisterTableViewController: UITableViewController {
     var registerModel: RegisterModel = RegisterModel()
     
     var tempSimplifiedRegistrationCell: SimplifiedRegistrationUICollectionViewCell?
+    var tempSimplifiedLoginCell: SimplifiedLoginUICollectionViewCell?
     var tempForgotPasswordCell: ForgotPasswordTableViewCell?
     
     var languageAlertView: LGAlertView?
-    var areaCodeAlertView: LGAlertView?
+    var registrationAreaCodeAlertView: LGAlertView?
+    var loginAreaCodeAlertView: LGAlertView?
     
     var countries: [CountryModel] = []
     var languages: [LanguageModel] = []
     
     var selectedCountry = CountryModel()
     var selectedLanguage = LanguageModel()
+    
+    var isRegistration: Bool = false
     
     //MARK: -
     //MARK: - View Did Load
@@ -161,10 +168,15 @@ class LoginAndRegisterTableViewController: UITableViewController {
         } else {
             
         }
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
+        
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
+        //Add Nav Bar
+        if self.respondsToSelector("edgesForExtendedLayout") {
+            self.edgesForExtendedLayout = UIRectEdge.None
+        }
+        
         self.fireGetLanguageData()
         self.initializeDefaultValues()
     }
@@ -195,6 +207,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
                     if model.code == SessionManager.selectedCountryCode() {
                         self.selectedCountry = model
                         self.selectedLanguage = model.defaultLanguage
+                        self.tableView.reloadData()
                     }
                 }
             }
@@ -220,19 +233,19 @@ class LoginAndRegisterTableViewController: UITableViewController {
     
     //MARK: -
     //MARK: - Table view data source
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         return 2
     }
     
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let loginHeaderView = tableView.dequeueReusableCellWithIdentifier(self.headerViewNibName) as! LoginHeaderTableViewCell
         loginHeaderView.setBackButtonToClose(isCloseButton)
         loginHeaderView.setTitle(self.pageTitle)
@@ -240,11 +253,11 @@ class LoginAndRegisterTableViewController: UITableViewController {
         return loginHeaderView
     }
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return self.headerCellHeight
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let logoRegisterTableViewCell: LoginRegisterLogoTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.logoRegisterTableViewCellNibName) as! LoginRegisterLogoTableViewCell
             logoRegisterTableViewCell.selectionStyle = .None
@@ -254,6 +267,12 @@ class LoginAndRegisterTableViewController: UITableViewController {
                 let resetPasswordTableViewCell: ForgotPasswordTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.resetPasswordTableViewCellNibName) as! ForgotPasswordTableViewCell
                 resetPasswordTableViewCell.delegate = self
                 resetPasswordTableViewCell.selectionStyle = .None
+                
+                resetPasswordTableViewCell.mobileNumberTextField.text = ""
+                resetPasswordTableViewCell.passwordTextField.text = ""
+                resetPasswordTableViewCell.confirmPasswordTextField.text = ""
+                resetPasswordTableViewCell.activationCodeTextField.text = ""
+                
                 return resetPasswordTableViewCell
             } else {
                 let loginRegisterTableViewCell: LoginRegisterTableViewCell = self.tableView.dequeueReusableCellWithIdentifier(self.loginResgisterTableViewCellNibName) as! LoginRegisterTableViewCell
@@ -263,12 +282,13 @@ class LoginAndRegisterTableViewController: UITableViewController {
                 loginRegisterTableViewCell.selectedCountry = self.selectedCountry
                 loginRegisterTableViewCell.selectedLanguage = self.selectedLanguage
                 loginRegisterTableViewCell.selectionStyle = .None
+                loginRegisterTableViewCell.collectionView.reloadData()
                 return loginRegisterTableViewCell
             }
         }
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.row == 0 {
             return self.logoCellHeight
         }  else {
@@ -325,7 +345,12 @@ class LoginAndRegisterTableViewController: UITableViewController {
     //MARK: -
     //MARK: - Success Message
     func showSuccessMessage() {
-        Toast.displayToastWithMessage( LoginStrings.successMessage, duration: 3.0, view: self.view)
+        if self.isRegistration {
+            Toast.displayToastWithMessage( LoginStrings.welcomMessage, duration: 3.0, view: self.view)
+        } else{
+            Toast.displayToastWithMessage( LoginStrings.successMessage, duration: 3.0, view: self.view)
+        }
+        
         self.view.userInteractionEnabled = false
         Delay.delayWithDuration(1.0, completionHandler: { (success) -> Void in
             let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -337,6 +362,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
     //MARK: -
     //MARK: - Fire Login With Email
     func fireLoginWithEmail(email: String, password: String) {
+        self.isRegistration = false
         self.showLoader()
         self.loginSessionDataTask = WebServiceManager.fireEmailLoginRequestWithUrl(APIAtlas.loginUrl, emailAddress: email, password: password, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
@@ -368,6 +394,7 @@ class LoginAndRegisterTableViewController: UITableViewController {
     //MARK: - Fire Login With Contact Number
     func fireLoginWithContactNumber(contactNo: String, password: String) {
         self.showLoader()
+        
         self.loginSessionDataTask = WebServiceManager.fireContactNumberLoginRequestWithUrl(APIAtlas.loginUrlV2, contactNo: contactNo, password: password, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
@@ -402,6 +429,13 @@ class LoginAndRegisterTableViewController: UITableViewController {
         WebServiceManager.fireUnauthenticatedOTPRequestWithUrl(APIAtlas.unauthenticateOTP, contactNumber: contactNumber, areaCode: areaCode, type: type, storeType: storeType, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 self.dismissLoader()
+                
+                if let temp = responseObject as? NSDictionary {
+                    if let tempMessage = temp["message"] as? String {
+                        Toast.displayToastWithMessage(tempMessage, duration: 1.5, view: self.view)
+                    }
+                }
+                
                 if self.isResetPassword {
                     self.tempForgotPasswordCell?.startTimer()
                 } else {
@@ -433,7 +467,9 @@ class LoginAndRegisterTableViewController: UITableViewController {
         self.showLoader()
         
         WebServiceManager.fireRegisterRequestWithUrl(APIAtlas.registerV2, contactNumber: contactNumber, password: password, areaCode: areaCode, referralCode: referralCode, verificationCode: verificationCode, language: language, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
+            println(responseObject)
             if successful {
+                self.isRegistration = true
                 self.dismissLoader()
                 let registerModel: RegisterModel = RegisterModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 if registerModel.isSuccessful {
@@ -506,38 +542,46 @@ class LoginAndRegisterTableViewController: UITableViewController {
         
         let parameters: NSDictionary = [LoginConstants.tokenKey: token, LoginConstants.clientIdKey: Constants.Credentials.clientID(), LoginConstants.clientSecretKey: Constants.Credentials.clientSecret(), LoginConstants.grantTypeKey: Constants.Credentials.grantBuyer]
         
-        manager.POST(APIAtlas.facebookUrl, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+        WebServiceManager.fireSocialMediaLoginFromUrl(APIAtlas.facebookUrl, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             self.dismissLoader()
-            println(responseObject.description)
-            
-            let loginModel: LoginModel = LoginModel.parseDataFromDictionary(responseObject as! NSDictionary)
-            if loginModel.isSuccessful {
-                SessionManager.parseTokensFromResponseObject(loginModel.dataDictionary)
-                self.showSuccessMessage()
-                self.fireCreateRegistration(SessionManager.gcmToken())
-            } else {
-                if let isExisting = loginModel.dataDictionary["isExisting"] as? Bool {
-                    UIAlertController.showAlertYesOrNoWithTitle(Constants.Localized.error, message: "\(loginModel.message), do you want to merge your account?", viewController: self, actionHandler: { (isYes) -> Void in
-                        if isYes {
-                            self.mergeAccount(token)
-                        } else {
-                            FBSDKLoginManager().logOut()
-                        }
-                    })
-                    
+            if successful {
+                let loginModel: LoginModel = LoginModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                if loginModel.isSuccessful {
+                    SessionManager.parseTokensFromResponseObject(loginModel.dataDictionary)
+                    self.showSuccessMessage()
+                    self.fireCreateRegistration(SessionManager.gcmToken())
                 } else {
-                    FBSDKLoginManager().logOut()
-                    Toast.displayToastWithMessage(loginModel.message, view: self.view)
+                    if let isExisting = loginModel.dataDictionary["isExisting"] as? Bool {
+                        UIAlertController.showAlertYesOrNoWithTitle(Constants.Localized.error, message: "\(loginModel.message), do you want to merge your account?", viewController: self, actionHandler: { (isYes) -> Void in
+                            if isYes {
+                                self.mergeAccount(token)
+                            } else {
+                                FBSDKLoginManager().logOut()
+                            }
+                        })
+                        
+                    } else {
+                        FBSDKLoginManager().logOut()
+                        Toast.displayToastWithMessage(loginModel.message, view: self.view)
+                    }
+                }
+            } else {
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                } else if requestErrorType == .Cancel {
+                    //Do nothing
                 }
             }
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                Toast.displayToastWithMessage(Constants.Localized.someThingWentWrong, view: self.view)
-                self.dismissLoader()
-        })
+        }
     }
     
     //MARK: -
@@ -548,29 +592,36 @@ class LoginAndRegisterTableViewController: UITableViewController {
         
         let parameters: NSDictionary = [LoginConstants.clientIdKey: Constants.Credentials.clientID(), LoginConstants.clientSecretKey: Constants.Credentials.clientSecret(), LoginConstants.clientSecretKey: Constants.Credentials.grantBuyer, LoginConstants.grantTypeKey: Constants.Credentials.grantBuyer, "token": facebookAccessToken, "accountType": "facebook"]
         
-        manager.POST(APIAtlas.mergeFacebook, parameters: parameters, success: {
-            (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
-            
+        WebServiceManager.fireSocialMediaLoginFromUrl(APIAtlas.mergeFacebook, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             self.dismissLoader()
-            println(responseObject)
-            
-            let loginModel: LoginModel = LoginModel.parseDataFromDictionary(responseObject as! NSDictionary)
-            if loginModel.isSuccessful {
-                SessionManager.parseTokensFromResponseObject(loginModel.dataDictionary)
-                self.showSuccessMessage()
-                self.fireCreateRegistration(SessionManager.gcmToken())
+            if successful {
+                let loginModel: LoginModel = LoginModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                if loginModel.isSuccessful {
+                    SessionManager.parseTokensFromResponseObject(loginModel.dataDictionary)
+                    self.showSuccessMessage()
+                    self.fireCreateRegistration(SessionManager.gcmToken())
+                } else {
+                    FBSDKLoginManager().logOut()
+                    Toast.displayToastWithMessage(loginModel.message, view: self.view)
+                }
+
             } else {
-                FBSDKLoginManager().logOut()
-                Toast.displayToastWithMessage(loginModel.message, view: self.view)
+                if requestErrorType == .ResponseError {
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
+                } else if requestErrorType == .PageNotFound {
+                    Toast.displayToastWithMessage("Page not found.", duration: 1.5, view: self.view)
+                } else if requestErrorType == .NoInternetConnection {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .RequestTimeOut {
+                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
+                } else if requestErrorType == .UnRecognizeError {
+                    Toast.displayToastWithMessage(Constants.Localized.error, duration: 1.5, view: self.view)
+                } else if requestErrorType == .Cancel {
+                    //Do nothing
+                }
             }
-            
-            
-            }, failure: {
-                (task: NSURLSessionDataTask!, error: NSError!) in
-                let task: NSHTTPURLResponse = task.response as! NSHTTPURLResponse
-                Toast.displayToastWithMessage(Constants.Localized.someThingWentWrong, view: self.view)
-                self.dismissLoader()
-        })
+        }
     }
     
     //MARK: -
@@ -704,12 +755,71 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
         self.isResetPassword = true
         self.isCloseButton = false
         var indexPath = NSIndexPath(forRow: 1, inSection: 0)
+        self.tempForgotPasswordCell?.seconds = 1
         self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Left)
         self.tableView.reloadData()
     }
     
     func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapSignin signInButton: UIButton) {
         self.loginChecker(simplifiedLoginCell)
+    }
+    
+    func simplifiedLoginCell(simplifiedLoginCell: SimplifiedLoginUICollectionViewCell, didTapAreaCode areaCodeView: UIView) {
+        self.tempSimplifiedLoginCell = simplifiedLoginCell
+        
+        var countryEntities: [CountryEntity] = CountryEntity.findAll() as! [CountryEntity]
+        let countryEntity: CountryEntity = countryEntities.first!
+        var buttonTitles: [String] = []
+        
+        let basicModel: BasicModel = BasicModel.parseDataFromResponseObjec(StringHelper.convertStringToDictionary(countryEntity.json))
+        
+        if basicModel.dataAnyObject.isKindOfClass(NSArray) {
+            var dictionaries: [NSDictionary] = basicModel.dataAnyObject as! [NSDictionary]
+            
+            for dictionary in dictionaries {
+                let model: CountryModel = CountryModel.parseDataFromDictionary(dictionary)
+                if model.isActive {
+                    buttonTitles.append("+\(model.areaCode)")
+                    self.countries.append(model)
+                }
+            }
+        }
+        
+        self.loginAreaCodeAlertView = LGAlertView(title: LoginStrings.selectAreaCode, message: LoginStrings.chooseAreaCode, style: LGAlertViewStyle.ActionSheet, buttonTitles: buttonTitles, cancelButtonTitle: nil, destructiveButtonTitle: nil, actionHandler: nil, cancelHandler: nil, destructiveHandler: nil)
+        
+        
+        self.loginAreaCodeAlertView!.coverColor = UIColor(white: 0.0, alpha: 0.7)
+        self.loginAreaCodeAlertView!.layerShadowColor = UIColor(white: 0.0, alpha: 0.3)
+        self.loginAreaCodeAlertView!.layerShadowRadius = 4.0
+        self.loginAreaCodeAlertView!.layerCornerRadius = 0.0
+        self.loginAreaCodeAlertView!.layerBorderWidth = 2.0
+        self.loginAreaCodeAlertView!.layerBorderColor = Constants.Colors.appTheme
+        self.loginAreaCodeAlertView!.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        self.loginAreaCodeAlertView!.buttonsHeight = 44.0
+        self.loginAreaCodeAlertView!.titleFont = UIFont.boldSystemFontOfSize(18.0)
+        self.loginAreaCodeAlertView!.titleTextColor = UIColor.darkGrayColor()
+        self.loginAreaCodeAlertView!.messageTextColor = UIColor.lightGrayColor()
+        self.loginAreaCodeAlertView!.width = min(self.view.bounds.size.width, self.view.bounds.size.height)
+        self.loginAreaCodeAlertView!.offsetVertical = 0.0
+        self.loginAreaCodeAlertView!.cancelButtonOffsetY = 0.0
+        self.loginAreaCodeAlertView!.titleTextAlignment = .Left
+        self.loginAreaCodeAlertView!.messageTextAlignment = .Left
+        self.loginAreaCodeAlertView!.destructiveButtonTextAlignment = .Right
+        self.loginAreaCodeAlertView!.buttonsTextAlignment = .Right
+        self.loginAreaCodeAlertView!.cancelButtonTextAlignment = .Right
+        self.loginAreaCodeAlertView!.separatorsColor = nil
+        self.loginAreaCodeAlertView!.destructiveButtonTitleColor = UIColor.whiteColor()
+        
+        self.loginAreaCodeAlertView!.buttonsTitleColor = UIColor.darkGrayColor()
+        self.loginAreaCodeAlertView!.cancelButtonTitleColor = UIColor.whiteColor()
+        self.loginAreaCodeAlertView!.buttonsTitleColorHighlighted = UIColor.whiteColor()
+        
+        self.loginAreaCodeAlertView!.destructiveButtonBackgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.5)
+        self.loginAreaCodeAlertView!.buttonsBackgroundColor = Constants.Colors.alphaAppThemeColor
+        self.loginAreaCodeAlertView!.buttonsBackgroundColorHighlighted = Constants.Colors.appTheme
+        self.loginAreaCodeAlertView!.cancelButtonBackgroundColorHighlighted = UIColor(white: 0.5, alpha: 1.0)
+        self.loginAreaCodeAlertView!.delegate = self
+        self.loginAreaCodeAlertView!.showAnimated(true, completionHandler: nil)
     }
     
     
@@ -825,41 +935,41 @@ extension LoginAndRegisterTableViewController: LoginRegisterTableViewCellDelegat
             }
         }
         
-        self.areaCodeAlertView = LGAlertView(title: LoginStrings.selectAreaCode, message: LoginStrings.chooseAreaCode, style: LGAlertViewStyle.ActionSheet, buttonTitles: buttonTitles, cancelButtonTitle: nil, destructiveButtonTitle: nil, actionHandler: nil, cancelHandler: nil, destructiveHandler: nil)
+        self.registrationAreaCodeAlertView = LGAlertView(title: LoginStrings.selectAreaCode, message: LoginStrings.chooseAreaCode, style: LGAlertViewStyle.ActionSheet, buttonTitles: buttonTitles, cancelButtonTitle: nil, destructiveButtonTitle: nil, actionHandler: nil, cancelHandler: nil, destructiveHandler: nil)
         
         
-        self.areaCodeAlertView!.coverColor = UIColor(white: 0.0, alpha: 0.7)
-        self.areaCodeAlertView!.layerShadowColor = UIColor(white: 0.0, alpha: 0.3)
-        self.areaCodeAlertView!.layerShadowRadius = 4.0
-        self.areaCodeAlertView!.layerCornerRadius = 0.0
-        self.areaCodeAlertView!.layerBorderWidth = 2.0
-        self.areaCodeAlertView!.layerBorderColor = Constants.Colors.appTheme
-        self.areaCodeAlertView!.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        self.areaCodeAlertView!.buttonsHeight = 44.0
-        self.areaCodeAlertView!.titleFont = UIFont.boldSystemFontOfSize(18.0)
-        self.areaCodeAlertView!.titleTextColor = UIColor.darkGrayColor()
-        self.areaCodeAlertView!.messageTextColor = UIColor.lightGrayColor()
-        self.areaCodeAlertView!.width = min(self.view.bounds.size.width, self.view.bounds.size.height)
-        self.areaCodeAlertView!.offsetVertical = 0.0
-        self.areaCodeAlertView!.cancelButtonOffsetY = 0.0
-        self.areaCodeAlertView!.titleTextAlignment = .Left
-        self.areaCodeAlertView!.messageTextAlignment = .Left
-        self.areaCodeAlertView!.destructiveButtonTextAlignment = .Right
-        self.areaCodeAlertView!.buttonsTextAlignment = .Right
-        self.areaCodeAlertView!.cancelButtonTextAlignment = .Right
-        self.areaCodeAlertView!.separatorsColor = nil
-        self.areaCodeAlertView!.destructiveButtonTitleColor = UIColor.whiteColor()
+        self.registrationAreaCodeAlertView!.coverColor = UIColor(white: 0.0, alpha: 0.7)
+        self.registrationAreaCodeAlertView!.layerShadowColor = UIColor(white: 0.0, alpha: 0.3)
+        self.registrationAreaCodeAlertView!.layerShadowRadius = 4.0
+        self.registrationAreaCodeAlertView!.layerCornerRadius = 0.0
+        self.registrationAreaCodeAlertView!.layerBorderWidth = 2.0
+        self.registrationAreaCodeAlertView!.layerBorderColor = Constants.Colors.appTheme
+        self.registrationAreaCodeAlertView!.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        self.registrationAreaCodeAlertView!.buttonsHeight = 44.0
+        self.registrationAreaCodeAlertView!.titleFont = UIFont.boldSystemFontOfSize(18.0)
+        self.registrationAreaCodeAlertView!.titleTextColor = UIColor.darkGrayColor()
+        self.registrationAreaCodeAlertView!.messageTextColor = UIColor.lightGrayColor()
+        self.registrationAreaCodeAlertView!.width = min(self.view.bounds.size.width, self.view.bounds.size.height)
+        self.registrationAreaCodeAlertView!.offsetVertical = 0.0
+        self.registrationAreaCodeAlertView!.cancelButtonOffsetY = 0.0
+        self.registrationAreaCodeAlertView!.titleTextAlignment = .Left
+        self.registrationAreaCodeAlertView!.messageTextAlignment = .Left
+        self.registrationAreaCodeAlertView!.destructiveButtonTextAlignment = .Right
+        self.registrationAreaCodeAlertView!.buttonsTextAlignment = .Right
+        self.registrationAreaCodeAlertView!.cancelButtonTextAlignment = .Right
+        self.registrationAreaCodeAlertView!.separatorsColor = nil
+        self.registrationAreaCodeAlertView!.destructiveButtonTitleColor = UIColor.whiteColor()
         
-        self.areaCodeAlertView!.buttonsTitleColor = UIColor.darkGrayColor()
-        self.areaCodeAlertView!.cancelButtonTitleColor = UIColor.whiteColor()
-        self.areaCodeAlertView!.buttonsTitleColorHighlighted = UIColor.whiteColor()
+        self.registrationAreaCodeAlertView!.buttonsTitleColor = UIColor.darkGrayColor()
+        self.registrationAreaCodeAlertView!.cancelButtonTitleColor = UIColor.whiteColor()
+        self.registrationAreaCodeAlertView!.buttonsTitleColorHighlighted = UIColor.whiteColor()
         
-        self.areaCodeAlertView!.destructiveButtonBackgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.5)
-        self.areaCodeAlertView!.buttonsBackgroundColor = Constants.Colors.alphaAppThemeColor
-        self.areaCodeAlertView!.buttonsBackgroundColorHighlighted = Constants.Colors.appTheme
-        self.areaCodeAlertView!.cancelButtonBackgroundColorHighlighted = UIColor(white: 0.5, alpha: 1.0)
-        self.areaCodeAlertView!.delegate = self
-        self.areaCodeAlertView!.showAnimated(true, completionHandler: nil)
+        self.registrationAreaCodeAlertView!.destructiveButtonBackgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.5)
+        self.registrationAreaCodeAlertView!.buttonsBackgroundColor = Constants.Colors.alphaAppThemeColor
+        self.registrationAreaCodeAlertView!.buttonsBackgroundColorHighlighted = Constants.Colors.appTheme
+        self.registrationAreaCodeAlertView!.cancelButtonBackgroundColorHighlighted = UIColor(white: 0.5, alpha: 1.0)
+        self.registrationAreaCodeAlertView!.delegate = self
+        self.registrationAreaCodeAlertView!.showAnimated(true, completionHandler: nil)
         
         
         
@@ -997,10 +1107,14 @@ extension LoginAndRegisterTableViewController: LGAlertViewDelegate {
         if alertView == self.languageAlertView {
             self.selectedLanguage = self.languages[Int(index)]
             self.tempSimplifiedRegistrationCell?.languagePreferenceLabel.text = "\(self.selectedLanguage.name) (\(self.selectedLanguage.code.uppercaseString))"
-        } else if alertView == self.areaCodeAlertView {
+        } else if alertView == self.registrationAreaCodeAlertView {
             self.selectedCountry = self.countries[Int(index)]
             self.tempSimplifiedRegistrationCell?.areaCodeLabel.text = "+\(self.selectedCountry.areaCode)"
             self.tempSimplifiedRegistrationCell?.areaCodeImageView.sd_setImageWithURL(NSURL(string: self.selectedCountry.flag), placeholderImage: UIImage(named: "dummy-placeholder"))
+        }  else if alertView == self.loginAreaCodeAlertView {
+            self.selectedCountry = self.countries[Int(index)]
+            self.tempSimplifiedLoginCell?.areaCodeLabel.text = "+\(self.selectedCountry.areaCode)"
+            self.tempSimplifiedLoginCell?.areaCodeImageView.sd_setImageWithURL(NSURL(string: self.selectedCountry.flag), placeholderImage: UIImage(named: "dummy-placeholder"))
         }
     }
 }
