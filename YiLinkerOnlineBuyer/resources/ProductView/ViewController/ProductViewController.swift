@@ -606,7 +606,6 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
                 self.productSellerModel = ProductSellerModel.parseDataWithDictionary(responseObject)
                 self.sellerRequest = true
                 self.sellerSuccess = true
-                self.requestContactsFromEndpoint()
                 self.checkRequests()
             } else {
                 println("seller failed")
@@ -840,56 +839,24 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     func requestContactsFromEndpoint(){
         
         if (Reachability.isConnectedToNetwork()) {
+            self.showHUD()
+            
             let url = APIAtlas.ACTION_GET_CONTACTS_V2
             WebServiceManager.fireGetContacttDetailsWithUrl(url, page: "1", limit: "30", keyword: "", accessToken: SessionManager.accessToken(), actionHandler: {  (successful, responseObject, requestErrorType) -> Void in
                 println(responseObject)
                 if successful {
                     self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
+                    self.barMessageAction()
                 } else {
                     self.contacts = Array<W_Contact>()
+                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
+                    self.showAlert(title: ProductStrings.alertError, message: errorModel.message)
                 }
+                
                 self.yiHud?.hide()
             })
         }
         
-//        WebServiceManager.fireGetContactListWithUrl("\(APIAtlas.ACTION_GET_CONTACTS_V2)?access_token=\(SessionManager.accessToken())", keyword: keyword, page: "\(page)", limit: "\(limit)", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
-//            self.yiHud?.hide()
-//            if successful {
-//                if responseObject["isSuccessful"] as! Bool {
-//                    self.contacts = W_Contact.parseContacts(responseObject as! NSDictionary)
-//                    self.yiHud?.hide()
-//                    self.tableView.reloadData()
-//                } else {
-//                    self.showAlert(title: Constants.Localized.error, message: responseObject["message"] as! String)
-//                }
-//            } else {
-//                self.contacts = Array<W_Contact>()
-//                if requestErrorType == .ResponseError {
-//                    //Error in api requirements
-//                    let errorModel: ErrorModel = ErrorModel.parseErrorWithResponce(responseObject as! NSDictionary)
-//                    Toast.displayToastWithMessage(errorModel.message, duration: 1.5, view: self.view)
-//                    self.yiHud?.hide()
-//                } else if requestErrorType == .AccessTokenExpired {
-//                    self.fireRefreshToken()
-//                } else if requestErrorType == .PageNotFound {
-//                    //Page not found
-//                    Toast.displayToastWithMessage(Constants.Localized.pageNotFound, duration: 1.5, view: self.view)
-//                    self.yiHud?.hide()
-//                } else if requestErrorType == .NoInternetConnection {
-//                    //No internet connection
-//                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-//                    self.yiHud?.hide()
-//                } else if requestErrorType == .RequestTimeOut {
-//                    //Request timeout
-//                    Toast.displayToastWithMessage(Constants.Localized.noInternetErrorMessage, duration: 1.5, view: self.view)
-//                    self.yiHud?.hide()
-//                } else if requestErrorType == .UnRecognizeError {
-//                    //Unhandled error
-//                    UIAlertController.displayErrorMessageWithTarget(self, errorMessage: Constants.Localized.someThingWentWrong, title: Constants.Localized.error)
-//                    self.yiHud?.hide()
-//                }
-//            }
-//        })
     }
     
     func requestRefreshToken(type: String) {
@@ -1359,7 +1326,15 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func message(controller: ProductImagesView) {
-        self.barMessageAction()
+        if self.contacts.count == 1 {
+            if !SessionManager.isLoggedIn() {
+                self.showAlert(title: StringHelper.localizedStringWithKey("MESSAGING_TITLE"), message: ProductStrings.cannotMessage)
+            } else {
+                self.requestContactsFromEndpoint()
+            }
+        } else {
+            self.barMessageAction()
+        }
     }
     
     func share(controller: ProductImagesView) {
