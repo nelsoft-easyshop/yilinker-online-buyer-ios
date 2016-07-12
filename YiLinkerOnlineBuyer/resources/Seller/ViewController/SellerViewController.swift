@@ -648,35 +648,56 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //MARK: Message seller
     func sellerTableHeaderViewDidMessage() {
         
-        let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
-        let messagingViewController: MessageThreadVC = (storyBoard.instantiateViewControllerWithIdentifier("MessageThreadVC") as? MessageThreadVC)!
-        
         for var i = 0; i < self.contacts.count; i++ {
             if "\(self.sellerId)" == contacts[i].userId {
                 self.selectedContact = contacts[i]
-                self.canMessage = true
             }
         }
         
-        var isOnline = "-1"
-        if (SessionManager.isLoggedIn()){
-            isOnline = "1"
+        if !SessionManager.isLoggedIn() {
+            self.showAlert(title: StringHelper.localizedStringWithKey("MESSAGING_TITLE"), message: ProductStrings.cannotMessage)
         } else {
-            isOnline = "0"
-        }
-        
-        messagingViewController.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
-        messagingViewController.recipient = selectedContact
-        
-        if self.canMessage {
-            self.navigationController?.pushViewController(messagingViewController, animated: true)
-        } else {
-            if SessionManager.isLoggedIn() {
-                self.showAlert(title: Constants.Localized.error, message: self.cannotMessage)
-            } else {
-                self.showAlert(title: Constants.Localized.error, message: StringHelper.localizedStringWithKey("VENDOR_PAGE_CANNOT_MESSAGE_LOGIN_LOCALIZE_KEY"))
+            var isOnline: String = "0"
+            if let temp = selectedContact?.isOnline {
+                isOnline = temp
+            }
+            var viewController = MessagingThreadViewController(nibName: "MessagingThreadViewController", bundle: nil)
+            if let temp = sellerModel {
+                viewController.receiver = MessagingContactModel(userId: "\(self.sellerId)", slug: "", fullName: temp.name, profileImageUrl: temp.avatar.absoluteString!, profileThumbnailImageUrl: temp.avatar.absoluteString!, profileSmallImageUrl: temp.avatar.absoluteString!, profileMediumImageUrl: temp.avatar.absoluteString!, profileLargeImageUrl: temp.avatar.absoluteString!, isOnline: isOnline, hasUnreadMessage: "")
+                self.navigationController?.pushViewController(viewController, animated:true)
             }
         }
+        
+//        
+//        let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
+//        let messagingViewController: MessageThreadVC = (storyBoard.instantiateViewControllerWithIdentifier("MessageThreadVC") as? MessageThreadVC)!
+//        
+//        for var i = 0; i < self.contacts.count; i++ {
+//            if "\(self.sellerId)" == contacts[i].userId {
+//                self.selectedContact = contacts[i]
+//                self.canMessage = true
+//            }
+//        }
+//        
+//        var isOnline = "-1"
+//        if (SessionManager.isLoggedIn()){
+//            isOnline = "1"
+//        } else {
+//            isOnline = "0"
+//        }
+//        
+//        messagingViewController.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
+//        messagingViewController.recipient = selectedContact
+//        
+//        if self.canMessage {
+//            self.navigationController?.pushViewController(messagingViewController, animated: true)
+//        } else {
+//            if SessionManager.isLoggedIn() {
+//                self.showAlert(title: Constants.Localized.error, message: self.cannotMessage)
+//            } else {
+//                self.showAlert(title: Constants.Localized.error, message: StringHelper.localizedStringWithKey("VENDOR_PAGE_CANNOT_MESSAGE_LOGIN_LOCALIZE_KEY"))
+//            }
+//        }
         
     }
     
