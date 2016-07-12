@@ -22,6 +22,14 @@ struct EditProfileLocalizedStrings {
     static let cancelLocalizeString = StringHelper.localizedStringWithKey("CANCEL_LOCALIZE_KEY")
     static let copiedToClipBoard = StringHelper.localizedStringWithKey("COPY_LOCALIZE_KEY")
     static let successfullyUpdateProfile = StringHelper.localizedStringWithKey("UPDATE_PROF_LOCALIZE_KEY")
+    
+    static let errorCountryRequired = StringHelper.localizedStringWithKey("ERROR_COUNTRY_REQUIRED_LOCALIZE_KEY")
+    static let errorLanguageRequired = StringHelper.localizedStringWithKey("ERROR_LANGUAGE_REQUIRED_LOCALIZE_KEY")
+    static let errorFirstNameRequired = StringHelper.localizedStringWithKey("ERROR_FIRSTNAME_REQUIRED_LOCALIZE_KEY")
+    static let errorFirstNameInvalid = StringHelper.localizedStringWithKey("ERROR_FIRSTNAME_INVALID_LOCALIZE_KEY")
+    static let errorLastNameRequired = StringHelper.localizedStringWithKey("ERROR_LASTNAME_REQUIRED_LOCALIZE_KEY")
+    static let errorLastNameInvalid = StringHelper.localizedStringWithKey("ERROR_LASTNAME_INVALID_LOCALIZE_KEY")
+    static let errorMobileRequired = StringHelper.localizedStringWithKey("ERROR_MOBILENUMBER_REQUIRED_LOCALIZE_KEY")
 }
 
 class EditProfileTableViewController: UITableViewController, UINavigationControllerDelegate {
@@ -207,6 +215,10 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             cell.lastNameTextField.text = profileUserDetailsModel.lastName
             cell.mobilePhoneTextField.text = profileUserDetailsModel.contactNumber
             
+//            if profileUserDetailsModel.contactNumber.isEmpty {
+//                cell.mobilePhoneTextField.enabled = true
+//            }
+            
             if profileUserDetailsModel.userDocuments.isEmpty  {
                 cell.addIDButton.setTitle(cell.addLocalizeString, forState: UIControlState.Normal)
                 cell.viewImageConstraint.constant = 0
@@ -215,7 +227,11 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
                 cell.viewImageConstraint.constant = 75
             }
             
-            cell.languageValueLabel.text = "\(profileUserDetailsModel.language.name) (\(profileUserDetailsModel.language.code.uppercaseString))"
+            if !profileUserDetailsModel.language.name.isEmpty {
+                cell.languageValueLabel.text = "\(profileUserDetailsModel.language.name) (\(profileUserDetailsModel.language.code.uppercaseString))"
+            } else {
+                cell.languageValueLabel.text = ""
+            }
             
             cell.countryFlagImageView.sd_setImageWithURL(NSURL(string: profileUserDetailsModel.country.flag), placeholderImage: UIImage(named: "dummy-placeholder"))
             cell.countryValueLabel.text =  profileUserDetailsModel.country.name
@@ -685,15 +701,22 @@ extension EditProfileTableViewController: EditProfileAccountInformationTableView
         
         var errorMessage: String = ""
         
-        if firstName.isEmpty {
-            errorMessage = "First name is required."
+        if self.country.countryID == 0 {
+            errorMessage = EditProfileLocalizedStrings.errorCountryRequired
+        } else if self.self.language.languageId == 0 {
+            errorMessage = EditProfileLocalizedStrings.errorLanguageRequired
+        } else if firstName.isEmpty {
+            errorMessage = EditProfileLocalizedStrings.errorFirstNameRequired
         } else if !firstName.isValidName() {
-            errorMessage = "First name contains illegal characters. It can only contain letters, numbers and underscores."
+            errorMessage = EditProfileLocalizedStrings.errorFirstNameInvalid
         } else if lastName.isEmpty {
-            errorMessage = "Last name is required."
+            errorMessage = EditProfileLocalizedStrings.errorLastNameRequired
         } else if !lastName.isValidName() {
-            errorMessage = "Last name contains illegal characters. It can only contain letters, numbers and underscores."
+            errorMessage = EditProfileLocalizedStrings.errorLastNameInvalid
         }
+//        else if mobileNumber.isEmpty {
+//            errorMessage = EditProfileLocalizedStrings.errorMobileRequired
+//        }
         
         if errorMessage != "" {
             UIAlertController.displayErrorMessageWithTarget(self, errorMessage: errorMessage)
