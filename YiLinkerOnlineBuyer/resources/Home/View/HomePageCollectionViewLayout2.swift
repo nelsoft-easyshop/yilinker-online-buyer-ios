@@ -397,7 +397,7 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
         let indexPath = NSIndexPath(forItem: 0, inSection: section)
         let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
         
-        attributes.frame = CGRectMake(0, self.sectionYOffsetWithSectionNumber(section), screenRect!.width , SectionHeight.sectionEleven)
+        attributes.frame = CGRectMake(0, self.sectionYOffsetWithSectionNumber(section), screenRect!.width , SectionHeight.sectionTwelve)
         
         let key = self.layoutKeyForIndexPath(indexPath)
         self.layoutAttributes[key] = attributes
@@ -496,6 +496,10 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
                 }
             } else if self.layouts[x] == "11" {
                 occupiedSpace = occupiedSpace + SectionHeight.sectionEleven + sectionVerticalInset
+            } else if self.layouts[x] == "12" {
+                occupiedSpace = occupiedSpace + SectionHeight.sectionTwelve + sectionVerticalInset + 250.0
+            } else if self.layouts[x] == "13" {
+                occupiedSpace = occupiedSpace + SectionHeight.sectionThirteen + sectionVerticalInset
             }
             
         }

@@ -531,6 +531,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.homePageModel = HomePageModel.parseDataFromDictionary(dictionary)
         self.layouts.removeAll(keepCapacity: true)
         for (index, model) in enumerate(self.homePageModel.data) {
+            println(model)
             if model.isKindOfClass(LayoutOneModel) {
                 self.layouts.append("1")
                 self.loadImageInSectionOne(model as! LayoutOneModel)
@@ -722,6 +723,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - UICollectionView Data Source
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         //#warning Incomplete method implementation -- Return the number of sections
+//        println(self.layouts)
         return self.layouts.count
     }
     
@@ -750,7 +752,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         case 11:
             return 1
         case 12:
-            return 1
+            return 2
         case 13:
             return self.homePageModel.data[section].data.count
         default:
@@ -797,7 +799,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else if self.layouts[indexPath.section] == "11" {
             return self.overseasCollectionViewCell(indexPath)
         } else if self.layouts[indexPath.section] == "12" {
-            return self.layoutTwelveCollectionViewCellWithIndexPath(indexPath)
+            println(indexPath.row)
+            if indexPath.row == 0 {
+                return self.layoutTwelveCollectionViewCellWithIndexPath(indexPath)
+            } else {
+                return self.layoutThirteenCollectionViewCellWithIndexPath(indexPath)
+            }
         } else if self.layouts[indexPath.section] == "13" {
             return self.layoutThirteenCollectionViewCellWithIndexPath(indexPath)
         } else {
@@ -812,6 +819,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         let headerView: LayoutHeaderCollectionViewCell = self.collectionView?.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: self.sectionHeaderNibName, forIndexPath: indexPath) as! LayoutHeaderCollectionViewCell
         headerView.delegate = self
+
+        print("section \(indexPath.section) > ")
+        print(self.homePageModel.data[indexPath.section])
+        if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutTwelveModel) {
+            println(" - Beng!")
+        } else {
+            println(" - Nope!")
+        }
         
         if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutFiveModel) {
             let layoutFiveModel: LayoutFiveModel = self.homePageModel.data[indexPath.section] as! LayoutFiveModel
@@ -884,46 +899,30 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             headerView.updateTitleLine()
             headerView.backgroundColor = UIColor.clearColor()
         } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutTwelveModel) {
-            let layoutTenModel: LayoutTenModel = self.homePageModel.data[indexPath.section] as! LayoutTenModel
-//            if layoutTenModel.isViewMoreAvailable {
-//                headerView.target = layoutTenModel.viewMoreTarget.targetUrl
-//                headerView.targetType = layoutTenModel.viewMoreTarget.targetType
-//                headerView.viewMoreButton.hidden = false
-//            } else {
-//                headerView.viewMoreButton.hidden = true
-//            }
+            let layoutTwelveModel: LayoutTwelveModel = self.homePageModel.data[indexPath.section] as! LayoutTwelveModel
+            if layoutTwelveModel.isViewMoreAvailable {
+                headerView.target = layoutTwelveModel.viewMoreTarget.targetUrl
+                headerView.targetType = layoutTwelveModel.viewMoreTarget.targetType
+                headerView.viewMoreButton.hidden = false
+            } else {
+                headerView.viewMoreButton.hidden = true
+            }
             
-//            headerView.sectionTitle = layoutTenModel.sectionTitle
-//            headerView.titleLabel.text = layoutTenModel.sectionTitle
-//            headerView.updateTitleLine()
-//            headerView.backgroundColor = UIColor.clearColor()
-            headerView.target = layoutTenModel.viewMoreTarget.targetUrl
-            headerView.targetType = layoutTenModel.viewMoreTarget.targetType
-            headerView.viewMoreButton.hidden = false
-
-            headerView.sectionTitle = "Sample Title"
-            headerView.titleLabel.text = "Sample Title"
+            headerView.sectionTitle = layoutTwelveModel.sectionTitle
+            headerView.titleLabel.text = layoutTwelveModel.sectionTitle
             headerView.updateTitleLine()
             headerView.backgroundColor = UIColor.clearColor()
         } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutThirteenModel) {
-            let layoutTenModel: LayoutTenModel = self.homePageModel.data[indexPath.section] as! LayoutTenModel
-//            if layoutTenModel.isViewMoreAvailable {
-//                headerView.target = layoutTenModel.viewMoreTarget.targetUrl
-//                headerView.targetType = layoutTenModel.viewMoreTarget.targetType
-//                headerView.viewMoreButton.hidden = false
-//            } else {
-//                headerView.viewMoreButton.hidden = true
-//            }
-//            headerView.sectionTitle = layoutTenModel.sectionTitle
-//            headerView.titleLabel.text = layoutTenModel.sectionTitle
-//            headerView.updateTitleLine()
-//            headerView.backgroundColor = UIColor.clearColor()
-            headerView.target = layoutTenModel.viewMoreTarget.targetUrl
-            headerView.targetType = layoutTenModel.viewMoreTarget.targetType
-            headerView.viewMoreButton.hidden = false
-
-            headerView.sectionTitle = "Sample Title"
-            headerView.titleLabel.text = "Sample Title"
+            let layoutThirteenModel: LayoutThirteenModel = self.homePageModel.data[indexPath.section] as! LayoutThirteenModel
+            if layoutThirteenModel.isViewMoreAvailable {
+                headerView.target = layoutThirteenModel.viewMoreTarget.targetUrl
+                headerView.targetType = layoutThirteenModel.viewMoreTarget.targetType
+                headerView.viewMoreButton.hidden = false
+            } else {
+                headerView.viewMoreButton.hidden = true
+            }
+            headerView.sectionTitle = layoutThirteenModel.sectionTitle
+            headerView.titleLabel.text = layoutThirteenModel.sectionTitle
             headerView.updateTitleLine()
             headerView.backgroundColor = UIColor.clearColor()
         }

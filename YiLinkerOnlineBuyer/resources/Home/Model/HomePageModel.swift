@@ -34,7 +34,7 @@ class HomePageModel: NSObject {
         
         for sectionDictionary in arrays {
             let layoutId: Int = sectionDictionary["layoutId"] as! Int
-            
+            println(layoutId)
             if layoutId == 1 {
                 data.append(LayoutOneModel.parseDataFromDictionary(sectionDictionary))
             } else if layoutId == 2 {
@@ -57,8 +57,15 @@ class HomePageModel: NSObject {
                 data.append(LayoutTenModel.parseDataFromDictionary(sectionDictionary))
             } else if layoutId == 11 {
                 data.append(LayoutElevenModel.parseDataFromDictionary(sectionDictionary))
+            } else if layoutId == 12 {
+                data.append(LayoutTwelveModel.parseDataFromDictionary(sectionDictionary))
+            } else if layoutId == 13 {
+                data.append(LayoutThirteenModel.parseDataFromDictionary(sectionDictionary))
             }
         }
+
+        data.append(LayoutTwelveModel.parseDataFromDictionary(arrays[10]))
+        data.append(LayoutThirteenModel.parseDataFromDictionary(arrays[10]))
         
         if let temp = dictionary["message"] as? String {
             message = temp

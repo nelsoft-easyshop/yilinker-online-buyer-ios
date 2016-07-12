@@ -36,11 +36,11 @@ class LayoutTwelveModel: NSObject {
         var data: [HomeProductModel] = []
         
         if let temp = dictionary["layoutId"] as? Int {
-            layoutId = temp
+            layoutId = 12
         }
         
         if let temp = dictionary["sectionTitle"] as? String {
-            sectionTitle = temp
+            sectionTitle = "Sample Title"
         }
         
         if let temp = dictionary["isViewMoreAvailable"] as? Bool {
