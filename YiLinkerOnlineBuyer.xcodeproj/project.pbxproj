@@ -552,6 +552,12 @@
 		0CD262281CBF38EA00DDCBA9 /* CountryViewController5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD262241CBF38EA00DDCBA9 /* CountryViewController5.xib */; };
 		0CD262291CBF38EA00DDCBA9 /* CountryViewController6.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD262251CBF38EA00DDCBA9 /* CountryViewController6.xib */; };
 		0CD2622A1CBF38EA00DDCBA9 /* CountryViewController6plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD262261CBF38EA00DDCBA9 /* CountryViewController6plus.xib */; };
+		26DE97951D348D8200D7040A /* LayoutTwelveCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DE97931D348D8200D7040A /* LayoutTwelveCollectionViewCell.swift */; };
+		26DE97961D348D8200D7040A /* LayoutTwelveCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DE97941D348D8200D7040A /* LayoutTwelveCollectionViewCell.xib */; };
+		26DE97991D348DF800D7040A /* LayoutThirteenCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DE97971D348DF800D7040A /* LayoutThirteenCollectionViewCell.swift */; };
+		26DE979A1D348DF800D7040A /* LayoutThirteenCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DE97981D348DF800D7040A /* LayoutThirteenCollectionViewCell.xib */; };
+		26DE979C1D348E0800D7040A /* LayoutTwelveModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DE979B1D348E0800D7040A /* LayoutTwelveModel.swift */; };
+		26DE979E1D348E1200D7040A /* LayoutThirteenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DE979D1D348E1200D7040A /* LayoutThirteenModel.swift */; };
 		70739FE11CC7523200C4E0DC /* CountryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70739FE01CC7523200C4E0DC /* CountryModel.swift */; };
 		70739FE31CC7536100C4E0DC /* BasicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70739FE21CC7536100C4E0DC /* BasicModel.swift */; };
 		70739FE71CC768A500C4E0DC /* CountryEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70739FE61CC768A500C4E0DC /* CountryEntity.swift */; };
@@ -1193,6 +1199,12 @@
 		0CD262251CBF38EA00DDCBA9 /* CountryViewController6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryViewController6.xib; sourceTree = "<group>"; };
 		0CD262261CBF38EA00DDCBA9 /* CountryViewController6plus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryViewController6plus.xib; sourceTree = "<group>"; };
 		13599842A00C070178791D1F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		26DE97931D348D8200D7040A /* LayoutTwelveCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LayoutTwelveCollectionViewCell.swift; path = YiLinkerOnlineBuyer/resources/Home/View/LayoutTwelveCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
+		26DE97941D348D8200D7040A /* LayoutTwelveCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LayoutTwelveCollectionViewCell.xib; path = YiLinkerOnlineBuyer/resources/Home/View/LayoutTwelveCollectionViewCell.xib; sourceTree = SOURCE_ROOT; };
+		26DE97971D348DF800D7040A /* LayoutThirteenCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LayoutThirteenCollectionViewCell.swift; path = YiLinkerOnlineBuyer/resources/Home/View/LayoutThirteenCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
+		26DE97981D348DF800D7040A /* LayoutThirteenCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LayoutThirteenCollectionViewCell.xib; path = YiLinkerOnlineBuyer/resources/Home/View/LayoutThirteenCollectionViewCell.xib; sourceTree = SOURCE_ROOT; };
+		26DE979B1D348E0800D7040A /* LayoutTwelveModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LayoutTwelveModel.swift; path = YiLinkerOnlineBuyer/resources/Home/Model/LayoutTwelveModel.swift; sourceTree = SOURCE_ROOT; };
+		26DE979D1D348E1200D7040A /* LayoutThirteenModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LayoutThirteenModel.swift; path = YiLinkerOnlineBuyer/resources/Home/Model/LayoutThirteenModel.swift; sourceTree = SOURCE_ROOT; };
 		70739FE01CC7523200C4E0DC /* CountryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryModel.swift; sourceTree = "<group>"; };
 		70739FE21CC7536100C4E0DC /* BasicModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BasicModel.swift; path = YiLinkerOnlineBuyer/resources/Model/BasicModel.swift; sourceTree = SOURCE_ROOT; };
 		70739FE61CC768A500C4E0DC /* CountryEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryEntity.swift; sourceTree = "<group>"; };
@@ -2067,6 +2079,8 @@
 				0CAB7FED1C86817B00B653A9 /* LayoutTwoModel.swift */,
 				0CAB7FEE1C86817B00B653A9 /* TargetModel.swift */,
 				0C8417DB1CC0C7A00076B9B9 /* LayoutElevenModel.swift */,
+				26DE979B1D348E0800D7040A /* LayoutTwelveModel.swift */,
+				26DE979D1D348E1200D7040A /* LayoutThirteenModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2115,6 +2129,10 @@
 				0CAB80161C86817B00B653A9 /* ViewMoreFooterCollectionViewCell.xib */,
 				0C8417D71CC0C6120076B9B9 /* OverseasCollectionViewCell.swift */,
 				0C8417D81CC0C6120076B9B9 /* OverseasCollectionViewCell.xib */,
+				26DE97931D348D8200D7040A /* LayoutTwelveCollectionViewCell.swift */,
+				26DE97941D348D8200D7040A /* LayoutTwelveCollectionViewCell.xib */,
+				26DE97971D348DF800D7040A /* LayoutThirteenCollectionViewCell.swift */,
+				26DE97981D348DF800D7040A /* LayoutThirteenCollectionViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3181,6 +3199,7 @@
 				0CAB834D1C86817C00B653A9 /* SellerViewController.xib in Resources */,
 				790E59801C87D0D00073FE23 /* SearchBarView.xib in Resources */,
 				0CAB81CF1C86817C00B653A9 /* DicountVoucherTableViewCell.xib in Resources */,
+				26DE979A1D348DF800D7040A /* LayoutThirteenCollectionViewCell.xib in Resources */,
 				0CAB822D1C86817C00B653A9 /* ForgotPasswordTableViewCell.xib in Resources */,
 				0CAB82311C86817C00B653A9 /* ChangePasswordViewController.xib in Resources */,
 				0CAB82AA1C86817C00B653A9 /* MessagingSenderTableViewCell.xib in Resources */,
@@ -3281,6 +3300,7 @@
 				0CAB81AD1C86817C00B653A9 /* ChangeAddressFooterCollectionViewCell.xib in Resources */,
 				0CAB83541C86817C00B653A9 /* FAB.storyboard in Resources */,
 				799B9A461C8EACEA006472E8 /* ProfileHeaderTableViewCell.xib in Resources */,
+				26DE97961D348D8200D7040A /* LayoutTwelveCollectionViewCell.xib in Resources */,
 				797C2BC21CBF744500B1406A /* GlobalPreferencesPickerTableViewController.xib in Resources */,
 				0CAB82121C86817C00B653A9 /* Panton.otf in Resources */,
 				0CAB83BC1C86817C00B653A9 /* WebViewController.xib in Resources */,
@@ -3458,10 +3478,12 @@
 				0CAB83661C86817C00B653A9 /* TransactionDescriptionView.swift in Sources */,
 				0CAB83161C86817C00B653A9 /* NewDisputeTableViewController.swift in Sources */,
 				0CAB82821C86817C00B653A9 /* HomeContainerViewController.swift in Sources */,
+				26DE97951D348D8200D7040A /* LayoutTwelveCollectionViewCell.swift in Sources */,
 				0CAB81D71C86817C00B653A9 /* NetTotalTableViewCell.swift in Sources */,
 				0CAB839A1C86817C00B653A9 /* VerifyMobileNumberStatusViewController.swift in Sources */,
 				0CAB82391C86817C00B653A9 /* Constants.swift in Sources */,
 				0CAB819A1C86817C00B653A9 /* ActivityModel.swift in Sources */,
+				26DE979E1D348E1200D7040A /* LayoutThirteenModel.swift in Sources */,
 				0CAB81C71C86817C00B653A9 /* PesoPayModel.swift in Sources */,
 				0CAB835E1C86817C00B653A9 /* TransactionCancelOrderView.swift in Sources */,
 				0CAB822E1C86817C00B653A9 /* ChangeMobileNumberViewController.swift in Sources */,
@@ -3656,6 +3678,7 @@
 				0CAB83941C86817C00B653A9 /* TransactionProductDetailsViewController.swift in Sources */,
 				0CAB82A11C86817C00B653A9 /* MessagingConversationTableViewCell.swift in Sources */,
 				0C759FB81C900B3B002A08E2 /* PushNotificationModel.swift in Sources */,
+				26DE979C1D348E0800D7040A /* LayoutTwelveModel.swift in Sources */,
 				798D84C51C86C14500D2A1F7 /* MyPointsTableViewController.swift in Sources */,
 				0CAB83341C86817C00B653A9 /* GeneralRatingTableViewCell.swift in Sources */,
 				0CAB81FA1C86817C00B653A9 /* CustomizeShoppingCollectionViewLayout.swift in Sources */,
@@ -3750,6 +3773,7 @@
 				0CAB833A1C86817C00B653A9 /* NoReviewTableViewCell.swift in Sources */,
 				799B9A421C8EACEA006472E8 /* EditProfilePersonalInformationTableViewCell.swift in Sources */,
 				0CAB83671C86817C00B653A9 /* TransactionDetailsTableViewCell.swift in Sources */,
+				26DE97991D348DF800D7040A /* LayoutThirteenCollectionViewCell.swift in Sources */,
 				0CAB83211C86817C00B653A9 /* SearchSuggestionTableViewCell.swift in Sources */,
 				0CAB81CA1C86817C00B653A9 /* CheckoutViews.swift in Sources */,
 				0CAB81991C86817C00B653A9 /* ActivityLogModel.swift in Sources */,
