@@ -45,6 +45,8 @@ struct Constants {
         static let layoutTenKey = "layout10"
         static let layoutFiveKeyWithFooter = "layout5-footer"
         static let layoutFiveKey2 = "layout5-2"
+        static let layoutTwelveKey = "layout12"
+        static let layoutThirteenKey = "layout13"
     }
     
     struct Colors {

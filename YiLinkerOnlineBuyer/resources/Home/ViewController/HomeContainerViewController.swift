@@ -56,6 +56,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     let sellerCarouselNibName = "SellerCarouselCollectionViewCell"
     let layoutNineNibName = "LayoutNineCollectionViewCell"
     let twoColumnGridCell = "TwoColumnGridCollectionViewCell"
+    let twelveLayout = "LayoutTwelveCollectionViewCell"
+    let thirteenLayout = "LayoutThirteenCollectionViewCell"
     
     var remainingTime: Int = 0
     
@@ -141,7 +143,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.registerCellWithNibName(self.layoutNineNibName)
         self.registerCellWithNibName(self.twoColumnGridCell)
         self.registerCellWithNibName(OverseasCollectionViewCell.nibNameAndIdentifier())
-        
+        self.registerCellWithNibName(self.twelveLayout)
+        self.registerCellWithNibName(self.thirteenLayout)
         self.fireGetHomePageData(true)
         
         self.changeDashBoardToCategory()
@@ -560,6 +563,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 self.layouts.append("10")
             } else if model.isKindOfClass(LayoutElevenModel) {
                 self.layouts.append("11")
+            } else if model.isKindOfClass(LayoutTwelveModel) {
+                self.layouts.append("12")
+            } else if model.isKindOfClass(LayoutThirteenModel) {
+                self.layouts.append("13")
             }
         }
         
@@ -607,9 +614,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 SessionManager.setEmailAddress(self.profileModel.email)
                 SessionManager.setReferrerCode(self.profileModel.referrerCode)
                 
-                println("first name: \(self.profileModel.firstName)")
-                println("last name: \(self.profileModel.lastName)")
-                println("contact number: \(self.profileModel.contactNumber)")
+//                println("first name: \(self.profileModel.firstName)")
+//                println("last name: \(self.profileModel.lastName)")
+//                println("contact number: \(self.profileModel.contactNumber)")
                 
                 //Update tab bar icons badges
                 self.updateTabBarBadge()
@@ -742,6 +749,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             return self.homePageModel.data[section].data.count
         case 11:
             return 1
+        case 12:
+            return 1
+        case 13:
+            return self.homePageModel.data[section].data.count
         default:
             return 0
         }
@@ -785,6 +796,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             return self.twoColumnGridCollectionViewCellWithIndexPath(indexPath)
         } else if self.layouts[indexPath.section] == "11" {
             return self.overseasCollectionViewCell(indexPath)
+        } else if self.layouts[indexPath.section] == "12" {
+            return self.layoutTwelveCollectionViewCellWithIndexPath(indexPath)
+        } else if self.layouts[indexPath.section] == "13" {
+            return self.layoutThirteenCollectionViewCellWithIndexPath(indexPath)
         } else {
             return UICollectionViewCell()
         }
@@ -868,6 +883,49 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             headerView.titleLabel.text = layoutTenModel.sectionTitle
             headerView.updateTitleLine()
             headerView.backgroundColor = UIColor.clearColor()
+        } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutTwelveModel) {
+            let layoutTenModel: LayoutTenModel = self.homePageModel.data[indexPath.section] as! LayoutTenModel
+//            if layoutTenModel.isViewMoreAvailable {
+//                headerView.target = layoutTenModel.viewMoreTarget.targetUrl
+//                headerView.targetType = layoutTenModel.viewMoreTarget.targetType
+//                headerView.viewMoreButton.hidden = false
+//            } else {
+//                headerView.viewMoreButton.hidden = true
+//            }
+            
+//            headerView.sectionTitle = layoutTenModel.sectionTitle
+//            headerView.titleLabel.text = layoutTenModel.sectionTitle
+//            headerView.updateTitleLine()
+//            headerView.backgroundColor = UIColor.clearColor()
+            headerView.target = layoutTenModel.viewMoreTarget.targetUrl
+            headerView.targetType = layoutTenModel.viewMoreTarget.targetType
+            headerView.viewMoreButton.hidden = false
+
+            headerView.sectionTitle = "Sample Title"
+            headerView.titleLabel.text = "Sample Title"
+            headerView.updateTitleLine()
+            headerView.backgroundColor = UIColor.clearColor()
+        } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutThirteenModel) {
+            let layoutTenModel: LayoutTenModel = self.homePageModel.data[indexPath.section] as! LayoutTenModel
+//            if layoutTenModel.isViewMoreAvailable {
+//                headerView.target = layoutTenModel.viewMoreTarget.targetUrl
+//                headerView.targetType = layoutTenModel.viewMoreTarget.targetType
+//                headerView.viewMoreButton.hidden = false
+//            } else {
+//                headerView.viewMoreButton.hidden = true
+//            }
+//            headerView.sectionTitle = layoutTenModel.sectionTitle
+//            headerView.titleLabel.text = layoutTenModel.sectionTitle
+//            headerView.updateTitleLine()
+//            headerView.backgroundColor = UIColor.clearColor()
+            headerView.target = layoutTenModel.viewMoreTarget.targetUrl
+            headerView.targetType = layoutTenModel.viewMoreTarget.targetType
+            headerView.viewMoreButton.hidden = false
+
+            headerView.sectionTitle = "Sample Title"
+            headerView.titleLabel.text = "Sample Title"
+            headerView.updateTitleLine()
+            headerView.backgroundColor = UIColor.clearColor()
         }
         
         return headerView
@@ -892,6 +950,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             let verticalCell: VerticalImageCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! VerticalImageCollectionViewCell
             self.didClickItemWithTarget(verticalCell.target, targetType: verticalCell.targetType)
         }
+        
+        // MARK: - TODO
+        // MARK: put a delegate here for the new layouts
     }
     
     //MARK: -
@@ -1236,6 +1297,76 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - Layout Nine Collection View Cell Delegate
     func layoutNineCollectionViewCellDidClickProductImage(productImage: ProductImageView) {
         self.didClickItemWithTarget(productImage.target, targetType: productImage.targetType, sectionTitle: productImage.title)
+    }
+    
+    //MARK: -
+    //MARK: - Twelve Layout
+    func layoutTwelveCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> LayoutTwelveCollectionViewCell {
+        let layoutTwelveCVC: LayoutTwelveCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("LayoutTwelveCollectionViewCell", forIndexPath: indexPath) as! LayoutTwelveCollectionViewCell
+        
+//        let layoutTenModel: LayoutTenModel = self.homePageModel.data[indexPath.section] as! LayoutTenModel
+//        
+//        twoColumnGridCollectionViewCell.target = layoutTenModel.data[indexPath.row].target.targetUrl
+//        twoColumnGridCollectionViewCell.targetType = layoutTenModel.data[indexPath.row].target.targetType
+//        
+//        twoColumnGridCollectionViewCell.productItemImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutTenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+//            if let imageView = twoColumnGridCollectionViewCell.productItemImageView {
+//                if downloadedImage != nil {
+//                    imageView.fadeInImageWithImage(downloadedImage)
+//                }
+//            }
+//        })
+//        
+//        twoColumnGridCollectionViewCell.productNameLabel.text = layoutTenModel.data[indexPath.row].name
+//        twoColumnGridCollectionViewCell.discountedPriceLabel.text = layoutTenModel.data[indexPath.row].discountedPrice.addPesoSign()
+//        twoColumnGridCollectionViewCell.discountPercentageLabel.text = layoutTenModel.data[indexPath.row].discountPercentage.formatToPercentage()
+//        twoColumnGridCollectionViewCell.originalPriceLabel.text = layoutTenModel.data[indexPath.row].originalPrice.addPesoSign()
+//        twoColumnGridCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
+//        
+//        if layoutTenModel.data[indexPath.row].discountPercentage.toDouble() == 0 || layoutTenModel.data[indexPath.row].discountPercentage.toDouble() == nil {
+//            twoColumnGridCollectionViewCell.discountPercentageLabel.hidden = true
+//            twoColumnGridCollectionViewCell.originalPriceLabel.hidden = true
+//        } else {
+//            twoColumnGridCollectionViewCell.discountPercentageLabel.hidden = false
+//            twoColumnGridCollectionViewCell.originalPriceLabel.hidden = false
+//        }
+        
+        return layoutTwelveCVC
+    }
+    
+    //MARK: -
+    //MARK: - Thirteen Layout
+    func layoutThirteenCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> LayoutThirteenCollectionViewCell {
+        let layoutThirteenCVC: LayoutThirteenCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("LayoutThirteenCollectionViewCell", forIndexPath: indexPath) as! LayoutThirteenCollectionViewCell
+        
+        //        let layoutTenModel: LayoutTenModel = self.homePageModel.data[indexPath.section] as! LayoutTenModel
+        //
+        //        twoColumnGridCollectionViewCell.target = layoutTenModel.data[indexPath.row].target.targetUrl
+        //        twoColumnGridCollectionViewCell.targetType = layoutTenModel.data[indexPath.row].target.targetType
+        //
+        //        twoColumnGridCollectionViewCell.productItemImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutTenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+        //            if let imageView = twoColumnGridCollectionViewCell.productItemImageView {
+        //                if downloadedImage != nil {
+        //                    imageView.fadeInImageWithImage(downloadedImage)
+        //                }
+        //            }
+        //        })
+        //
+        //        twoColumnGridCollectionViewCell.productNameLabel.text = layoutTenModel.data[indexPath.row].name
+        //        twoColumnGridCollectionViewCell.discountedPriceLabel.text = layoutTenModel.data[indexPath.row].discountedPrice.addPesoSign()
+        //        twoColumnGridCollectionViewCell.discountPercentageLabel.text = layoutTenModel.data[indexPath.row].discountPercentage.formatToPercentage()
+        //        twoColumnGridCollectionViewCell.originalPriceLabel.text = layoutTenModel.data[indexPath.row].originalPrice.addPesoSign()
+        //        twoColumnGridCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
+        //
+        //        if layoutTenModel.data[indexPath.row].discountPercentage.toDouble() == 0 || layoutTenModel.data[indexPath.row].discountPercentage.toDouble() == nil {
+        //            twoColumnGridCollectionViewCell.discountPercentageLabel.hidden = true
+        //            twoColumnGridCollectionViewCell.originalPriceLabel.hidden = true
+        //        } else {
+        //            twoColumnGridCollectionViewCell.discountPercentageLabel.hidden = false
+        //            twoColumnGridCollectionViewCell.originalPriceLabel.hidden = false
+        //        }
+        
+        return layoutThirteenCVC
     }
     
     //MARK: -
