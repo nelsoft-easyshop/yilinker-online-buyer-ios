@@ -47,6 +47,29 @@ class TransactionProductDetailsModel: NSObject {
     var orderProductId: Int = 0
     var orderProductStatusId: Int = 0
     
+    
+    /*
+    deliveryLogs =     {
+    deliveryRider =         {
+    contactNumber = 09000000000;
+    deliveryRider = "Online QA";
+    pickupRider = "";
+    };
+    lastActionType = "Received by Recipient";
+    lastCheckedInBy = "Online QA";
+    lastCheckedInDate =         {
+    date = "2016-07-10 19:41:03.000000";
+    timezone = "Asia/Manila";
+    "timezone_type" = 3;
+    };
+    lastCheckedinLocation = "Home address  Bagong Lipunan Ng Crame Quezon City Metro Manila-Quezon City";
+    pickupRider =         {
+    contactNumber = 09000000000;
+    pickupRider = "Online QA";
+    };
+    };
+    */
+    
     init(productImage: String, sku: String, color: String, size: String, width: String, height: String, length: String, weight: String, brandName: String, longDescription: String, shortDescription: String, attributeName: NSArray, attributeValue: NSArray, isCancellable: Bool, hasFeedback: Bool, orderProductId: Int, orderProductStatusId: Int) {
         self.productImage = productImage
         self.sku = sku

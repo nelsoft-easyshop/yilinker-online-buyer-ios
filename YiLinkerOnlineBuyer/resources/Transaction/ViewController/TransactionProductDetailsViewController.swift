@@ -106,6 +106,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         self.unitPrice = self.table[indexSection].transactions[indexRow].unitPrice
         self.totalPrice = self.table[indexSection].transactions[indexRow].totalPrice.formatToPeso()
         self.hasProductFeedback = self.table[indexSection].transactions[indexRow].hasProductFeedback
+        Feedback.setProductFeedback = self.hasProductFeedback
         self.productName = self.table[indexSection].transactions[indexRow].productName
         self.isCancellable = self.table[indexSection].transactions[indexRow].isCancellable
     }
@@ -128,7 +129,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
     
     
     override func viewDidAppear(animated: Bool) {
-        self.fireTransactionProductDetailsDeliveryStatus()
+        //self.fireTransactionProductDetailsDeliveryStatus()
         self.fireTransactionProductDetails()
     }
     
@@ -275,13 +276,16 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
                 self.transactionCancelView.showCancelLabel()
                 if self.hasProductFeedback {
                     self.transactionCancelView.leaveFeedbackButton.setTitle("VIEW PRODUCT FEEDBACK", forState: UIControlState.Normal)
+                    self.transactionCancelView.contactCSRLabel.hidden = true
                     self.transactionCancelView.leaveFeedbackButton.hidden = false
                     self.transactionCancelView.leaveFeedbackButton.tag = 1001
                 } else {
                     if self.transactionProductDetailsModel.orderProductStatusId == 4 || self.transactionProductDetailsModel.orderProductStatusId == 5  {
+                        self.transactionCancelView.contactCSRLabel.hidden = true
                         self.transactionCancelView.leaveFeedbackButton.hidden = false
                         self.transactionCancelView.leaveFeedbackButton.tag = 1002
                     } else {
+                        self.transactionCancelView.contactCSRLabel.hidden = false
                         self.transactionCancelView.leaveFeedbackButton.hidden = true
                     }
                 }
@@ -290,6 +294,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
                 self.transactionCancelView.leaveFeedbackButton.hidden = true
             }
         } else {
+            self.transactionCancelView.contactCSRLabel.hidden = false
             self.transactionCancelView.cancelView.hidden = true
         }
         
@@ -718,11 +723,18 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
                     
                     if responseObject["isSuccessful"] as! Bool {
                         self.transactionProductDetailsModel = TransactionProductDetailsModel.parseFromDataDictionary(responseObject as! NSDictionary)
+                        self.transactionDeliveryStatus = TransactionProductDetailsDeliveryStatusModel.parseDataFromDictionary(responseObject as! NSDictionary)
                     }
                     
                     if Feedback.setProductFeedback {
-                        self.headerView.removeFromSuperview()
-                        self.footerView.removeFromSuperview()
+                        if self.headerView != nil {
+                            self.headerView.removeFromSuperview()
+                        }
+                        
+                        if self.footerView != nil {
+                            self.footerView.removeFromSuperview()
+                        }
+                        
                         self.loadViewsWithDetails()
                     }
                     
@@ -765,8 +777,8 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
         WebServiceManager.fireGetTransactionsWithUrl(APIAtlas.transactionDeliveryStatus+"\(SessionManager.accessToken())&transactionId=\(self.transactionId)", actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 if responseObject["isSuccessful"] as! Bool {
-                    self.transactionDeliveryStatus = TransactionProductDetailsDeliveryStatusModel.parseDataFromDictionary(responseObject as! NSDictionary)
-                    self.timerRefresh()
+                    //self.transactionDeliveryStatus = TransactionProductDetailsDeliveryStatusModel.parseDataFromDictionary(responseObject as! NSDictionary)
+                    //self.timerRefresh()
                 }
                 self.hideProgressBar()
             } else {
@@ -802,6 +814,7 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
                 if responseObject["isSuccessful"] as! Bool {
                     self.transactionDeliveryStatus = TransactionProductDetailsDeliveryStatusModel.parseDataFromDictionary(responseObject as! NSDictionary)
                 }
+                
                 self.transactionDeliveryStatusView.removeFromSuperview()
                 self.transactionDeliveryStatusView = nil
                 self.getFooterView().addSubview(self.getTransactionDeliveryStatusView())
@@ -843,10 +856,10 @@ class TransactionProductDetailsViewController: UIViewController, TransactionCanc
                 SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
                 
                 if self.refreshtag == 1001 {
-                    self.fireTransactionProductDetailsDeliveryStatus()
+                    //self.fireTransactionProductDetailsDeliveryStatus()
                     self.fireTransactionProductDetails()
                 } else {
-                    self.fireTransactionProductDetailsDeliveryStatus()
+                    //self.fireTransactionProductDetailsDeliveryStatus()
                 }
                 
                 self.hideProgressBar()
