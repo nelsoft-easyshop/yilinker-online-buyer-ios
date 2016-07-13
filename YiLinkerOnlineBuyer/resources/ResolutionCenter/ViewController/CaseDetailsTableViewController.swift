@@ -135,7 +135,7 @@ class CaseDetailsTableViewController: UITableViewController {
             ,"disputeId": self.disputeId];
         
         WebServiceManager.fireGetCasesWithUrl(APIAtlas.getResolutionCenterCaseDetails, parameter: parameters, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
-            
+            self.yiHud?.hide()
             let caseDetailsModel: CaseDetailsModel = CaseDetailsModel.parseDataWithDictionary(responseObject)
             
             if caseDetailsModel.isSuccessful {
