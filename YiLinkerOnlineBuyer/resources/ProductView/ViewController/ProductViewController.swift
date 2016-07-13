@@ -1563,36 +1563,54 @@ class ProductViewController: UIViewController, ProductImagesViewDelegate, Produc
     }
     
     func barMessageAction() {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
-        let messagingViewController: MessageThreadVC = (storyBoard.instantiateViewControllerWithIdentifier("MessageThreadVC") as? MessageThreadVC)!
-        
-        var canMessage: Bool = false
         for var i = 0; i < self.contacts.count; i++ {
             if "\(self.productDetailsModel.sellerId)" == contacts[i].userId {
                 self.selectedContact = contacts[i]
-                canMessage = true
             }
         }
         
-        var isOnline = "-1"
-        if (SessionManager.isLoggedIn()){
-            isOnline = "1"
+        if !SessionManager.isLoggedIn() {
+            self.showAlert(title: StringHelper.localizedStringWithKey("MESSAGING_TITLE"), message: ProductStrings.cannotMessage)
         } else {
-            isOnline = "0"
-        }
-        messagingViewController.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
-        messagingViewController.recipient = selectedContact
-        
-        if canMessage {
-            self.navigationController?.pushViewController(messagingViewController, animated: true)
-        } else {
-            if !SessionManager.isLoggedIn() {
-                self.showAlert(title: StringHelper.localizedStringWithKey("MESSAGING_TITLE"), message: ProductStrings.cannotMessage)
-            } else {
-                self.showAlert(title: StringHelper.localizedStringWithKey("MESSAGING_TITLE"), message: ProductStrings.alertSellerNotAvailable)
+            var isOnline: String = "0"
+            if let temp = selectedContact?.isOnline {
+                isOnline = temp
             }
-            //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "You're allowed to message this seller. Please login first.", title: "Error")
+            var viewController = MessagingThreadViewController(nibName: "MessagingThreadViewController", bundle: nil)
+            viewController.receiver = MessagingContactModel(userId: "\(productSellerModel.userId)", slug: "", fullName: productSellerModel.fullName, profileImageUrl: productSellerModel.profilePhoto, profileThumbnailImageUrl: productSellerModel.profilePhoto, profileSmallImageUrl: productSellerModel.profilePhoto, profileMediumImageUrl: productSellerModel.profilePhoto, profileLargeImageUrl: productSellerModel.profilePhoto, isOnline: isOnline, hasUnreadMessage: "")
+            self.navigationController?.pushViewController(viewController, animated:true)
         }
+    
+//        let storyBoard: UIStoryboard = UIStoryboard(name: "HomeStoryBoard", bundle: nil)
+//        let messagingViewController: MessageThreadVC = (storyBoard.instantiateViewControllerWithIdentifier("MessageThreadVC") as? MessageThreadVC)!
+//        
+//        var canMessage: Bool = false
+//        for var i = 0; i < self.contacts.count; i++ {
+//            if "\(self.productDetailsModel.sellerId)" == contacts[i].userId {
+//                self.selectedContact = contacts[i]
+//                canMessage = true
+//            }
+//        }
+//        
+//        var isOnline = "-1"
+//        if (SessionManager.isLoggedIn()){
+//            isOnline = "1"
+//        } else {
+//            isOnline = "0"
+//        }
+//        messagingViewController.sender = W_Contact(fullName: SessionManager.userFullName() , userRegistrationIds: "", userIdleRegistrationIds: "", userId: SessionManager.accessToken(), profileImageUrl: SessionManager.profileImageStringUrl(), isOnline: isOnline)
+//        messagingViewController.recipient = selectedContact
+//        
+//        if canMessage {
+//            self.navigationController?.pushViewController(messagingViewController, animated: true)
+//        } else {
+//            if !SessionManager.isLoggedIn() {
+//                self.showAlert(title: StringHelper.localizedStringWithKey("MESSAGING_TITLE"), message: ProductStrings.cannotMessage)
+//            } else {
+//                self.showAlert(title: StringHelper.localizedStringWithKey("MESSAGING_TITLE"), message: ProductStrings.alertSellerNotAvailable)
+//            }
+//            //UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "You're allowed to message this seller. Please login first.", title: "Error")
+//        }
     }
     
     func barShareAction() {

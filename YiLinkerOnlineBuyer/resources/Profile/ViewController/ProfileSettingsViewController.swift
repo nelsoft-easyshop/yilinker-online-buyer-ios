@@ -36,6 +36,8 @@ class ProfileSettingsViewController: UIViewController, DeactivateModalViewContro
     var somethingWrongLocalizeString: String = ""
     var connectionLocalizeString: String = ""
     var connectionMessageLocalizeString: String = ""
+    var deactivateEmailLocalizeString: String = ""
+    var deactivateEmailVerificationLocalizeString: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +55,9 @@ class ProfileSettingsViewController: UIViewController, DeactivateModalViewContro
     
     func initializeViews() {
         self.title = StringHelper.localizedStringWithKey("SETTINGS_LOCALIZE_KEY")
+        
+        deactivateEmailLocalizeString = StringHelper.localizedStringWithKey("DEACTIVATE_EMAIL_ERROR_LOCALIZED_KEY")
+        deactivateEmailVerificationLocalizeString = StringHelper.localizedStringWithKey("DEACTIVATE_EMAIL_VERIFICATION_ERROR_LOCALIZED_KEY")
         
         //Add Nav Bar
         if self.respondsToSelector("edgesForExtendedLayout") {
@@ -72,6 +77,7 @@ class ProfileSettingsViewController: UIViewController, DeactivateModalViewContro
         tableData.append(ProfileSettingsLocalizedStrings.smsLocalizeString)
         tableData.append(ProfileSettingsLocalizedStrings.emailLocalizeString)
         tableData.append(ProfileSettingsLocalizedStrings.deactivateLocalizeString)
+        
         
         tableView.reloadData()
     }
@@ -294,8 +300,19 @@ extension ProfileSettingsViewController: ProfileSettingsTableViewCellDelegate {
             self.tableDataStatus[1] = value
             self.firePostSettings(.Email, isOn: value)
         } else {
-            self.tableDataStatus[2] = value
-            self.showDeactivateModal()
+            if !SessionManager.isEmailVerified() {
+                self.tableDataStatus[2] = false
+                Toast.displayToastWithMessage(deactivateEmailVerificationLocalizeString, duration: 2, view: self.view)
+                self.tableView.reloadData()
+            } else if SessionManager.emailAddress().isEmpty {
+                self.tableDataStatus[2] = false
+                Toast.displayToastWithMessage(deactivateEmailLocalizeString, duration: 2, view: self.view)
+                self.tableView.reloadData()
+            } else {
+                self.tableDataStatus[2] = value
+                self.showDeactivateModal()
+            }
+            
         }
     }
 }
