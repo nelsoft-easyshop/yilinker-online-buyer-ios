@@ -67,7 +67,7 @@ struct SectionHeight {
     static let sectionEleven: CGFloat = 150
     static let layoutHeader: CGFloat = 40.0
     static let sectionTwelve: CGFloat = 199
-    static let sectionThirteen: CGFloat = 150
+    static let sectionThirteen: CGFloat = 260
     
 }
 
@@ -393,14 +393,72 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
     
     //MARK: Layout Twelve
     func layoutTwelve(section: Int) {
+//        let horizontalInset: CGFloat = 5.0
+//        let numberOfItems = self.collectionView?.numberOfItemsInSection(section)
+//        let indexPath = NSIndexPath(forItem: 0, inSection: section)
+//        let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+//        
+//        //Add Header View
+//        let headerView: (attribute: UICollectionViewLayoutAttributes, key: String) = headerViewWithYPosition(self.sectionYOffsetWithSectionNumber(section), path: indexPath)
+//        self.layoutAttributes[headerView.key] = headerView.attribute
+//        
+//        attributes.frame = CGRectMake(8, self.sectionYOffsetWithSectionNumber(section) + SectionHeight.layoutHeader + horizontalInset, screenRect!.width - 16 , SectionHeight.sectionTwelve)
+//
+//        let key = self.layoutKeyForIndexPath(indexPath)
+//        self.layoutAttributes[key] = attributes
+        
+        let horizontalInset: CGFloat = 5.0
+        var defaultYPosition = self.sectionYOffsetWithSectionNumber(section) + SectionHeight.layoutHeader + horizontalInset
+        let path = NSIndexPath(forItem: 0, inSection: section)
+        
+        //Add Header View
+        let headerView: (attribute: UICollectionViewLayoutAttributes, key: String) = headerViewWithYPosition(self.sectionYOffsetWithSectionNumber(section), path: path)
+        self.layoutAttributes[headerView.key] = headerView.attribute
+        
+        //Add cells
+        var xPosition: CGFloat = horizontalInset
+        var yPosition: CGFloat = defaultYPosition
+        
         let numberOfItems = self.collectionView?.numberOfItemsInSection(section)
-        let indexPath = NSIndexPath(forItem: 0, inSection: section)
-        let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+        let initialMargin: CGFloat = 8
         
-        attributes.frame = CGRectMake(0, self.sectionYOffsetWithSectionNumber(section), screenRect!.width , SectionHeight.sectionTwelve)
+        var itemSize: CGSize = CGSizeZero
         
-        let key = self.layoutKeyForIndexPath(indexPath)
-        self.layoutAttributes[key] = attributes
+        let screenWidth: CGFloat =  ((screenRect!.width - (horizontalInset * 3)) /  2)
+        
+        for var item = -1; item < 4; item++ {
+            let indexPath = NSIndexPath(forItem: item + 1, inSection: section)
+            let attribute = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+
+            if item == -1 {
+                // adding three images layout
+                attribute.frame = CGRectMake(8, defaultYPosition, screenRect!.width - 16 , SectionHeight.sectionTwelve)
+                yPosition = yPosition + SectionHeight.sectionTwelve + horizontalInset
+            } else {
+                // adding cells
+                let cellHeight: CGFloat = 90
+                
+                itemSize = CGSizeMake(screenWidth, cellHeight)
+                println(item)
+                if (item + 1) % 2 != 0 {
+                    if (item + 1) != 1 {
+                        xPosition = horizontalInset
+                        yPosition = yPosition + cellHeight + horizontalInset
+                    }
+                } else {
+                    if item != 0 {
+                        xPosition = xPosition + screenWidth + horizontalInset
+                    }
+                    
+                }
+                
+                attribute.frame = CGRectMake(xPosition, yPosition, itemSize.width, itemSize.height)
+            }
+            
+            
+            let key: String = self.layoutKeyForIndexPath(indexPath)
+            self.layoutAttributes[key] = attribute
+        }
     }
     
     //MARK: Layout Thirteen
@@ -426,7 +484,7 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
         for var item = 0; item < numberOfItems; item++ {
             let indexPath = NSIndexPath(forItem: item, inSection: section)
             let attribute = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
-            let cellHeight: CGFloat = 287
+            let cellHeight: CGFloat = 100
             
             itemSize = CGSizeMake(screenWidth, cellHeight)
             

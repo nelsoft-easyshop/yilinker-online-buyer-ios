@@ -723,7 +723,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - UICollectionView Data Source
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         //#warning Incomplete method implementation -- Return the number of sections
-//        println(self.layouts)
         return self.layouts.count
     }
     
@@ -752,9 +751,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         case 11:
             return 1
         case 12:
-            return 2
+            return 5
         case 13:
-            return self.homePageModel.data[section].data.count
+            return 4//self.homePageModel.data[section].data.count
         default:
             return 0
         }
@@ -819,14 +818,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         let headerView: LayoutHeaderCollectionViewCell = self.collectionView?.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: self.sectionHeaderNibName, forIndexPath: indexPath) as! LayoutHeaderCollectionViewCell
         headerView.delegate = self
-
-        print("section \(indexPath.section) > ")
-        print(self.homePageModel.data[indexPath.section])
-        if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutTwelveModel) {
-            println(" - Beng!")
-        } else {
-            println(" - Nope!")
-        }
         
         if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutFiveModel) {
             let layoutFiveModel: LayoutFiveModel = self.homePageModel.data[indexPath.section] as! LayoutFiveModel
@@ -908,10 +899,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 headerView.viewMoreButton.hidden = true
             }
             
+            headerView.target = layoutTwelveModel.viewMoreTarget.targetUrl
+            headerView.targetType = layoutTwelveModel.viewMoreTarget.targetType
+            headerView.viewMoreButton.hidden = false
             headerView.sectionTitle = layoutTwelveModel.sectionTitle
             headerView.titleLabel.text = layoutTwelveModel.sectionTitle
             headerView.updateTitleLine()
-            headerView.backgroundColor = UIColor.clearColor()
+//            headerView.backgroundColor = UIColor.clearColor()
         } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutThirteenModel) {
             let layoutThirteenModel: LayoutThirteenModel = self.homePageModel.data[indexPath.section] as! LayoutThirteenModel
             if layoutThirteenModel.isViewMoreAvailable {
@@ -924,7 +918,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             headerView.sectionTitle = layoutThirteenModel.sectionTitle
             headerView.titleLabel.text = layoutThirteenModel.sectionTitle
             headerView.updateTitleLine()
-            headerView.backgroundColor = UIColor.clearColor()
+//            headerView.backgroundColor = UIColor.clearColor()
         }
         
         return headerView
