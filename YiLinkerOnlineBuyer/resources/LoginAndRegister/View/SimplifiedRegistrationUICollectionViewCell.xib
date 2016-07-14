@@ -32,6 +32,9 @@
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                        <connections>
+                            <action selector="textFieldAction:" destination="gTV-IL-0wX" eventType="editingChanged" id="0Ec-0W-P7m"/>
+                        </connections>
                     </textField>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Confirm Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NPw-da-yDo">
                         <rect key="frame" x="16" y="161" width="343" height="35"/>
@@ -40,6 +43,9 @@
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                        <connections>
+                            <action selector="textFieldAction:" destination="gTV-IL-0wX" eventType="editingChanged" id="8rY-fJ-Asj"/>
+                        </connections>
                     </textField>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Referral Code" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="d98-k9-bVg">
                         <rect key="frame" x="16" y="208" width="343" height="35"/>
@@ -57,6 +63,7 @@
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
                         <textInputTraits key="textInputTraits"/>
                         <connections>
+                            <action selector="textFieldAction:" destination="gTV-IL-0wX" eventType="editingChanged" id="wuk-2T-Wor"/>
                             <outlet property="delegate" destination="-1" id="y11-Gb-NWW"/>
                         </connections>
                     </textField>
@@ -67,6 +74,9 @@
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
                         <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                        <connections>
+                            <action selector="textFieldAction:" destination="gTV-IL-0wX" eventType="editingChanged" id="cpP-De-g71"/>
+                        </connections>
                     </textField>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ekh-6d-zIq">
                         <rect key="frame" x="16" y="67" width="85" height="35"/>

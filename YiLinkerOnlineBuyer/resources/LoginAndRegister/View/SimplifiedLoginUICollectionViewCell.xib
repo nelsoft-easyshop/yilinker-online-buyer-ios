@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -44,6 +44,9 @@
                         </constraints>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                        <connections>
+                            <action selector="textFieldAction:" destination="gTV-IL-0wX" eventType="editingChanged" id="Ii4-hr-b2M"/>
+                        </connections>
                     </textField>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nW8-Ch-5IR">
                         <rect key="frame" x="102" y="19" width="75" height="20"/>
@@ -146,6 +149,9 @@
                         </constraints>
                         <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
                         <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                        <connections>
+                            <action selector="textFieldAction:" destination="gTV-IL-0wX" eventType="editingChanged" id="4p0-rp-2zj"/>
+                        </connections>
                     </textField>
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K0y-9W-al7">
                         <rect key="frame" x="16" y="61" width="85" height="35"/>

@@ -86,6 +86,16 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
         self.buttonAction(self.byMobileButton)
     }
     
+    func setButtonEnabled(enabled: Bool) {
+        self.signInButton.enabled = enabled
+        
+        if enabled {
+            self.signInButton.alpha = 1
+        } else {
+            self.signInButton.alpha = 0.5
+        }
+    }
+    
     @IBAction func buttonAction(sender: UIButton) {
         self.endEditing(true)
         if sender == self.byMobileButton {
@@ -99,6 +109,7 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
             UIView.animateWithDuration(0.25) {
                 self.layoutIfNeeded()
             }
+            self.setButtonEnabled(false)
         } else if sender == self.byEmailButton {
             self.isMobileLogin = false
             self.byEmailButton.setTitleColor(Constants.Colors.appTheme, forState: UIControlState.Normal)
@@ -110,10 +121,19 @@ class SimplifiedLoginUICollectionViewCell: UICollectionViewCell {
             UIView.animateWithDuration(0.25) {
                 self.layoutIfNeeded()
             }
+            self.setButtonEnabled(false)
         } else if sender == self.forgotPasswordButton {
            self.delegate?.simplifiedLoginCell(self, didTapForgotPassword: self.forgotPasswordButton)
         } else if sender == self.signInButton {
             self.delegate?.simplifiedLoginCell(self, didTapSignin: self.signInButton)
+        }
+    }
+    
+    @IBAction func textFieldAction(textField: UITextField) {
+        if emailMobileTextField.text.isNotEmpty() && passwordTextField.text.isNotEmpty() {
+            self.setButtonEnabled(true)
+        } else {
+            self.setButtonEnabled(false)
         }
     }
     
