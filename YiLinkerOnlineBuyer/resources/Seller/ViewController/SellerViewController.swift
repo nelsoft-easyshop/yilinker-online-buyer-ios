@@ -286,6 +286,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     let temp = SellerModel.parseSellerReviewsDataFromDictionary(responseObject as! NSDictionary)
                     self.sellerModel?.reviews = temp.reviews
                     self.sellerModel?.rating = temp.rating
+                    self.sellerModelFeedback = temp
                     self.tableView.reloadData()
                 } else {
                     self.showAlert(title: Constants.Localized.error, message: responseObject["message"] as! String)
@@ -587,7 +588,7 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //Show seller's ratings and feedback
     func sellerTableHeaderViewDidViewFeedBack() {
         if self.sellerModelFeedback != nil {
-            if sellerModelFeedback?.reviews.count > 5 {
+            if sellerModelFeedback?.reviews.count >= 5 {
                 self.showView()
                 var feedBackViewController = FeedBackViewController(nibName: "FeedBackViewController", bundle: nil)
                 feedBackViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
