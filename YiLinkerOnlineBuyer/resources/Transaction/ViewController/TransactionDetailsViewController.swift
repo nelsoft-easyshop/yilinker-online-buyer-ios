@@ -229,7 +229,6 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                 self.transactionSectionView.messageButton.tag = self.table[section].sellerIdForFeedback
             }
             
-                
             self.transactionSectionView.leaveFeedbackButton.tag = self.table[section].sellerIdForFeedback
             self.transactionSectionView.sellerNameLabel.text = self.table[section].sellerName
             self.transactionSectionView.sellerNameLabel.tag = self.table[section].sellerIdForFeedback

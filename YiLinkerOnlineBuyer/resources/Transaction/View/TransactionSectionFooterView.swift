@@ -51,7 +51,7 @@ class TransactionSectionFooterView: UIView {
     }
     
     @IBAction func goToSellerPage(sender: AnyObject) {
-        var tag = sender.tag
+        var tag = self.sellerNameLabel.tag//sender.tag
         self.delegate?.sellerPage(tag)
     }
 }
