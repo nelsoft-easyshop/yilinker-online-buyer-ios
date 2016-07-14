@@ -12,7 +12,7 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="376" height="199"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy_cover_photo" translatesAutoresizingMaskIntoConstraints="NO" id="5xe-AB-ZQM">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="webview_background" translatesAutoresizingMaskIntoConstraints="NO" id="5xe-AB-ZQM">
                         <rect key="frame" x="0.0" y="0.0" width="188" height="199"/>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="17Z-r4-60F" userLabel="Two Images Container View">
@@ -21,7 +21,7 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dragonpay" translatesAutoresizingMaskIntoConstraints="NO" id="B5U-eX-YOU">
                                 <rect key="frame" x="0.0" y="0.0" width="188" height="98"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="genuine" translatesAutoresizingMaskIntoConstraints="NO" id="Vxo-9M-lTK">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy_cover_photo" translatesAutoresizingMaskIntoConstraints="NO" id="Vxo-9M-lTK">
                                 <rect key="frame" x="0.0" y="101" width="188" height="98"/>
                             </imageView>
                         </subviews>
@@ -64,6 +64,6 @@
     <resources>
         <image name="dragonpay" width="200" height="146"/>
         <image name="dummy_cover_photo" width="1688" height="1125"/>
-        <image name="genuine" width="200" height="152"/>
+        <image name="webview_background" width="360" height="640"/>
     </resources>
 </document>

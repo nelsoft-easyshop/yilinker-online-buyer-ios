@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -42,8 +42,8 @@
                         <action selector="buttonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="YpJ-dm-7Vr"/>
                     </connections>
                 </button>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4C9-qX-0uS">
-                    <rect key="frame" x="41" y="8" width="293" height="30"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4C9-qX-0uS" userLabel="Search Box Container View">
+                    <rect key="frame" x="41" y="8" width="204" height="30"/>
                     <subviews>
                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QJi-ML-B23">
                             <rect key="frame" x="0.0" y="0.0" width="45" height="30"/>
@@ -67,7 +67,7 @@
                             </constraints>
                         </view>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search Product Here. . ." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="P8r-D3-eRl">
-                            <rect key="frame" x="56" y="2" width="214" height="25"/>
+                            <rect key="frame" x="56" y="2" width="115" height="25"/>
                             <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
                             <textInputTraits key="textInputTraits" returnKeyType="search"/>
                             <connections>
@@ -75,7 +75,7 @@
                             </connections>
                         </textField>
                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="qtt-od-gk3">
-                            <rect key="frame" x="265" y="5" width="20" height="20"/>
+                            <rect key="frame" x="179" y="5" width="20" height="20"/>
                             <color key="color" red="0.37647058820000001" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                         </activityIndicatorView>
                     </subviews>
@@ -84,8 +84,8 @@
                         <constraint firstItem="P8r-D3-eRl" firstAttribute="leading" secondItem="QJi-ML-B23" secondAttribute="trailing" constant="11" id="3xa-BE-JqJ"/>
                         <constraint firstAttribute="bottom" secondItem="qtt-od-gk3" secondAttribute="bottom" constant="5" id="4Ml-Sg-cdR"/>
                         <constraint firstItem="QJi-ML-B23" firstAttribute="top" secondItem="4C9-qX-0uS" secondAttribute="top" id="Qvl-zH-ds0"/>
-                        <constraint firstAttribute="trailing" secondItem="P8r-D3-eRl" secondAttribute="trailing" constant="23" id="YFY-NJ-meh"/>
-                        <constraint firstAttribute="trailing" secondItem="qtt-od-gk3" secondAttribute="trailing" constant="8" id="h7y-r6-Pf4"/>
+                        <constraint firstAttribute="trailing" secondItem="P8r-D3-eRl" secondAttribute="trailing" constant="33" id="YFY-NJ-meh"/>
+                        <constraint firstAttribute="trailing" secondItem="qtt-od-gk3" secondAttribute="trailing" constant="5" id="h7y-r6-Pf4"/>
                         <constraint firstItem="QJi-ML-B23" firstAttribute="leading" secondItem="4C9-qX-0uS" secondAttribute="leading" id="o74-Nd-bVG"/>
                         <constraint firstItem="P8r-D3-eRl" firstAttribute="top" secondItem="4C9-qX-0uS" secondAttribute="top" constant="2" id="tAt-RY-M7I"/>
                         <constraint firstAttribute="bottom" secondItem="P8r-D3-eRl" secondAttribute="bottom" constant="3" id="tXr-fY-3xk"/>
@@ -96,12 +96,43 @@
                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZNy-0I-MW3">
                     <rect key="frame" x="365" y="35" width="10" height="10"/>
                 </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MPh-yA-K3d" userLabel="Daily Login View">
+                    <rect key="frame" x="253" y="8" width="81" height="30"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IIH-zn-pvT">
+                            <rect key="frame" x="36" y="2" width="42" height="26"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="26" id="Whd-qb-fdZ"/>
+                                <constraint firstAttribute="width" constant="42" id="Xax-bv-xnb"/>
+                            </constraints>
+                            <string key="text">DAILY
+LOGIN</string>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="plus" translatesAutoresizingMaskIntoConstraints="NO" id="3vL-ba-cL4">
+                            <rect key="frame" x="11" y="5" width="20" height="20"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.48991066245824405" green="0.0" blue="0.6113255718954248" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="IIH-zn-pvT" firstAttribute="top" secondItem="MPh-yA-K3d" secondAttribute="top" constant="2" id="6sI-Va-dzZ"/>
+                        <constraint firstAttribute="height" constant="30" id="FL7-FE-c4X"/>
+                        <constraint firstAttribute="width" constant="81" id="Jht-IK-Gtg"/>
+                        <constraint firstAttribute="bottom" secondItem="IIH-zn-pvT" secondAttribute="bottom" constant="2" id="dWj-zL-Jtn"/>
+                        <constraint firstAttribute="trailing" secondItem="IIH-zn-pvT" secondAttribute="trailing" constant="3" id="e1z-MY-JNH"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="0.37647058820000001" green="0.12549019610000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
+                <constraint firstItem="CFL-5a-1jB" firstAttribute="leading" secondItem="MPh-yA-K3d" secondAttribute="trailing" constant="8" id="9k0-S1-9pp"/>
                 <constraint firstItem="4C9-qX-0uS" firstAttribute="leading" secondItem="ZZi-Xk-TUE" secondAttribute="trailing" constant="8" id="FDT-7e-vX2"/>
-                <constraint firstItem="CFL-5a-1jB" firstAttribute="leading" secondItem="4C9-qX-0uS" secondAttribute="trailing" constant="8" id="KVN-yG-ur3"/>
+                <constraint firstItem="CFL-5a-1jB" firstAttribute="leading" secondItem="4C9-qX-0uS" secondAttribute="trailing" constant="97" id="KVN-yG-ur3"/>
+                <constraint firstItem="MPh-yA-K3d" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="OnR-Qk-SCe"/>
                 <constraint firstAttribute="trailing" secondItem="CFL-5a-1jB" secondAttribute="trailing" constant="8" id="PVb-hj-VLf"/>
+                <constraint firstAttribute="bottom" secondItem="MPh-yA-K3d" secondAttribute="bottom" constant="7" id="SUt-Rk-Iv6"/>
                 <constraint firstAttribute="centerY" secondItem="ZZi-Xk-TUE" secondAttribute="centerY" id="fXz-Y4-MSr"/>
                 <constraint firstItem="4C9-qX-0uS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="h2D-0U-sT6"/>
                 <constraint firstAttribute="centerY" secondItem="CFL-5a-1jB" secondAttribute="centerY" id="j2G-Og-oAp"/>
@@ -111,6 +142,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="activityIndicator" destination="qtt-od-gk3" id="wOz-mf-oeg"/>
+                <outlet property="dailyLoginContainerView" destination="MPh-yA-K3d" id="5wL-rn-FfF"/>
                 <outlet property="dropDownView" destination="Nma-Wc-UA3" id="gyY-lv-pDI"/>
                 <outlet property="profileButton" destination="CFL-5a-1jB" id="v92-bI-AM3"/>
                 <outlet property="scanQRButton" destination="ZZi-Xk-TUE" id="Q8p-iF-6Kp"/>
@@ -125,6 +157,7 @@
     </objects>
     <resources>
         <image name="person-icon" width="76" height="76"/>
+        <image name="plus" width="200" height="200"/>
         <image name="product-icon" width="76" height="76"/>
         <image name="scan-qr-icon" width="68" height="68"/>
     </resources>

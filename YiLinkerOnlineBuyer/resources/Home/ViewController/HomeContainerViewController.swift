@@ -1331,7 +1331,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - Thirteen Layout
     func layoutThirteenCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> LayoutThirteenCollectionViewCell {
         let layoutThirteenCVC: LayoutThirteenCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("LayoutThirteenCollectionViewCell", forIndexPath: indexPath) as! LayoutThirteenCollectionViewCell
-        
         //        let layoutTenModel: LayoutTenModel = self.homePageModel.data[indexPath.section] as! LayoutTenModel
         //
         //        twoColumnGridCollectionViewCell.target = layoutTenModel.data[indexPath.row].target.targetUrl

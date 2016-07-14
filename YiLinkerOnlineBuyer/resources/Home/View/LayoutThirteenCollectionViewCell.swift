@@ -15,8 +15,9 @@ class LayoutThirteenCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
         
+        self.layer.cornerRadius = 5.0
         self.layer.borderWidth = 1.0
-        self.layer.borderColor = UIColor.darkGrayColor().CGColor
+        self.layer.borderColor = UIColor.lightGrayColor().CGColor
     }
 
 }

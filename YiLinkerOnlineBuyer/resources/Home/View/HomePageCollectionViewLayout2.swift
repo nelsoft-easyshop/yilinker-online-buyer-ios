@@ -67,7 +67,7 @@ struct SectionHeight {
     static let sectionEleven: CGFloat = 150
     static let layoutHeader: CGFloat = 40.0
     static let sectionTwelve: CGFloat = 199
-    static let sectionThirteen: CGFloat = 260
+    static let sectionThirteen: CGFloat = 255
     
 }
 
@@ -121,6 +121,8 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
                 self.layoutThirteen(index)
             }
         }
+        
+        self.collectionView?.backgroundColor = .whiteColor()
     }
     
     //MARK: Layout One
@@ -402,6 +404,7 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
 //        let headerView: (attribute: UICollectionViewLayoutAttributes, key: String) = headerViewWithYPosition(self.sectionYOffsetWithSectionNumber(section), path: indexPath)
 //        self.layoutAttributes[headerView.key] = headerView.attribute
 //        
+//        // size of the view/layout
 //        attributes.frame = CGRectMake(8, self.sectionYOffsetWithSectionNumber(section) + SectionHeight.layoutHeader + horizontalInset, screenRect!.width - 16 , SectionHeight.sectionTwelve)
 //
 //        let key = self.layoutKeyForIndexPath(indexPath)
@@ -436,7 +439,7 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
                 yPosition = yPosition + SectionHeight.sectionTwelve + horizontalInset
             } else {
                 // adding cells
-                let cellHeight: CGFloat = 90
+                let cellHeight: CGFloat = 100
                 
                 itemSize = CGSizeMake(screenWidth, cellHeight)
                 println(item)
@@ -555,7 +558,7 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
             } else if self.layouts[x] == "11" {
                 occupiedSpace = occupiedSpace + SectionHeight.sectionEleven + sectionVerticalInset
             } else if self.layouts[x] == "12" {
-                occupiedSpace = occupiedSpace + SectionHeight.sectionTwelve + sectionVerticalInset + 250.0
+                occupiedSpace = occupiedSpace + SectionHeight.sectionTwelve + sectionVerticalInset + SectionHeight.sectionThirteen + 5.0
             } else if self.layouts[x] == "13" {
                 occupiedSpace = occupiedSpace + SectionHeight.sectionThirteen + sectionVerticalInset
             }

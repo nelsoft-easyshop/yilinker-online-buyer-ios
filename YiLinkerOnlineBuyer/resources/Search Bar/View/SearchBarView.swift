@@ -44,6 +44,9 @@ class SearchBarView: UIView {
     @IBOutlet weak var searchTextField: UITextField!
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    @IBOutlet weak var dailyLoginContainerView: UIView?
+    
     var searchTypeTableView: UITableView?
     var isSearchTypeHidden: Bool = true
     var searchTypeImage: [String] = ["product-icon", "seller-icon"]
@@ -78,6 +81,8 @@ class SearchBarView: UIView {
         self.searchView.frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height)
         self.searchView.layer.cornerRadius = 15
         self.searchTypeView.layer.cornerRadius = 15
+        self.dailyLoginContainerView!.layer.cornerRadius = 15
+        self.dailyLoginContainerView!.layer.borderWidth = 0.5
         
         if isQRCode {
             self.scanQRButton.setImage(UIImage(named: "scan-qr-icon"), forState: .Normal)
