@@ -13,16 +13,16 @@
                 <rect key="frame" x="0.0" y="0.0" width="376" height="199"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="webview_background" translatesAutoresizingMaskIntoConstraints="NO" id="5xe-AB-ZQM">
-                        <rect key="frame" x="0.0" y="0.0" width="188" height="199"/>
+                        <rect key="frame" x="0.0" y="0.0" width="186" height="199"/>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="17Z-r4-60F" userLabel="Two Images Container View">
-                        <rect key="frame" x="188" y="0.0" width="188" height="199"/>
+                        <rect key="frame" x="190" y="0.0" width="186" height="199"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dragonpay" translatesAutoresizingMaskIntoConstraints="NO" id="B5U-eX-YOU">
-                                <rect key="frame" x="0.0" y="0.0" width="188" height="98"/>
+                                <rect key="frame" x="0.0" y="0.0" width="186" height="98"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy_cover_photo" translatesAutoresizingMaskIntoConstraints="NO" id="Vxo-9M-lTK">
-                                <rect key="frame" x="0.0" y="101" width="188" height="98"/>
+                                <rect key="frame" x="0.0" y="101" width="186" height="98"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -51,13 +51,18 @@
                 <constraint firstItem="5xe-AB-ZQM" firstAttribute="top" secondItem="9mr-cZ-IFT" secondAttribute="top" id="IPi-JL-cWV"/>
                 <constraint firstAttribute="bottom" secondItem="5xe-AB-ZQM" secondAttribute="bottom" id="Nxm-CN-6kQ"/>
                 <constraint firstItem="5xe-AB-ZQM" firstAttribute="leading" secondItem="9mr-cZ-IFT" secondAttribute="leading" id="O9O-IH-N6l"/>
-                <constraint firstItem="17Z-r4-60F" firstAttribute="leading" secondItem="5xe-AB-ZQM" secondAttribute="trailing" id="Uif-Gw-Xsq"/>
-                <constraint firstItem="17Z-r4-60F" firstAttribute="leading" secondItem="5xe-AB-ZQM" secondAttribute="trailing" id="Ww4-G5-ZkR"/>
-                <constraint firstItem="17Z-r4-60F" firstAttribute="leading" secondItem="5xe-AB-ZQM" secondAttribute="trailing" id="ZDo-yu-dUn"/>
+                <constraint firstItem="17Z-r4-60F" firstAttribute="leading" secondItem="5xe-AB-ZQM" secondAttribute="trailing" constant="4" id="Uif-Gw-Xsq"/>
+                <constraint firstItem="17Z-r4-60F" firstAttribute="leading" secondItem="5xe-AB-ZQM" secondAttribute="trailing" constant="4" id="Ww4-G5-ZkR"/>
+                <constraint firstItem="17Z-r4-60F" firstAttribute="leading" secondItem="5xe-AB-ZQM" secondAttribute="trailing" constant="4" id="ZDo-yu-dUn"/>
                 <constraint firstAttribute="trailing" secondItem="17Z-r4-60F" secondAttribute="trailing" id="eit-QY-DJd"/>
                 <constraint firstItem="5xe-AB-ZQM" firstAttribute="width" secondItem="17Z-r4-60F" secondAttribute="width" id="tIG-ar-q3k"/>
             </constraints>
             <size key="customSize" width="375" height="199"/>
+            <connections>
+                <outlet property="leftImageView" destination="5xe-AB-ZQM" id="pbU-T0-Mpq"/>
+                <outlet property="rightLowerImageView" destination="Vxo-9M-lTK" id="y9M-Km-xLT"/>
+                <outlet property="rightUpperImageView" destination="B5U-eX-YOU" id="YpE-f9-aLK"/>
+            </connections>
             <point key="canvasLocation" x="325" y="260.5"/>
         </collectionViewCell>
     </objects>

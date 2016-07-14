@@ -435,7 +435,7 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
 
             if item == -1 {
                 // adding three images layout
-                attribute.frame = CGRectMake(8, defaultYPosition, screenRect!.width - 16 , SectionHeight.sectionTwelve)
+                attribute.frame = CGRectMake(6, defaultYPosition, screenRect!.width - 12 , SectionHeight.sectionTwelve)
                 yPosition = yPosition + SectionHeight.sectionTwelve + horizontalInset
             } else {
                 // adding cells

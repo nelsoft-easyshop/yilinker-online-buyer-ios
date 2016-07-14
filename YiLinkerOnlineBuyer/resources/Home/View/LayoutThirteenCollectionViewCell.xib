@@ -16,48 +16,48 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pc5-mi-uKs" userLabel="Labels Container View">
                         <rect key="frame" x="0.0" y="0.0" width="153" height="136"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rqr-No-2vQ">
-                                <rect key="frame" x="0.0" y="0.0" width="153" height="83"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="Rqr-No-2vQ">
+                                <rect key="frame" x="2" y="0.0" width="151" height="83"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <string key="text">Altec Lansing
 VS2621 2.1
 Channel
 Speaker ...</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P5,356 - 30%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Bp-a3-jzD">
-                                <rect key="frame" x="0.0" y="115" width="153" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P5,356 - 30%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Bp-a3-jzD">
+                                <rect key="frame" x="2" y="113" width="151" height="21"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P5,356" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QuC-Z4-4Ak">
-                                <rect key="frame" x="0.0" y="87" width="153" height="24"/>
+                                <rect key="frame" x="2" y="85" width="151" height="24"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <color key="textColor" red="1" green="0.024321662710000001" blue="0.46062844040000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="QuC-Z4-4Ak" firstAttribute="top" secondItem="Rqr-No-2vQ" secondAttribute="bottom" constant="4" id="2wd-q4-WHS"/>
-                            <constraint firstItem="QuC-Z4-4Ak" firstAttribute="top" secondItem="Rqr-No-2vQ" secondAttribute="bottom" constant="4" id="8Wf-M6-Epe"/>
+                            <constraint firstItem="QuC-Z4-4Ak" firstAttribute="top" secondItem="Rqr-No-2vQ" secondAttribute="bottom" constant="2" id="2wd-q4-WHS"/>
+                            <constraint firstItem="QuC-Z4-4Ak" firstAttribute="top" secondItem="Rqr-No-2vQ" secondAttribute="bottom" constant="2" id="8Wf-M6-Epe"/>
                             <constraint firstAttribute="trailing" secondItem="0Bp-a3-jzD" secondAttribute="trailing" id="9cP-p7-6GR"/>
                             <constraint firstItem="Rqr-No-2vQ" firstAttribute="width" secondItem="QuC-Z4-4Ak" secondAttribute="width" id="AOR-0C-QX6"/>
-                            <constraint firstAttribute="bottom" secondItem="0Bp-a3-jzD" secondAttribute="bottom" id="D6E-Xq-2BL"/>
+                            <constraint firstAttribute="bottom" secondItem="0Bp-a3-jzD" secondAttribute="bottom" constant="2" id="D6E-Xq-2BL"/>
                             <constraint firstItem="Rqr-No-2vQ" firstAttribute="top" secondItem="Pc5-mi-uKs" secondAttribute="top" id="HGz-mc-c4F"/>
-                            <constraint firstItem="Rqr-No-2vQ" firstAttribute="leading" secondItem="Pc5-mi-uKs" secondAttribute="leading" id="Hy9-mn-ZhB"/>
-                            <constraint firstItem="QuC-Z4-4Ak" firstAttribute="leading" secondItem="Pc5-mi-uKs" secondAttribute="leading" id="LGs-eu-65z"/>
-                            <constraint firstItem="Rqr-No-2vQ" firstAttribute="width" secondItem="0Bp-a3-jzD" secondAttribute="height" multiplier="51:7" id="Oy9-x0-BJ0"/>
-                            <constraint firstItem="0Bp-a3-jzD" firstAttribute="leading" secondItem="Pc5-mi-uKs" secondAttribute="leading" id="dlX-Pe-51T"/>
+                            <constraint firstItem="Rqr-No-2vQ" firstAttribute="leading" secondItem="Pc5-mi-uKs" secondAttribute="leading" constant="2" id="Hy9-mn-ZhB"/>
+                            <constraint firstItem="QuC-Z4-4Ak" firstAttribute="leading" secondItem="Pc5-mi-uKs" secondAttribute="leading" constant="2" id="LGs-eu-65z"/>
+                            <constraint firstItem="Rqr-No-2vQ" firstAttribute="width" secondItem="0Bp-a3-jzD" secondAttribute="height" multiplier="51:7" constant="-2" id="Oy9-x0-BJ0"/>
+                            <constraint firstItem="0Bp-a3-jzD" firstAttribute="leading" secondItem="Pc5-mi-uKs" secondAttribute="leading" constant="2" id="dlX-Pe-51T"/>
                             <constraint firstItem="0Bp-a3-jzD" firstAttribute="top" secondItem="QuC-Z4-4Ak" secondAttribute="bottom" constant="4" id="gHj-aG-Pdl"/>
                             <constraint firstAttribute="trailing" secondItem="QuC-Z4-4Ak" secondAttribute="trailing" id="jFg-tq-v7n"/>
                             <constraint firstAttribute="trailing" secondItem="Rqr-No-2vQ" secondAttribute="trailing" id="jFv-1x-P9j"/>
                             <constraint firstItem="0Bp-a3-jzD" firstAttribute="top" secondItem="QuC-Z4-4Ak" secondAttribute="bottom" constant="4" id="uKm-Fc-zni"/>
-                            <constraint firstItem="Rqr-No-2vQ" firstAttribute="width" secondItem="QuC-Z4-4Ak" secondAttribute="height" multiplier="51:8" id="wTZ-4m-sAr"/>
+                            <constraint firstItem="Rqr-No-2vQ" firstAttribute="width" secondItem="QuC-Z4-4Ak" secondAttribute="height" multiplier="51:8" constant="-2" id="wTZ-4m-sAr"/>
                             <constraint firstItem="Rqr-No-2vQ" firstAttribute="width" secondItem="0Bp-a3-jzD" secondAttribute="width" id="x5O-0Q-3Oc"/>
                         </constraints>
                     </view>
@@ -80,6 +80,13 @@ Speaker ...</string>
                 <constraint firstAttribute="bottom" secondItem="Pc5-mi-uKs" secondAttribute="bottom" id="vEd-Le-ekH"/>
                 <constraint firstItem="9q3-5V-9U5" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="zK0-dV-WIy"/>
             </constraints>
+            <connections>
+                <outlet property="discountLabel" destination="0Bp-a3-jzD" id="DI3-CS-aOa"/>
+                <outlet property="labelContainerView" destination="Pc5-mi-uKs" id="qwn-IV-jTh"/>
+                <outlet property="nameLabel" destination="Rqr-No-2vQ" id="I8p-e0-TTI"/>
+                <outlet property="priceLabel" destination="QuC-Z4-4Ak" id="1J3-A6-4BP"/>
+                <outlet property="productImageView" destination="9q3-5V-9U5" id="Tjm-Gs-NVf"/>
+            </connections>
             <point key="canvasLocation" x="306.5" y="-44"/>
         </collectionViewCell>
     </objects>

@@ -57,7 +57,6 @@
 		0CAB81B31C86817C00B653A9 /* ChangeAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB7F101C86817B00B653A9 /* ChangeAddressViewController.xib */; };
 		0CAB81B41C86817C00B653A9 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB7F111C86817B00B653A9 /* MapViewController.swift */; };
 		0CAB81B51C86817C00B653A9 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAB7F121C86817B00B653A9 /* MapViewController.xib */; };
-		0CAB81B61C86817C00B653A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB7F141C86817B00B653A9 /* AppDelegate.swift */; };
 		0CAB81B71C86817C00B653A9 /* CartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB7F171C86817B00B653A9 /* CartModel.swift */; };
 		0CAB81B81C86817C00B653A9 /* CartProductDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB7F181C86817B00B653A9 /* CartProductDetailsModel.swift */; };
 		0CAB81B91C86817C00B653A9 /* CartProductAttributeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB7F1A1C86817B00B653A9 /* CartProductAttributeTableViewCell.swift */; };
@@ -552,6 +551,7 @@
 		0CD262281CBF38EA00DDCBA9 /* CountryViewController5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD262241CBF38EA00DDCBA9 /* CountryViewController5.xib */; };
 		0CD262291CBF38EA00DDCBA9 /* CountryViewController6.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD262251CBF38EA00DDCBA9 /* CountryViewController6.xib */; };
 		0CD2622A1CBF38EA00DDCBA9 /* CountryViewController6plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD262261CBF38EA00DDCBA9 /* CountryViewController6plus.xib */; };
+		26B1F4001D378196008FA0B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B1F3FF1D378196008FA0B1 /* AppDelegate.swift */; };
 		26DE97951D348D8200D7040A /* LayoutTwelveCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DE97931D348D8200D7040A /* LayoutTwelveCollectionViewCell.swift */; };
 		26DE97961D348D8200D7040A /* LayoutTwelveCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DE97941D348D8200D7040A /* LayoutTwelveCollectionViewCell.xib */; };
 		26DE97991D348DF800D7040A /* LayoutThirteenCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DE97971D348DF800D7040A /* LayoutThirteenCollectionViewCell.swift */; };
@@ -697,7 +697,6 @@
 		0CAB7F101C86817B00B653A9 /* ChangeAddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangeAddressViewController.xib; sourceTree = "<group>"; };
 		0CAB7F111C86817B00B653A9 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		0CAB7F121C86817B00B653A9 /* MapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
-		0CAB7F141C86817B00B653A9 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0CAB7F171C86817B00B653A9 /* CartModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartModel.swift; sourceTree = "<group>"; };
 		0CAB7F181C86817B00B653A9 /* CartProductDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartProductDetailsModel.swift; sourceTree = "<group>"; };
 		0CAB7F1A1C86817B00B653A9 /* CartProductAttributeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartProductAttributeTableViewCell.swift; sourceTree = "<group>"; };
@@ -1199,6 +1198,7 @@
 		0CD262251CBF38EA00DDCBA9 /* CountryViewController6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryViewController6.xib; sourceTree = "<group>"; };
 		0CD262261CBF38EA00DDCBA9 /* CountryViewController6plus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryViewController6plus.xib; sourceTree = "<group>"; };
 		13599842A00C070178791D1F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		26B1F3FF1D378196008FA0B1 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = YiLinkerOnlineBuyer/resources/AppDelegate/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
 		26DE97931D348D8200D7040A /* LayoutTwelveCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LayoutTwelveCollectionViewCell.swift; path = YiLinkerOnlineBuyer/resources/Home/View/LayoutTwelveCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
 		26DE97941D348D8200D7040A /* LayoutTwelveCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LayoutTwelveCollectionViewCell.xib; path = YiLinkerOnlineBuyer/resources/Home/View/LayoutTwelveCollectionViewCell.xib; sourceTree = SOURCE_ROOT; };
 		26DE97971D348DF800D7040A /* LayoutThirteenCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LayoutThirteenCollectionViewCell.swift; path = YiLinkerOnlineBuyer/resources/Home/View/LayoutThirteenCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -1523,7 +1523,7 @@
 		0CAB7F131C86817B00B653A9 /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
-				0CAB7F141C86817B00B653A9 /* AppDelegate.swift */,
+				26B1F3FF1D378196008FA0B1 /* AppDelegate.swift */,
 			);
 			path = AppDelegate;
 			sourceTree = "<group>";
@@ -3747,6 +3747,7 @@
 				0CAB832A1C86817C00B653A9 /* ResultViewController.swift in Sources */,
 				0CAB819D1C86817C00B653A9 /* DeliveryLogsSectionModel.swift in Sources */,
 				0CAB82DD1C86817C00B653A9 /* ProductReviewHeaderView.swift in Sources */,
+				26B1F4001D378196008FA0B1 /* AppDelegate.swift in Sources */,
 				0CAB81D31C86817C00B653A9 /* IncompleteRequirementsTableViewCell.swift in Sources */,
 				0CAB82CE1C86817C00B653A9 /* ProductUnitsModel.swift in Sources */,
 				0CAB82C61C86817C00B653A9 /* ProductAttributeModel.swift in Sources */,
@@ -3833,7 +3834,6 @@
 				0CAB81C31C86817C00B653A9 /* CategoriesViewController.swift in Sources */,
 				0CAB82781C86817C00B653A9 /* SellerCarouselCollectionViewCell.swift in Sources */,
 				0CAB82241C86817C00B653A9 /* OneByOneCollectionViewFlowLayout.swift in Sources */,
-				0CAB81B61C86817C00B653A9 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

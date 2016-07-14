@@ -1331,18 +1331,31 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - Thirteen Layout
     func layoutThirteenCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> LayoutThirteenCollectionViewCell {
         let layoutThirteenCVC: LayoutThirteenCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("LayoutThirteenCollectionViewCell", forIndexPath: indexPath) as! LayoutThirteenCollectionViewCell
+        
+//        println(self.homePageModel.data.count)
+//        let model: LayoutThirteenModel = self.homePageModel.data[2] as! LayoutThirteenModel
+//        
+//        layoutThirteenCVC.productImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(model.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+//            if let imageView = layoutThirteenCVC.productImageView {
+//                if downloadedImage != nil {
+//                    imageView.fadeInImageWithImage(downloadedImage)
+//                }
+//            }
+//        })
+
+        
         //        let layoutTenModel: LayoutTenModel = self.homePageModel.data[indexPath.section] as! LayoutTenModel
         //
         //        twoColumnGridCollectionViewCell.target = layoutTenModel.data[indexPath.row].target.targetUrl
         //        twoColumnGridCollectionViewCell.targetType = layoutTenModel.data[indexPath.row].target.targetType
         //
-        //        twoColumnGridCollectionViewCell.productItemImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutTenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
-        //            if let imageView = twoColumnGridCollectionViewCell.productItemImageView {
-        //                if downloadedImage != nil {
-        //                    imageView.fadeInImageWithImage(downloadedImage)
-        //                }
-        //            }
-        //        })
+//                twoColumnGridCollectionViewCell.productItemImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutTenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+//                    if let imageView = twoColumnGridCollectionViewCell.productItemImageView {
+//                        if downloadedImage != nil {
+//                            imageView.fadeInImageWithImage(downloadedImage)
+//                        }
+//                    }
+//                })
         //
         //        twoColumnGridCollectionViewCell.productNameLabel.text = layoutTenModel.data[indexPath.row].name
         //        twoColumnGridCollectionViewCell.discountedPriceLabel.text = layoutTenModel.data[indexPath.row].discountedPrice.addPesoSign()
