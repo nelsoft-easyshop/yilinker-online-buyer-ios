@@ -27,7 +27,9 @@ class TransactionProductDetailsDeliveryStatusModel: NSObject {
     }
     
     class func parseDataFromDictionary(dictionary: AnyObject) -> TransactionProductDetailsDeliveryStatusModel {
+        var deliveryStatusModel: TransactionProductDetailsDeliveryStatusModel?
         
+        let deliveryStatus: NSDictionary = dictionary["data"] as! NSDictionary
         var lastCheckedInBy: String = ""
         var lastCheckedInLocation: String = ""
         var pickupRider: String = ""
@@ -35,56 +37,74 @@ class TransactionProductDetailsDeliveryStatusModel: NSObject {
         var deliveryRider: String = ""
         var deliveryRiderContactNumber: String = ""
         
-        let deliveryStatus: NSArray = dictionary["data"] as! NSArray
-        if deliveryStatus.count != 0 {
-            for delivery in deliveryStatus as! [NSDictionary] {
-                if let val = delivery["lastCheckedInBy"] as? String {
-                    lastCheckedInBy = val
-                } else {
-                    lastCheckedInBy = "-"
-                }
-                
-                if let val = delivery["lastCheckedInLocation"] as? String {
-                    lastCheckedInLocation = val
-                } else {
-                    lastCheckedInLocation = "-"
-                }
-                
-                if let val = delivery["pickupRider"] as? String {
-                    pickupRider = val
-                } else {
-                    pickupRider = ""
-                }
-                
-                if let val = delivery["pickupRiderContactNumber"] as? String {
-                    pickupRiderContactNumber = val
-                } else {
-                    pickupRiderContactNumber = ""
-                }
-                
-                if let val = delivery["deliveryRider"] as? String {
+        if let deliveryLogs = deliveryStatus["deliveryLogs"] as? NSDictionary {
+            if let rider = deliveryLogs["deliveryRider"] as? NSDictionary {
+                if let val = rider["deliveryRider"] as? String {
                     deliveryRider = val
                 } else {
                     deliveryRider = "-"
                 }
                 
-                if let val = delivery["deliveryRiderContactNumber"] as? String {
+                if let val = rider["contactNumber"] as? String {
                     deliveryRiderContactNumber = val
                 } else {
                     deliveryRiderContactNumber = ""
                 }
             }
+            
+            if let pickUpRider = deliveryLogs["pickupRider"] as? NSDictionary {
+                if let val = pickUpRider["pickupRider"] as? String {
+                    pickupRider = val
+                } else {
+                    pickupRider = "-"
+                }
+                
+                if let val = pickUpRider["contactNumber"] as? String {
+                    pickupRiderContactNumber = val
+                } else {
+                    pickupRiderContactNumber = ""
+                }
+            }
+            
+            if let val = deliveryLogs["lastCheckedInBy"] as? String {
+                lastCheckedInBy = val
+            } else {
+                lastCheckedInBy = "-"
+            }
+            
+            if let val = deliveryLogs["lastCheckedinLocation"] as? String {
+                lastCheckedInLocation = val
+            } else {
+                lastCheckedInLocation = "-"
+            }
+        }
+        
+        return TransactionProductDetailsDeliveryStatusModel(lastCheckedInBy: lastCheckedInBy, lastCheckedInLocation: lastCheckedInLocation, pickupRider: pickupRider, pickupRiderContactNumber: pickupRiderContactNumber, deliveryRider: deliveryRider, deliveryRiderContactNumber: deliveryRiderContactNumber)
+        
+        /*if deliveryStatus.count != 0 {
+        
+        
+            var delivery: NSDictionary = deliveryStatus[0] as! NSDictionary
+            
+            
+            
         } else {
+            
+            var lastCheckedInBy: String = ""
+            var lastCheckedInLocation: String = ""
+            var pickupRider: String = ""
+            var pickupRiderContactNumber: String = ""
+            var deliveryRider: String = ""
+            var deliveryRiderContactNumber: String = ""
+            
             lastCheckedInBy = ""
             lastCheckedInLocation = ""
             pickupRider = ""
             pickupRiderContactNumber = ""
             deliveryRider = ""
             deliveryRiderContactNumber = ""
-        }
-        
-        var deliveryStatusModel = TransactionProductDetailsDeliveryStatusModel(lastCheckedInBy: lastCheckedInBy, lastCheckedInLocation: lastCheckedInLocation, pickupRider: pickupRider, pickupRiderContactNumber: pickupRiderContactNumber, deliveryRider: deliveryRider, deliveryRiderContactNumber: deliveryRiderContactNumber)
-        
-        return deliveryStatusModel
+            deliveryStatusModel = TransactionProductDetailsDeliveryStatusModel(lastCheckedInBy: lastCheckedInBy, lastCheckedInLocation: lastCheckedInLocation, pickupRider: pickupRider, pickupRiderContactNumber: pickupRiderContactNumber, deliveryRider: deliveryRider, deliveryRiderContactNumber: deliveryRiderContactNumber)
+            return deliveryStatusModel!
+        }*/
     }
 }
