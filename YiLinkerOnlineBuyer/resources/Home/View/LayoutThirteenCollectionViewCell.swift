@@ -11,6 +11,7 @@ import UIKit
 
 class LayoutThirteenCollectionViewCell: UICollectionViewCell {
 
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var labelContainerView: UIView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
@@ -22,12 +23,12 @@ class LayoutThirteenCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
         
-//        self.layer.cornerRadius = 2.0
-//        self.layer.borderWidth = 1.0
-//        self.layer.borderColor = Constants.Colors.backgroundGray.CGColor
+        containerView.layer.cornerRadius = 2.0
+        containerView.layer.borderWidth = 1.0
+        containerView.layer.borderColor = Constants.Colors.backgroundGray.CGColor
         
-        let whiteView: UIView = UIView(frame: self.bounds)
-        whiteView.backgroundColor = UIColor.redColor()
+//        let whiteView: UIView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 250))
+//        whiteView.backgroundColor = UIColor.redColor()
 //        self.addSubview(whiteView)
     }
 

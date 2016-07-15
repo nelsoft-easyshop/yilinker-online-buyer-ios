@@ -67,7 +67,7 @@ struct SectionHeight {
     static let sectionEleven: CGFloat = 150
     static let layoutHeader: CGFloat = 40.0
     static let sectionTwelve: CGFloat = 199
-    static let sectionThirteen: CGFloat = 255
+    static let sectionThirteen: CGFloat = 280
     
 }
 
@@ -410,7 +410,7 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
 //        let key = self.layoutKeyForIndexPath(indexPath)
 //        self.layoutAttributes[key] = attributes
         
-        let horizontalInset: CGFloat = 5//5.0
+        let horizontalInset: CGFloat = 0//5.0
         var defaultYPosition = self.sectionYOffsetWithSectionNumber(section) + SectionHeight.layoutHeader + horizontalInset
         let path = NSIndexPath(forItem: 0, inSection: section)
         
@@ -423,7 +423,7 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
         var yPosition: CGFloat = defaultYPosition
         
         let numberOfItems = self.collectionView?.numberOfItemsInSection(section)
-        let initialMargin: CGFloat = 8//8
+        let initialMargin: CGFloat = 0//8
         
         var itemSize: CGSize = CGSizeZero
         
@@ -439,18 +439,19 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
                 yPosition = yPosition + SectionHeight.sectionTwelve + horizontalInset
             } else {
                 // adding cells
-                let cellHeight: CGFloat = 100
+                let cellHeight: CGFloat = 120
                 
                 itemSize = CGSizeMake(screenWidth, cellHeight)
-                println(item)
+
                 if (item + 1) % 2 != 0 {
                     if (item + 1) != 1 {
                         xPosition = horizontalInset
-                        yPosition = yPosition + cellHeight + horizontalInset
+                        yPosition = yPosition + cellHeight - 6.0// + horizontalInset
                     }
                 } else {
                     if item != 0 {
-                        xPosition = xPosition + screenWidth + horizontalInset
+                        itemSize.width += 4
+                        xPosition = xPosition + screenWidth - 5.0// + horizontalInset
                     }
                     
                 }
@@ -466,7 +467,7 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
     
     //MARK: Layout Thirteen
     func layoutThirteen(section: Int) {
-        let horizontalInset: CGFloat = 5.0
+        let horizontalInset: CGFloat = 0//5.0
         var defaultYPosition = self.sectionYOffsetWithSectionNumber(section) + SectionHeight.layoutHeader + horizontalInset
         let path = NSIndexPath(forItem: 0, inSection: section)
         
@@ -478,7 +479,7 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
         var yPosition: CGFloat = defaultYPosition
         
         let numberOfItems = self.collectionView?.numberOfItemsInSection(section)
-        let initialMargin: CGFloat = 8
+        let initialMargin: CGFloat = 0//8
         
         var itemSize: CGSize = CGSizeZero
         
@@ -487,18 +488,19 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
         for var item = 0; item < numberOfItems; item++ {
             let indexPath = NSIndexPath(forItem: item, inSection: section)
             let attribute = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
-            let cellHeight: CGFloat = 100
+            let cellHeight: CGFloat = 120
             
             itemSize = CGSizeMake(screenWidth, cellHeight)
             
             if (item + 1) % 2 != 0 {
                 if (item + 1) != 1 {
                     xPosition = horizontalInset
-                    yPosition = yPosition + cellHeight + horizontalInset
+                    yPosition = yPosition + cellHeight - 6.0// + horizontalInset
                 }
             } else {
                 if item != 0 {
-                    xPosition = xPosition + screenWidth + horizontalInset
+                    itemSize.width += 4
+                    xPosition = xPosition + screenWidth - 5.0// + horizontalInset
                 }
                 
             }
