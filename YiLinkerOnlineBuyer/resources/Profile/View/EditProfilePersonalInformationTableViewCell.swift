@@ -38,6 +38,7 @@ class EditProfilePersonalInformationTableViewCell: UITableViewCell, UITextFieldD
     @IBOutlet weak var languageValueLabel: UILabel!
     @IBOutlet weak var countryView: UIView!
     @IBOutlet weak var languageView: UIView!
+    @IBOutlet weak var mobileNumberLabel: UILabel!
     
     @IBOutlet weak var personalInfoLabel: UILabel!
     @IBOutlet weak var firstNameLabel: UILabel!
@@ -50,6 +51,7 @@ class EditProfilePersonalInformationTableViewCell: UITableViewCell, UITextFieldD
     var changeLocalizeString: String = ""
     
     @IBOutlet weak var viewImageConstraint: NSLayoutConstraint!
+    @IBOutlet weak var mobileNumberConstraint: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -106,6 +108,16 @@ class EditProfilePersonalInformationTableViewCell: UITableViewCell, UITextFieldD
         let languageGesture = UIGestureRecognizer(target: self, action: "didTapLanguage")
         self.languageValueLabel.addGestureRecognizer(languageGesture)
         self.languageView.addGestureRecognizer(languageGesture)
+    }
+    
+    func showMobileNumberError(show: Bool) {
+        if show {
+            self.mobileNumberLabel.hidden = false
+            self.mobileNumberConstraint.constant = 15
+        } else {
+            self.mobileNumberLabel.hidden = true
+            self.mobileNumberConstraint.constant = 0
+        }
     }
     
     @IBAction func editingAction(sender: AnyObject) {
