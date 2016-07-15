@@ -122,7 +122,7 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
             }
         }
         
-        self.collectionView?.backgroundColor = .whiteColor()
+//        self.collectionView?.backgroundColor = .greenColor()
     }
     
     //MARK: Layout One
@@ -410,7 +410,7 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
 //        let key = self.layoutKeyForIndexPath(indexPath)
 //        self.layoutAttributes[key] = attributes
         
-        let horizontalInset: CGFloat = 5.0
+        let horizontalInset: CGFloat = 5//5.0
         var defaultYPosition = self.sectionYOffsetWithSectionNumber(section) + SectionHeight.layoutHeader + horizontalInset
         let path = NSIndexPath(forItem: 0, inSection: section)
         
@@ -423,7 +423,7 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
         var yPosition: CGFloat = defaultYPosition
         
         let numberOfItems = self.collectionView?.numberOfItemsInSection(section)
-        let initialMargin: CGFloat = 8
+        let initialMargin: CGFloat = 8//8
         
         var itemSize: CGSize = CGSizeZero
         
@@ -435,7 +435,7 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
 
             if item == -1 {
                 // adding three images layout
-                attribute.frame = CGRectMake(6, defaultYPosition, screenRect!.width - 12 , SectionHeight.sectionTwelve)
+                attribute.frame = CGRectMake(0/*6*/, defaultYPosition - horizontalInset, screenRect!.width, SectionHeight.sectionTwelve)
                 yPosition = yPosition + SectionHeight.sectionTwelve + horizontalInset
             } else {
                 // adding cells

@@ -29,7 +29,6 @@ class HomePageModel: NSObject {
         var data: [AnyObject] = []
         
         var arrays: [NSDictionary] = []
-        
         arrays = dictionary["data"] as! [NSDictionary]
         
 //        for sectionDictionary in arrays {
@@ -64,6 +63,8 @@ class HomePageModel: NSObject {
 //            }
 //        }
         
+        data.append(LayoutOneModel.parseDataFromDictionary(arrays[0]))
+        data.append(LayoutThreeModel.parseDataFromDictionary(arrays[2]))
         data.append(LayoutTwelveModel.parseDataFromDictionary(arrays[10]))
         data.append(LayoutThirteenModel.parseDataFromDictionary(arrays[10]))
         data.append(LayoutThirteenModel.parseDataFromDictionary(arrays[10]))

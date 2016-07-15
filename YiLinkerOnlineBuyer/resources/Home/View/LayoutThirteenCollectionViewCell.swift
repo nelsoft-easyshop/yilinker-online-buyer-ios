@@ -22,9 +22,13 @@ class LayoutThirteenCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        self.layer.cornerRadius = 2.0
-        self.layer.borderWidth = 1.0
-        self.layer.borderColor = Constants.Colors.backgroundGray.CGColor
+//        self.layer.cornerRadius = 2.0
+//        self.layer.borderWidth = 1.0
+//        self.layer.borderColor = Constants.Colors.backgroundGray.CGColor
+        
+        let whiteView: UIView = UIView(frame: self.bounds)
+        whiteView.backgroundColor = UIColor.redColor()
+//        self.addSubview(whiteView)
     }
 
     
