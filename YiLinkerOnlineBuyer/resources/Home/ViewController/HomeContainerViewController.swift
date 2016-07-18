@@ -9,7 +9,7 @@
 import UIKit
 
 
-class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate, SellerCarouselCollectionViewCellDataSource, SellerCarouselCollectionViewCellDelegate, LayoutNineCollectionViewCellDelegate, DailyLoginCollectionViewCellDataSource, DailyLoginCollectionViewCellDelegate, FABViewControllerDelegate, OverseasCollectionViewCellDelegate, OverseasCollectionViewCellDataSource {
+class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate, SellerCarouselCollectionViewCellDataSource, SellerCarouselCollectionViewCellDelegate, LayoutNineCollectionViewCellDelegate, DailyLoginCollectionViewCellDataSource, DailyLoginCollectionViewCellDelegate, FABViewControllerDelegate, OverseasCollectionViewCellDelegate, OverseasCollectionViewCellDataSource, LayoutTwelveCollectionViewCellDelegate {
     
     let featured: String = StringHelper.localizedStringWithKey("FEATURED_LOCALIZE_KEY")
     let hotItems: String = StringHelper.localizedStringWithKey("HOT_ITEMS_LOCALIZE_KEY")
@@ -531,7 +531,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.homePageModel = HomePageModel.parseDataFromDictionary(dictionary)
         self.layouts.removeAll(keepCapacity: true)
         for (index, model) in enumerate(self.homePageModel.data) {
-            println(model)
+
             if model.isKindOfClass(LayoutOneModel) {
                 self.layouts.append("1")
                 self.loadImageInSectionOne(model as! LayoutOneModel)
@@ -541,14 +541,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 self.layouts.append("3")
             } else if model.isKindOfClass(LayoutFourModel) {
                 let layoutFourModel: LayoutFourModel = self.homePageModel.data[index] as! LayoutFourModel
-                
-                if layoutFourModel.remainingTime != 0 {
+                // MARK: TODO
+//                if layoutFourModel.remainingTime != 0 {
                     self.remainingTime = layoutFourModel.remainingTime
-                    self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
+//                    self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
                     self.layouts.append("4")
-                } else {
-                    self.homePageModel.data.removeAtIndex(index)
-                }
+//                } else {
+//                    self.homePageModel.data.removeAtIndex(index)
+//                }
                 
             } else if model.isKindOfClass(LayoutFiveModel) {
                 self.layouts.append("5")
@@ -754,6 +754,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             return 5
         case 13:
             return 4//self.homePageModel.data[section].data.count
+        case 14:
+            return 4
         default:
             return 0
         }
@@ -1297,32 +1299,40 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     func layoutTwelveCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> LayoutTwelveCollectionViewCell {
         let layoutTwelveCVC: LayoutTwelveCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("LayoutTwelveCollectionViewCell", forIndexPath: indexPath) as! LayoutTwelveCollectionViewCell
         
-//        let layoutTenModel: LayoutTenModel = self.homePageModel.data[indexPath.section] as! LayoutTenModel
-//        
-//        twoColumnGridCollectionViewCell.target = layoutTenModel.data[indexPath.row].target.targetUrl
-//        twoColumnGridCollectionViewCell.targetType = layoutTenModel.data[indexPath.row].target.targetType
-//        
-//        twoColumnGridCollectionViewCell.productItemImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(layoutTenModel.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: { (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
-//            if let imageView = twoColumnGridCollectionViewCell.productItemImageView {
-//                if downloadedImage != nil {
-//                    imageView.fadeInImageWithImage(downloadedImage)
-//                }
-//            }
-//        })
-//        
-//        twoColumnGridCollectionViewCell.productNameLabel.text = layoutTenModel.data[indexPath.row].name
-//        twoColumnGridCollectionViewCell.discountedPriceLabel.text = layoutTenModel.data[indexPath.row].discountedPrice.addPesoSign()
-//        twoColumnGridCollectionViewCell.discountPercentageLabel.text = layoutTenModel.data[indexPath.row].discountPercentage.formatToPercentage()
-//        twoColumnGridCollectionViewCell.originalPriceLabel.text = layoutTenModel.data[indexPath.row].originalPrice.addPesoSign()
-//        twoColumnGridCollectionViewCell.originalPriceLabel.drawDiscountLine(false)
-//        
-//        if layoutTenModel.data[indexPath.row].discountPercentage.toDouble() == 0 || layoutTenModel.data[indexPath.row].discountPercentage.toDouble() == nil {
-//            twoColumnGridCollectionViewCell.discountPercentageLabel.hidden = true
-//            twoColumnGridCollectionViewCell.originalPriceLabel.hidden = true
-//        } else {
-//            twoColumnGridCollectionViewCell.discountPercentageLabel.hidden = false
-//            twoColumnGridCollectionViewCell.originalPriceLabel.hidden = false
-//        }
+        layoutTwelveCVC.delegate = self
+        
+        let model: LayoutTwelveModel = self.homePageModel.data[indexPath.section] as! LayoutTwelveModel
+        
+        if model.data.count == 3 {
+            
+            layoutTwelveCVC.leftImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(model.data[0].image), placeholderImage: UIImage(named: self.placeHolder), completed: {
+                (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                if let imageView = layoutTwelveCVC.leftImageView {
+                    if downloadedImage != nil {
+                        imageView.fadeInImageWithImage(downloadedImage)
+                    }
+                }
+            })
+            
+            layoutTwelveCVC.rightUpperImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(model.data[1].image), placeholderImage: UIImage(named: self.placeHolder), completed: {
+                (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                if let imageView = layoutTwelveCVC.rightUpperImageView {
+                    if downloadedImage != nil {
+                        imageView.fadeInImageWithImage(downloadedImage)
+                    }
+                }
+            })
+            
+            layoutTwelveCVC.rightLowerImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(model.data[2].image), placeholderImage: UIImage(named: self.placeHolder), completed: {
+                (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                if let imageView = layoutTwelveCVC.rightLowerImageView {
+                    if downloadedImage != nil {
+                        imageView.fadeInImageWithImage(downloadedImage)
+                    }
+                }
+            })
+            
+        }
         
         return layoutTwelveCVC
     }
@@ -2259,5 +2269,11 @@ extension HomeContainerViewController: OverseasCollectionViewCellDelegate {
         let fullImageCell: FullImageCollectionViewCell = carouselCollectionViewCell.collectionView.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
         
         self.didClickItemWithTarget(fullImageCell.target, targetType: fullImageCell.targetType)
+    }
+}
+
+extension HomeContainerViewController: LayoutTwelveCollectionViewCellDelegate {
+    func layoutTwelveCollectionViewCellDidClickProductImage(productImage: ProductImageView) {
+        self.didClickItemWithTarget(productImage.target, targetType: productImage.targetType, sectionTitle: "")
     }
 }

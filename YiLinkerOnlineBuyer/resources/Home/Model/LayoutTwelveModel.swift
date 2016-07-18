@@ -40,7 +40,7 @@ class LayoutTwelveModel: NSObject {
         }
         
         if let temp = dictionary["sectionTitle"] as? String {
-            sectionTitle = "Promo Sample"
+            sectionTitle = temp
         }
         
         if let temp = dictionary["isViewMoreAvailable"] as? Bool {

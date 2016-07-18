@@ -18,6 +18,10 @@ class LayoutThirteenCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var discountLabel: UILabel!
     @IBOutlet weak var productImageView: UIImageView!
     
+    var productModel: HomePageProductModel?
+    
+    var target: String = ""
+    var targetType: String = ""
     
     override func awakeFromNib() {
         super.awakeFromNib()

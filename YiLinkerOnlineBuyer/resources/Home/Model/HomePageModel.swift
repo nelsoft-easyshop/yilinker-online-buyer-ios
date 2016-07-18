@@ -30,44 +30,46 @@ class HomePageModel: NSObject {
         
         var arrays: [NSDictionary] = []
         arrays = dictionary["data"] as! [NSDictionary]
-        
-//        for sectionDictionary in arrays {
-//            let layoutId: Int = sectionDictionary["layoutId"] as! Int
-//            var ctr = 0
-//            if layoutId == 1 {
-//                data.append(LayoutOneModel.parseDataFromDictionary(sectionDictionary))
-//            } else if layoutId == 2 {
-//                data.append(LayoutTwoModel.parseDataFromDictionary(sectionDictionary))
-//            } else if layoutId == 3 {
-//                data.append(LayoutThreeModel.parseDataFromDictionary(sectionDictionary))
-//            } else if layoutId == 4 {
+
+        for sectionDictionary in arrays {
+            let layoutId: Int = sectionDictionary["layoutId"] as! Int
+
+            if layoutId == 1 {
+                data.append(LayoutOneModel.parseDataFromDictionary(sectionDictionary))
+            } else if layoutId == 2 {
+                data.append(LayoutTwoModel.parseDataFromDictionary(sectionDictionary))
+            } else if layoutId == 3 {
+                data.append(LayoutThreeModel.parseDataFromDictionary(sectionDictionary))
+            } else if layoutId == 4 {
 //                data.append(LayoutFourModel.parseDataFromDictionary(sectionDictionary))
-//            } else if layoutId == 5 {
-//                data.append(LayoutFiveModel.parseDataFromDictionary(sectionDictionary))
-//            } else if layoutId == 6 {
-//                data.append(LayoutSixModel.parseDataFromDictionary(sectionDictionary))
-//            } else if layoutId == 7 {
-//                data.append(LayoutSevenModel.parseDataFromDictionary(sectionDictionary))
-//            } else if layoutId == 8 {
-//                data.append(LayoutEightModel.parseDataFromDictionary(sectionDictionary))
-//            } else if layoutId == 9 {
-//                data.append(LayoutNineModel.parseDataFromDictionary(sectionDictionary))
-//            } else if layoutId == 10 {
-//                data.append(LayoutTenModel.parseDataFromDictionary(sectionDictionary))
-//            } else if layoutId == 11 {
-//                data.append(LayoutElevenModel.parseDataFromDictionary(sectionDictionary))
-//            } else if layoutId == 12 {
+            } else if layoutId == 5 {
+                data.append(LayoutFiveModel.parseDataFromDictionary(sectionDictionary))
+            } else if layoutId == 6 {
+                data.append(LayoutSixModel.parseDataFromDictionary(sectionDictionary))
+            } else if layoutId == 7 {
+                data.append(LayoutSevenModel.parseDataFromDictionary(sectionDictionary))
+            } else if layoutId == 8 {
+                data.append(LayoutEightModel.parseDataFromDictionary(sectionDictionary))
+            } else if layoutId == 9 {
+                data.append(LayoutNineModel.parseDataFromDictionary(sectionDictionary))
+            } else if layoutId == 10 {
+                data.append(LayoutTenModel.parseDataFromDictionary(sectionDictionary))
+            } else if layoutId == 11 {
+                data.append(LayoutElevenModel.parseDataFromDictionary(sectionDictionary))
+            } else if layoutId == 12 {
+                if let temps = sectionDictionary["data"] as? [NSDictionary] {
+                    data.append(LayoutTwelveModel.parseDataFromDictionary(temps[0]))
+                    data.append(LayoutThirteenModel.parseDataFromDictionary(temps[1]))
+                }
 //                data.append(LayoutTwelveModel.parseDataFromDictionary(sectionDictionary))
-//            } else if layoutId == 13 {
+            } else if layoutId == 13 {
 //                data.append(LayoutThirteenModel.parseDataFromDictionary(sectionDictionary))
-//            }
-//        }
+            } else if layoutId == 14 {
+                data.append(LayoutThirteenModel.parseDataFromDictionary(sectionDictionary))
+            }
+        }
         
-        data.append(LayoutOneModel.parseDataFromDictionary(arrays[0]))
-        data.append(LayoutThreeModel.parseDataFromDictionary(arrays[2]))
-        data.append(LayoutTwelveModel.parseDataFromDictionary(arrays[10]))
-        data.append(LayoutThirteenModel.parseDataFromDictionary(arrays[10]))
-        data.append(LayoutThirteenModel.parseDataFromDictionary(arrays[10]))
+        
         
         if let temp = dictionary["message"] as? String {
             message = temp

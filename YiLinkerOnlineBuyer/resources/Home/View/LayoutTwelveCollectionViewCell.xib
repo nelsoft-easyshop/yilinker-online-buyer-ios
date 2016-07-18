@@ -15,16 +15,16 @@
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OLg-0f-eJc">
                         <rect key="frame" x="5" y="5" width="376" height="199"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="webview_background" translatesAutoresizingMaskIntoConstraints="NO" id="5xe-AB-ZQM">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="webview_background" translatesAutoresizingMaskIntoConstraints="NO" id="5xe-AB-ZQM" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="186" height="199"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="17Z-r4-60F" userLabel="Two Images Container View">
                                 <rect key="frame" x="190" y="0.0" width="186" height="199"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dragonpay" translatesAutoresizingMaskIntoConstraints="NO" id="B5U-eX-YOU">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dragonpay" translatesAutoresizingMaskIntoConstraints="NO" id="B5U-eX-YOU" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="186" height="98"/>
                                     </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy_cover_photo" translatesAutoresizingMaskIntoConstraints="NO" id="Vxo-9M-lTK">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy_cover_photo" translatesAutoresizingMaskIntoConstraints="NO" id="Vxo-9M-lTK" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="101" width="186" height="98"/>
                                     </imageView>
                                 </subviews>
@@ -71,9 +71,9 @@
             </constraints>
             <size key="customSize" width="375" height="199"/>
             <connections>
-                <outlet property="leftImageView" destination="5xe-AB-ZQM" id="pbU-T0-Mpq"/>
-                <outlet property="rightLowerImageView" destination="Vxo-9M-lTK" id="y9M-Km-xLT"/>
-                <outlet property="rightUpperImageView" destination="B5U-eX-YOU" id="YpE-f9-aLK"/>
+                <outlet property="leftImageView" destination="5xe-AB-ZQM" id="9P7-B5-ZWI"/>
+                <outlet property="rightLowerImageView" destination="Vxo-9M-lTK" id="8bY-Fq-5Qz"/>
+                <outlet property="rightUpperImageView" destination="B5U-eX-YOU" id="TgR-l7-TM4"/>
             </connections>
             <point key="canvasLocation" x="325" y="260.5"/>
         </collectionViewCell>

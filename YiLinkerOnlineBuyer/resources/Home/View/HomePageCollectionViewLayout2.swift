@@ -395,74 +395,74 @@ class HomePageCollectionViewLayout2: UICollectionViewLayout {
     
     //MARK: Layout Twelve
     func layoutTwelve(section: Int) {
-//        let horizontalInset: CGFloat = 5.0
-//        let numberOfItems = self.collectionView?.numberOfItemsInSection(section)
-//        let indexPath = NSIndexPath(forItem: 0, inSection: section)
-//        let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
-//        
-//        //Add Header View
-//        let headerView: (attribute: UICollectionViewLayoutAttributes, key: String) = headerViewWithYPosition(self.sectionYOffsetWithSectionNumber(section), path: indexPath)
-//        self.layoutAttributes[headerView.key] = headerView.attribute
-//        
-//        // size of the view/layout
-//        attributes.frame = CGRectMake(8, self.sectionYOffsetWithSectionNumber(section) + SectionHeight.layoutHeader + horizontalInset, screenRect!.width - 16 , SectionHeight.sectionTwelve)
-//
-//        let key = self.layoutKeyForIndexPath(indexPath)
-//        self.layoutAttributes[key] = attributes
-        
-        let horizontalInset: CGFloat = 0//5.0
-        var defaultYPosition = self.sectionYOffsetWithSectionNumber(section) + SectionHeight.layoutHeader + horizontalInset
-        let path = NSIndexPath(forItem: 0, inSection: section)
+        let horizontalInset: CGFloat = 0.0
+        let numberOfItems = self.collectionView?.numberOfItemsInSection(section)
+        let indexPath = NSIndexPath(forItem: 0, inSection: section)
+        let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
         
         //Add Header View
-        let headerView: (attribute: UICollectionViewLayoutAttributes, key: String) = headerViewWithYPosition(self.sectionYOffsetWithSectionNumber(section), path: path)
+        let headerView: (attribute: UICollectionViewLayoutAttributes, key: String) = headerViewWithYPosition(self.sectionYOffsetWithSectionNumber(section), path: indexPath)
         self.layoutAttributes[headerView.key] = headerView.attribute
         
-        //Add cells
-        var xPosition: CGFloat = horizontalInset
-        var yPosition: CGFloat = defaultYPosition
-        
-        let numberOfItems = self.collectionView?.numberOfItemsInSection(section)
-        let initialMargin: CGFloat = 0//8
-        
-        var itemSize: CGSize = CGSizeZero
-        
-        let screenWidth: CGFloat =  ((screenRect!.width - (horizontalInset * 3)) /  2)
-        
-        for var item = -1; item < 4; item++ {
-            let indexPath = NSIndexPath(forItem: item + 1, inSection: section)
-            let attribute = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+        // size of the view/layout
+        attributes.frame = CGRectMake(0, self.sectionYOffsetWithSectionNumber(section) + SectionHeight.layoutHeader + horizontalInset, screenRect!.width , SectionHeight.sectionTwelve)
 
-            if item == -1 {
-                // adding three images layout
-                attribute.frame = CGRectMake(0/*6*/, defaultYPosition - horizontalInset, screenRect!.width, SectionHeight.sectionTwelve)
-                yPosition = yPosition + SectionHeight.sectionTwelve + horizontalInset
-            } else {
-                // adding cells
-                let cellHeight: CGFloat = 120
-                
-                itemSize = CGSizeMake(screenWidth, cellHeight)
-
-                if (item + 1) % 2 != 0 {
-                    if (item + 1) != 1 {
-                        xPosition = horizontalInset
-                        yPosition = yPosition + cellHeight - 6.0// + horizontalInset
-                    }
-                } else {
-                    if item != 0 {
-                        itemSize.width += 4
-                        xPosition = xPosition + screenWidth - 5.0// + horizontalInset
-                    }
-                    
-                }
-                
-                attribute.frame = CGRectMake(xPosition, yPosition, itemSize.width, itemSize.height)
-            }
-            
-            
-            let key: String = self.layoutKeyForIndexPath(indexPath)
-            self.layoutAttributes[key] = attribute
-        }
+        let key = self.layoutKeyForIndexPath(indexPath)
+        self.layoutAttributes[key] = attributes
+        
+//        let horizontalInset: CGFloat = 0//5.0
+//        var defaultYPosition = self.sectionYOffsetWithSectionNumber(section) + SectionHeight.layoutHeader + horizontalInset
+//        let path = NSIndexPath(forItem: 0, inSection: section)
+//        
+//        //Add Header View
+//        let headerView: (attribute: UICollectionViewLayoutAttributes, key: String) = headerViewWithYPosition(self.sectionYOffsetWithSectionNumber(section), path: path)
+//        self.layoutAttributes[headerView.key] = headerView.attribute
+//        
+//        //Add cells
+//        var xPosition: CGFloat = horizontalInset
+//        var yPosition: CGFloat = defaultYPosition
+//        
+//        let numberOfItems = self.collectionView?.numberOfItemsInSection(section)
+//        let initialMargin: CGFloat = 0//8
+//        
+//        var itemSize: CGSize = CGSizeZero
+//        
+//        let screenWidth: CGFloat =  ((screenRect!.width - (horizontalInset * 3)) /  2)
+//        
+//        for var item = -1; item < numberOfItems; item++ {
+//            let indexPath = NSIndexPath(forItem: item + 1, inSection: section)
+//            let attribute = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+//
+//            if item == -1 {
+//                // adding three images layout
+//                attribute.frame = CGRectMake(0/*6*/, defaultYPosition - horizontalInset, screenRect!.width, SectionHeight.sectionTwelve)
+//                yPosition = yPosition + SectionHeight.sectionTwelve + horizontalInset
+//            } else {
+//                // adding cells
+//                let cellHeight: CGFloat = 120
+//                
+//                itemSize = CGSizeMake(screenWidth, cellHeight)
+//
+//                if (item + 1) % 2 != 0 {
+//                    if (item + 1) != 1 {
+//                        xPosition = horizontalInset
+//                        yPosition = yPosition + cellHeight - 6.0// + horizontalInset
+//                    }
+//                } else {
+//                    if item != 0 {
+//                        itemSize.width += 4
+//                        xPosition = xPosition + screenWidth - 5.0// + horizontalInset
+//                    }
+//                    
+//                }
+//                
+//                attribute.frame = CGRectMake(xPosition, yPosition, itemSize.width, itemSize.height)
+//            }
+//            
+//            
+//            let key: String = self.layoutKeyForIndexPath(indexPath)
+//            self.layoutAttributes[key] = attribute
+//        }
     }
     
     //MARK: Layout Thirteen

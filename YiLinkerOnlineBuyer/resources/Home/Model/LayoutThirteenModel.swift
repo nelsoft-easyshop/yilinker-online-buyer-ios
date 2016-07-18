@@ -41,8 +41,8 @@ class LayoutThirteenModel: NSObject {
         
         if let temp = dictionary["sectionTitle"] as? String {
             sectionTitle = temp
+            println(sectionTitle)
         }
-        sectionTitle = "Electronics"
         
         if let temp = dictionary["isViewMoreAvailable"] as? Bool {
             isViewMoreAvailable = temp
