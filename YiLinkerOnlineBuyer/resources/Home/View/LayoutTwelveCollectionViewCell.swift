@@ -14,9 +14,6 @@ protocol LayoutTwelveCollectionViewCellDelegate {
 
 class LayoutTwelveCollectionViewCell: UICollectionViewCell {
 
-//    @IBOutlet weak var leftImageView: UIImageView!
-//    @IBOutlet weak var rightUpperImageView: UIImageView!
-//    @IBOutlet weak var rightLowerImageView: UIImageView!
     @IBOutlet weak var leftImageView: ProductImageView!
     @IBOutlet weak var rightUpperImageView: ProductImageView!
     @IBOutlet weak var rightLowerImageView: ProductImageView!

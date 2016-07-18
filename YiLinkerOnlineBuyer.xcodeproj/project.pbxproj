@@ -552,6 +552,9 @@
 		0CD262291CBF38EA00DDCBA9 /* CountryViewController6.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD262251CBF38EA00DDCBA9 /* CountryViewController6.xib */; };
 		0CD2622A1CBF38EA00DDCBA9 /* CountryViewController6plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD262261CBF38EA00DDCBA9 /* CountryViewController6plus.xib */; };
 		26B1F4001D378196008FA0B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B1F3FF1D378196008FA0B1 /* AppDelegate.swift */; };
+		26D1BB871D3CB17E00A5E930 /* LayoutFourteenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D1BB861D3CB17E00A5E930 /* LayoutFourteenModel.swift */; };
+		26D1BB8A1D3CB40000A5E930 /* LayoutFourteenCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D1BB881D3CB40000A5E930 /* LayoutFourteenCollectionViewCell.swift */; };
+		26D1BB8B1D3CB40000A5E930 /* LayoutFourteenCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26D1BB891D3CB40000A5E930 /* LayoutFourteenCollectionViewCell.xib */; };
 		26DE97951D348D8200D7040A /* LayoutTwelveCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DE97931D348D8200D7040A /* LayoutTwelveCollectionViewCell.swift */; };
 		26DE97961D348D8200D7040A /* LayoutTwelveCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DE97941D348D8200D7040A /* LayoutTwelveCollectionViewCell.xib */; };
 		26DE97991D348DF800D7040A /* LayoutThirteenCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26DE97971D348DF800D7040A /* LayoutThirteenCollectionViewCell.swift */; };
@@ -1199,6 +1202,9 @@
 		0CD262261CBF38EA00DDCBA9 /* CountryViewController6plus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryViewController6plus.xib; sourceTree = "<group>"; };
 		13599842A00C070178791D1F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		26B1F3FF1D378196008FA0B1 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = YiLinkerOnlineBuyer/resources/AppDelegate/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
+		26D1BB861D3CB17E00A5E930 /* LayoutFourteenModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LayoutFourteenModel.swift; path = YiLinkerOnlineBuyer/resources/Home/Model/LayoutFourteenModel.swift; sourceTree = SOURCE_ROOT; };
+		26D1BB881D3CB40000A5E930 /* LayoutFourteenCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LayoutFourteenCollectionViewCell.swift; path = YiLinkerOnlineBuyer/resources/Home/View/LayoutFourteenCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
+		26D1BB891D3CB40000A5E930 /* LayoutFourteenCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LayoutFourteenCollectionViewCell.xib; path = YiLinkerOnlineBuyer/resources/Home/View/LayoutFourteenCollectionViewCell.xib; sourceTree = SOURCE_ROOT; };
 		26DE97931D348D8200D7040A /* LayoutTwelveCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LayoutTwelveCollectionViewCell.swift; path = YiLinkerOnlineBuyer/resources/Home/View/LayoutTwelveCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
 		26DE97941D348D8200D7040A /* LayoutTwelveCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LayoutTwelveCollectionViewCell.xib; path = YiLinkerOnlineBuyer/resources/Home/View/LayoutTwelveCollectionViewCell.xib; sourceTree = SOURCE_ROOT; };
 		26DE97971D348DF800D7040A /* LayoutThirteenCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LayoutThirteenCollectionViewCell.swift; path = YiLinkerOnlineBuyer/resources/Home/View/LayoutThirteenCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -2081,6 +2087,7 @@
 				0C8417DB1CC0C7A00076B9B9 /* LayoutElevenModel.swift */,
 				26DE979B1D348E0800D7040A /* LayoutTwelveModel.swift */,
 				26DE979D1D348E1200D7040A /* LayoutThirteenModel.swift */,
+				26D1BB861D3CB17E00A5E930 /* LayoutFourteenModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2133,6 +2140,8 @@
 				26DE97941D348D8200D7040A /* LayoutTwelveCollectionViewCell.xib */,
 				26DE97971D348DF800D7040A /* LayoutThirteenCollectionViewCell.swift */,
 				26DE97981D348DF800D7040A /* LayoutThirteenCollectionViewCell.xib */,
+				26D1BB881D3CB40000A5E930 /* LayoutFourteenCollectionViewCell.swift */,
+				26D1BB891D3CB40000A5E930 /* LayoutFourteenCollectionViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3333,6 +3342,7 @@
 				0CAB81AB1C86817C00B653A9 /* ChangeAddressCollectionViewCell.xib in Resources */,
 				0CAB82601C86817C00B653A9 /* FlashSaleCollectionViewCell.xib in Resources */,
 				0CAB81D01C86817C00B653A9 /* GuestCheckoutContainerViewController.xib in Resources */,
+				26D1BB8B1D3CB40000A5E930 /* LayoutFourteenCollectionViewCell.xib in Resources */,
 				0C77B32D1C87E77D0069D063 /* TransactionViews.xib in Resources */,
 				0CAB82111C86817C00B653A9 /* Panton Thin.otf in Resources */,
 				0CAB820E1C86817C00B653A9 /* Panton SemiBold Italic.otf in Resources */,
@@ -3581,6 +3591,7 @@
 				0CAB82481C86817C00B653A9 /* XibHelper.swift in Sources */,
 				799B9A4B1C8EACEA006472E8 /* EditProfileTableViewController.swift in Sources */,
 				0CAB83B51C86817C00B653A9 /* TodaysPromoViewController.swift in Sources */,
+				26D1BB871D3CB17E00A5E930 /* LayoutFourteenModel.swift in Sources */,
 				0CAB82EF1C86817C00B653A9 /* ProductViewController.swift in Sources */,
 				0CAB83821C86817C00B653A9 /* TransactionCancelViewController.swift in Sources */,
 				0CAB81F51C86817C00B653A9 /* SummaryViewController.swift in Sources */,
@@ -3605,6 +3616,7 @@
 				0CAB836B1C86817C00B653A9 /* TransactionLeaveFeedbackFieldTableViewCell.swift in Sources */,
 				0CAB83521C86817C00B653A9 /* StarterContentPageViewController.swift in Sources */,
 				0CAB82351C86817C00B653A9 /* APIManager.swift in Sources */,
+				26D1BB8A1D3CB40000A5E930 /* LayoutFourteenCollectionViewCell.swift in Sources */,
 				799B9A441C8EACEA006472E8 /* ProductImagesViewCollectionViewCell.swift in Sources */,
 				0CAB83861C86817C00B653A9 /* TransactionDeliveryLogViewController.swift in Sources */,
 				0CAB82221C86817C00B653A9 /* FABProfileCollectionViewCell.swift in Sources */,

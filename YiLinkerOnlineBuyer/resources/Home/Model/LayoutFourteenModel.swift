@@ -1,14 +1,15 @@
 //
-//  LayoutTwelveModel.swift
+//  LayoutFourteenModel.swift
 //  YiLinkerOnlineBuyer
 //
-//  Created by Rj Constantino on 7/12/16.
+//  Created by Rj Constantino on 7/18/16.
 //  Copyright (c) 2016 yiLinker-online-buyer. All rights reserved.
 //
 
 import UIKit
 
-class LayoutTwelveModel: NSObject {
+class LayoutFourteenModel: NSObject {
+    
     var layoutId: Int = 0
     var sectionTitle: String = ""
     var isViewMoreAvailable: Bool = false
@@ -27,8 +28,7 @@ class LayoutTwelveModel: NSObject {
         self.data = data
     }
     
-    class func parseDataFromDictionary(dictionary: NSDictionary) -> LayoutTwelveModel {
-
+    class func parseDataFromDictionary(dictionary: NSDictionary) -> LayoutFourteenModel {
         var layoutId: Int = 0
         var sectionTitle: String = ""
         var isViewMoreAvailable: Bool = false
@@ -37,11 +37,10 @@ class LayoutTwelveModel: NSObject {
         var data: [HomeProductModel] = []
         
         if let temp = dictionary["layoutId"] as? Int {
-            layoutId = 12
+            layoutId = temp
         }
         
         if let temp = dictionary["sectionTitle"] as? String {
-
             sectionTitle = temp
         }
         
@@ -54,13 +53,11 @@ class LayoutTwelveModel: NSObject {
         }
         
         if let temps = dictionary["data"] as? [NSDictionary] {
-//            data.append(HomeProductModel.parseDataFromDictionary(temps[0]))
-            println(temps)
             for temp in temps {
                 data.append(HomeProductModel.parseDataFromDictionary(temp))
             }
         }
         
-        return LayoutTwelveModel(layoutId: layoutId, sectionTitle: sectionTitle, isViewMoreAvailable: isViewMoreAvailable, viewMoreTarget: viewMoreTarget, data: data)
+        return LayoutFourteenModel(layoutId: layoutId, sectionTitle: sectionTitle, isViewMoreAvailable: isViewMoreAvailable, viewMoreTarget: viewMoreTarget, data: data)
     }
 }

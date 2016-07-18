@@ -36,7 +36,7 @@ class LayoutThirteenModel: NSObject {
         var data: [HomeProductModel] = []
         
         if let temp = dictionary["layoutId"] as? Int {
-            layoutId = temp
+            layoutId = 13
         }
         
         if let temp = dictionary["sectionTitle"] as? String {
