@@ -961,6 +961,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else if cell.isKindOfClass(VerticalImageCollectionViewCell) {
             let verticalCell: VerticalImageCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! VerticalImageCollectionViewCell
             self.didClickItemWithTarget(verticalCell.target, targetType: verticalCell.targetType)
+        } else if cell.isKindOfClass(LayoutThirteenCollectionViewCell) {
+            let layoutThirteen: LayoutThirteenCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! LayoutThirteenCollectionViewCell
+            self.didClickItemWithTarget(layoutThirteen.target, targetType: layoutThirteen.targetType)
+        } else if cell.isKindOfClass(LayoutFourteenCollectionViewCell) {
+            let layoutFourteen: LayoutFourteenCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! LayoutFourteenCollectionViewCell
+            self.didClickItemWithTarget(layoutFourteen.target, targetType: layoutFourteen.targetType)
         }
         
         // MARK: - TODO
