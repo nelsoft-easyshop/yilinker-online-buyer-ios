@@ -54,8 +54,6 @@ class LayoutTwelveModel: NSObject {
         }
         
         if let temps = dictionary["data"] as? [NSDictionary] {
-//            data.append(HomeProductModel.parseDataFromDictionary(temps[0]))
-            println(temps)
             for temp in temps {
                 data.append(HomeProductModel.parseDataFromDictionary(temp))
             }

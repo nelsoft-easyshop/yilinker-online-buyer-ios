@@ -20,6 +20,7 @@ protocol SearchBarViewDelegate {
     func searchBarView(searchBarView: SearchBarView, didSeacrhTypeChanged searchType: SearchType)
     func searchBarView(searchBarView: SearchBarView, didTapSearch textField: UITextField)
     func searchBarView(searchBarView: SearchBarView, didChooseSuggestion suggestion: SearchSuggestionModel)
+    func searchBarView(didTapDailyLogin searchBarView: SearchBarView)
 }
 
 class SearchBarView: UIView {
@@ -63,6 +64,7 @@ class SearchBarView: UIView {
     //MARK: - Awake Form Nib
     override func awakeFromNib() {
         
+        self.dailyLoginContainerView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "didTapDailyLoginView:"))
     }
     
     //MARK: -
@@ -282,6 +284,11 @@ class SearchBarView: UIView {
         if self.searchAutoCompleteTableView != nil {
             self.animateView(self.searchAutoCompleteTableView!, show: false)
         }
+    }
+    
+    //MARK: - Daily Login
+    func didTapDailyLoginView(gesture: UIGestureRecognizer) {
+        self.delegate?.searchBarView(didTapDailyLogin: self)
     }
 }
 

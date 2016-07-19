@@ -27,7 +27,7 @@ class HomePageModel: NSObject {
         var message: String = ""
         var isSuccessful: Bool = false
         var data: [AnyObject] = []
-        
+        println(dictionary)
         var arrays: [NSDictionary] = []
         arrays = dictionary["data"] as! [NSDictionary]
 

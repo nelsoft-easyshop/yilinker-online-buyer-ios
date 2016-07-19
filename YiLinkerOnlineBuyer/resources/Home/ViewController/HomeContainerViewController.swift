@@ -544,14 +544,14 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             } else if model.isKindOfClass(LayoutFourModel) {
                 let layoutFourModel: LayoutFourModel = self.homePageModel.data[index] as! LayoutFourModel
                 // MARK: TODO
-//                if layoutFourModel.remainingTime != 0 {
+                if layoutFourModel.remainingTime != 0 {
                     self.remainingTime = layoutFourModel.remainingTime
-//                    self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
+                    self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
                     self.layouts.append("4")
-//                } else {
-//                    self.homePageModel.data.removeAtIndex(index)
-//                }
-                
+                } else {
+                    self.homePageModel.data.removeAtIndex(index)
+                }
+            
             } else if model.isKindOfClass(LayoutFiveModel) {
                 self.layouts.append("5")
             } else if model.isKindOfClass(LayoutSixModel) {
@@ -1378,7 +1378,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
 
         layoutThirteenCVC.target = model.data[indexPath.row].target.targetUrl
         layoutThirteenCVC.targetType = model.data[indexPath.row].target.targetType
-        
+
         layoutThirteenCVC.productImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(model.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: {
             (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
             if let imageView = layoutThirteenCVC.productImageView {
@@ -2175,6 +2175,12 @@ extension HomeContainerViewController: SearchBarViewDelegate {
         self.navigationController?.pushViewController(resultController, animated:true);
     }
     
+    func searchBarView(didTapDailyLogin searchBarView: SearchBarView) {
+        var url = APIEnvironment.baseUrl() + "/v3/" + SessionManager.selectedCountryCode() + "/" + SessionManager.selectedLanguageCode() + "/auth/" + APIAtlas.dailyLogin
+
+        self.didClickItemWithTarget(url, targetType: "webView", sectionTitle: StringHelper.localizedStringWithKey("WEBVIEW_DAILY_LOGIN"))
+    }
+    
     //API Request
     //MARK: - API Request
     func fireSearch(queryString: String, searchBarView: SearchBarView){
@@ -2311,7 +2317,6 @@ extension HomeContainerViewController: OverseasCollectionViewCellDelegate {
 
 extension HomeContainerViewController: LayoutTwelveCollectionViewCellDelegate {
     func layoutTwelveCollectionViewCellDidClickProductImage(productImage: ProductImageView) {
-        println(productImage.targetType)
         self.didClickItemWithTarget(productImage.target, targetType: productImage.targetType, sectionTitle: productImage.title)
     }
 }
