@@ -215,9 +215,11 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
             cell.lastNameTextField.text = profileUserDetailsModel.lastName
             cell.mobilePhoneTextField.text = profileUserDetailsModel.contactNumber
             
-//            if profileUserDetailsModel.contactNumber.isEmpty {
-//                cell.mobilePhoneTextField.enabled = true
-//            }
+            if profileUserDetailsModel.contactNumber.isEmpty {
+                cell.showMobileNumberError(true)
+            } else {
+                cell.showMobileNumberError(false)
+            }
             
             if profileUserDetailsModel.userDocuments.isEmpty  {
                 cell.addIDButton.setTitle(cell.addLocalizeString, forState: UIControlState.Normal)
@@ -265,7 +267,7 @@ class EditProfileTableViewController: UITableViewController, UINavigationControl
         if indexPath.row == 0 {
             return 150
         } else if indexPath.row == 1 {
-            return 310
+            return 320
         } else if indexPath.row == 2 {
             return 180
         }  else if indexPath.row == 3 {
