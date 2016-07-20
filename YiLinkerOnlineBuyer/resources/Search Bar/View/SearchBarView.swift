@@ -84,7 +84,8 @@ class SearchBarView: UIView {
         self.searchView.layer.cornerRadius = 15
         self.searchTypeView.layer.cornerRadius = 15
         self.dailyLoginContainerView!.layer.cornerRadius = 15
-        self.dailyLoginContainerView!.layer.borderWidth = 0.5
+//        self.dailyLoginContainerView!.layer.borderWidth = 0.5
+        self.dailyLoginContainerView?.backgroundColor = HexaColor.colorWithHexa(0x59242ac)
         
         if isQRCode {
             self.scanQRButton.setImage(UIImage(named: "scan-qr-icon"), forState: .Normal)

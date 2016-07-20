@@ -111,7 +111,7 @@ LOGIN</string>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="plus" translatesAutoresizingMaskIntoConstraints="NO" id="3vL-ba-cL4">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_daily_login" translatesAutoresizingMaskIntoConstraints="NO" id="3vL-ba-cL4">
                             <rect key="frame" x="11" y="5" width="20" height="20"/>
                         </imageView>
                     </subviews>
@@ -156,8 +156,8 @@ LOGIN</string>
         </view>
     </objects>
     <resources>
+        <image name="ic_daily_login" width="240" height="240"/>
         <image name="person-icon" width="76" height="76"/>
-        <image name="plus" width="200" height="200"/>
         <image name="product-icon" width="76" height="76"/>
         <image name="scan-qr-icon" width="68" height="68"/>
     </resources>
