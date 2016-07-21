@@ -204,9 +204,9 @@ struct APIAtlas {
     static let transactionLeaveProductFeedback = "auth/product/addProductReview"
     
     //Resolution Center
-    static let getResolutionCenterCases = "/api/auth/dispute/get-case"
-    static let getResolutionCenterCaseDetails = "/api/auth/dispute/get-case-detail"
-    static let postResolutionCenterAddCase = "/api/auth/dispute/add-case"
+    static let getResolutionCenterCases = "auth/dispute/get-case"
+    static let getResolutionCenterCaseDetails = "auth/dispute/get-case-detail"
+    static let postResolutionCenterAddCase = "auth/dispute/add-case"
     
     //Seller Category
     static let sellerCategory = "category/getCustomCategories?sellerId="

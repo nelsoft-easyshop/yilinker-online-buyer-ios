@@ -29,7 +29,7 @@ class ViewFeedBackViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var loadingLabel: UILabel!
     @IBOutlet weak var ratingAndReviewsTableView: UITableView!
     
-    let reviewTableViewCellIdentifier: String = "reviewIdentifier"
+    let reviewTableViewCellIdentifier: String = "ReviewTableViewCell"
     
     var productReviewModel: ProductReviewModel?
     var sellerModel: SellerModel?

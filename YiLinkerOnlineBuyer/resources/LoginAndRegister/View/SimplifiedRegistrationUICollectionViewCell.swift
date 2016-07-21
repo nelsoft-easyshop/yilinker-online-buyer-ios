@@ -121,6 +121,29 @@ class SimplifiedRegistrationUICollectionViewCell: UICollectionViewCell {
         }
     }
     
+    @IBAction func textFieldAction(sender: UITextField) {
+        if self.mobileNumberTextField.isNotEmpty() && self.passwordTextField.isNotEmpty() && self.confirmPasswordTextField.isNotEmpty() && self.activationCodeTextField.isNotEmpty() {
+            self.setButtonEnabled(true, button: self.sendActivationCodeButton)
+            self.setButtonEnabled(true, button: self.registerButton)
+        } else if self.mobileNumberTextField.isNotEmpty() {
+            self.setButtonEnabled(true, button: self.sendActivationCodeButton)
+            self.setButtonEnabled(false, button: self.registerButton)
+        } else {
+            self.setButtonEnabled(false, button: self.sendActivationCodeButton)
+            self.setButtonEnabled(false, button: self.registerButton)
+        }
+    }
+    
+    func setButtonEnabled(enabled: Bool, button: UIButton) {
+        button.enabled = enabled
+        
+        if enabled {
+            button.alpha = 1
+        } else {
+            button.alpha = 0.5
+        }
+    }
+    
     //Start the time
     func startTimer() {
         self.seconds = 60

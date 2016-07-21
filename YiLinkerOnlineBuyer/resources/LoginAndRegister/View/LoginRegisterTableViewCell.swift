@@ -151,6 +151,7 @@ extension LoginRegisterTableViewCell: UICollectionViewDataSource, UICollectionVi
             cell.areaCodeLabel.text = "+\(self.selectedCountry.areaCode)"
             cell.areaCodeImageView.sd_setImageWithURL(NSURL(string: self.selectedCountry.flag), placeholderImage: UIImage(named: "dummy-placeholder"))
             cell.delegate = self
+            cell.setButtonEnabled(false)
             return cell
         } else {
             let cell: SimplifiedRegistrationUICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifierRegistration, forIndexPath: indexPath) as! SimplifiedRegistrationUICollectionViewCell
@@ -159,6 +160,8 @@ extension LoginRegisterTableViewCell: UICollectionViewDataSource, UICollectionVi
             cell.areaCodeLabel.text = "+\(self.selectedCountry.areaCode)"
             cell.areaCodeImageView.sd_setImageWithURL(NSURL(string: self.selectedCountry.flag), placeholderImage: UIImage(named: "dummy-placeholder"))
             cell.delegate = self
+            cell.setButtonEnabled(false, button: cell.registerButton)
+            cell.setButtonEnabled(false, button: cell.sendActivationCodeButton)
             return cell
         }
     }

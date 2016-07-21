@@ -500,6 +500,14 @@ MYPOINTS_LOCALIZE_KEY = "My\nPoints";
 RESOLUTIONCENTER_LOCALIZE_KEY = "Resolution\nCenter";
 SETTINGS_LOCALIZE_KEY = "Settings";
 
+ERROR_COUNTRY_REQUIRED_LOCALIZE_KEY = "Country is required.";
+ERROR_LANGUAGE_REQUIRED_LOCALIZE_KEY = "Language is required.";
+ERROR_FIRSTNAME_REQUIRED_LOCALIZE_KEY = "First name is required.";
+ERROR_LASTNAME_REQUIRED_LOCALIZE_KEY = "Last name is required.";
+ERROR_MOBILENUMBER_REQUIRED_LOCALIZE_KEY = "Mobile Number is required.";
+ERROR_FIRSTNAME_INVALID_LOCALIZE_KEY = "First name contains illegal characters. It can only contain letters, numbers and underscores.";
+ERROR_LASTNAME_INVALID_LOCALIZE_KEY = "Last name contains illegal characters. It can only contain letters, numbers and underscores.";
+
 // MARK: - My Points
 MY_POINTS_TITLE_LOCALIZE_KEY = "My Points";
 POINTS_LOCALIZE_KEY = "Points";

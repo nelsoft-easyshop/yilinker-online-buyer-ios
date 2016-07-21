@@ -90,7 +90,7 @@ class ProductSellerModel {
             
             if let value: AnyObject = dictionary["data"] {
                 
-                if let tempVar = value["id"] as? Int {
+                if let tempVar = value["userId"] as? Int {
                     userId = tempVar
                 }
                 
