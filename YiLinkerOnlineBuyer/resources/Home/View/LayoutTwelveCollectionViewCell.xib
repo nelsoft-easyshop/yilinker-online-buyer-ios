@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LayoutTwelveCollectionViewCell" id="9mr-cZ-IFT" userLabel="Collection View Cell" customClass="LayoutTwelveCollectionViewCell" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="388" height="209"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="388" height="209"/>
+                <subviews>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OLg-0f-eJc">
+                        <rect key="frame" x="5" y="5" width="376" height="199"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="webview_background" translatesAutoresizingMaskIntoConstraints="NO" id="5xe-AB-ZQM" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="186" height="199"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="17Z-r4-60F" userLabel="Two Images Container View">
+                                <rect key="frame" x="190" y="0.0" width="186" height="199"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dragonpay" translatesAutoresizingMaskIntoConstraints="NO" id="B5U-eX-YOU" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="186" height="98"/>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy_cover_photo" translatesAutoresizingMaskIntoConstraints="NO" id="Vxo-9M-lTK" customClass="ProductImageView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="101" width="186" height="98"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="Vxo-9M-lTK" firstAttribute="width" secondItem="B5U-eX-YOU" secondAttribute="width" id="2ut-gG-9Tg"/>
+                                    <constraint firstItem="Vxo-9M-lTK" firstAttribute="height" secondItem="B5U-eX-YOU" secondAttribute="height" id="6ZT-4D-c5f"/>
+                                    <constraint firstAttribute="bottom" secondItem="Vxo-9M-lTK" secondAttribute="bottom" id="7cB-gl-3a8"/>
+                                    <constraint firstItem="Vxo-9M-lTK" firstAttribute="leading" secondItem="17Z-r4-60F" secondAttribute="leading" id="9kl-Jw-v4g"/>
+                                    <constraint firstItem="B5U-eX-YOU" firstAttribute="leading" secondItem="17Z-r4-60F" secondAttribute="leading" id="9xY-Ac-x8U"/>
+                                    <constraint firstAttribute="trailing" secondItem="Vxo-9M-lTK" secondAttribute="trailing" id="Hh1-Y4-DGX"/>
+                                    <constraint firstItem="Vxo-9M-lTK" firstAttribute="leading" secondItem="B5U-eX-YOU" secondAttribute="trailing" constant="-186" id="Ke0-tR-EHV"/>
+                                    <constraint firstItem="B5U-eX-YOU" firstAttribute="top" secondItem="17Z-r4-60F" secondAttribute="top" id="VOa-S2-oYo"/>
+                                    <constraint firstAttribute="trailing" secondItem="B5U-eX-YOU" secondAttribute="trailing" id="gTr-vF-QcE"/>
+                                    <constraint firstItem="Vxo-9M-lTK" firstAttribute="top" secondItem="B5U-eX-YOU" secondAttribute="bottom" constant="3" id="kT8-KV-dJl"/>
+                                    <constraint firstItem="Vxo-9M-lTK" firstAttribute="top" secondItem="B5U-eX-YOU" secondAttribute="bottom" constant="3" id="zq5-pk-HlM"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="17Z-r4-60F" firstAttribute="leading" secondItem="5xe-AB-ZQM" secondAttribute="trailing" constant="4" id="058-MN-zZ1"/>
+                            <constraint firstAttribute="trailing" secondItem="17Z-r4-60F" secondAttribute="trailing" id="3WJ-uE-vGj"/>
+                            <constraint firstItem="5xe-AB-ZQM" firstAttribute="height" secondItem="17Z-r4-60F" secondAttribute="height" id="4us-Uj-RQg"/>
+                            <constraint firstItem="5xe-AB-ZQM" firstAttribute="top" secondItem="OLg-0f-eJc" secondAttribute="top" id="8ug-vC-3at"/>
+                            <constraint firstItem="5xe-AB-ZQM" firstAttribute="leading" secondItem="OLg-0f-eJc" secondAttribute="leading" id="Eoc-vv-ygZ"/>
+                            <constraint firstItem="17Z-r4-60F" firstAttribute="leading" secondItem="5xe-AB-ZQM" secondAttribute="trailing" constant="4" id="S6d-PZ-P5k"/>
+                            <constraint firstItem="17Z-r4-60F" firstAttribute="top" secondItem="OLg-0f-eJc" secondAttribute="top" id="Tdn-5x-5E1"/>
+                            <constraint firstAttribute="bottom" secondItem="5xe-AB-ZQM" secondAttribute="bottom" id="bc3-Kx-dkw"/>
+                            <constraint firstItem="17Z-r4-60F" firstAttribute="leading" secondItem="5xe-AB-ZQM" secondAttribute="trailing" constant="4" id="vGl-PJ-SRS"/>
+                            <constraint firstItem="5xe-AB-ZQM" firstAttribute="width" secondItem="17Z-r4-60F" secondAttribute="width" id="xIb-x4-tbK"/>
+                            <constraint firstAttribute="bottom" secondItem="17Z-r4-60F" secondAttribute="bottom" id="xWE-wS-LdX"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="OLg-0f-eJc" firstAttribute="leading" secondItem="9mr-cZ-IFT" secondAttribute="leading" constant="5" id="NL9-KD-qgL"/>
+                <constraint firstAttribute="bottom" secondItem="OLg-0f-eJc" secondAttribute="bottom" constant="5" id="PXe-dD-R6v"/>
+                <constraint firstItem="OLg-0f-eJc" firstAttribute="top" secondItem="9mr-cZ-IFT" secondAttribute="top" constant="5" id="hJv-FY-NJE"/>
+                <constraint firstAttribute="trailing" secondItem="OLg-0f-eJc" secondAttribute="trailing" constant="7" id="sGD-uY-BSb"/>
+            </constraints>
+            <size key="customSize" width="375" height="199"/>
+            <connections>
+                <outlet property="leftImageView" destination="5xe-AB-ZQM" id="9P7-B5-ZWI"/>
+                <outlet property="rightLowerImageView" destination="Vxo-9M-lTK" id="8bY-Fq-5Qz"/>
+                <outlet property="rightUpperImageView" destination="B5U-eX-YOU" id="TgR-l7-TM4"/>
+            </connections>
+            <point key="canvasLocation" x="325" y="260.5"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="dragonpay" width="200" height="146"/>
+        <image name="dummy_cover_photo" width="1688" height="1125"/>
+        <image name="webview_background" width="360" height="640"/>
+    </resources>
+</document>

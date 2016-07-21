@@ -1078,6 +1078,9 @@ extension ResultViewController: SearchBarViewDelegate {
         self.fireSearch()
     }
     
+    func searchBarView(didTapDailyLogin searchBarView: SearchBarView) {
+
+    }
     //API Request
     //MARK: - API Request
     func fireSearch(queryString: String, searchBarView: SearchBarView){

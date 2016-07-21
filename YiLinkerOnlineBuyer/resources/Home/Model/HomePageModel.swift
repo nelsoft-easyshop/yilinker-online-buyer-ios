@@ -27,14 +27,13 @@ class HomePageModel: NSObject {
         var message: String = ""
         var isSuccessful: Bool = false
         var data: [AnyObject] = []
-        
+        println(dictionary)
         var arrays: [NSDictionary] = []
-        
         arrays = dictionary["data"] as! [NSDictionary]
-        
+
         for sectionDictionary in arrays {
             let layoutId: Int = sectionDictionary["layoutId"] as! Int
-            
+
             if layoutId == 1 {
                 data.append(LayoutOneModel.parseDataFromDictionary(sectionDictionary))
             } else if layoutId == 2 {
@@ -57,8 +56,31 @@ class HomePageModel: NSObject {
                 data.append(LayoutTenModel.parseDataFromDictionary(sectionDictionary))
             } else if layoutId == 11 {
                 data.append(LayoutElevenModel.parseDataFromDictionary(sectionDictionary))
+            } else if layoutId == 12 {
+
+                var first = LayoutTwelveModel.parseDataFromDictionary(sectionDictionary)
+                if let temps = sectionDictionary["data"] as? [NSDictionary] {
+                    if temps.count != 0 {
+                        var second = LayoutTwelveModel.parseDataFromDictionary(temps[0])
+                        second.layoutId = first.layoutId
+                        second.sectionTitle = first.sectionTitle
+                        second.isViewMoreAvailable = first.isViewMoreAvailable
+                        second.viewMoreTarget = first.viewMoreTarget
+                        data.append(second)
+                    }
+                
+                    if temps.count > 1 {
+                        data.append(LayoutThirteenModel.parseDataFromDictionary(temps[1]))
+                    }
+                }
+            } else if layoutId == 13 {
+//                data.append(LayoutThirteenModel.parseDataFromDictionary(sectionDictionary))
+            } else if layoutId == 14 {
+                data.append(LayoutFourteenModel.parseDataFromDictionary(sectionDictionary))
             }
         }
+        
+        
         
         if let temp = dictionary["message"] as? String {
             message = temp

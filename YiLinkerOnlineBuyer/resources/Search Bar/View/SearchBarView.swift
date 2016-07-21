@@ -20,6 +20,7 @@ protocol SearchBarViewDelegate {
     func searchBarView(searchBarView: SearchBarView, didSeacrhTypeChanged searchType: SearchType)
     func searchBarView(searchBarView: SearchBarView, didTapSearch textField: UITextField)
     func searchBarView(searchBarView: SearchBarView, didChooseSuggestion suggestion: SearchSuggestionModel)
+    func searchBarView(didTapDailyLogin searchBarView: SearchBarView)
 }
 
 class SearchBarView: UIView {
@@ -44,6 +45,9 @@ class SearchBarView: UIView {
     @IBOutlet weak var searchTextField: UITextField!
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    @IBOutlet weak var dailyLoginContainerView: UIView?
+    
     var searchTypeTableView: UITableView?
     var isSearchTypeHidden: Bool = true
     var searchTypeImage: [String] = ["product-icon", "seller-icon"]
@@ -60,6 +64,7 @@ class SearchBarView: UIView {
     //MARK: - Awake Form Nib
     override func awakeFromNib() {
         
+        self.dailyLoginContainerView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "didTapDailyLoginView:"))
     }
     
     //MARK: -
@@ -78,6 +83,9 @@ class SearchBarView: UIView {
         self.searchView.frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height)
         self.searchView.layer.cornerRadius = 15
         self.searchTypeView.layer.cornerRadius = 15
+        self.dailyLoginContainerView!.layer.cornerRadius = 15
+//        self.dailyLoginContainerView!.layer.borderWidth = 0.5
+        self.dailyLoginContainerView?.backgroundColor = HexaColor.colorWithHexa(0x59242ac)
         
         if isQRCode {
             self.scanQRButton.setImage(UIImage(named: "scan-qr-icon"), forState: .Normal)
@@ -277,6 +285,11 @@ class SearchBarView: UIView {
         if self.searchAutoCompleteTableView != nil {
             self.animateView(self.searchAutoCompleteTableView!, show: false)
         }
+    }
+    
+    //MARK: - Daily Login
+    func didTapDailyLoginView(gesture: UIGestureRecognizer) {
+        self.delegate?.searchBarView(didTapDailyLogin: self)
     }
 }
 
