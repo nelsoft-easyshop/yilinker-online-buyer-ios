@@ -75,7 +75,7 @@
                 <outlet property="rightLowerImageView" destination="Vxo-9M-lTK" id="8bY-Fq-5Qz"/>
                 <outlet property="rightUpperImageView" destination="B5U-eX-YOU" id="TgR-l7-TM4"/>
             </connections>
-            <point key="canvasLocation" x="325" y="260.5"/>
+            <point key="canvasLocation" x="389" y="308.5"/>
         </collectionViewCell>
     </objects>
     <resources>
