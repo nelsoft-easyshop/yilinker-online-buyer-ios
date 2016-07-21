@@ -541,7 +541,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 self.layouts.append("2")
             } else if model.isKindOfClass(LayoutThreeModel) {
                 self.layouts.append("3")
-            } else if model.isKindOfClass(LayoutFourModel) {
+            } else if model.isKindOfClass(LayoutFourModel) { // Flash Sale
                 let layoutFourModel: LayoutFourModel = self.homePageModel.data[index] as! LayoutFourModel
                 // MARK: TODO
                 if layoutFourModel.remainingTime != 0 {
@@ -758,9 +758,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         case 12:
             return 1
         case 13:
-            return 4//self.homePageModel.data[section].data.count
-        case 14:
             return 4
+        case 14:
+            return 4//self.homePageModel.data[section].data.count
         default:
             return 0
         }
@@ -910,7 +910,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             headerView.sectionTitle = layoutTwelveModel.sectionTitle
             headerView.titleLabel.text = layoutTwelveModel.sectionTitle
             headerView.updateTitleLine()
-//            headerView.backgroundColor = UIColor.clearColor()
         } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutThirteenModel) {
             let layoutThirteenModel: LayoutThirteenModel = self.homePageModel.data[indexPath.section] as! LayoutThirteenModel
             if layoutThirteenModel.isViewMoreAvailable {
@@ -924,7 +923,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             headerView.sectionTitle = layoutThirteenModel.sectionTitle
             headerView.titleLabel.text = layoutThirteenModel.sectionTitle
             headerView.updateTitleLine()
-//            headerView.backgroundColor = UIColor.clearColor()
         } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutFourteenModel) {
             let layoutFourteenModel: LayoutFourteenModel = self.homePageModel.data[indexPath.section] as! LayoutFourteenModel
             if layoutFourteenModel.isViewMoreAvailable {
@@ -1325,9 +1323,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         layoutTwelveCVC.delegate = self
         
         let model: LayoutTwelveModel = self.homePageModel.data[indexPath.section] as! LayoutTwelveModel
-        
-        if model.data.count == 3 {
             
+        if model.data.count > 0 {
             layoutTwelveCVC.leftImageView.target = model.data[0].target.targetUrl
             layoutTwelveCVC.leftImageView.targetType = model.data[0].target.targetType
             layoutTwelveCVC.leftImageView.title = model.data[0].name
@@ -1339,7 +1336,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     }
                 }
             })
-
+        }
+        
+        
+        if model.data.count > 1 {
             layoutTwelveCVC.rightUpperImageView.target = model.data[1].target.targetUrl
             layoutTwelveCVC.rightUpperImageView.targetType = model.data[1].target.targetType
             layoutTwelveCVC.rightUpperImageView.title = model.data[1].name
@@ -1351,7 +1351,10 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     }
                 }
             })
-            
+        }
+        
+        
+        if model.data.count > 2 {
             layoutTwelveCVC.rightLowerImageView.target = model.data[2].target.targetUrl
             layoutTwelveCVC.rightLowerImageView.targetType = model.data[2].target.targetType
             layoutTwelveCVC.rightLowerImageView.title = model.data[2].name
@@ -1363,7 +1366,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                     }
                 }
             })
-            
         }
         
         return layoutTwelveCVC

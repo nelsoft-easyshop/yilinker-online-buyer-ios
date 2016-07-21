@@ -103,7 +103,7 @@ Speaker ...</string>
                 <outlet property="priceLabel" destination="QuC-Z4-4Ak" id="1J3-A6-4BP"/>
                 <outlet property="productImageView" destination="9q3-5V-9U5" id="Tjm-Gs-NVf"/>
             </connections>
-            <point key="canvasLocation" x="309" y="-41"/>
+            <point key="canvasLocation" x="348" y="-81"/>
         </collectionViewCell>
     </objects>
     <resources>
