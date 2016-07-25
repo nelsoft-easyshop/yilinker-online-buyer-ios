@@ -26,7 +26,7 @@ enum WebviewSource {
     case Category
     case StoreView
     case ProductList
-    case Default
+    case Others
 }
 class WebViewURL {
     static let baseUrl = APIEnvironment.baseUrl().stringByReplacingOccurrencesOfString("/api", withString: "/")
@@ -34,11 +34,15 @@ class WebViewURL {
     static let dailyLogin: String = APIEnvironment.baseUrl() + "/v1/auth/" + APIAtlas.dailyLogin
     static let category: String = baseUrl + APIAtlas.category
     static let storeView: String = baseUrl + APIAtlas.storeView
-    //static let productList: String = baseUrl + APIAtlas.mobileProductList
-    static let productList: String = APIAtlas.mobileProductList
+    static let productList: String = baseUrl + APIAtlas.mobileProductList
 }
 
 class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate {
+    
+    let USERID: String = "userId"
+    let PRODUCTID: String = "productId"
+    let CATEGORYID: String = "categoryId"
+    let GET_PRODUCT_LIST: String = "getProductList"
     
     @IBOutlet weak var webView: UIWebView!
     var urlString: String = ""
@@ -47,10 +51,11 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
     var emptyView: EmptyView?
     @IBOutlet weak var pleaseLabel: UILabel!
     
-    var webviewSource = WebviewSource.Default
+    var webviewSource = WebviewSource.Others
     var isFromFab: Bool = false
+    var pageTitle: String = ""
     
-    var hud: YiHUD?
+    var hud: MBProgressHUD?
     
     var isBackButtonVisible: Bool = true
     
@@ -59,210 +64,60 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
         self.webView.delegate = self
         self.webView.scrollView.bounces = false
         errorView.hidden = true
+        self.backButton()
+        self.edgesForExtendedLayout = UIRectEdge.None
+        self.pleaseLabel.text = WebviewStrings.please
         
-        if self.urlString.isEmpty {
-            loadWebview()
-        } else if self.urlString.contains(APIAtlas.flashSale) {
-            webviewSource = WebviewSource.FlashSale
-            loadWebview()
-        } else if self.urlString.contains(APIAtlas.dailyLogin) {
-            webviewSource = WebviewSource.DailyLogin
-            loadWebview()
-        } else if self.urlString.contains(APIAtlas.category) {
-            webviewSource = WebviewSource.Category
-            loadWebview()
-        } else if self.urlString.contains(APIAtlas.storeView) {
-            webviewSource = WebviewSource.StoreView
-            loadWebview()
-        } else if self.urlString.contains(APIAtlas.mobileProductList) {
-            webviewSource = WebviewSource.ProductList
-            loadWebview()
-        } else {
+        self.checkCurrentURL()
+        
+        if pageTitle.isEmpty {
             self.title = WebviewStrings.yilinker
-            self.loadUrlWithUrlString(self.urlString)
+        } else{
+            self.title = pageTitle
         }
         
         if isBackButtonVisible {
             self.backButton()
         }
-
-        self.edgesForExtendedLayout = UIRectEdge.None
-        self.pleaseLabel.text = WebviewStrings.please
+    }
+    
+    //MARK: - Check type of URL to handle adding of access token in daily login and setting of page title.
+    func checkCurrentURL() {
+        if self.urlString.contains(APIAtlas.dailyLogin) {
+            pageTitle = WebviewStrings.dailyLogin
+            if SessionManager.isLoggedIn() {
+                webviewSource = WebviewSource.DailyLogin
+                self.urlString = "\(urlString)?access_token=\(SessionManager.accessToken())"
+                loadUrl(self.urlString)
+            } else {
+                self.addEmptyView()
+            }
+        } else if self.urlString.contains(APIAtlas.flashSale) {
+            pageTitle = WebviewStrings.flashSales
+            loadUrl(self.urlString)
+        } else if self.urlString.contains(APIAtlas.category) || webviewSource == WebviewSource.Category {
+            webviewSource = WebviewSource.Category
+            if self.urlString.isEmpty {
+                self.urlString = WebViewURL.category
+            }
+            pageTitle = WebviewStrings.categories
+            loadUrl(self.urlString)
+        } else {
+            webviewSource = WebviewSource.Others
+            loadUrl(self.urlString)
+        }
     }
     
     //MARK: - Load URL with URL String
-    func  loadUrlWithUrlString(string: String) {
-        let url = NSURL(string: string)!
-        let requestObj = NSURLRequest(URL: url)
+    func loadUrl(url: String) {
+        let urlTemp = NSURL(string: url)!
+        let requestObj = NSURLRequest(URL: urlTemp)
         self.webView.loadRequest(requestObj)
-    }
-    
-    func  loadWebview() {
-        var tempUrl: String = ""
-        switch webviewSource {
-        case .FlashSale:
-            tempUrl = WebViewURL.flashSale
-            self.title = WebviewStrings.flashSales
-        case .DailyLogin:
-            tempUrl = WebViewURL.dailyLogin + "?access_token=\(SessionManager.accessToken())"
-            self.title = WebviewStrings.dailyLogin
-        case .Category:
-            tempUrl = WebViewURL.category
-            self.title = WebviewStrings.categories
-        case .StoreView:
-            tempUrl = WebViewURL.storeView
-            self.title = WebviewStrings.storeView
-        case .ProductList:
-            tempUrl = self.urlString
-            if tempUrl.contains("hotItems") {
-                self.title = WebviewStrings.hotItems
-            } else if tempUrl.contains("newItems") {
-                self.title = WebviewStrings.newItems
-            } else if tempUrl.contains("todaysPromo") {
-                self.title = WebviewStrings.todaysPromo
-            } else {
-                self.title = WebviewStrings.yilinker
-            }
-        case .Default:
-            self.title = WebviewStrings.yilinker
-            self.addEmptyView()
-        default:
-            self.title = WebviewStrings.yilinker
-            print("Default")
-        }
-        
-        self.loadUrlWithUrlString(tempUrl)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    //MARK: - Web View Delegate
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
-        self.webView.hidden = true
-        self.showNetworkStatusIndicator(false)
-        self.addEmptyView()
-    }
-    
-    func webViewDidFinishLoad(webView: UIWebView) {
-        webView.hidden = false
-        self.showNetworkStatusIndicator(false)
-        webView.stringByEvaluatingJavaScriptFromString("document.body.style.webkitTouchCallout='none';")
-        
-        if webviewSource == WebviewSource.DailyLogin {
-            let html: String = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.outerHTML")!
-            
-            if html.contains("invalid_grant") {
-                webView.hidden = true
-                self.requestRefreshToken()
-            }
-        }
-    }
-    
-    func webViewDidStartLoad(webView: UIWebView) {
-        self.showNetworkStatusIndicator(true)
-        self.webView.hidden = true
-    }
-    
-    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        
-        var url: NSURL = request.URL!
-        var urlString: String = url.absoluteString!
-        
-        switch webviewSource {
-        case .FlashSale:
-            if urlString == WebViewURL.flashSale {
-                return true
-            } else {
-                let productId: String = productLinkTap(urlString)
-                if productId.isNotEmpty() {
-                    let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
-                    productViewController.tabController = self.tabBarController as! CustomTabBarController
-                    productViewController.productId = productId
-                    self.navigationController?.pushViewController(productViewController, animated: true)
-                } else {
-                    errorView.hidden = false
-                }
-                return false
-            }
-            
-        case .DailyLogin:
-            if SessionManager.isLoggedIn() {
-                if urlString == WebViewURL.dailyLogin + "?access_token=\(SessionManager.accessToken())" {
-                    return true
-                } else {
-                    //errorView.hidden = false
-                    return false
-                }
-            } else {
-                errorView.hidden = false
-                return false
-            }
-            
-        case .Category:
-            if urlString == WebViewURL.category {
-                return true
-            } else {
-                var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
-                resultController.pageTitle = self.getCategoryTitle(urlString)
-                resultController.passModel(SearchSuggestionModel(suggestion: "", imageURL: "", searchUrl: urlString))
-                self.navigationController?.pushViewController(resultController, animated:true);
-                return false
-            }
-        case .StoreView:
-            if urlString == WebViewURL.storeView {
-                return true
-            } else {
-                if urlString.contains("userId") {
-                    let id: String = storeViewLinkTap(urlString)
-                    let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
-                    sellerViewController.sellerId = (id as NSString).integerValue
-                    self.navigationController!.pushViewController(sellerViewController, animated: true)
-                    
-                } else if urlString.contains("productId") {
-                    let id: String = productLinkTap(urlString)
-                    let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
-                    productViewController.tabController = self.tabBarController as! CustomTabBarController
-                    productViewController.productId = id
-                    self.navigationController?.pushViewController(productViewController, animated: true)
-                } else {
-                    errorView.hidden = false
-                }
-                return false
-            }
-        case .ProductList:
-            if urlString.contains(WebViewURL.productList) {
-                return true
-            } else {
-                let productId: String = productLinkTap(urlString)
-                if productId.isNotEmpty() {
-                    let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
-                    productViewController.tabController = self.tabBarController as! CustomTabBarController
-                    productViewController.productId = productId
-                    self.navigationController?.pushViewController(productViewController, animated: true)
-                } else {
-                    errorView.hidden = false
-                }
-                return false
-            }
-        case .Default:
-            return true
-        default:
-            errorView.hidden = false
-            return false
-        }
-    }
-    
-    //MARK: - Show Network Status Indicator
-    func showNetworkStatusIndicator(isShow: Bool) {
-        if isShow {
-            self.hud = YiHUD.initHud()
-            self.hud?.showHUDToView(self.view)
-        } else {
-            self.hud?.hide()
-        }
     }
     
     //MARK: - Back Button
@@ -283,27 +138,92 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
         self.navigationItem.leftBarButtonItems = [navigationSpacer, customBackButton]
     }
     
+    //MARK: - Web View Delegate
+    func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
+        self.addEmptyView()
+    }
+    
+    func webViewDidFinishLoad(webView: UIWebView) {
+        webView.hidden = false
+        self.showNetworkStatusIndicator(false)
+        webView.stringByEvaluatingJavaScriptFromString("document.body.style.webkitTouchCallout='none';")
+        
+        if webviewSource == WebviewSource.DailyLogin {
+            let html: String = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.outerHTML")!
+            
+            if html.contains("error") {
+                webView.hidden = true
+                self.requestRefreshToken()
+            }
+        }
+    }
+    
+    func webViewDidStartLoad(webView: UIWebView) {
+        self.showNetworkStatusIndicator(true)
+        self.webView.hidden = true
+    }
+    
+    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        var url: NSURL = request.URL!
+        var urlAbsoluteString: String = url.absoluteString!
+        
+        if urlAbsoluteString.contains(USERID) {
+            let id: String = self.linkTap(urlAbsoluteString)
+            let sellerViewController: SellerViewController = SellerViewController(nibName: "SellerViewController", bundle: nil)
+            sellerViewController.sellerId = (id as NSString).integerValue
+            self.navigationController!.pushViewController(sellerViewController, animated: true)
+            return false
+        } else if urlAbsoluteString.contains(PRODUCTID) {
+            let id: String = self.linkTap(urlAbsoluteString)
+            let productViewController: ProductViewController = ProductViewController(nibName: "ProductViewController", bundle: nil)
+            productViewController.tabController = self.tabBarController as! CustomTabBarController
+            productViewController.productId = id
+            self.navigationController?.pushViewController(productViewController, animated: true)
+            return false
+        }  else if urlAbsoluteString.contains(GET_PRODUCT_LIST) {
+            var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+            resultController.passModel(SearchSuggestionModel(suggestion: "", imageURL: "", searchUrl: urlAbsoluteString))
+            self.navigationController?.pushViewController(resultController, animated:true);
+            return false
+        } else if urlAbsoluteString.contains(CATEGORYID) {
+            var resultController = ResultViewController(nibName: "ResultViewController", bundle: nil)
+            resultController.pageTitle = self.getCategoryTitle(urlAbsoluteString)
+//            resultController.passCategoryID(self.linkTap(urlAbsoluteString).toInt()!)
+            resultController.passModel(SearchSuggestionModel(suggestion: "", imageURL: "", searchUrl: urlAbsoluteString))
+            self.navigationController?.pushViewController(resultController, animated:true);
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    //MARK: - Show Network Status Indicator
+    func showNetworkStatusIndicator(isShow: Bool) {
+        if isShow {
+            if self.hud != nil {
+                self.hud!.hide(true)
+                self.hud = nil
+            }
+            
+            self.hud = MBProgressHUD(view: self.view)
+            self.hud?.removeFromSuperViewOnHide = true
+            self.hud?.dimBackground = false
+            self.view.addSubview(self.hud!)
+            self.hud?.show(true)
+        } else {
+            self.hud?.hide(true)
+        }
+    }
+    
     //MARK: - Back
     func back() {
-        //        if self.webView.canGoBack {
-        //            self.webView.goBack()
-        //        } else {
         self.navigationController!.popViewControllerAnimated(true)
-        //        }
     }
     
     //MARK: - Add Empty View
     func addEmptyView() {
-//        if self.emptyView == nil {
-//            self.emptyView = UIView.loadFromNibNamed("EmptyView", bundle: nil) as? EmptyView
-//            self.webView.layoutIfNeeded()
-//            self.emptyView!.frame = self.webView.frame
-//            self.emptyView!.backgroundColor = UIColor.whiteColor()
-//            self.emptyView!.delegate = self
-//            self.webView.addSubview(emptyView!)
-//        } else {
-//            self.emptyView!.hidden = false
-//        }
+        self.webView.hidden = true
+        self.showNetworkStatusIndicator(false)
         errorView.hidden = false
     }
     
@@ -315,53 +235,40 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
     
     //MARK: - Flash Sales
     func productLinkTap(url: String) -> String {
-        
-        var productUrl: String = ""
+        var productID: String = ""
         
         let start = url.indexOfCharacter("=") + 1
-        productUrl = url.substringFromIndex(advance(minElement(indices(url)), start))
-        
-        //        let html = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.outerHTML")
-        //        let doc = TFHpple(HTMLData: html?.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false))
-        //        var elements = doc.searchWithXPathQuery("//a[@class='btn promo-instance-product-status btn-inactive']")
-        //
-        //        for element in elements as! [TFHppleElement] {
-        //            if url.contains(element.objectForKey("href")) {
-        //                productUrl = element.objectForKey("data-product-id")
-        //                break
-        //            }
-        //        }
-        return productUrl
+        productID = url.substringFromIndex(advance(minElement(indices(url)), start))
+        return productID
     }
     
     //MARK: - Store View
     func storeViewLinkTap(url: String) -> String {
-        
-        var storeUrl: String = ""
+        var storeID: String = ""
         
         if url.contains("getStoreInfo") {
             let start = url.indexOfCharacter("=") + 1
             if start != 0 {
-                storeUrl = url.substringFromIndex(advance(minElement(indices(url)), start))
+                storeID = url.substringFromIndex(advance(minElement(indices(url)), start))
             }
         }
-        
-        //        let html = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.outerHTML")
-        //        let doc = TFHpple(HTMLData: html?.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false))
-        //        var elements = doc.searchWithXPathQuery("//a[@class='seller-name']")
-        //
-        //        for element in elements as! [TFHppleElement] {
-        //            if url.contains(element.objectForKey("href")) {
-        //                storeUrl = element.objectForKey("data-sellerid")
-        //                break
-        //            }
-        //        }
-        return storeUrl
+        return storeID
     }
     
-    //MARK: - Category
-    func getCategoryTitle(url: String) -> String {
     
+    func linkTap(url: String) -> String {
+        var idTemp: String = ""
+        if url.contains(PRODUCTID) || url.contains(USERID) || url.contains(CATEGORYID) {
+            let start = url.indexOfCharacter("=") + 1
+            if start != 0 {
+                idTemp = url.substringFromIndex(advance(minElement(indices(url)), start))
+            }
+        }
+        return idTemp
+    }
+    
+    //MARK: - Category Title
+    func getCategoryTitle(url: String) -> String {
         var titleString: String = ""
         let html = webView.stringByEvaluatingJavaScriptFromString("document.documentElement.outerHTML")
         let doc = TFHpple(HTMLData: html?.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false))
@@ -385,7 +292,6 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
                 break
             }
         }
-        
         return titleString
     }
     
@@ -400,8 +306,7 @@ class WebViewController: UIViewController, UIWebViewDelegate, EmptyViewDelegate 
         manager.POST(APIAtlas.refreshTokenUrl, parameters: params, success: {
             (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
             SessionManager.parseTokensFromResponseObject(responseObject as! NSDictionary)
-            
-            self.loadWebview()
+            self.checkCurrentURL()
             }, failure: {
                 (task: NSURLSessionDataTask!, error: NSError!) in
                 println(error)
