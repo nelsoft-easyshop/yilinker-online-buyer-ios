@@ -884,7 +884,7 @@ class WebServiceManager: NSObject {
         
         if url.contains(APIAtlas.V4) { 
             tempURL = tempURL.stringByReplacingOccurrencesOfString("v4", withString: "\(APIAtlas.V4)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())", options: nil, range: nil)
-        } else if !url.contains(APIAtlas.V1) ||  !url.contains(APIAtlas.V2) ||  !url.contains(APIAtlas.V3) {
+        } else if !url.contains(APIAtlas.V1) &&  !url.contains(APIAtlas.V2) &&  !url.contains(APIAtlas.V3) {
             tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
         }
         

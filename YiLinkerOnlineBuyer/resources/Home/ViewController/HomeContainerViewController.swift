@@ -367,8 +367,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         let categories = StringHelper.localizedStringWithKey("WEBVIEW_CATEGORIES")
         let webViewController: WebViewController = WebViewController(nibName: "WebViewController", bundle: nil) as WebViewController
-        webViewController.urlString = APIAtlas.category
+        webViewController.webviewSource = WebviewSource.Category
         webViewController.title = categories
+        webViewController.isFromFab = true
         webViewController.isBackButtonVisible = false
         let navigationController2: UINavigationController = UINavigationController(rootViewController: webViewController) as UINavigationController
         navigationController2.navigationBar.barTintColor = Constants.Colors.appTheme
