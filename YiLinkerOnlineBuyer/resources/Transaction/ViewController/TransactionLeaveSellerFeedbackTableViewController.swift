@@ -107,7 +107,7 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
     }
     
     //MARK: Add seller feedback
-    func fireSellerFeedback(feedback2: String, rateItemQuality: Int, rateCommunication: Int) {
+    func fireSellerFeedback(feedback: String, rateItemQuality: Int, rateCommunication: Int) {
        
         self.showHUD()
         
@@ -135,7 +135,7 @@ class TransactionLeaveSellerFeedbackTableViewController: UITableViewController, 
 
         let finalJsonString3: String = finalJsonString2.stringByReplacingOccurrencesOfString("}\"", withString: "}", options: NSStringCompareOptions.LiteralSearch, range: nil)
         
-        var parameters: NSMutableDictionary = ["sellerId" : self.sellerId, "orderId" : self.orderId, "title" : "Seller Feedback", "feedback" : feedback2, "access_token" : SessionManager.accessToken()]
+        var parameters: NSMutableDictionary = ["sellerId" : self.sellerId, "orderId" : self.orderId, "title" : "Seller Feedback", "feedback" : feedback, "access_token" : SessionManager.accessToken()]
         
         parameters["ratings"] = finalJsonString3.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         
