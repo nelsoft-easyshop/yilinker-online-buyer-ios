@@ -296,9 +296,9 @@ class AddAddressTableViewController: UITableViewController, UITableViewDelegate,
             self.addressModel.zipCode = getTextAtIndex(5)
             
             
-            if self.addressModel.title == "" {
+            /*if self.addressModel.title == "" {
                 showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.addressTitleRequired)
-            } else if self.addressModel.streetName == "" {
+            } else */if self.addressModel.streetName == "" {
                 showAlert(title: AddressStrings.incompleteInformation, message: AddressStrings.streetNameRequired)
             } else if self.addressModel.province == self.selectProvince {
                 showAlert(title: AddressStrings.incompleteInformation, message: self.provinceRequired)

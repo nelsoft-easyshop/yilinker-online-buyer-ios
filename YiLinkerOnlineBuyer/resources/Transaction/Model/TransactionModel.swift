@@ -215,7 +215,10 @@ class TransactionModel: NSObject {
                             dateFormatter1.dateFormat = "MMMM dd, yyyy"
                             let dateAdded = dateFormatter1.stringFromDate(date)
                             
-                            order_id.append(order["order_id"] as! String)
+                            if let orderId = order["order_id"] as? String {
+                                order_id.append(orderId)
+                            }
+                            
                             date_added.append(dateAdded)
                             invoice_number.append(order["invoice_number"] as! String)
                             payment_type.append(order["payment_type"] as! String)
