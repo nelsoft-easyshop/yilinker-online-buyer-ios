@@ -9,7 +9,7 @@
 import UIKit
 
 
-class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate, SellerCarouselCollectionViewCellDataSource, SellerCarouselCollectionViewCellDelegate, LayoutNineCollectionViewCellDelegate, DailyLoginCollectionViewCellDataSource, DailyLoginCollectionViewCellDelegate, FABViewControllerDelegate, OverseasCollectionViewCellDelegate, OverseasCollectionViewCellDataSource {
+class HomeContainerViewController: UIViewController, UITabBarControllerDelegate, EmptyViewDelegate, CarouselCollectionViewCellDataSource, CarouselCollectionViewCellDelegate, HalfPagerCollectionViewCellDelegate, HalfPagerCollectionViewCellDataSource, FlashSaleCollectionViewCellDelegate, LayoutHeaderCollectionViewCellDelegate, SellerCarouselCollectionViewCellDataSource, SellerCarouselCollectionViewCellDelegate, LayoutNineCollectionViewCellDelegate, DailyLoginCollectionViewCellDataSource, DailyLoginCollectionViewCellDelegate, FABViewControllerDelegate, OverseasCollectionViewCellDelegate, OverseasCollectionViewCellDataSource, LayoutTwelveCollectionViewCellDelegate {
     
     let featured: String = StringHelper.localizedStringWithKey("FEATURED_LOCALIZE_KEY")
     let hotItems: String = StringHelper.localizedStringWithKey("HOT_ITEMS_LOCALIZE_KEY")
@@ -56,6 +56,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     let sellerCarouselNibName = "SellerCarouselCollectionViewCell"
     let layoutNineNibName = "LayoutNineCollectionViewCell"
     let twoColumnGridCell = "TwoColumnGridCollectionViewCell"
+    let twelveLayout = "LayoutTwelveCollectionViewCell"
+    let thirteenLayout = "LayoutThirteenCollectionViewCell"
+    let fourteenLayout = "LayoutFourteenCollectionViewCell"
     
     var remainingTime: Int = 0
     
@@ -141,7 +144,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.registerCellWithNibName(self.layoutNineNibName)
         self.registerCellWithNibName(self.twoColumnGridCell)
         self.registerCellWithNibName(OverseasCollectionViewCell.nibNameAndIdentifier())
-        
+        self.registerCellWithNibName(self.twelveLayout)
+        self.registerCellWithNibName(self.thirteenLayout)
+        self.registerCellWithNibName(self.fourteenLayout)
         self.fireGetHomePageData(true)
         
         self.changeDashBoardToCategory()
@@ -362,8 +367,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         let categories = StringHelper.localizedStringWithKey("WEBVIEW_CATEGORIES")
         let webViewController: WebViewController = WebViewController(nibName: "WebViewController", bundle: nil) as WebViewController
-        webViewController.urlString = APIAtlas.category
+        webViewController.webviewSource = WebviewSource.Category
         webViewController.title = categories
+        webViewController.isFromFab = true
         webViewController.isBackButtonVisible = false
         let navigationController2: UINavigationController = UINavigationController(rootViewController: webViewController) as UINavigationController
         navigationController2.navigationBar.barTintColor = Constants.Colors.appTheme
@@ -528,6 +534,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         self.homePageModel = HomePageModel.parseDataFromDictionary(dictionary)
         self.layouts.removeAll(keepCapacity: true)
         for (index, model) in enumerate(self.homePageModel.data) {
+
             if model.isKindOfClass(LayoutOneModel) {
                 self.layouts.append("1")
                 self.loadImageInSectionOne(model as! LayoutOneModel)
@@ -535,9 +542,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 self.layouts.append("2")
             } else if model.isKindOfClass(LayoutThreeModel) {
                 self.layouts.append("3")
-            } else if model.isKindOfClass(LayoutFourModel) {
+            } else if model.isKindOfClass(LayoutFourModel) { // Flash Sale
                 let layoutFourModel: LayoutFourModel = self.homePageModel.data[index] as! LayoutFourModel
-                
+                // MARK: TODO
                 if layoutFourModel.remainingTime != 0 {
                     self.remainingTime = layoutFourModel.remainingTime
                     self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTime", userInfo: nil, repeats: true)
@@ -545,7 +552,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 } else {
                     self.homePageModel.data.removeAtIndex(index)
                 }
-                
+            
             } else if model.isKindOfClass(LayoutFiveModel) {
                 self.layouts.append("5")
             } else if model.isKindOfClass(LayoutSixModel) {
@@ -560,6 +567,13 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 self.layouts.append("10")
             } else if model.isKindOfClass(LayoutElevenModel) {
                 self.layouts.append("11")
+            } else if model.isKindOfClass(LayoutTwelveModel) {
+                self.layouts.append("12")
+                self.layouts.append("13")
+            } else if model.isKindOfClass(LayoutThirteenModel) {
+//                self.layouts.append("13")
+            } else if model.isKindOfClass(LayoutFourteenModel) {
+                self.layouts.append("14")
             }
         }
         
@@ -607,9 +621,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
                 SessionManager.setEmailAddress(self.profileModel.email)
                 SessionManager.setReferrerCode(self.profileModel.referrerCode)
                 
-                println("first name: \(self.profileModel.firstName)")
-                println("last name: \(self.profileModel.lastName)")
-                println("contact number: \(self.profileModel.contactNumber)")
+//                println("first name: \(self.profileModel.firstName)")
+//                println("last name: \(self.profileModel.lastName)")
+//                println("contact number: \(self.profileModel.contactNumber)")
                 
                 //Update tab bar icons badges
                 self.updateTabBarBadge()
@@ -742,6 +756,12 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             return self.homePageModel.data[section].data.count
         case 11:
             return 1
+        case 12:
+            return 1
+        case 13:
+            return 4
+        case 14:
+            return 4//self.homePageModel.data[section].data.count
         default:
             return 0
         }
@@ -785,6 +805,16 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             return self.twoColumnGridCollectionViewCellWithIndexPath(indexPath)
         } else if self.layouts[indexPath.section] == "11" {
             return self.overseasCollectionViewCell(indexPath)
+        } else if self.layouts[indexPath.section] == "12" {
+            if indexPath.row == 0 {
+                return self.layoutTwelveCollectionViewCellWithIndexPath(indexPath)
+            } else {
+                return self.layoutThirteenCollectionViewCellWithIndexPath(indexPath)
+            }
+        } else if self.layouts[indexPath.section] == "13" {
+            return self.layoutThirteenCollectionViewCellWithIndexPath(indexPath)
+        } else if self.layouts[indexPath.section] == "14" {
+            return self.layoutFourteenCollectionViewCellWithIndexPath(indexPath)
         } else {
             return UICollectionViewCell()
         }
@@ -868,6 +898,45 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             headerView.titleLabel.text = layoutTenModel.sectionTitle
             headerView.updateTitleLine()
             headerView.backgroundColor = UIColor.clearColor()
+        } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutTwelveModel) {
+            let layoutTwelveModel: LayoutTwelveModel = self.homePageModel.data[indexPath.section] as! LayoutTwelveModel
+            if layoutTwelveModel.isViewMoreAvailable {
+                headerView.target = layoutTwelveModel.viewMoreTarget.targetUrl
+                headerView.targetType = layoutTwelveModel.viewMoreTarget.targetType
+                headerView.viewMoreButton.hidden = false
+            } else {
+                headerView.viewMoreButton.hidden = true
+            }
+            
+            headerView.sectionTitle = layoutTwelveModel.sectionTitle
+            headerView.titleLabel.text = layoutTwelveModel.sectionTitle
+            headerView.updateTitleLine()
+        } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutThirteenModel) {
+            let layoutThirteenModel: LayoutThirteenModel = self.homePageModel.data[indexPath.section] as! LayoutThirteenModel
+            if layoutThirteenModel.isViewMoreAvailable {
+                headerView.target = layoutThirteenModel.viewMoreTarget.targetUrl
+                headerView.targetType = layoutThirteenModel.viewMoreTarget.targetType
+                headerView.viewMoreButton.hidden = false
+            } else {
+                headerView.viewMoreButton.hidden = true
+            }
+
+            headerView.sectionTitle = layoutThirteenModel.sectionTitle
+            headerView.titleLabel.text = layoutThirteenModel.sectionTitle
+            headerView.updateTitleLine()
+        } else if self.homePageModel.data[indexPath.section].isKindOfClass(LayoutFourteenModel) {
+            let layoutFourteenModel: LayoutFourteenModel = self.homePageModel.data[indexPath.section] as! LayoutFourteenModel
+            if layoutFourteenModel.isViewMoreAvailable {
+                headerView.target = layoutFourteenModel.viewMoreTarget.targetUrl
+                headerView.targetType = layoutFourteenModel.viewMoreTarget.targetType
+                headerView.viewMoreButton.hidden = false
+            } else {
+                headerView.viewMoreButton.hidden = true
+            }
+
+            headerView.sectionTitle = layoutFourteenModel.sectionTitle
+            headerView.titleLabel.text = layoutFourteenModel.sectionTitle
+            headerView.updateTitleLine()
         }
         
         return headerView
@@ -891,7 +960,16 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         } else if cell.isKindOfClass(VerticalImageCollectionViewCell) {
             let verticalCell: VerticalImageCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! VerticalImageCollectionViewCell
             self.didClickItemWithTarget(verticalCell.target, targetType: verticalCell.targetType)
+        } else if cell.isKindOfClass(LayoutThirteenCollectionViewCell) {
+            let layoutThirteen: LayoutThirteenCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! LayoutThirteenCollectionViewCell
+            self.didClickItemWithTarget(layoutThirteen.target, targetType: layoutThirteen.targetType)
+        } else if cell.isKindOfClass(LayoutFourteenCollectionViewCell) {
+            let layoutFourteen: LayoutFourteenCollectionViewCell = collectionView.cellForItemAtIndexPath(indexPath) as! LayoutFourteenCollectionViewCell
+            self.didClickItemWithTarget(layoutFourteen.target, targetType: layoutFourteen.targetType)
         }
+        
+        // MARK: - TODO
+        // MARK: put a delegate here for the new layouts
     }
     
     //MARK: -
@@ -1236,6 +1314,114 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
     //MARK: - Layout Nine Collection View Cell Delegate
     func layoutNineCollectionViewCellDidClickProductImage(productImage: ProductImageView) {
         self.didClickItemWithTarget(productImage.target, targetType: productImage.targetType, sectionTitle: productImage.title)
+    }
+    
+    //MARK: -
+    //MARK: - Twelve Layout
+    func layoutTwelveCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> LayoutTwelveCollectionViewCell {
+        let layoutTwelveCVC: LayoutTwelveCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("LayoutTwelveCollectionViewCell", forIndexPath: indexPath) as! LayoutTwelveCollectionViewCell
+        
+        layoutTwelveCVC.delegate = self
+        
+        let model: LayoutTwelveModel = self.homePageModel.data[indexPath.section] as! LayoutTwelveModel
+            
+        if model.data.count > 0 {
+            layoutTwelveCVC.leftImageView.target = model.data[0].target.targetUrl
+            layoutTwelveCVC.leftImageView.targetType = model.data[0].target.targetType
+            layoutTwelveCVC.leftImageView.title = model.data[0].name
+            layoutTwelveCVC.leftImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(model.data[0].image), placeholderImage: UIImage(named: self.placeHolder), completed: {
+                (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                if let imageView = layoutTwelveCVC.leftImageView {
+                    if downloadedImage != nil {
+                        imageView.fadeInImageWithImage(downloadedImage)
+                    }
+                }
+            })
+        }
+        
+        
+        if model.data.count > 1 {
+            layoutTwelveCVC.rightUpperImageView.target = model.data[1].target.targetUrl
+            layoutTwelveCVC.rightUpperImageView.targetType = model.data[1].target.targetType
+            layoutTwelveCVC.rightUpperImageView.title = model.data[1].name
+            layoutTwelveCVC.rightUpperImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(model.data[1].image), placeholderImage: UIImage(named: self.placeHolder), completed: {
+                (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                if let imageView = layoutTwelveCVC.rightUpperImageView {
+                    if downloadedImage != nil {
+                        imageView.fadeInImageWithImage(downloadedImage)
+                    }
+                }
+            })
+        }
+        
+        
+        if model.data.count > 2 {
+            layoutTwelveCVC.rightLowerImageView.target = model.data[2].target.targetUrl
+            layoutTwelveCVC.rightLowerImageView.targetType = model.data[2].target.targetType
+            layoutTwelveCVC.rightLowerImageView.title = model.data[2].name
+            layoutTwelveCVC.rightLowerImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(model.data[2].image), placeholderImage: UIImage(named: self.placeHolder), completed: {
+                (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+                if let imageView = layoutTwelveCVC.rightLowerImageView {
+                    if downloadedImage != nil {
+                        imageView.fadeInImageWithImage(downloadedImage)
+                    }
+                }
+            })
+        }
+        
+        return layoutTwelveCVC
+    }
+    
+    //MARK: -
+    //MARK: - Thirteen Layout
+    func layoutThirteenCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> LayoutThirteenCollectionViewCell {
+        let layoutThirteenCVC: LayoutThirteenCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("LayoutThirteenCollectionViewCell", forIndexPath: indexPath) as! LayoutThirteenCollectionViewCell
+        
+        let model: LayoutThirteenModel = self.homePageModel.data[indexPath.section] as! LayoutThirteenModel
+
+        layoutThirteenCVC.target = model.data[indexPath.row].target.targetUrl
+        layoutThirteenCVC.targetType = model.data[indexPath.row].target.targetType
+
+        layoutThirteenCVC.productImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(model.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: {
+            (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+            if let imageView = layoutThirteenCVC.productImageView {
+                if downloadedImage != nil {
+                    imageView.fadeInImageWithImage(downloadedImage)
+                }
+            }
+        })
+        
+        layoutThirteenCVC.nameLabel.text = model.data[indexPath.row].name
+        layoutThirteenCVC.priceLabel.text = model.data[indexPath.row].originalPrice.addPesoSign()
+        layoutThirteenCVC.discountLabel.text = model.data[indexPath.row].discountedPrice.addPesoSign()
+        
+        return layoutThirteenCVC
+    }
+    
+    //MARK: -
+    //MARK: - Thirteen Layout
+    func layoutFourteenCollectionViewCellWithIndexPath(indexPath: NSIndexPath) -> LayoutFourteenCollectionViewCell {
+        let layoutFourteenCVC: LayoutFourteenCollectionViewCell = self.collectionView?.dequeueReusableCellWithReuseIdentifier("LayoutFourteenCollectionViewCell", forIndexPath: indexPath) as! LayoutFourteenCollectionViewCell
+        
+        let model: LayoutFourteenModel = self.homePageModel.data[indexPath.section] as! LayoutFourteenModel
+        
+        layoutFourteenCVC.target = model.data[indexPath.row].target.targetUrl
+        layoutFourteenCVC.targetType = model.data[indexPath.row].target.targetType
+        
+        layoutFourteenCVC.productImageView.sd_setImageWithURL(StringHelper.convertStringToUrl(model.data[indexPath.row].image), placeholderImage: UIImage(named: self.placeHolder), completed: {
+            (downloadedImage, NSError, SDImageCacheType, NSURL) -> Void in
+            if let imageView = layoutFourteenCVC.productImageView {
+                if downloadedImage != nil {
+                    imageView.fadeInImageWithImage(downloadedImage)
+                }
+            }
+        })
+        
+        layoutFourteenCVC.nameLabel.text = model.data[indexPath.row].name
+        layoutFourteenCVC.priceLabel.text = model.data[indexPath.row].originalPrice.addPesoSign()
+        layoutFourteenCVC.discountLabel.text = model.data[indexPath.row].discountedPrice.addPesoSign()
+        
+        return layoutFourteenCVC
     }
     
     //MARK: -
@@ -1992,6 +2178,12 @@ extension HomeContainerViewController: SearchBarViewDelegate {
         self.navigationController?.pushViewController(resultController, animated:true);
     }
     
+    func searchBarView(didTapDailyLogin searchBarView: SearchBarView) {
+        var url = APIEnvironment.baseUrl() + "/v3/" + SessionManager.selectedCountryCode() + "/" + SessionManager.selectedLanguageCode() + "/auth/" + APIAtlas.dailyLogin
+
+        self.didClickItemWithTarget(url, targetType: "webView", sectionTitle: StringHelper.localizedStringWithKey("WEBVIEW_DAILY_LOGIN"))
+    }
+    
     //API Request
     //MARK: - API Request
     func fireSearch(queryString: String, searchBarView: SearchBarView){
@@ -2020,7 +2212,7 @@ extension HomeContainerViewController: SearchBarViewDelegate {
                         }
                         else {
                             self.suggestions.removeAll(keepCapacity: false)
-                            self.suggestions.append(SearchSuggestionModel(suggestion: SearchBarView.noResultsString, imageURL: "", searchUrl: ""))
+//                            self.suggestions.append(SearchSuggestionModel(suggestion: SearchBarView.noResultsString, imageURL: "", searchUrl: ""))
                             searchBarView.passSearchSuggestions(self.suggestions)
                         }
                     }
@@ -2123,5 +2315,11 @@ extension HomeContainerViewController: OverseasCollectionViewCellDelegate {
         let fullImageCell: FullImageCollectionViewCell = carouselCollectionViewCell.collectionView.cellForItemAtIndexPath(indexPath) as! FullImageCollectionViewCell
         
         self.didClickItemWithTarget(fullImageCell.target, targetType: fullImageCell.targetType)
+    }
+}
+
+extension HomeContainerViewController: LayoutTwelveCollectionViewCellDelegate {
+    func layoutTwelveCollectionViewCellDidClickProductImage(productImage: ProductImageView) {
+        self.didClickItemWithTarget(productImage.target, targetType: productImage.targetType, sectionTitle: productImage.title)
     }
 }

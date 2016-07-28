@@ -10,7 +10,11 @@ import UIKit
 
 class Toast: NSObject {
     class func displayToastWithMessage(message: String, duration: NSTimeInterval, view: UIView) {
-        view.makeToast(message, duration: duration, position: CSToastPositionCenter, style: CSToastManager.sharedStyle())
+        if count(message) > 1 {
+            view.makeToast(message, duration: duration, position: CSToastPositionCenter, style: CSToastManager.sharedStyle())
+        } else {
+            view.makeToast(Constants.Localized.someThingWentWrong, duration: duration, position: CSToastPositionCenter, style: CSToastManager.sharedStyle())
+        }
     }
     
     class func displayToastWithMessage(message: String, view: UIView) {

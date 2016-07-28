@@ -1078,6 +1078,9 @@ extension ResultViewController: SearchBarViewDelegate {
         self.fireSearch()
     }
     
+    func searchBarView(didTapDailyLogin searchBarView: SearchBarView) {
+
+    }
     //API Request
     //MARK: - API Request
     func fireSearch(queryString: String, searchBarView: SearchBarView){
@@ -1106,7 +1109,7 @@ extension ResultViewController: SearchBarViewDelegate {
                         }
                         else {
                             self.suggestions.removeAll(keepCapacity: false)
-                            self.suggestions.append(SearchSuggestionModel(suggestion: SearchBarView.noResultsString, imageURL: "", searchUrl: ""))
+//                            self.suggestions.append(SearchSuggestionModel(suggestion: SearchBarView.noResultsString, imageURL: "", searchUrl: ""))
                             searchBarView.passSearchSuggestions(self.suggestions)
                         }
                     }
