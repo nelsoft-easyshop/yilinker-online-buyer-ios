@@ -187,6 +187,7 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
         tableData.removeAll(keepCapacity: false)
         var tempDates: [String] = []
         
+        // Get all dates
         if deliveryLogs.deliveryLogs.count != 0 {
             for subValue in deliveryLogs.deliveryLogs {
                 if !contains(tempDates, formatDateToCompleteString(formatStringToDate(subValue.date))) {
@@ -197,6 +198,7 @@ class TransactionDeliveryLogTableViewController: UITableViewController {
             
             println(tempDates)
             
+            // Segregatiom of details falls within same date
             for var i = 0; i < tableData.count; i++ {
                 for subValue in deliveryLogs.deliveryLogs {
                     if formatDateToCompleteString(formatStringToDate(subValue.date)) == tableData[i].date {

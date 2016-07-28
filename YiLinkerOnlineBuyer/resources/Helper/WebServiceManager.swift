@@ -1323,7 +1323,11 @@ class WebServiceManager: NSObject {
         
         let manager: APIManager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = ["userAddressId": userAddressId, self.accessTokenKey: accessToken, "title": title, "streetName": streetName, "province": province, "city": city, "barangay": barangay, "zipCode": zipCode, "locationId": locationId, "longitude": longitude, "latitude": latitude]
+        var parameters: NSMutableDictionary = ["userAddressId": userAddressId, self.accessTokenKey: accessToken, "streetName": streetName, "province": province, "city": city, "barangay": barangay, "zipCode": zipCode, "locationId": locationId, "longitude": longitude, "latitude": latitude]
+        
+        if title != "" {
+            parameters["title"] = title
+        }
         
         let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
@@ -1338,7 +1342,11 @@ class WebServiceManager: NSObject {
         
         let manager: APIManager = APIManager.sharedInstance
         
-        let parameters: NSDictionary = [self.accessTokenKey: accessToken, "title": title, "streetName": streetName, "province": province, "city": city, "barangay": barangay, "zipCode": zipCode, "locationId": locationId, "longitude": longitude, "latitude": latitude]
+        let parameters: NSMutableDictionary = [self.accessTokenKey: accessToken, "streetName": streetName, "province": province, "city": city, "barangay": barangay, "zipCode": zipCode, "locationId": locationId, "longitude": longitude, "latitude": latitude]
+        
+        if title != "" {
+            parameters["title"] = title
+        }
         
         let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)

@@ -477,10 +477,13 @@ class SellerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         } else {
             if self.sellerModelFeedback != nil {
                 if self.sellerModelFeedback!.reviews.count > 3 {
+                    // If review is greater than 3, it returns extra cell for "See More" feedback
                     return 4
                 } else if self.sellerModelFeedback!.reviews.count == 0 {
+                    // Returns extra cell for "No Available Reviews"
                     return 1
                 } else {
+                    // Returns the number of reviews
                     return self.sellerModelFeedback!.reviews.count
                 }
             } else {

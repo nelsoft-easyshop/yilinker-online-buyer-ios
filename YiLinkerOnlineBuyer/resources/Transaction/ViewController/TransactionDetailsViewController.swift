@@ -478,7 +478,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
     
     func messageSeller(sellerId: Int) {
         self.canMessage = false
-        if contains(self.arrayContacts, "\(sellerId)") {
+        if contains(self.arrayContacts, "\(sellerId)") { // If the buyer followed the seller
             for var i = 0; i < self.contacts.count; i++ {
                 if "\(sellerId)" == contacts[i].userId {
                     self.selectedContact = contacts[i]
@@ -486,7 +486,7 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                     self.showMessaging()
                 }
             }
-        } else {
+        } else { // If buyer doesn't follow the seller
             self.fireSeller("\(sellerId)")
         }
     }
@@ -543,6 +543,8 @@ class TransactionDetailsViewController: UIViewController, UITableViewDelegate, U
                     self.sellerModel = SellerModel.parseSellerDataFromDictionary(responseObject as! NSDictionary)
                     self.contactsNotFollowed.append(W_Contact(fullName: self.sellerModel.store_name, userRegistrationIds: "", userIdleRegistrationIds: "", userId: sellerId, profileImageUrl: "\(self.sellerModel.avatar)", isOnline: "1"))
                     
+                    // Will check if the sellerId is equal to the seller's id
+                    // Then the buyer can message the seller
                     for var i = 0; i < self.contactsNotFollowed.count; i++ {
                         if "\(sellerId)" == self.contactsNotFollowed[i].userId {
                             self.selectedContact = self.contactsNotFollowed[i]

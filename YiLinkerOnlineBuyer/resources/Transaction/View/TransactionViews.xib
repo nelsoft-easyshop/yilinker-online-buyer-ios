@@ -437,7 +437,7 @@
                 <outlet property="voucherDiscountLabel" destination="3zA-7W-3he" id="1d6-Rf-l5M"/>
                 <outlet property="voucherDiscountTitleLabel" destination="mwx-sr-DJJ" id="oD9-hh-ZSP"/>
             </connections>
-            <point key="canvasLocation" x="361.5" y="115"/>
+            <point key="canvasLocation" x="361.5" y="126"/>
         </view>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="NrC-nd-xMW" userLabel="Transaction Seller" customClass="TransactionSellerView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="314"/>
@@ -607,7 +607,7 @@ Phiippines</string>
                 <outlet property="numberLabel" destination="DW3-53-jF9" id="5OH-T6-K0y"/>
                 <outlet property="smsImageView" destination="WmQ-cD-Nsl" id="J7Q-6e-rED"/>
             </connections>
-            <point key="canvasLocation" x="361.5" y="473"/>
+            <point key="canvasLocation" x="361.5" y="546"/>
         </view>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="LRr-bJ-2sh" userLabel="Transaction Status" customClass="TransactionDeliveryStatusView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="218"/>
@@ -809,7 +809,7 @@ Phiippines</string>
                 <outlet property="pickupRiderTitleLabel" destination="5om-iF-rnT" id="vK5-fp-8Qr"/>
                 <outlet property="pickupSms" destination="iuS-Dw-7Fc" id="uAV-PB-rFL"/>
             </connections>
-            <point key="canvasLocation" x="361.5" y="831"/>
+            <point key="canvasLocation" x="361.5" y="887"/>
         </view>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="ZbA-3d-E5y" userLabel="Product Images" customClass="TransactionProductImagesView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="238"/>
@@ -1082,7 +1082,7 @@ Phiippines</string>
                 <outlet property="seeMoreButton" destination="QIq-iT-Mk8" id="ddd-eC-9J3"/>
                 <outlet property="seeMoreLabel" destination="jsQ-aI-8bJ" id="yyz-RD-CCj"/>
             </connections>
-            <point key="canvasLocation" x="935.5" y="410"/>
+            <point key="canvasLocation" x="901.5" y="410"/>
         </view>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="HYi-6R-oZb" userLabel="Product Description" customClass="TransactionSectionFooterView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="140"/>
@@ -1245,7 +1245,7 @@ Phiippines</string>
                 <outlet property="sellerNameLabelTitle" destination="gbF-nW-wb7" id="Fof-dN-ulU"/>
                 <outlet property="sellerStorePageButton" destination="nlf-3w-Ntu" id="9vv-2W-VMG"/>
             </connections>
-            <point key="canvasLocation" x="793.5" y="615"/>
+            <point key="canvasLocation" x="901.5" y="595"/>
         </view>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="PcZ-VS-qjU" userLabel="Product Description" customClass="TransactionSectionHeaderView" customModule="YiLinkerOnlineBuyer" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="25"/>
@@ -1270,7 +1270,7 @@ Phiippines</string>
                                         <constraint firstAttribute="width" constant="20" id="aGK-xB-tPi"/>
                                     </constraints>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="CANCEL THIS ORDER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="pCM-TD-2h3">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CANCEL THIS ORDER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="pCM-TD-2h3">
                                     <rect key="frame" x="38" y="4" width="133" height="21"/>
                                     <fontDescription key="fontDescription" name="Panton-Bold" family="Panton" pointSize="14"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1361,6 +1361,13 @@ Phiippines</string>
                 <outlet property="leaveFeedbackButton" destination="F8Z-sn-mXp" id="PQ4-wZ-57H"/>
             </connections>
             <point key="canvasLocation" x="830.5" y="850.5"/>
+        </view>
+        <view contentMode="scaleToFill" id="ehP-ID-0xw">
+            <rect key="frame" x="0.0" y="1" width="307" height="62"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="596.5" y="1141"/>
         </view>
     </objects>
     <resources>
