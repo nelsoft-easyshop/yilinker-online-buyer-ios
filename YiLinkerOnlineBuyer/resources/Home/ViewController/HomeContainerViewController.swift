@@ -2212,7 +2212,7 @@ extension HomeContainerViewController: SearchBarViewDelegate {
                         }
                         else {
                             self.suggestions.removeAll(keepCapacity: false)
-                            self.suggestions.append(SearchSuggestionModel(suggestion: SearchBarView.noResultsString, imageURL: "", searchUrl: ""))
+//                            self.suggestions.append(SearchSuggestionModel(suggestion: SearchBarView.noResultsString, imageURL: "", searchUrl: ""))
                             searchBarView.passSearchSuggestions(self.suggestions)
                         }
                     }
