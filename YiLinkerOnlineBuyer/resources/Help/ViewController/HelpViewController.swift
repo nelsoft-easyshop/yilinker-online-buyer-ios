@@ -21,6 +21,11 @@ class HelpViewController: UIViewController {
     @IBOutlet weak var checkUpdatesButton: UIButton!
     @IBOutlet weak var whatsNewButton: UIButton!
     
+    @IBOutlet weak var callTextButton2: UIButton!
+    @IBOutlet weak var callTextButton3: UIButton!
+    @IBOutlet weak var callIconButton2: UIButton!
+    @IBOutlet weak var callIconButton3: UIButton!
+
     @IBOutlet weak var facebookButton: UIButton!
     @IBOutlet weak var twitterButton: UIButton!
     @IBOutlet weak var instagramButton: UIButton!
@@ -112,9 +117,13 @@ class HelpViewController: UIViewController {
         if sender as! UIButton == emailTextButton || sender as! UIButton == emailIconButton {
             url = "mailto:support@yilinker.ph"
         } else if sender as! UIButton == callTextButton || sender as! UIButton == callIconButton {
+            url = "tel://+639288694075"
+        } else if sender as! UIButton == callTextButton2 || sender as! UIButton == callIconButton2 {
+            url = "tel://+639183457698"
+        } else if sender as! UIButton == callTextButton3 || sender as! UIButton == callIconButton3 {
             url = "tel://+639777265481"
         }
-        
+    
         UIApplication.sharedApplication().openURL(NSURL(string:url)!)
     }
     
