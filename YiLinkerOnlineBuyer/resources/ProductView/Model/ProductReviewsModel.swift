@@ -29,40 +29,68 @@ class ProductReviewsModel {
         var model = ProductReviewsModel()
         if reviews.isKindOfClass(NSDictionary) {
             
-            if reviews["userId"] != nil {
-                model.userId = reviews["userId"] as! Int
+//            if reviews["userId"] != nil {
+//                model.userId = reviews["userId"] as! Int
+//            }
+            
+            if let temp = reviews["userId"] as? Int {
+                model.userId = temp
             }
             
 //            if reviews["userId"] != nil {
 //                 model.title = reviews["title"] as! String
 //            }
             
-            if reviews["review"] != nil {
-                model.review = reviews["review"] as! String
+//            if reviews["review"] != nil {
+//                model.review = reviews["review"] as! String
+//            }
+            
+            if let temp = reviews["review"] as? String {
+                model.review = temp
             }
             
-            if reviews["rating"] != nil {
-                model.rating = reviews["rating"] as! String
+//            if reviews["rating"] != nil {
+//                model.rating = reviews["rating"] as! String
+//            }
+            
+            if let temp = reviews["rating"] as? String {
+                model.rating = temp
             }
             
-            if reviews["fullName"] != nil {
-                model.fullName = reviews["fullName"] as! String
+//            if reviews["fullName"] != nil {
+//                model.fullName = reviews["fullName"] as! String
+//            }
+            
+            if let temp = reviews["fullName"] as? String {
+                model.fullName = temp
             }
             
             if let temp = reviews["firstName"] as? String {
                 model.firstName = temp
             }
             
-            if reviews["lastName"] != nil {
-                model.lastName = reviews["lastName"] as! String
+//            if reviews["lastName"] != nil {
+//                model.lastName = reviews["lastName"] as! String
+//            }
+            
+            if let temp = reviews["lastName"] as? String {
+                model.lastName = temp
             }
             
-            if reviews["profileImageUrl"] != nil {
-                model.profileImageUrl = reviews["profileImageUrl"] as! String
+//            if reviews["profileImageUrl"] != nil {
+//                model.profileImageUrl = reviews["profileImageUrl"] as! String
+//            }
+            
+            if let temp = reviews["profileImageUrl"] as? String {
+                model.profileImageUrl = temp
             }
             
-            if reviews["dateAdded"] != nil {
-                model.dateAdded = reviews["dateAdded"] as! String
+//            if reviews["dateAdded"] != nil {
+//                model.dateAdded = reviews["dateAdded"] as! String
+//            }
+            
+            if let temp = reviews["dateAdded"] as? String {
+                model.dateAdded = temp
             }
    
         }
