@@ -94,7 +94,7 @@ class ProductReviewViewController: UIViewController {
         numberOfPeopleLabel.text = ProductStrings.peopleRate
         cancelButton.setTitle( ProductStrings.cancel, forState: .Normal)
         let nib = UINib(nibName: "ReviewTableViewCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: "reviewIdentifier")
+        self.tableView.registerNib(nib, forCellReuseIdentifier: "ReviewTableViewCell")
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 100.0
         
