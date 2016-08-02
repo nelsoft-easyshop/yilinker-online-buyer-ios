@@ -585,7 +585,6 @@ class SessionManager {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
 
-
      class func setIsDeviceTokenRegistered(isDeviceRegistered: Bool) {
         NSUserDefaults.standardUserDefaults().setBool(isDeviceRegistered, forKey: "isDeviceRegistered")
         NSUserDefaults.standardUserDefaults().synchronize()
@@ -600,5 +599,4 @@ class SessionManager {
         
         return false
     }
-    
 }

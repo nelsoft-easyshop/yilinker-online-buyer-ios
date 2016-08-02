@@ -28,145 +28,155 @@ struct APIEnvironment {
 
 struct APIAtlas {
     
+    static let V1 = "v1"
+    static let V2 = "v2"
+    static let V3 = "v3"
+    static let V4 = "v4"
+    
+    static func generateV3URL(url: String) -> String {
+        return "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
+    }
+    
+    static func generateV4URL(url: String) -> String {
+        return "\(APIAtlas.V4)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
+    }
+    
     static func COD() -> String {
         if SessionManager.isLoggedIn() {
-            return "auth/payment/doPaymentCod"
+            return APIAtlas.generateV4URL("auth/payment/doPaymentCod")
         } else {
             SessionManager.loadCookies()
-            return "payment/doPaymentCod"
+            return APIAtlas.generateV4URL("payment/doPaymentCod")
         }
     }
     
     static func pesoPay() -> String {
         if SessionManager.isLoggedIn() {
-            return "auth/payment/doPesoPay"
+            return APIAtlas.generateV4URL("auth/payment/doPesoPay")
         } else {
             SessionManager.loadCookies()
-            return "payment/doPesoPay"
+            return APIAtlas.generateV4URL("payment/doPesoPay")
         }
     }
     
     static func overView() -> String {
         if SessionManager.isLoggedIn() {
-            return "auth/payment/checkoutOverview"
+            return APIAtlas.generateV4URL("auth/payment/checkoutOverview")
         } else {
             SessionManager.loadCookies()
-            return "payment/checkoutOverview"
+            return APIAtlas.generateV4URL("payment/checkoutOverview")
         }
     }
     
     static func cart() -> String {
         if SessionManager.isLoggedIn() {
-            return "auth/cart/getCart"
+            return APIAtlas.generateV4URL("auth/cart/getCart")
         } else {
             SessionManager.loadCookies()
-            return "cart/getCart"
+            return APIAtlas.generateV4URL("cart/getCart")
         }
     }
     
     static func updateCart() -> String {
         if SessionManager.isLoggedIn() {
-            return "auth/cart/updateCartItem"
+            return APIAtlas.generateV4URL("auth/cart/updateCartItem")
         } else {
             SessionManager.loadCookies()
-            return "cart/updateCartItem"
+            return APIAtlas.generateV4URL("cart/updateCartItem")
         }
     }
     
     static func updateCheckout() -> String {
         if SessionManager.isLoggedIn() {
-            return "auth/cart/cartToCheckout"
+            return APIAtlas.generateV4URL("auth/cart/cartToCheckout")
         } else {
             SessionManager.loadCookies()
-            return "cart/cartToCheckout"
+            return APIAtlas.generateV4URL("cart/cartToCheckout")
         }
     }
     
     
     static func voucher() -> String {
         if SessionManager.isLoggedIn() {
-            return "auth/cart/applyVoucher"
+            return APIAtlas.generateV4URL("auth/cart/applyVoucher")
         } else {
             SessionManager.loadCookies()
-            return "cart/applyVoucher"
+            return APIAtlas.generateV4URL("cart/applyVoucher")
         }
     }
     
     static func mobileFeedBack() -> String {
         if SessionManager.isLoggedIn() {
-            return "auth/mobile-feedback/add"
+            return APIAtlas.generateV4URL("auth/mobile-feedback/add")
         } else {
             SessionManager.loadCookies()
-            return "mobile-feedback/add"
+            return APIAtlas.generateV4URL("mobile-feedback/add")
         }
     }
     
     static func homeUrl(version: String, languageCode: String) -> String {
-        return "home/getData"
+        return APIAtlas.generateV4URL("home/getData")
     }
-    
-    static let V1 = "v1"
-    static let V2 = "v2"
-    static let V3 = "v3"
-    static let V4 = "v4"
     
     static let appItunesURL = "https://itunes.apple.com/ph/app/yilinker-buyer/id1048641709?mt=8"
     static let appLookupUrl = "http://itunes.apple.com/lookup?bundleId=com.easyshop.YiLinkerOnlineBuyer"
-    static let refreshTokenUrl = "login"
-    static let loginUrl = "login"
-    static let registerUrl = "user/register"
-    static let getUserInfoUrl = "auth/user/getUser"
-    static let homeUrl = "v4/home/getData"
-    static let cartUrl = "auth/cart/getCart"
-    static let wishlistUrl = "auth/cart/getCart"
-    static let updateWishlistUrl = "auth/cart/updateCartItem"
-    static let addWishlistToCartUrl = "auth/wishlistToCart"
-    static let updateCartUrl = "auth/cart/updateCartItem"
-    static let getSellerUrl = "get-seller"
-    static let buyerSellerFeedbacks = "feedback/getUserFeedbacks"
-    static let productDetails = "product/getProductDetail"
-    static let productReviews = "product/getProductReviews"
-    static let productSellerDetails = "get-product"
-    static let getSellerInfoLoggedIn = "auth/user/getStoreInfo"
-    static let getSellerInfo = "user/getStoreInfo"
-    static let followSeller = "auth/followSeller"
-    static let unfollowSeller = "auth/unfollowSeller"
-    static let sellerReview = "seller/getReviews"
-    static let searchUrl = "product/getSearchKeywords"
-    static let profileUrl = "auth/user/getUser"
-    static let editProfileUrl = "auth/user/editProfile"
-    static let addressesUrl = "auth/address/getUserAddresses"
-    static let deleteAddressUrl = "auth/address/deleteUserAddress"
-    static let setDefaultAddressUrl = "auth/address/setDefaultAddress"
-    static let provinceUrl = "location/getAllProvinces"
-    static let citiesUrl = "location/getChildCities"
-    static let barangay = "location/getBarangaysByCity"
-    static let addAddressUrl = "auth/address/addNewAddress"
-    static let updateCheckoutUrl = "auth/cart/cartToCheckout"
-    static let updateGuestCheckout = "cart/cartToCheckout"
-    static let editAddress = "auth/address/editUserAddress"
-    static let setCheckoutAddressUrl = "auth/user/setAddress"
+    
+    static let refreshTokenUrl = APIAtlas.generateV4URL("login")
+    static let loginUrl = APIAtlas.generateV4URL("login")
+    static let registerUrl = APIAtlas.generateV4URL("user/register")
+    static let getUserInfoUrl = APIAtlas.generateV4URL("auth/user/getUser")
+    static let homeUrl = APIAtlas.generateV4URL("home/getData")
+    static let cartUrl = APIAtlas.generateV4URL("auth/cart/getCart")
+    static let wishlistUrl = APIAtlas.generateV4URL("auth/cart/getCart")
+    static let updateWishlistUrl = APIAtlas.generateV4URL("auth/cart/updateCartItem")
+    static let addWishlistToCartUrl = APIAtlas.generateV4URL("auth/wishlistToCart")
+    static let updateCartUrl = APIAtlas.generateV4URL("auth/cart/updateCartItem")
+    static let getSellerUrl = APIAtlas.generateV4URL("get-seller")
+    static let buyerSellerFeedbacks = APIAtlas.generateV4URL("feedback/getUserFeedbacks")
+    static let productDetails = APIAtlas.generateV4URL("product/getProductDetail")
+    static let productReviews = APIAtlas.generateV4URL("product/getProductReviews")
+    static let productSellerDetails = APIAtlas.generateV4URL("get-product")
+    static let getSellerInfoLoggedIn = APIAtlas.generateV4URL("auth/user/getStoreInfo")
+    static let getSellerInfo = APIAtlas.generateV4URL("user/getStoreInfo")
+    static let followSeller = APIAtlas.generateV4URL("auth/followSeller")
+    static let unfollowSeller = APIAtlas.generateV4URL("auth/unfollowSeller")
+    static let sellerReview = APIAtlas.generateV4URL("seller/getReviews")
+    static let searchUrl = APIAtlas.generateV4URL("product/getSearchKeywords")
+    static let profileUrl = APIAtlas.generateV4URL("auth/user/getUser")
+    static let editProfileUrl = APIAtlas.generateV4URL("auth/user/editProfile")
+    static let addressesUrl = APIAtlas.generateV4URL("auth/address/getUserAddresses")
+    static let deleteAddressUrl = APIAtlas.generateV4URL("auth/address/deleteUserAddress")
+    static let setDefaultAddressUrl = APIAtlas.generateV4URL("auth/address/setDefaultAddress")
+    static let provinceUrl = APIAtlas.generateV4URL("location/getAllProvinces")
+    static let citiesUrl = APIAtlas.generateV4URL("location/getChildCities")
+    static let barangay = APIAtlas.generateV4URL("location/getBarangaysByCity")
+    static let addAddressUrl = APIAtlas.generateV4URL("auth/address/addNewAddress")
+    static let updateCheckoutUrl = APIAtlas.generateV4URL("auth/cart/cartToCheckout")
+    static let updateGuestCheckout = APIAtlas.generateV4URL("cart/cartToCheckout")
+    static let editAddress = APIAtlas.generateV4URL("auth/address/editUserAddress")
+    static let setCheckoutAddressUrl = APIAtlas.generateV4URL("auth/user/setAddress")
 
     static let cashOnDeliveryUrl = APIAtlas.COD()
     static let pesoPayUrl = APIAtlas.pesoPay()
     static let overViewUrl = APIAtlas.overView()
-    static let activityLogs = "auth/user/activityLog?access_token="
-    static let getCategories = "product/getCategories?parentId="
-    static let productList = "product/getProductList"
-    static let guestUserUrl = "guestUser"
-    static let updateMobileNumber = "auth/user/changeContactNumber"
-    static let smsVerification = "auth/sms/verify"
-    static let changePassword = "auth/user/changePassword"
-    static let getFollowedSellers = "auth/getFollowedSellers"
-    static let postEmailNotif = "auth/email/subscription"
-    static let postSMSNotif = "auth/sms/subscription"
-    static let deactivate = "auth/account/disable"
-    static let todaysPromo = "product/getPromoProducts"
-    static let cartImage = "assets/images/uploads/products/"
-    static let searchBuyer = "product/getProductList?query="
-    static let searchSeller = "store/search?queryString="
+    static let activityLogs = APIAtlas.generateV4URL("auth/user/activityLog?access_token=")
+    static let getCategories = APIAtlas.generateV4URL("product/getCategories?parentId=")
+    static let productList = APIAtlas.generateV4URL("product/getProductList")
+    static let guestUserUrl = APIAtlas.generateV4URL("guestUser")
+    static let updateMobileNumber = APIAtlas.generateV4URL("auth/user/changeContactNumber")
+    static let smsVerification = APIAtlas.generateV4URL("auth/sms/verify")
+    static let changePassword = APIAtlas.generateV4URL("auth/user/changePassword")
+    static let getFollowedSellers = APIAtlas.generateV4URL("auth/getFollowedSellers")
+    static let postEmailNotif = APIAtlas.generateV4URL("auth/email/subscription")
+    static let postSMSNotif = APIAtlas.generateV4URL("auth/sms/subscription")
+    static let deactivate = APIAtlas.generateV4URL("auth/account/disable")
+    static let todaysPromo = APIAtlas.generateV4URL("product/getPromoProducts")
+    static let cartImage = APIAtlas.generateV4URL("assets/images/uploads/products/")
+    static let searchBuyer = APIAtlas.generateV4URL("product/getProductList?query=")
+    static let searchSeller = APIAtlas.generateV4URL("store/search?queryString=")
     static let baseUrl = APIEnvironment.baseUrl()
     
+    //=== Used on Dennis Code ===
     /* MESSAGING CONSTANTS */
     static let ACTION_SEND_MESSAGE          = "/v1/message/sendMessage"
     static let ACTION_GET_CONVERSATION_HEAD = "/v1/message/getConversationHead"
@@ -178,52 +188,53 @@ struct APIAtlas {
     static let ACTION_GCM_DELETE            = "/v1/auth/device/deleteRegistrationId"
     static let ACTION_GCM_UPDATE            = "/v1/device/auth/updateRegistrationId"
     static let uploadFileType = "jpeg"
+    //=== Used on Dennis Code ===
     
     /* MESSAGING CONSTANTS V2 */
-    static let ACTION_SEND_MESSAGE_V2          = "message/sendMessage"
-    static let ACTION_GET_CONVERSATION_HEAD_V2 = "message/getConversationHead"
-    static let ACTION_GET_CONTACTS_V2          = "message/getContacts"
-    static let ACTION_GET_CONVERSATION_MESSAGES_V2 = "message/getConversationMessages"
-    static let ACTION_SET_AS_READ_V2           = "message/setConversationAsRead"
-    static let ACTION_IMAGE_ATTACH_V2          = "message/imageAttach"
-    static let ACTION_GCM_CREATE_V2            = "auth/device/addRegistrationId"
-    static let ACTION_GCM_DELETE_V2            = "auth/device/deleteRegistrationId"
-    static let ACTION_GCM_UPDATE_V2           = "device/auth/updateRegistrationId"
+    static let ACTION_SEND_MESSAGE_V2          = APIAtlas.generateV4URL("message/sendMessage")
+    static let ACTION_GET_CONVERSATION_HEAD_V2 = APIAtlas.generateV4URL("message/getConversationHead")
+    static let ACTION_GET_CONTACTS_V2          = APIAtlas.generateV4URL("message/getContacts")
+    static let ACTION_GET_CONVERSATION_MESSAGES_V2 = APIAtlas.generateV4URL("message/getConversationMessages")
+    static let ACTION_SET_AS_READ_V2           = APIAtlas.generateV4URL("message/setConversationAsRead")
+    static let ACTION_IMAGE_ATTACH_V2          = APIAtlas.generateV4URL("message/imageAttach")
+    static let ACTION_GCM_CREATE_V2            = APIAtlas.generateV4URL("auth/device/addRegistrationId")
+    static let ACTION_GCM_DELETE_V2            = APIAtlas.generateV4URL("auth/device/deleteRegistrationId")
+    static let ACTION_GCM_UPDATE_V2           = APIAtlas.generateV4URL("device/auth/updateRegistrationId")
     static let uploadFileType_V2 = "jpeg"
     
     
     //Transactions
-    static let transactionLogs = "auth/getTransactionList?access_token="
-    static let transactionDetails = "auth/getTransaction?access_token="
-    static let transactionLeaveSellerFeedback = "auth/feedback/addUserFeedback"
-    static let transactionProductDetails = "auth/getOrderProductDetail?access_token="
-    static let transactionCancellation = "auth/cancellation/reasons"
-    static let postTransactionCancellation = "auth/transaction/cancel"
-    static let getReasons = "auth/dispute/get-buyer-reasons?access_token="
-    static let transactionDeliveryStatus = "auth/getTransactionDeliveryOverview?access_token="
-    static let getDeliveryLogs = "auth/getTransactionDeliveryLogs"
-    static let transactionLeaveProductFeedback = "auth/product/addProductReview"
+    static let transactionLogs = APIAtlas.generateV4URL("auth/getTransactionList?access_token=")
+    static let transactionDetails = APIAtlas.generateV4URL("auth/getTransaction?access_token=")
+    static let transactionLeaveSellerFeedback = APIAtlas.generateV4URL("auth/feedback/addUserFeedback")
+    static let transactionProductDetails = APIAtlas.generateV4URL("auth/getOrderProductDetail?access_token=")
+    static let transactionCancellation = APIAtlas.generateV4URL("auth/cancellation/reasons")
+    static let postTransactionCancellation = APIAtlas.generateV4URL("auth/transaction/cancel")
+    static let getReasons = APIAtlas.generateV4URL("auth/dispute/get-buyer-reasons?access_token=")
+    static let transactionDeliveryStatus = APIAtlas.generateV4URL("auth/getTransactionDeliveryOverview?access_token=")
+    static let getDeliveryLogs = APIAtlas.generateV4URL("auth/getTransactionDeliveryLogs")
+    static let transactionLeaveProductFeedback = APIAtlas.generateV4URL("auth/product/addProductReview")
     
     //Resolution Center
-    static let getResolutionCenterCases = "auth/dispute/get-case"
-    static let getResolutionCenterCaseDetails = "auth/dispute/get-case-detail"
-    static let postResolutionCenterAddCase = "auth/dispute/add-case"
+    static let getResolutionCenterCases = APIAtlas.generateV4URL("auth/dispute/get-case")
+    static let getResolutionCenterCaseDetails = APIAtlas.generateV4URL("auth/dispute/get-case-detail")
+    static let postResolutionCenterAddCase = APIAtlas.generateV4URL("auth/dispute/add-case")
     
     //Seller Category
-    static let sellerCategory = "category/getCustomCategories?sellerId="
+    static let sellerCategory = APIAtlas.generateV4URL("category/getCustomCategories?sellerId=")
     
-    static let facebookUrl = "facebook/auth"
-    static let googleUrl = "google/auth"
+    static let facebookUrl = APIAtlas.generateV4URL("facebook/auth")
+    static let googleUrl = APIAtlas.generateV4URL("google/auth")
     
-    static let verificationGetCodeUrl = "auth/sms/getCode"
+    static let verificationGetCodeUrl = APIAtlas.generateV4URL("auth/sms/getCode")
     
     //Guest Register
-    static let guestUserRegisterUrl = "registerGuestUser"
+    static let guestUserRegisterUrl = APIAtlas.generateV4URL("registerGuestUser")
     
     //Voucher Url
     static let voucherUrl = APIAtlas.voucher()
     
-    static let mergeFacebook = "socialmedia/merge"
+    static let mergeFacebook = APIAtlas.generateV4URL("socialmedia/merge")
     
     //Webview
     static let flashSale = "flash-sale"
@@ -234,34 +245,35 @@ struct APIAtlas {
     
     //MARK: - V2 APIs
     //Login
-    static let loginUrlV2 = "login"
+    static let loginUrlV2 = APIAtlas.generateV4URL("login")
     
     //OTP
-    static let unauthenticateOTP = "sms/send"
+    static let unauthenticateOTP = APIAtlas.generateV4URL("sms/send")
     
     //Register
-    static let registerV2 = "user/register"
+    static let registerV2 = APIAtlas.generateV4URL("user/register")
     
     //Sprint 1
-    static let saveBasicInfoUrl = "auth/update-basic-info"
-    static let authenticatedOTP = "auth/sms/send"
-    static let verifyAuthenticatedOTPCodeUrl = "auth/token/validate"
-    static let verifyUnAuthenticatedOTPCodeUrl = "token/validate"
+    static let saveBasicInfoUrl = APIAtlas.generateV4URL("auth/update-basic-info")
+    static let authenticatedOTP = APIAtlas.generateV4URL("auth/sms/send")
+    static let verifyAuthenticatedOTPCodeUrl = APIAtlas.generateV4URL("auth/token/validate")
+    static let verifyUnAuthenticatedOTPCodeUrl = APIAtlas.generateV4URL("token/validate")
     //Fogot Password
-    static let forgotPasswordV2 = "user/resetPassword"
+    static let forgotPasswordV2 = APIAtlas.generateV4URL("user/resetPassword")
     
     //My Points
-    static let getPointsTotal = "auth/user/getPoints"
-    static let getPointsHistory = "auth/user/getPointHistory"
+    static let getPointsTotal = APIAtlas.generateV4URL("auth/user/getPoints")
+    static let getPointsHistory = APIAtlas.generateV4URL("auth/user/getPointHistory")
     
     //Push Notif
-    static let registerDeviceUrl = "device/add-device-token"
+    static let registerDeviceUrl = APIAtlas.generateV4URL("device/add-device-token")
     
     //Globalization
-    static let getLanguages = "get-languages"
+    static let getLanguages = APIAtlas.generateV4URL("get-languages")
     
     //MARK: - Get Countries
-    static let getCountriesUrl = "get-countries"
+    static let getCountriesUrl = APIAtlas.generateV4URL("get-countries")
+
 }
 
 class APIManager: AFHTTPSessionManager {
