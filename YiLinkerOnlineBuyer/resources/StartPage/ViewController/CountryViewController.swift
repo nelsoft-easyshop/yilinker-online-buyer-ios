@@ -72,6 +72,7 @@ class CountryViewController: UIViewController, LGAlertViewDelegate {
     }
     
     func fireGetCountriesAPICall() {
+        println(APIAtlas.getCountriesUrl)
         WebServiceManager.fireGetCountries(APIAtlas.getCountriesUrl, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             if successful {
                 //save json data to core data

@@ -634,14 +634,16 @@ class WebServiceManager: NSObject {
     private static func firePostRequestWithUrl(url: String, parameters: AnyObject, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager = APIManager.sharedInstance
         
+        /*
         var tempURL: String = url
         
         if !url.contains(APIAtlas.V1) ||  !url.contains(APIAtlas.V2) ||  !url.contains(APIAtlas.V3) {
             tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
         }
+        */
         
         if Reachability.isConnectedToNetwork() {
-            self.postTask = manager.POST(tempURL, parameters: parameters, success: {
+            self.postTask = manager.POST(url, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
                 }, failure: {
@@ -674,22 +676,23 @@ class WebServiceManager: NSObject {
         }
     }
     
-    
     //MARK: -
     //MARK: - Post Request With Url * Session Data Task
     //This function is for removing repeated codes in handler
     private static func firePostRequestSessionDataTaskWithUrl(url: String, parameters: AnyObject, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
         let manager = APIManager.sharedInstance
         
+        /*
         var tempURL: String = url
         
         if !url.contains(APIAtlas.V1) ||  !url.contains(APIAtlas.V2) ||  !url.contains(APIAtlas.V3) {
             tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
         }
+        */
         
         var sessionDataTask: NSURLSessionDataTask = NSURLSessionDataTask()
         if Reachability.isConnectedToNetwork() {
-           sessionDataTask = manager.POST(tempURL, parameters: parameters, success: {
+           sessionDataTask = manager.POST(url, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
                 }, failure: {
@@ -732,15 +735,18 @@ class WebServiceManager: NSObject {
     private static func fireGetRequestSessionDataTaskWithUrl(url: String, parameters: AnyObject, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) -> NSURLSessionDataTask {
         let manager = APIManager.sharedInstance
         
+        /*
         var tempURL: String = url
         
+  
         if !url.contains(APIAtlas.V1) ||  !url.contains(APIAtlas.V2) ||  !url.contains(APIAtlas.V3) {
             tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
         }
+        */
         
         var sessionDataTask: NSURLSessionDataTask = NSURLSessionDataTask()
         if Reachability.isConnectedToNetwork() {
-            sessionDataTask = manager.GET(tempURL, parameters: parameters, success: {
+            sessionDataTask = manager.GET(url, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
                 }, failure: {
@@ -782,15 +788,15 @@ class WebServiceManager: NSObject {
     private static func firePostRequestWithImage(url: String, parameters: AnyObject, image: UIImage, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager = APIManager.sharedInstance
         
-        var tempURL: String = url
-        
-        if !url.contains(APIAtlas.V1) ||  !url.contains(APIAtlas.V2) ||  !url.contains(APIAtlas.V3) {
-            tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
-        }
+//        var tempURL: String = url
+//        
+//        if !url.contains(APIAtlas.V1) ||  !url.contains(APIAtlas.V2) ||  !url.contains(APIAtlas.V3) {
+//            tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
+//        }
         
         if Reachability.isConnectedToNetwork() {
             
-            self.postTask = manager.POST(tempURL, parameters: parameters,
+            self.postTask = manager.POST(url, parameters: parameters,
                 constructingBodyWithBlock: { (formData: AFMultipartFormData!) -> Void in
                     formData.appendPartWithFileData(UIImageJPEGRepresentation(image, 1.0), name: "image", fileName: "yilinker", mimeType: "image/JPEG")
                 }, success: { (task, responseObject) -> Void in
@@ -827,15 +833,15 @@ class WebServiceManager: NSObject {
     private static func firePostRequestWithImages(url: String, parameters: AnyObject, imageData: [NSData?], imageKeys: [String], actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager = APIManager.sharedInstance
         
-        var tempURL: String = url
-        
-        if !url.contains(APIAtlas.V1) ||  !url.contains(APIAtlas.V2) ||  !url.contains(APIAtlas.V3) {
-            tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
-        }
+//        var tempURL: String = url
+//        
+//        if !url.contains(APIAtlas.V1) ||  !url.contains(APIAtlas.V2) ||  !url.contains(APIAtlas.V3) {
+//            tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
+//        }
         
         if Reachability.isConnectedToNetwork() {
             
-            self.postTask = manager.POST(tempURL, parameters: parameters,
+            self.postTask = manager.POST(url, parameters: parameters,
                 constructingBodyWithBlock: { (formData: AFMultipartFormData!) -> Void in
                     for var i = 0; i < imageData.count; i++ {
                         if imageData[i] != nil {
@@ -880,16 +886,18 @@ class WebServiceManager: NSObject {
     private static func fireGetRequestWithUrl(url: String, parameters: AnyObject, actionHandler: (successful: Bool, responseObject: AnyObject, requestErrorType: RequestErrorType) -> Void) {
         let manager = APIManager.sharedInstance
         
-        var tempURL: String = url
-        
-        if url.contains(APIAtlas.V4) { 
-            tempURL = tempURL.stringByReplacingOccurrencesOfString("v4", withString: "\(APIAtlas.V4)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())", options: nil, range: nil)
-        } else if !url.contains(APIAtlas.V1) &&  !url.contains(APIAtlas.V2) &&  !url.contains(APIAtlas.V3) {
-            tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
-        }
+//        var tempURL: String = url
+//        
+//        
+//        if url.contains(APIAtlas.V4) { 
+//            tempURL = tempURL.stringByReplacingOccurrencesOfString("v4", withString: "\(APIAtlas.V4)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())", options: nil, range: nil)
+//        } else if !url.contains(APIAtlas.V1) &&  !url.contains(APIAtlas.V2) &&  !url.contains(APIAtlas.V3) {
+//            tempURL = "\(APIAtlas.V3)/\(SessionManager.selectedCountryCode())/\(SessionManager.selectedLanguageCode())/\(url)"
+//        }
+
         
         if Reachability.isConnectedToNetwork() {
-            manager.GET(tempURL, parameters: parameters, success: {
+            manager.GET(url, parameters: parameters, success: {
                 (task: NSURLSessionDataTask!, responseObject: AnyObject!) in
                 actionHandler(successful: true, responseObject: responseObject, requestErrorType: .NoError)
                 }, failure: {
@@ -1448,7 +1456,6 @@ class WebServiceManager: NSObject {
         let sessionDataTask: NSURLSessionDataTask = self.firePostRequestSessionDataTaskWithUrl(url, parameters: parameters) { (successful, responseObject, requestErrorType) -> Void in
             actionHandler(successful: successful, responseObject: responseObject, requestErrorType: requestErrorType)
         }
-        
         return sessionDataTask
     }
     
