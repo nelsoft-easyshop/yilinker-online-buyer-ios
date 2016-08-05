@@ -1211,6 +1211,9 @@
 		26DE97981D348DF800D7040A /* LayoutThirteenCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LayoutThirteenCollectionViewCell.xib; path = YiLinkerOnlineBuyer/resources/Home/View/LayoutThirteenCollectionViewCell.xib; sourceTree = SOURCE_ROOT; };
 		26DE979B1D348E0800D7040A /* LayoutTwelveModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LayoutTwelveModel.swift; path = YiLinkerOnlineBuyer/resources/Home/Model/LayoutTwelveModel.swift; sourceTree = SOURCE_ROOT; };
 		26DE979D1D348E1200D7040A /* LayoutThirteenModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LayoutThirteenModel.swift; path = YiLinkerOnlineBuyer/resources/Home/Model/LayoutThirteenModel.swift; sourceTree = SOURCE_ROOT; };
+		54D866711D52E78900CD9DDC /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		54D866721D52E78900CD9DDC /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/HelpViewController.strings; sourceTree = "<group>"; };
+		54D866731D52E78900CD9DDC /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LocalizableString.strings; sourceTree = "<group>"; };
 		70739FE01CC7523200C4E0DC /* CountryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryModel.swift; sourceTree = "<group>"; };
 		70739FE21CC7536100C4E0DC /* BasicModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BasicModel.swift; path = YiLinkerOnlineBuyer/resources/Model/BasicModel.swift; sourceTree = SOURCE_ROOT; };
 		70739FE61CC768A500C4E0DC /* CountryEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryEntity.swift; sourceTree = "<group>"; };
@@ -3154,6 +3157,7 @@
 				Base,
 				"zh-Hans",
 				"zh-Hant",
+				de,
 			);
 			mainGroup = 0C8A7C651B6772670039F013;
 			productRefGroup = 0C8A7C6F1B6772670039F013 /* Products */;
@@ -3872,6 +3876,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				0CAB7FC31C86817B00B653A9 /* zh-Hans */,
+				54D866721D52E78900CD9DDC /* de */,
 			);
 			name = HelpViewController.strings;
 			sourceTree = "<group>";
@@ -3882,6 +3887,7 @@
 				0CAB81181C86817B00B653A9 /* en */,
 				0CAB81191C86817B00B653A9 /* zh-Hans */,
 				0CAB811A1C86817B00B653A9 /* zh-Hant */,
+				54D866731D52E78900CD9DDC /* de */,
 			);
 			name = LocalizableString.strings;
 			sourceTree = "<group>";
@@ -3890,6 +3896,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				0CAB816B1C86817C00B653A9 /* Base */,
+				54D866711D52E78900CD9DDC /* de */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
@@ -3988,7 +3995,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4011,7 +4018,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: NELSON LIAO (XY4U9PK7G5)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (

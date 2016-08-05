@@ -2187,10 +2187,12 @@ extension HomeContainerViewController: SearchBarViewDelegate {
     //API Request
     //MARK: - API Request
     func fireSearch(queryString: String, searchBarView: SearchBarView){
-        if (self.searchTask != nil) {
-            self.searchTask?.cancel()
-            self.searchTask = nil
-            searchBarView.hideLoader()
+        if Reachability.isConnectedToNetwork() {
+            if (self.searchTask != nil) {
+                self.searchTask?.cancel()
+                self.searchTask = nil
+                searchBarView.hideLoader()
+            }
         }
         
         searchBarView.showLoader()
