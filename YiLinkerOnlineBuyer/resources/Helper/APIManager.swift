@@ -114,10 +114,10 @@ struct APIAtlas {
         }
     }
     
-    static func homeUrl(version: String, languageCode: String) -> String {
-        return APIAtlas.generateV4URL("home/getData")
-    }
-    
+//    static func homeUrl(version: String, languageCode: String) -> String {
+//        return APIAtlas.generateV3URL("home/getData")
+//    }
+//    
     static let appItunesURL = "https://itunes.apple.com/ph/app/yilinker-buyer/id1048641709?mt=8"
     static let appLookupUrl = "http://itunes.apple.com/lookup?bundleId=com.easyshop.YiLinkerOnlineBuyer"
     
