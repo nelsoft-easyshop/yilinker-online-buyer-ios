@@ -1389,8 +1389,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         })
         
         layoutThirteenCVC.nameLabel.text = model.data[indexPath.row].name
-        layoutThirteenCVC.priceLabel.text = model.data[indexPath.row].originalPrice.addPesoSign()
-        layoutThirteenCVC.discountLabel.text = model.data[indexPath.row].discountedPrice.addPesoSign()
+        layoutThirteenCVC.priceLabel.text = model.data[indexPath.row].originalPrice.formatToPeso()
+        layoutThirteenCVC.discountLabel.attributedText = formatToAttributedDiscountString(model.data[indexPath.row].discountedPrice.formatToPeso(), discountPercentText: model.data[indexPath.row].discountPercentage + "%")
         
         return layoutThirteenCVC
     }
@@ -1415,9 +1415,9 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         })
         
         layoutFourteenCVC.nameLabel.text = model.data[indexPath.row].name
-        layoutFourteenCVC.priceLabel.text = model.data[indexPath.row].originalPrice.addPesoSign()
-        layoutFourteenCVC.discountLabel.text = model.data[indexPath.row].discountedPrice.addPesoSign()
-        
+        layoutFourteenCVC.priceLabel.text = model.data[indexPath.row].originalPrice.formatToPeso()
+        layoutFourteenCVC.discountLabel.attributedText = formatToAttributedDiscountString(model.data[indexPath.row].discountedPrice.formatToPeso(), discountPercentText: model.data[indexPath.row].discountPercentage + "%")
+
         return layoutFourteenCVC
     }
     
@@ -2242,6 +2242,19 @@ extension HomeContainerViewController: SearchBarViewDelegate {
     func loadImage(image: String) {
         let imageView: UIImageView = UIImageView(frame: CGRectZero)
         imageView.sd_setImageWithURL(StringHelper.convertStringToUrl(image))
+    }
+    
+    func formatToAttributedDiscountString(discountedPriceText: String, discountPercentText: String) -> NSMutableAttributedString {
+        
+        let discountText = discountedPriceText + " - " + discountPercentText
+        let discountAttributeString: NSMutableAttributedString =  NSMutableAttributedString(string: discountText)
+        // text with middle line
+        discountAttributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSMakeRange(0, count(discountedPriceText)))
+        // text with italic font
+        let boldFontAttribute = [NSFontAttributeName: UIFont.italicSystemFontOfSize(12.0)]
+        discountAttributeString.addAttributes(boldFontAttribute, range: NSMakeRange(count(discountedPriceText) + 2, count(discountPercentText)))
+
+        return discountAttributeString
     }
 }
 
