@@ -180,6 +180,8 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             self.populateHomePageWithDictionary(self.coreDataJsonString())
         }
         
+        self.collectionView.contentInset = UIEdgeInsetsMake(-20, 0, 0, 0);
+        self.automaticallyAdjustsScrollViewInsets = true
     }
     
     //MARK: - Add Pull To Refresh
@@ -187,7 +189,6 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         let options = PullToRefreshOption()
         options.backgroundColor = UIColor.clearColor()
         options.indicatorColor = UIColor.darkGrayColor()
-        
         self.collectionView.addPullToRefresh(options: options, refreshCompletion: { [weak self] in
             // some code
             Delay.delayWithDuration(1.0, completionHandler: { (success) -> Void in
