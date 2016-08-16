@@ -66,9 +66,9 @@
                                 <constraint firstAttribute="height" constant="30" id="gvg-fR-MKm"/>
                             </constraints>
                         </view>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search Product Here. . ." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="P8r-D3-eRl">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search Product Here. . ." minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="P8r-D3-eRl">
                             <rect key="frame" x="56" y="2" width="115" height="25"/>
-                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="13"/>
+                            <fontDescription key="fontDescription" name="Panton-Regular" family="Panton" pointSize="11"/>
                             <textInputTraits key="textInputTraits" returnKeyType="search"/>
                             <connections>
                                 <action selector="textFieldAction:" destination="iN0-l3-epB" eventType="editingChanged" id="gm8-Le-CWS"/>
