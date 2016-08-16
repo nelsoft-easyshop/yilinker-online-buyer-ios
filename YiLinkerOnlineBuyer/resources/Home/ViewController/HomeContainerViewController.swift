@@ -1420,7 +1420,15 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         
         layoutFourteenCVC.nameLabel.text = model.data[indexPath.row].name
         layoutFourteenCVC.priceLabel.text = model.data[indexPath.row].originalPrice.formatToPeso()
-        layoutFourteenCVC.discountLabel.attributedText = formatToAttributedDiscountString(model.data[indexPath.row].discountedPrice.formatToPeso(), discountPercentText: model.data[indexPath.row].discountPercentage + "%")
+        //layoutFourteenCVC.discountLabel.attributedText = formatToAttributedDiscountString(model.data[indexPath.row].discountedPrice.formatToPeso(), discountPercentText: model.data[indexPath.row].discountPercentage + "%")
+        
+        if model.data[indexPath.row].discountPercentage == "0.0" || model.data[indexPath.row].discountPercentage == "0" {
+            layoutFourteenCVC.discountLabel.hidden = true
+        } else {
+            layoutFourteenCVC.discountLabel.attributedText = formatToAttributedDiscountString(model.data[indexPath.row].discountedPrice.formatToPeso(), discountPercentText: model.data[indexPath.row].discountPercentage + "%")
+            layoutFourteenCVC.discountLabel.hidden = false
+            
+        }
 
         return layoutFourteenCVC
     }
