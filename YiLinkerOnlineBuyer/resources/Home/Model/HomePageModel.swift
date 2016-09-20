@@ -80,8 +80,6 @@ class HomePageModel: NSObject {
             }
         }
         
-        
-        
         if let temp = dictionary["message"] as? String {
             message = temp
         }

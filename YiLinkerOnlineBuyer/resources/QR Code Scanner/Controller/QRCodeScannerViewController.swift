@@ -34,6 +34,8 @@ class QRCodeScannerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // println("Self.bounce is: \(UIScreen.mainScreen().bounds)")
+        
         self.flashButton.layer.cornerRadius = self.flashButton.frame.width / 2
 
         // Get an instance of the AVCaptureDevice class to initialize a device object and provide the video
@@ -66,7 +68,7 @@ class QRCodeScannerViewController: UIViewController {
         // Initialize the video preview layer and add it as a sublayer to the viewPreview view's layer.
         videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
-        videoPreviewLayer?.frame = self.previewView.layer.bounds
+        videoPreviewLayer?.frame = UIScreen.mainScreen().bounds
         previewView.layer.addSublayer(videoPreviewLayer)
         
         captureSession?.startRunning()

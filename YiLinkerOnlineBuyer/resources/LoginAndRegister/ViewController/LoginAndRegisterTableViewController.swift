@@ -391,7 +391,7 @@ class LoginAndRegisterTableViewController: UIViewController, UITableViewDataSour
     }
     
     //MARK: -
-    //MARK: - Fire Login With Contact Number
+    //MARK: - Fire Login With Contact Number EPOY
     func fireLoginWithContactNumber(contactNo: String, password: String) {
         self.showLoader()
         
@@ -655,7 +655,6 @@ class LoginAndRegisterTableViewController: UIViewController, UITableViewDataSour
     func fireGetLanguageAPICall() {
         WebServiceManager.fireGetLanguagesWithUrl(APIAtlas.getLanguages, actionHandler: { (successful, responseObject, requestErrorType) -> Void in
             self.dismissLoader()
-            
             if successful {
                 self.saveLanguagesToCoreData(responseObject)
                 if let response = responseObject as? NSDictionary {
