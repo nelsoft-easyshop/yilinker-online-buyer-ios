@@ -1419,17 +1419,20 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
         })
         
         layoutFourteenCVC.nameLabel.text = model.data[indexPath.row].name
-        layoutFourteenCVC.priceLabel.text = model.data[indexPath.row].originalPrice.formatToPeso()
-        //layoutFourteenCVC.discountLabel.attributedText = formatToAttributedDiscountString(model.data[indexPath.row].discountedPrice.formatToPeso(), discountPercentText: model.data[indexPath.row].discountPercentage + "%")
+        
+        layoutFourteenCVC.priceLabel.text = model.data[indexPath.row].discountedPrice.formatToPeso()
+        
+        layoutFourteenCVC.discountLabel.attributedText = formatToAttributedDiscountString(model.data[indexPath.row].originalPrice.formatToPeso(), discountPercentText: model.data[indexPath.row].discountPercentage + "%")
         
         if model.data[indexPath.row].discountPercentage == "0.0" || model.data[indexPath.row].discountPercentage == "0" {
             layoutFourteenCVC.discountLabel.hidden = true
         } else {
-            layoutFourteenCVC.discountLabel.attributedText = formatToAttributedDiscountString(model.data[indexPath.row].discountedPrice.formatToPeso(), discountPercentText: model.data[indexPath.row].discountPercentage + "%")
+            layoutFourteenCVC.discountLabel.attributedText = formatToAttributedDiscountString(model.data[indexPath.row].originalPrice.formatToPeso(), discountPercentText: model.data[indexPath.row].discountPercentage + "%")
             layoutFourteenCVC.discountLabel.hidden = false
             
         }
 
+        //EPOY
         return layoutFourteenCVC
     }
     
@@ -1839,6 +1842,7 @@ class HomeContainerViewController: UIViewController, UITabBarControllerDelegate,
             self.navigationController?.pushViewController(productViewController, animated: true)
         } else if targetType == "webView" {
             let webViewController: WebViewController = WebViewController(nibName: "WebViewController", bundle: nil)
+            webViewController.pageTitle = sectionTitle
             webViewController.urlString = target
             self.navigationController!.pushViewController(webViewController, animated: true)
         } else if targetType == "countryProductList" {
@@ -2188,9 +2192,14 @@ extension HomeContainerViewController: SearchBarViewDelegate {
     }
     
     func searchBarView(didTapDailyLogin searchBarView: SearchBarView) {
-        var url = APIEnvironment.baseUrl() + "/v3/" + SessionManager.selectedCountryCode() + "/" + SessionManager.selectedLanguageCode() + "/auth/" + APIAtlas.dailyLogin
+        if SessionManager.isLoggedIn() {
+            var url = APIEnvironment.baseUrl() + "/v3/" + SessionManager.selectedCountryCode() + "/" + SessionManager.selectedLanguageCode() + "/auth/" + APIAtlas.dailyLogin
 
-        self.didClickItemWithTarget(url, targetType: "webView", sectionTitle: StringHelper.localizedStringWithKey("WEBVIEW_DAILY_LOGIN"))
+            self.didClickItemWithTarget(url, targetType: "webView", sectionTitle: StringHelper.localizedStringWithKey("WEBVIEW_DAILY_LOGIN"))
+        } else {
+            UIAlertController.displayErrorMessageWithTarget(self, errorMessage: "Please login to get your free points", title: "Login Required")
+        }
+
     }
     
     //API Request
