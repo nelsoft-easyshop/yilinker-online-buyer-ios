@@ -288,14 +288,14 @@ class APIManager: AFHTTPSessionManager {
             let url: NSURL! = NSURL(string: APIAtlas.baseUrl)
             Static.instance = APIManager(baseURL: url)
             
-            Static.instance?.securityPolicy = AFSecurityPolicy(pinningMode: AFSSLPinningMode.Certificate)
-            let certificatePath = NSBundle.mainBundle().pathForResource("yilinker_pinned_certificate", ofType: "cer")!
-            let certificateData = NSData(contentsOfFile: certificatePath)!
-            Static.instance?.securityPolicy.pinnedCertificates = [certificateData];
-            Static.instance?.securityPolicy.validatesDomainName = true
-            Static.instance?.securityPolicy.allowInvalidCertificates = true
-
-            Static.instance?.responseSerializer = JSONResponseSerializer()
+//            Static.instance?.securityPolicy = AFSecurityPolicy(pinningMode: AFSSLPinningMode.Certificate)
+//            let certificatePath = NSBundle.mainBundle().pathForResource("yilinker_pinned_certificate", ofType: "cer")!
+//            let certificateData = NSData(contentsOfFile: certificatePath)!
+//            Static.instance?.securityPolicy.pinnedCertificates = [certificateData];
+//            Static.instance?.securityPolicy.validatesDomainName = false
+//            Static.instance?.securityPolicy.allowInvalidCertificates = false
+//
+//            Static.instance?.responseSerializer = JSONResponseSerializer()
         }
         
         return Static.instance!
